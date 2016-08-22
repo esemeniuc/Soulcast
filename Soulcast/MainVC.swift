@@ -12,6 +12,11 @@ import UIKit
 class MainVC: UIViewController {
   //
   
+  var childVCs:[UIViewController] = [RecordingVC(), MapVC()]
+  //  let outgoingVC = OutgoingVC()
+//  let incomingVC = IncomingVC()
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.blueColor()

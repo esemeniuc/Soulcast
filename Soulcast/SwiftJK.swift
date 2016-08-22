@@ -6,6 +6,10 @@ class SwiftJK {
   
 }
 
+let screenWidth = UIScreen.mainScreen().bounds.width
+let screenHeight = UIScreen.mainScreen().bounds.height
+
+
 func doOnce (taskName:String, task:() -> ()) -> (Bool) {
   if NSUserDefaults.standardUserDefaults().valueForKey("doOnce-" + taskName) == nil {
     task()

@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.makeKeyAndVisible()
 //    registerForPushNotifications(application)
   
-    modelTester.testAllTheThings()
+    tester.testAllTheThings()
     
     return true
   }

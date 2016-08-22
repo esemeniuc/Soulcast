@@ -9,7 +9,6 @@ let deviceManager = DeviceManager()
 class DeviceManager: NSObject {
   var tempDevice: Device!
 
-  
   private func registerDeviceLocally(device: Device) {
     NSUserDefaults.standardUserDefaults().setValue(device.token, forKey: "token")
   }

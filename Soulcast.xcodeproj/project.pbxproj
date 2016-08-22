@@ -22,9 +22,9 @@
 		BDB8F4B21D6BA80E00E4C7E0 /* SoulPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4B01D6BA80E00E4C7E0 /* SoulPlayer.swift */; };
 		BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4B31D6BA82700E4C7E0 /* SwiftJK.swift */; };
 		BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4B51D6BA8DA00E4C7E0 /* Soul.swift */; };
-		BDB8F4B81D6BB04700E4C7E0 /* SoulTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4B71D6BB04700E4C7E0 /* SoulTester.swift */; };
 		BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */; };
 		BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */; };
+		BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,9 +47,9 @@
 		BDB8F4B01D6BA80E00E4C7E0 /* SoulPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayer.swift; sourceTree = "<group>"; };
 		BDB8F4B31D6BA82700E4C7E0 /* SwiftJK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftJK.swift; sourceTree = "<group>"; };
 		BDB8F4B51D6BA8DA00E4C7E0 /* Soul.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Soul.swift; sourceTree = "<group>"; };
-		BDB8F4B71D6BB04700E4C7E0 /* SoulTester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulTester.swift; sourceTree = "<group>"; };
 		BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCaster.swift; sourceTree = "<group>"; };
 		BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcher.swift; sourceTree = "<group>"; };
+		BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +122,7 @@
 			children = (
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BDB8F4A41D6BA7D100E4C7E0 /* MapVC.swift */,
+				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
 				BDB8F4AD1D6BA7FC00E4C7E0 /* RecordingVC.swift */,
 			);
 			name = ViewControllers;
@@ -131,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				BDB8F49F1D6BA6B400E4C7E0 /* ModelTests.swift */,
-				BDB8F4B71D6BB04700E4C7E0 /* SoulTester.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -286,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */,
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */,
 				BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */,
@@ -297,7 +298,6 @@
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,
 				BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */,
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
-				BDB8F4B81D6BB04700E4C7E0 /* SoulTester.swift in Sources */,
 				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,
 				BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */,
 				BDB8F4A01D6BA6B400E4C7E0 /* ModelTests.swift in Sources */,
