@@ -1,10 +1,4 @@
-//
-//  ModelTests.swift
-//  Soulcast
-//
-//  Created by June Kim on 2016-08-22.
-//  Copyright © 2016 Soulcast-team. All rights reserved.
-//
+
 
 import Foundation
 
@@ -38,6 +32,7 @@ class SoulTester: NSObject {
   
   func testPlay(thisSoul:Soul){
     soulPlayer.startPlaying(thisSoul)
+    //expect the sound to be what was just recorded...
   }
   
   func testOutgoing(){

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     window?.rootViewController = MainVC()
     self.window?.makeKeyAndVisible()
-//    registerForPushNotifications(application)
+    registerForPushNotifications(application)
   
     tester.testAllTheThings()
     
