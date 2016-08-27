@@ -64,7 +64,10 @@ class SoulRecorder: NSObject {
       }
     }
   }
-  
+  override init() {
+    super.init()
+    setup()
+  }
   func setup() {
     displayLink = CADisplayLink(target: self, selector: #selector(SoulRecorder.displayLinkFired(_:)))
     displayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)

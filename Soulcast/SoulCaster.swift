@@ -32,6 +32,8 @@ class SoulCaster: NSObject {
   var state:UploaderState = .NotReady {
     didSet {
       switch (oldValue, state) {
+      case (.NotReady, .Standby):
+        break
       case (.Standby, .Uploading):
         break
         
@@ -60,9 +62,11 @@ class SoulCaster: NSObject {
   
   func setup() {
     uploadProgress = 0
+    
     self.progressBlock = {(task, progress) in
       dispatch_async(dispatch_get_main_queue(), {
         self.uploadProgress = Float(progress.fractionCompleted)
+        self.delegate?.soulIsUploading(self.uploadProgress)
       })
     }
     self.completionHandler = { (task, error) -> Void in
@@ -71,9 +75,12 @@ class SoulCaster: NSObject {
           print("Failed with Error: \(error?.localizedDescription)");
         } else if(self.uploadProgress != 1.0) {
           print("Error: Failed - Likely due to invalid region / filename")
+        } else {
+          self.delegate?.soulDidFinishUploading()
         }
       })
     }
+    state = .Standby
     //TODO: reachability
   }
   
@@ -85,7 +92,7 @@ class SoulCaster: NSObject {
     assert(someSoul.epoch != nil, "There's no key assigned to the soul!!!")
   }
   
-  func upload(fileURL: NSURL, key:String){
+  private func upload(fileURL: NSURL, key:String){
     let expression = AWSS3TransferUtilityUploadExpression()
     expression.progressBlock = progressBlock
     
@@ -124,42 +131,10 @@ class SoulCaster: NSObject {
     
   }
   
-  func getPreSignedURLRequest(keyName: String) -> AWSS3GetPreSignedURLRequest {
-    let getPreSignedURLRequest = AWSS3GetPreSignedURLRequest()
-    getPreSignedURLRequest.bucket = S3BucketName
-    getPreSignedURLRequest.key = keyName
-    getPreSignedURLRequest.HTTPMethod = AWSHTTPMethod.PUT
-    getPreSignedURLRequest.expires = NSDate(timeIntervalSinceNow: 3600)
-    getPreSignedURLRequest.contentType = fileContentTypeStr
-    
-    return getPreSignedURLRequest
-  }
-  
-  func notifyDelegate() {
-    
-  }
-  
-  func reset() {
-    
-  }
-  
-}
-
-extension SoulCaster: NSURLSessionDataDelegate {
-  func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-    let progress = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
-    self.uploadProgress = progress
-    if let tempDelegate = self.delegate {
-      dispatch_async(dispatch_get_main_queue()) {
-        tempDelegate.soulIsUploading(progress)
-      }
-    }
-    
-  }
 }
 
 extension SoulCaster {
-  func castSoulToServer(outgoingSoul:Soul) {
+  private func castSoulToServer(outgoingSoul:Soul) {
     //TODO:
     
   }

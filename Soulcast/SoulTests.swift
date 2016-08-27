@@ -10,7 +10,6 @@ class Tester {
     let soulTester = SoulTester()
     soulTester.setup()
     soulTester.testRecording()
-//    soulTester.testOutgoing()
   }
 }
 
@@ -29,6 +28,11 @@ class SoulTester: NSObject {
   
   func testRecording(){
     recorder.delegate = self
+    recorder.pleaseStartRecording()
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      self.recorder.pleaseStopRecording()
+    }
   }
   
   func testPlay(thisSoul:Soul){
@@ -36,15 +40,19 @@ class SoulTester: NSObject {
     //expect the sound to be what was just recorded...
   }
   
-  func testOutgoing(){
+  func testOutgoing(mockSoul:Soul){
+    soulCaster.delegate = self
+    soulCaster.upload(mockSoul)
     //generate a local file with junk data if it does not exist
     //make a soul with that file
     //soulcaster.cast(soul)
     
   }
   
-  func soulSeed() -> Soul {
+  func mockSoul() -> Soul {
     let seed = Soul()
+    //TODO: switch out localURL for a valid file
+    seed.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/549676D1-DB20-401E-8ED9-E67142EC5BE2/Documents/Recording494031955.70334.m4a"
     seed.s3Key = "1428104002"
     seed.epoch = 14932432
     seed.longitude = -93.2783
@@ -75,12 +83,6 @@ class SoulTester: NSObject {
     return seed
   }
   
-  func testOutgoing(soul:Soul) {
-    //soulcaster
-    let singleSoulCaster = SoulCaster()
-    singleSoulCaster.upload(soul)
-    singleSoulCaster.castSoulToServer(soul)
-  }
   
   func uploadingFinished() {
     print("soulTester uploadingFinished")
@@ -119,11 +121,32 @@ extension SoulTester: SoulRecorderDelegate {
   func soulDidFinishRecording(newSoul: Soul){
     print("SoulTester soulDidFinishRecording")
     testPlay(newSoul)
+    newSoul.epoch = 123321
+    newSoul.s3Key = "1428104002"
+    testOutgoing(newSoul)
   }
   func soulDidFailToRecord(){
     print("SoulTester soulDidFailToRecord")
   }
   func soulDidReachMinimumDuration(){
+    
+  }
+}
+
+extension SoulTester: SoulCasterDelegate {
+  func soulDidStartUploading() {
+    
+  }
+  func soulIsUploading(progress:Float) {
+    
+  }
+  func soulDidFinishUploading() {
+    print("soulDidFinishUploading from delegate!")
+  }
+  func soulDidFailToUpload() {
+    
+  }
+  func soulDidReachServer() {
     
   }
 }

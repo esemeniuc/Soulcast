@@ -55,7 +55,7 @@ class OutgoingVC: UIViewController {
   }
   
   func configureNetworking() {
-    singleSoulCaster.delegate = self
+    soulCaster.delegate = self
   }
   
   func addOutgoingButton() {
@@ -183,7 +183,8 @@ extension OutgoingVC: SoulRecorderDelegate {
     newSoul.latitude = delegate?.outgoingLatitude()
     newSoul.token = Device.localDevice.token
     soulCaster.upload(newSoul)
-    soulCaster.castSoulToServer(newSoul)
+    //TODO: optimize later by concurrently uploading data and metadata concurrently
+//    soulCaster.castSoulToServer(newSoul)
 
     print("soulDidFinishRecording newSoul: \(newSoul.toParams(.Outgoing))")
     //enableCancel()
