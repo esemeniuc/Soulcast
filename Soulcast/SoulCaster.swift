@@ -1,19 +1,13 @@
-//
-//  SoulCaster.swift
-//  SoulCast
-//
-//  Created by Camvy Films on 2015-03-13.
-//  Copyright (c) 2015 June. All rights reserved.
-//
+
 import Foundation
 import AWSS3
 
-enum UploaderState {
-  case NotReady
-  case Standby
-  case Uploading
-  case Failed
-  case Finished
+enum UploaderState: String {
+  case NotReady = "Not Ready"
+  case Standby = "Standby"
+  case Uploading = "Uploading"
+  case Failed = "Failed"
+  case Finished = "Finished"
 }
 
 protocol SoulCasterDelegate {
@@ -24,13 +18,11 @@ protocol SoulCasterDelegate {
   func soulDidReachServer()
 }
 
-var singleSoulCaster:SoulCaster = SoulCaster()
-
 class SoulCaster: NSObject {
   
-  var session: NSURLSession?
-  var uploadTask: NSURLSessionUploadTask?
-  var uploadFileURL: NSURL?
+  var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
+  var progressBlock: AWSS3TransferUtilityProgressBlock?
+
   var uploadProgress: Float = 0
   let fileContentTypeStr = "audio/mpeg"
   
@@ -51,9 +43,9 @@ class SoulCaster: NSObject {
         break
         
       case (let x, .Failed):
-        print("soulCasterState x.hashValue: \(x.hashValue)")
+        print("soulCasterState x.rawValue: \(x.rawValue)")
       case (let x, .NotReady):
-        print("soulCasterState x.hashValue: \(x.hashValue)")
+        print("soulCasterState x.rawValue: \(x.rawValue)")
         break
       default:
         assert(false, "OOPS!!!")
@@ -64,72 +56,71 @@ class SoulCaster: NSObject {
   override init() {
     super.init()
     setup()
-//    let reachability = Reachability(hostName: serverURL)
-//    if reachability.isReachable() {
-//      self.state = .Standby
-//      setup()
-//    } else {
-//      state = .NotReady
-//    }
-//    reachability.reachableBlock = { (reachBlock:Reachability!) in
-//      self.state = .Standby
-//      self.setup()
-//    }
-//    reachability.unreachableBlock = { (reachBlock:Reachability!) in
-//      self.state = .NotReady
-//    }
-//    reachability.startNotifier()
   }
   
   func setup() {
-    var token: dispatch_once_t = 0
-    dispatch_once(&token) {
-      let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier(BackgroundSessionUploadIdentifier)
-      self.session = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-    }
     uploadProgress = 0
+    self.progressBlock = {(task, progress) in
+      dispatch_async(dispatch_get_main_queue(), {
+        self.uploadProgress = Float(progress.fractionCompleted)
+      })
+    }
+    self.completionHandler = { (task, error) -> Void in
+      dispatch_async(dispatch_get_main_queue(), {
+        if ((error) != nil){
+          print("Failed with Error: \(error?.localizedDescription)");
+        } else if(self.uploadProgress != 1.0) {
+          print("Error: Failed - Likely due to invalid region / filename")
+        }
+      })
+    }
+    //TODO: reachability
+  }
+  
+  func validate(someSoul:Soul) {
+    if state != .Standby {
+      assert(false, "tried to upload in a bad state! \(state.rawValue)")
+    }
+    assert(someSoul.localURL != nil, "There's nothing to upload!!!")
+    assert(someSoul.epoch != nil, "There's no key assigned to the soul!!!")
+  }
+  
+  func upload(fileURL: NSURL, key:String){
+    let expression = AWSS3TransferUtilityUploadExpression()
+    expression.progressBlock = progressBlock
+    
+    //continuewithblock substitutes with completion handler...
+    
+    AWSS3TransferUtility.defaultS3TransferUtility().uploadFile(
+      fileURL,
+      bucket: S3BucketName,
+      key: key,
+      contentType: fileContentTypeStr,
+      expression: expression,
+      completionHander: completionHandler).continueWithBlock { (task) -> AnyObject? in
+        if let error = task.error {
+          print("AWSS3TransferUtility.defaultS3TransferUtility().uploadFile error: \(error.localizedDescription)")
+          //TODO: indicate failure
+        }
+        if let exception = task.exception {
+          print("AWSS3TransferUtility.defaultS3TransferUtility().uploadFile exception: \(exception.description)")
+          //TODO: indicate failure
+        }
+        if let _ = task.result {
+          print("Upload Success!")
+          //TODO: indicate success with some sick animation
+        }
+        return nil
+    }
+
   }
   
   func upload(localSoul:Soul) {
-//    if state != .Standby {
-//      assert(false, "tried to upload in a bad state! \(state.hashValue)")
-//    }
+    validate(localSoul)
     self.outgoingSoul = localSoul
-    assert(localSoul.localURL != nil, "There's nothing to upload!!!")
-    self.uploadFileURL = NSURL(fileURLWithPath: localSoul.localURL!)
-    print("upload localSoul: \(localSoul) self.uploadFileURL: \(self.uploadFileURL)")
-    assert(localSoul.epoch != nil, "There's no key assigned to the soul!!!")
-    if (self.uploadTask != nil) {
-      return;
-    }
-    //
     let uploadKey = localSoul.s3Key! + ".mp3"
-    let presignedURLRequest = getPreSignedURLRequest(uploadKey)
-    AWSS3PreSignedURLBuilder.defaultS3PreSignedURLBuilder().getPreSignedURL(presignedURLRequest) .continueWithBlock { (task:AWSTask!) -> (AnyObject!) in
-      
-      if (task.error != nil) {
-        print("Error: %@", task.error)
-      } else {
-        
-        let presignedURL = task.result as! NSURL!
-        if (presignedURL != nil) {
-          let request = NSMutableURLRequest(URL: presignedURL)
-          request.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
-          request.HTTPMethod = "PUT"
-          
-          //contentType in the URLRequest must be the same as the one in getPresignedURLRequest
-          request.setValue(self.fileContentTypeStr, forHTTPHeaderField: "Content-Type")
-          
-          self.uploadTask = self.session?.uploadTaskWithRequest(request, fromFile: self.uploadFileURL!)
-          self.uploadTask?.resume()
-          //self.state = .Uploading
-          self.delegate?.soulDidStartUploading()
-        }
-      }
-      return nil;
-      
-    }
-    
+    upload(NSURL(fileURLWithPath: localSoul.localURL!), key: uploadKey)
+    self.delegate?.soulDidStartUploading()
     
   }
   
@@ -164,46 +155,6 @@ extension SoulCaster: NSURLSessionDataDelegate {
       }
     }
     
-  }
-}
-
-extension SoulCaster: NSURLSessionTaskDelegate {
-  func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-    //finished
-    if let tempDelegate = self.delegate {
-      if (error == nil) {
-        //self.state = .Finished
-        dispatch_async(dispatch_get_main_queue()) {
-          tempDelegate.soulDidFinishUploading()
-          //self.state = .Standby
-        }
-        //castSoulToServer(outgoingSoul!)
-      } else {
-        //self.state = .Failed
-        dispatch_async(dispatch_get_main_queue()) {
-          tempDelegate.soulDidFailToUpload()
-          //self.state = .Standby
-        }
-      }
-    }
-    
-    self.uploadTask = nil
-    
-  }
-}
-
-extension SoulCaster: NSURLSessionDelegate {
-  func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    //TODO:
-//    if ((appDelegate.backgroundUploadSessionCompletionHandler) != nil) {
-//      let completionHandler:() = appDelegate.backgroundUploadSessionCompletionHandler!;
-//      appDelegate.backgroundUploadSessionCompletionHandler = nil
-//      completionHandler
-//    }
-    
-    
-    print("URLSessionDidFinishEventsForBackgroundURLSession Completion Handler has been invoked, background upload task has finished.")
   }
 }
 

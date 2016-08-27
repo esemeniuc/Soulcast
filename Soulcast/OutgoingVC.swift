@@ -24,7 +24,7 @@ class OutgoingVC: UIViewController {
   var outgoingSoul:Soul?
   var recordingStartTime:NSDate!
   var soulRecorder = SoulRecorder()
-  var soulCaster = singleSoulCaster
+  var soulCaster = SoulCaster()
   var displayLink: CADisplayLink!
   var soulPlayer = SoulPlayer()
 

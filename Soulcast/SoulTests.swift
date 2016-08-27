@@ -18,6 +18,7 @@ class SoulTester: NSObject {
 
   let recorder = SoulRecorder()
   let soulPlayer = SoulPlayer()
+  let soulCaster = SoulCaster()
   
   func setup() {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SoulTester.uploadingFinished), name: "uploadingFinished", object: nil)
@@ -92,13 +93,13 @@ class SoulTester: NSObject {
   }
   
   func soulDidFailToPlay(notification:NSNotification) {
-    let failSoul = notification.object as! Soul
-    
+    //let failSoul = notification.object as! Soul
+    print("soulDidFailToPlay")
   }
   
   func soulDidFinishPlaying(notification:NSNotification) {
-    let finishedSoul = notification.object as! Soul
-    
+    //let finishedSoul = notification.object as! Soul
+    print("soulDidFinishPlaying")
   }
   
   //  func getObjectRequest() -> AWSS3GetObjectRequest {

@@ -143,20 +143,5 @@ extension SoulCatcher: NSURLSessionDelegate {
   }
 }
 
-extension SoulCatcher: NSURLSessionTaskDelegate {
-  func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//    if ((appDelegate.backgroundDownloadSessionCompletionHandler) != nil) {
-//      let completionHandler:() = appDelegate.backgroundDownloadSessionCompletionHandler!;
-//      appDelegate.backgroundDownloadSessionCompletionHandler = nil
-//      completionHandler
-//    }
-    
-    print("Completion Handler has been invoked, background download task has finished.");
-  }
-}
-
-
-
 
 

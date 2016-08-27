@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AWSS3
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -72,8 +73,16 @@ extension AppDelegate { //push
 
 }
 
+extension AppDelegate { //aws
+  
+  func application(application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: () -> Void) {
+    
+    AWSS3TransferUtility.interceptApplication(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
+  }
+  
+}
 
-extension AppDelegate {
+extension AppDelegate { //etc
 
   func applicationWillTerminate(application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
