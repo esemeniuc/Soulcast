@@ -15,7 +15,8 @@ class SoulCatcherTests {
   func testIncoming() {
     soulCatcher.delegate = self
     soulCatcher.catchSoulObject(mockIncomingSoul())
-    
+    // troubleshooting:
+    // try 
   }
   
   

@@ -8,7 +8,8 @@ class Tester {
   func testAllTheThings() {
     print("Test All The Things here!")
     let soulTester = SoulTester()
-    soulTester.testRecording()
+//    soulTester.testPlaying()
+//    soulTester.testRecording()
     soulTester.testIncoming()
   }
 }

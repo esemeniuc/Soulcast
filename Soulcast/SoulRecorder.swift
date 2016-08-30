@@ -5,7 +5,6 @@ import TheAmazingAudioEngine
 
 let audioController = AEAudioController(audioDescription: AEAudioController.nonInterleaved16BitStereoAudioDescription(), inputEnabled: true)
 
-
 enum FileReadWrite {
   case Read
   case Write
@@ -141,7 +140,7 @@ class SoulRecorder: NSObject {
   
   func outputPath() -> String {
     var outputPath:String!
-    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
     if paths.count > 0 {
       let randomNumberString = String(NSDate.timeIntervalSinceReferenceDate().description)
       print("randomNumberString: \(randomNumberString)")
