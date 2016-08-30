@@ -122,7 +122,7 @@ class SoulCaster: NSObject {
 
   }
   
-  func upload(localSoul:Soul) {
+  func cast(localSoul:Soul) {
     validate(localSoul)
     self.outgoingSoul = localSoul
     let uploadKey = localSoul.s3Key! + ".mp3"

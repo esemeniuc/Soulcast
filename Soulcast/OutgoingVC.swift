@@ -182,7 +182,7 @@ extension OutgoingVC: SoulRecorderDelegate {
     newSoul.longitude = delegate?.outgoingLongitude()
     newSoul.latitude = delegate?.outgoingLatitude()
     newSoul.token = Device.localDevice.token
-    soulCaster.upload(newSoul)
+    soulCaster.cast(newSoul)
     //TODO: optimize later by concurrently uploading data and metadata concurrently
 //    soulCaster.castSoulToServer(newSoul)
 

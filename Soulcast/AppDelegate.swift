@@ -68,6 +68,9 @@ extension AppDelegate { //push
     for eachItem in aps {
       print(eachItem)
     }
+    
+    let tempSoulCatcher = SoulCatcher()
+    tempSoulCatcher.catchSoul(userInfo)
   }
   
 

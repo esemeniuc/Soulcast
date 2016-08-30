@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+import AWSS3
 
 protocol SoulCatcherDelegate {
   func soulDidStartToDownload(soul:Soul)
@@ -15,55 +16,88 @@ protocol SoulCatcherDelegate {
   func soulDidFailToDownload()
 }
 
-let soulCatcher = SoulCatcher()
-
+//downloads a soul and puts it in a queue
 class SoulCatcher: NSObject {
   
-  var session: NSURLSession?
-  var downloadTask: NSURLSessionDownloadTask?
   var catchingSoul: Soul?
-  var catchingSouls: [Soul] = []
   var delegate: SoulCatcherDelegate?
+  var progress: Float = 0
   
-  var token: dispatch_once_t = 0
-  
+  var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
+
   func setup() {
-    dispatch_once(&token) {
-//      let configuration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier(BackgroundSessionDownloadIdentifier)
-//      self.session = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-    }
+
   }
   
-  func catchSoul(userInfo:NSDictionary) {
-    if let apsHash: NSDictionary = userInfo["aps"] as? NSDictionary {
-      if apsHash["type"] as? String == "incoming" {
-        print("Catching an incoming aps soul!")
-//        catchSoul(soulFromApsHash(apsHash))
+  func catchSoul(userInfo:[NSObject : AnyObject]) {
+    if let soulInfo = userInfo["soulObject"] as? [NSObject : AnyObject] {
+      if soulInfo["type"] as? String == "broadcast" {
+        print("Catching a broadcasted aps soul!")
+        catchSoulObject(soulFromHash(soulInfo))
         
-      } else if apsHash["type"] as? String == "direct" {
+      } else if soulInfo["type"] as? String == "direct" {
         print("Catching a directed aps soul!")
-        //TODO:
-//        catchSoul(soulFromApsHash(apsHash))
+        
       } else {
         assert(false, "Trying to catch a non-incoming soul!")
       }
     
     }
-    //Get a reference to incoming VC, pass soul to incomingVC.
   }
   
   func catchSoulObject(incomingSoul:Soul) {
-    setup()
-    catchingSouls.append(incomingSoul)
-//    startDownloadingAudioFrom(incomingSoul: incomingSoul)
+    startDownloading(incomingSoul)
   }
   
-  func playAudioFrom(incomingSoul:Soul) {
-//    soulPlayer.startPlaying(incomingSoul)
+  private func startDownloading(incomingSoul:Soul) {
+    let s3Key = incomingSoul.s3Key! as String + ".mp3"
+    
+    let expression = AWSS3TransferUtilityDownloadExpression()
+    expression.progressBlock = {(task, progress) in
+      dispatch_async(dispatch_get_main_queue(), {
+        self.progress = Float(progress.fractionCompleted)
+        self.delegate?.soulIsDownloading(self.progress)
+      })
+    }
+    
+    self.completionHandler = { (task, location, data, error) -> Void in
+      dispatch_async(dispatch_get_main_queue(), {
+        if ((error) != nil){
+          print("FAIL! error:\(error!)")
+          dispatch_async(dispatch_get_main_queue()) {
+            self.delegate?.soulDidFailToDownload()
+          }
+        } else if(self.progress != 1.0) {
+          dispatch_async(dispatch_get_main_queue()) {
+            self.delegate?.soulDidFailToDownload()
+          }
+        } else{
+          print("startDownloading incomingSoul success!!")
+          //TODO: save data to local temp file...
+          let filePath = self.saveToCache(data!, key:incomingSoul.s3Key!)
+          incomingSoul.localURL = filePath
+          dispatch_async(dispatch_get_main_queue()) {
+            self.delegate?.soulDidFinishDownloading(incomingSoul)
+            
+          }
+          singleSoulQueue.enqueue(incomingSoul)
+          
+        }
+      })
+    }
+    
+    let transferUtility = AWSS3TransferUtility.defaultS3TransferUtility()
+
+    transferUtility.downloadDataFromBucket(
+      S3BucketName,
+      key: s3Key,
+      expression: expression,
+      completionHander: completionHandler)
+    //optional: .continuewithblock...
+    
   }
   
-  private func soulFromApsHash (apsHash:NSDictionary) -> Soul {
-    let soulHash = apsHash["soul"] as! NSDictionary
+  private func soulFromHash (soulHash:NSDictionary) -> Soul {
     let incomingSoul = Soul()
     let incomingDevice = Device()
     incomingDevice.id = soulHash["device_id"] as? Int
@@ -73,75 +107,28 @@ class SoulCatcher: NSObject {
     incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
     incomingSoul.radius = (soulHash["radius"] as? NSString)?.doubleValue
     incomingSoul.s3Key = soulHash["s3Key"] as? String
+    incomingSoul.type = SoulType(rawValue: soulHash["type"] as! String)
     return incomingSoul
   }
-}
-
-
-extension SoulCatcher: NSURLSessionDownloadDelegate {
-  func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-    let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-    if let catcherDelegate = self.delegate {
-      dispatch_async(dispatch_get_main_queue()) {
-        catcherDelegate.soulIsDownloading(progress)
-      }
-    }
-  }
-
-  func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
-    
-    var finishedSoul:Soul!
-    for eachSoul in catchingSouls {
-      if downloadTask.taskDescription == eachSoul.s3Key! {
-        finishedSoul = eachSoul
-        break
-      }
-    }
-    
-    let filePath = movedFileToDocuments(location, withKey:finishedSoul.s3Key!)
-    finishedSoul.localURL = filePath
-    if let catcherDelegate = self.delegate {
-      dispatch_async(dispatch_get_main_queue()) {
-        catcherDelegate.soulDidFinishDownloading(finishedSoul)
-        
-      }
-    }
-    
-    //TODO: notify that this soul is finished downloading
-    //self.playAudioFrom(self.catchingSoul!)
-  }
   
-  func movedFileToDocuments(location:NSURL, withKey:String) -> String {
-    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-    let documentsPath = paths.first
-    let filePath = documentsPath! + "/" + withKey + ".m4a"
+  
+  func saveToCache(data: NSData, key:String) -> String {
+    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+    let tempPath = paths.first
+    let filePath = tempPath! + "/" + key + ".m4a"
     do {
       if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
         try NSFileManager.defaultManager().removeItemAtPath(filePath)
       }
-      try NSFileManager.defaultManager().moveItemAtURL(location, toURL: NSURL.fileURLWithPath(filePath))
+      data.writeToFile(filePath, atomically: true)
       
     } catch {
       print("movedFileToDocuments error!")
     }
-    
-    //TODO: incoming soul path is invalid?
     return filePath
   }
+}
+
+
   
-}
-
-extension SoulCatcher: NSURLSessionDelegate {
-  func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
-    assert(error == nil, "NSURLSessionTask error!! \(error?.localizedDescription)")
-    if let catcherDelegate = self.delegate{
-      dispatch_async(dispatch_get_main_queue()) {
-        catcherDelegate.soulDidFailToDownload()
-      }
-    }
-    self.downloadTask = nil
-  }
-}
-
-
 

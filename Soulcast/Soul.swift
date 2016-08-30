@@ -4,6 +4,10 @@ import UIKit
 import TheAmazingAudioEngine
 
 
+enum SoulType: String {
+  case Broadcast = "Broadcast"
+  case Outgoing = "Outgoing"
+}
 
 class Soul: NSObject {
   var s3Key:String?
@@ -15,11 +19,6 @@ class Soul: NSObject {
   var token: String?
 //  var device: Device?
   var type: SoulType?
-  
-  enum SoulType: String {
-    case Incoming = "Incoming"
-    case Outgoing = "Outgoing"
-  }
   
   // Usage: postToServer(someSoul.toParams())
   func toParams(type:SoulType) -> NSDictionary {

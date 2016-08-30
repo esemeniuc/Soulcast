@@ -23,7 +23,7 @@ class SoulPlayer: NSObject {
         NSNotificationCenter.defaultCenter().postNotificationName("soulDidFinishPlaying", object: self.tempSoul)
         self.reset()
       }
-    } catch {
+    } catch is ErrorType {
       assert(false);
       print("oh noes! playAudioAtPath fail")
       NSNotificationCenter.defaultCenter().postNotificationName("soulDidFailToPlay", object: self.tempSoul)

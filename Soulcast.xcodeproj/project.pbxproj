@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		6A519C27B5EFC0926D32B35E /* Pods_Soulcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */; };
+		BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD15511E1D74D1580093CA2F /* SoulQueue.swift */; };
+		BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */; };
+		BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */; };
+		BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551241D7611C30093CA2F /* SoulCasterTests.swift */; };
+		BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */; };
 		BDB8F48C1D6B938200E4C7E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */; };
 		BDB8F4931D6B938200E4C7E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */; };
 		BDB8F4961D6B938200E4C7E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDB8F4941D6B938200E4C7E0 /* LaunchScreen.storyboard */; };
@@ -31,6 +36,11 @@
 		603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.release.xcconfig"; sourceTree = "<group>"; };
 		91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.debug.xcconfig"; sourceTree = "<group>"; };
 		A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soulcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD15511E1D74D1580093CA2F /* SoulQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulQueue.swift; sourceTree = "<group>"; };
+		BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorderTests.swift; sourceTree = "<group>"; };
+		BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayerTests.swift; sourceTree = "<group>"; };
+		BD1551241D7611C30093CA2F /* SoulCasterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCasterTests.swift; sourceTree = "<group>"; };
+		BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcherTests.swift; sourceTree = "<group>"; };
 		BDB8F4881D6B938200E4C7E0 /* Soulcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soulcast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,6 +142,10 @@
 			isa = PBXGroup;
 			children = (
 				BDB8F49F1D6BA6B400E4C7E0 /* SoulTests.swift */,
+				BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */,
+				BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */,
+				BD1551241D7611C30093CA2F /* SoulCasterTests.swift */,
+				BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -160,6 +174,7 @@
 				BDB8F4AB1D6BA7E700E4C7E0 /* SoulConstants.swift */,
 				BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */,
 				BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */,
+				BD15511E1D74D1580093CA2F /* SoulQueue.swift */,
 			);
 			name = Transmission;
 			sourceTree = "<group>";
@@ -288,7 +303,9 @@
 			files = (
 				BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */,
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
+				BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */,
 				BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */,
+				BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */,
 				BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */,
 				BDB8F4AE1D6BA7FC00E4C7E0 /* RecordingVC.swift in Sources */,
 				BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */,
@@ -297,8 +314,11 @@
 				BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */,
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,
 				BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */,
+				BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */,
+				BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */,
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
 				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,
+				BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */,
 				BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */,
 				BDB8F4A01D6BA6B400E4C7E0 /* SoulTests.swift in Sources */,
 			);
