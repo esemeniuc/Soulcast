@@ -13,6 +13,7 @@
 		BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */; };
 		BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551241D7611C30093CA2F /* SoulCasterTests.swift */; };
 		BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */; };
+		BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551481D764B9D0093CA2F /* ServerFacade.swift */; };
 		BDB8F48C1D6B938200E4C7E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */; };
 		BDB8F4931D6B938200E4C7E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */; };
 		BDB8F4961D6B938200E4C7E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDB8F4941D6B938200E4C7E0 /* LaunchScreen.storyboard */; };
@@ -41,6 +42,7 @@
 		BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayerTests.swift; sourceTree = "<group>"; };
 		BD1551241D7611C30093CA2F /* SoulCasterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCasterTests.swift; sourceTree = "<group>"; };
 		BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcherTests.swift; sourceTree = "<group>"; };
+		BD1551481D764B9D0093CA2F /* ServerFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerFacade.swift; sourceTree = "<group>"; };
 		BDB8F4881D6B938200E4C7E0 /* Soulcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soulcast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				BDB8F4AB1D6BA7E700E4C7E0 /* SoulConstants.swift */,
 				BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */,
+				BD1551481D764B9D0093CA2F /* ServerFacade.swift */,
 				BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */,
 				BD15511E1D74D1580093CA2F /* SoulQueue.swift */,
 			);
@@ -302,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */,
+				BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */,
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */,
 				BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */,

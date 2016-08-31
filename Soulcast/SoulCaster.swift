@@ -13,7 +13,7 @@ enum UploaderState: String {
 protocol SoulCasterDelegate {
   func soulDidStartUploading()
   func soulIsUploading(progress:Float)
-  func soulDidFinishUploading()
+  func soulDidFinishUploading(soul:Soul)
   func soulDidFailToUpload()
   func soulDidReachServer()
 }
@@ -76,7 +76,7 @@ class SoulCaster: NSObject {
         } else if(self.uploadProgress != 1.0) {
           print("Error: Failed - Likely due to invalid region / filename")
         } else {
-          self.delegate?.soulDidFinishUploading()
+          //success.
         }
       })
     }
@@ -115,10 +115,13 @@ class SoulCaster: NSObject {
         }
         if let _ = task.result {
           print("Upload Success!")
+          self.delegate?.soulDidFinishUploading(self.outgoingSoul!)
           //TODO: indicate success with some sick animation
         }
         return nil
     }
+    
+    self.delegate?.soulDidStartUploading()
 
   }
   
@@ -127,8 +130,15 @@ class SoulCaster: NSObject {
     self.outgoingSoul = localSoul
     let uploadKey = localSoul.s3Key! + ".mp3"
     upload(NSURL(fileURLWithPath: localSoul.localURL!), key: uploadKey)
-    self.delegate?.soulDidStartUploading()
-    
+    postToServer(localSoul)
+  }
+  
+  func postToServer(localSoul:Soul) {
+    ServerFacade.post(localSoul, success: {
+      //success
+    }) { errorMessage in
+      print(errorMessage)
+    }
   }
   
 }

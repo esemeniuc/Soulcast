@@ -16,7 +16,7 @@ class RecordingVC: UIViewController {
   }
   
   override func viewDidAppear(animated: Bool) {
-    requestStartRecording()
+    super.viewDidAppear(animated)
   }
 
   func configureAudio() {

@@ -30,7 +30,7 @@ protocol SoulRecorderDelegate {
 
 class SoulRecorder: NSObject {
   let minimumRecordDuration:Int = 1
-  let maximumRecordDuration:Int = 3
+  let maximumRecordDuration:Int = 20
   var maximumDurationPassed = false
   var currentRecordingPath:String!
   var displayLink:CADisplayLink!

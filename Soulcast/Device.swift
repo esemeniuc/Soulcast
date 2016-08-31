@@ -61,9 +61,9 @@ class Device: NSObject {
     return Device()
   }
   
-  func toParams() -> NSDictionary {
-    let wrapperParams = NSMutableDictionary()
-    let contentParams = NSMutableDictionary()
+  func toParams() -> [String : AnyObject] {
+    var wrapperParams = [String : AnyObject]()
+    var contentParams = [String : AnyObject]()
     wrapperParams["device"] = contentParams
     if token != nil { contentParams["token"] = token }
     if longitude != nil { contentParams["longitude"] = longitude }

@@ -12,14 +12,15 @@ class SoulCasterTests {
   
   let soulCaster = SoulCaster()
   
-  
-  
-  
   func testOutgoing(){
     soulCaster.delegate = self
     soulCaster.cast(mockSoul())
   }
   
+  func testOutgoingJson() {
+    soulCaster.delegate = self
+    soulCaster.postToServer(mockSoul())
+  }
   
   func mockSoul() -> Soul {
     let seed = Soul()
@@ -41,7 +42,7 @@ extension SoulCasterTests: SoulCasterDelegate {
   func soulIsUploading(progress:Float) {
     
   }
-  func soulDidFinishUploading() {
+  func soulDidFinishUploading(soul:Soul) {
     print("soulDidFinishUploading from delegate!")
   }
   func soulDidFailToUpload() {

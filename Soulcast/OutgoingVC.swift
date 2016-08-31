@@ -1,10 +1,4 @@
-//
-//  OutgoingButtonVC.swift
-//  SoulCast
-//
-//  Created by Camvy Films on 2015-03-13.
-//  Copyright (c) 2015 June. All rights reserved.
-//
+
 
 import UIKit
 
@@ -61,11 +55,12 @@ class OutgoingVC: UIViewController {
   func addOutgoingButton() {
     view.frame = CGRectMake((screenWidth - buttonSize)/2, screenHeight - buttonSize, buttonSize, buttonSize)
     outgoingButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
+    outgoingButton.backgroundColor = UIColor.redColor()
     //TODO: simplest implementation first.
     //TODO: make pixel perfect.
-    //outgoingButton.addTarget(self, action: "outgoingButtonTouchedDown:", forControlEvents: UIControlEvents.TouchDown)
+    outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedDown(_:)), forControlEvents: UIControlEvents.TouchDown)
     outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedUpInside(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-    //outgoingButton.addTarget(self, action: "outgoingButtonTouchDraggedExit:", forControlEvents: UIControlEvents.TouchDragExit)
+    outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchDraggedExit(_:)), forControlEvents: UIControlEvents.TouchDragExit)
     
     view.addSubview(outgoingButton)
   }
@@ -80,8 +75,8 @@ class OutgoingVC: UIViewController {
   func outgoingButtonTouchedUpInside(button:UIButton) {
     print("outgoingButtonTouchedUpInside")
     //    outgoingButton.buttonState = .Enabled
-    //    requestFinishRecording()
-    requestStartRecording()
+        requestFinishRecording()
+//    requestStartRecording()
   }
   
   func outgoingButtonTouchDraggedExit(button:UIButton) {
@@ -210,7 +205,7 @@ extension OutgoingVC: SoulCasterDelegate {
   func soulIsUploading(progress:Float) {
     printline("soulIsUploading progress: \(progress)")
   }
-  func soulDidFinishUploading() {
+  func soulDidFinishUploading(soul:Soul) {
     printline("soulDidFinishUploading")
   }
   func soulDidFailToUpload() {
