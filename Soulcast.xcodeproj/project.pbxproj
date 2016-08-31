@@ -23,7 +23,6 @@
 		BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4A71D6BA7E000E4C7E0 /* DeviceManager.swift */; };
 		BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4A81D6BA7E000E4C7E0 /* Device.swift */; };
 		BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4AB1D6BA7E700E4C7E0 /* SoulConstants.swift */; };
-		BDB8F4AE1D6BA7FC00E4C7E0 /* RecordingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4AD1D6BA7FC00E4C7E0 /* RecordingVC.swift */; };
 		BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4AF1D6BA80E00E4C7E0 /* SoulRecorder.swift */; };
 		BDB8F4B21D6BA80E00E4C7E0 /* SoulPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4B01D6BA80E00E4C7E0 /* SoulPlayer.swift */; };
 		BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4B31D6BA82700E4C7E0 /* SwiftJK.swift */; };
@@ -54,7 +53,6 @@
 		BDB8F4A71D6BA7E000E4C7E0 /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		BDB8F4A81D6BA7E000E4C7E0 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		BDB8F4AB1D6BA7E700E4C7E0 /* SoulConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulConstants.swift; sourceTree = "<group>"; };
-		BDB8F4AD1D6BA7FC00E4C7E0 /* RecordingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingVC.swift; sourceTree = "<group>"; };
 		BDB8F4AF1D6BA80E00E4C7E0 /* SoulRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorder.swift; sourceTree = "<group>"; };
 		BDB8F4B01D6BA80E00E4C7E0 /* SoulPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayer.swift; sourceTree = "<group>"; };
 		BDB8F4B31D6BA82700E4C7E0 /* SwiftJK.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftJK.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BDB8F4A41D6BA7D100E4C7E0 /* MapVC.swift */,
 				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
-				BDB8F4AD1D6BA7FC00E4C7E0 /* RecordingVC.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -311,7 +308,6 @@
 				BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */,
 				BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */,
 				BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */,
-				BDB8F4AE1D6BA7FC00E4C7E0 /* RecordingVC.swift in Sources */,
 				BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */,
 				BDB8F48C1D6B938200E4C7E0 /* AppDelegate.swift in Sources */,
 				BDB8F4B21D6BA80E00E4C7E0 /* SoulPlayer.swift in Sources */,

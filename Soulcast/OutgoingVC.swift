@@ -13,7 +13,7 @@ protocol OutgoingVCDelegate {
 class OutgoingVC: UIViewController {
   
   var buttonSize:CGFloat = screenWidth * 1/3
-      var outgoingButton: UIButton!
+  var outgoingButton: UIButton!
     //  var outgoingButton: SimpleOutgoingButton!
   var outgoingSoul:Soul?
   var recordingStartTime:NSDate!
