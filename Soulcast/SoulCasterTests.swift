@@ -30,6 +30,8 @@ class SoulCasterTests {
     seed.epoch = 14932432
     seed.longitude = -93.2783
     seed.latitude = 44.9817
+    seed.radius = 0.333
+    seed.token = "YAYY ITS A TOKEN"
     return seed
   }
   

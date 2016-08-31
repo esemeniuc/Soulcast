@@ -128,14 +128,6 @@ class OutgoingVC: UIViewController {
     
   }
   
-  func enableCancel() {
-    //turn button action into a cancel, where it resets everything.
-  }
-  
-  func disableCancel() {
-    
-  }
-  
   func turnButtonTintDud() {
     
   }
@@ -177,12 +169,11 @@ extension OutgoingVC: SoulRecorderDelegate {
     newSoul.longitude = delegate?.outgoingLongitude()
     newSoul.latitude = delegate?.outgoingLatitude()
     newSoul.token = Device.localDevice.token
+    newSoul.type = .Broadcast
     soulCaster.cast(newSoul)
     //TODO: optimize later by concurrently uploading data and metadata concurrently
 //    soulCaster.castSoulToServer(newSoul)
 
-    print("soulDidFinishRecording newSoul: \(newSoul.toParams(.Outgoing))")
-    //enableCancel()
   }
 }
 

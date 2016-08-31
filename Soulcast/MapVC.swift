@@ -3,7 +3,7 @@
 import UIKit
 import MapKit
 
-protocol mapVCDelegate {
+protocol MapVCDelegate {
   func mapVCDidChangeradius(radius:Double)
 }
 
@@ -47,6 +47,7 @@ class MapVC: UIViewController {
   var radiusLabel: UILabel!
   var devicesLabel: UILabel!
   var devicesLabelUpdating = false
+  var delegate: MapVCDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()

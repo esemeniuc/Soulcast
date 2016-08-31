@@ -13,15 +13,17 @@ class ServerFacade {
   //
   
   
-  class func post(outgoingSoul: Soul, success:()->(), failure: (String)->()) {
-    request(.POST, serverURL + "/souls", parameters: (outgoingSoul.toParams(.Broadcast) as! [String : AnyObject])).responseJSON { response in
+  class func post(outgoingSoul: Soul, success:()->(), failure: (Int)->()) {
+    request(.POST, serverURL + "/souls/", parameters: (outgoingSoul.toParams() as! [String : AnyObject])).responseString { response in
       switch response.result{
       case .Success:
         print("Outgoing Soul Post success!")
+        
+        
         success()
       case .Failure:
         print("Outgoing Soul Post Failure!")
-        failure("error message")
+        failure((response.response?.statusCode)!)
       }
     }
   }

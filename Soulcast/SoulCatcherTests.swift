@@ -19,6 +19,10 @@ class SoulCatcherTests {
     // try 
   }
   
+  func testIncoming(userInfo: [NSObject : AnyObject]) {
+    soulCatcher.delegate = self
+    soulCatcher.catchSoul(userInfo)
+  }
   
   func mockIncomingSoul() -> Soul {
     let seed = Soul()

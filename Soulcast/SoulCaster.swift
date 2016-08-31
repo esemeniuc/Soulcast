@@ -88,6 +88,7 @@ class SoulCaster: NSObject {
     if state != .Standby {
       assert(false, "tried to upload in a bad state! \(state.rawValue)")
     }
+    //TODO: assert existence of s3key, epoch, longitude, laittude, radius, token.
     assert(someSoul.localURL != nil, "There's nothing to upload!!!")
     assert(someSoul.epoch != nil, "There's no key assigned to the soul!!!")
   }
@@ -134,10 +135,11 @@ class SoulCaster: NSObject {
   }
   
   func postToServer(localSoul:Soul) {
+    
     ServerFacade.post(localSoul, success: {
       //success
-    }) { errorMessage in
-      print(errorMessage)
+    }) { statusCode in
+      print(statusCode)
     }
   }
   

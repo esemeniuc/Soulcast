@@ -2,22 +2,20 @@
 
 import Foundation
 
-let tester = Tester()
-
-class Tester {
-  func testAllTheThings() {
-    print("Test All The Things here!")
-    let soulTester = SoulTester()
-//    soulTester.testPlaying()
-//    soulTester.testRecording()
-//    soulTester.testIncoming()
-//    soulTester.testWavRainbow()
-    soulTester.testJsonRainbow()
-  }
-}
+let tester = SoulTester()
 
 class SoulTester: NSObject {
 
+  func testAllTheThings() {
+    print("Test All The Things here!")
+    
+//    testPlaying()
+//    testRecording()
+//    testIncoming()
+//    testWavRainbow()
+//    testJsonRainbow()
+  }
+  
   let soulRecorderTests = SoulRecorderTests()
   let soulPlayerTests = SoulPlayerTests()
   let soulCasterTests = SoulCasterTests()
@@ -33,6 +31,11 @@ class SoulTester: NSObject {
   
   func testIncoming() {
     soulCatcherTests.testIncoming()
+  }
+  
+  func testIncoming(userInfo: [NSObject : AnyObject]){
+    //TODO: mock user info...
+    soulCatcherTests.testIncoming(userInfo)
   }
   
   func testPlaying() {

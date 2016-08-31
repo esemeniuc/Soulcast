@@ -2,7 +2,11 @@ import Foundation
 
 class Device: NSObject {
   var id: Int?
-  var token: String?
+  var token: String? {
+    didSet {
+      NSUserDefaults.standardUserDefaults().setValue(token, forKey: "token")
+    }
+  }
   var longitude: Double?
   var latitude: Double?
   var radius: Double?

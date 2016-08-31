@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     window?.rootViewController = MainVC()
     self.window?.makeKeyAndVisible()
-//    registerForPushNotifications(application)
+    registerForPushNotifications(application)
   
-//    tester.testAllTheThings()
+    tester.testAllTheThings()
     
     return true
   }
@@ -45,7 +45,9 @@ extension AppDelegate { //push
   }
   
   func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-    print("Token String: \(AppDelegate.tokenString(from: deviceToken))")
+    let tokenString = AppDelegate.tokenString(from: deviceToken)
+    Device.localDevice.token = tokenString
+    print("Token String: \(tokenString)")
   }
   
   static func tokenString(from deviceToken:NSData) -> String{
@@ -69,8 +71,9 @@ extension AppDelegate { //push
       print(eachItem)
     }
     
-    let tempSoulCatcher = SoulCatcher()
-    tempSoulCatcher.catchSoul(userInfo)
+//    tester.testIncoming(userInfo)
+//    let tempSoulCatcher = SoulCatcher()
+//    tempSoulCatcher.catchSoul(userInfo)
   }
   
 
