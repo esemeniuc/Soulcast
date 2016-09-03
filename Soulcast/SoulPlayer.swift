@@ -11,17 +11,22 @@ import TheAmazingAudioEngine
 class SoulPlayer: NSObject {
   private var tempSoul: Soul!
   private var player: AEAudioFilePlayer!
+  static var playing = false
   
   func startPlaying(soul:Soul!) {
+    guard !SoulPlayer.playing else{
+      return
+    }
     tempSoul = soul
     let filePath = NSURL(fileURLWithPath: soul.localURL! as String)
     do {
       player = try AEAudioFilePlayer(URL: filePath)
       audioController.addChannels([player])
       player?.removeUponFinish = true
+      SoulPlayer.playing = true
       player?.completionBlock = {
-        NSNotificationCenter.defaultCenter().postNotificationName("soulDidFinishPlaying", object: self.tempSoul)
         self.reset()
+        SoulPlayer.playing = false
       }
     } catch is ErrorType {
       assert(false);

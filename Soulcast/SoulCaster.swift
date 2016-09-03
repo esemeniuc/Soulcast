@@ -93,7 +93,7 @@ class SoulCaster: NSObject {
     assert(someSoul.longitude != nil)
     assert(someSoul.latitude != nil)
     assert(someSoul.radius != nil)
-    assert(someSoul.token != nil)
+//    assert(someSoul.token != nil)
     assert(someSoul.localURL != nil, "There's nothing to upload!!!")
   }
   

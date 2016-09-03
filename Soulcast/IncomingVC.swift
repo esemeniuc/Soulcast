@@ -5,7 +5,16 @@ import UIKit
 
 //launches when a soul is caught
 class IncomingVC: UIViewController {
-  var incomingCatcher: SoulCatcher?
+  var incomingCatcher: SoulCatcher? {
+    didSet{
+      incomingCatcher!.delegate = self
+    }
+  }
+  
+  override func viewDidLoad() {
+    //
+  }
+  
   
   
 }

@@ -69,14 +69,15 @@ class OutgoingVC: UIViewController {
     print("outgoingButtonTouchedDown")
 
 //    outgoingButton.buttonState = .Recording
-    requestStartRecording()
+    if !SoulPlayer.playing {
+      requestStartRecording()
+    }
   }
   
   func outgoingButtonTouchedUpInside(button:UIButton) {
     print("outgoingButtonTouchedUpInside")
     //    outgoingButton.buttonState = .Enabled
         requestFinishRecording()
-//    requestStartRecording()
   }
   
   func outgoingButtonTouchDraggedExit(button:UIButton) {

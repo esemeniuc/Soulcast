@@ -113,6 +113,7 @@ class MapVC: UIViewController {
       updateRadiusLabel(latitudeDelta)
       updateDevicesLabel()
       self.mapView.setRegion(MKCoordinateRegionMake(originalRegion!.center, userSpan!), animated: false)
+      self.delegate?.mapVCDidChangeradius(userSpan.latitudeDelta)
     case .Ended:
       saveRegionData()
       

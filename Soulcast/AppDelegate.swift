@@ -23,10 +23,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.rootViewController = MainVC()
     self.window?.makeKeyAndVisible()
     registerForPushNotifications(application)
-  
+    setAWSLoggingLevel()
 //    tester.testAllTheThings()
     
     return true
+  }
+  
+  func setAWSLoggingLevel() {
+    AWSLogger.defaultLogger().logLevel = .Warn
   }
   
 

@@ -88,6 +88,10 @@ class SoulRecorder: NSObject {
   
   func pleaseStartRecording() {
     print("pleaseStartRecording()")
+    if SoulPlayer.playing {
+      
+      assert(false, "Should not be recording while audio is being played")
+    }
     if state != .Standby {
       assert(false, "OOPS!! Tried to start recording from an inappropriate state!")
     } else {
@@ -103,6 +107,7 @@ class SoulRecorder: NSObject {
     } else if state == .RecordingLongEnough {
       saveRecording()
     }
+    displayCounter = 0
   }
   
   private func startRecording() {
@@ -154,8 +159,6 @@ class SoulRecorder: NSObject {
         }
       }
       
-      
-      print("outputPath: \(outputPath)")
     }
     
     return outputPath
@@ -175,10 +178,10 @@ class SoulRecorder: NSObject {
     print("saveRecording")
     state = .Finished
     recorder?.finishRecording()
-    resetRecorder()
     let newSoul = Soul()
     newSoul.localURL = currentRecordingPath
     delegate?.soulDidFinishRecording(newSoul)
+    resetRecorder()
     
   }
   

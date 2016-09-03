@@ -40,7 +40,6 @@ class MainVC: UIViewController {
     addChildViewController(incomingVC!)
     view.addSubview(incomingVC!.view)
     incomingVC?.incomingCatcher = catcher
-    catcher.delegate = incomingVC
     incomingVC?.didMoveToParentViewController(self)
   }
   
@@ -51,6 +50,7 @@ class MainVC: UIViewController {
 
 extension MainVC: OutgoingVCDelegate, MapVCDelegate {
   func mapVCDidChangeradius(radius:Double){
+    print("mapVCDidChangeradius: \(radius)")
     //TODO: enable update to server periodically
   }
   func outgoingRadius() -> Double{
