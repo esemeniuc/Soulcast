@@ -11,7 +11,7 @@ class SoulTester: NSObject {
     
 //    testPlaying()
 //    testRecording()
-//    testIncoming()
+    testIncoming(["":""])
 //    testWavRainbow()
 //    testJsonRainbow()
   }
@@ -35,7 +35,10 @@ class SoulTester: NSObject {
   
   func testIncoming(userInfo: [NSObject : AnyObject]){
     //TODO: mock user info...
-    soulCatcherTests.testIncoming(userInfo)
+    let mockInfo = soulCatcherTests.mockUserInfo()
+    soulCatcherTests.testIncoming(mockInfo)
+    return
+//    soulCatcherTests.testIncoming(userInfo)
   }
   
   func testPlaying() {

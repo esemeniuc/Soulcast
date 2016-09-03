@@ -88,9 +88,13 @@ class SoulCaster: NSObject {
     if state != .Standby {
       assert(false, "tried to upload in a bad state! \(state.rawValue)")
     }
-    //TODO: assert existence of s3key, epoch, longitude, laittude, radius, token.
+    assert(someSoul.s3Key != nil)
+    assert(someSoul.epoch != nil)
+    assert(someSoul.longitude != nil)
+    assert(someSoul.latitude != nil)
+    assert(someSoul.radius != nil)
+    assert(someSoul.token != nil)
     assert(someSoul.localURL != nil, "There's nothing to upload!!!")
-    assert(someSoul.epoch != nil, "There's no key assigned to the soul!!!")
   }
   
   private func upload(fileURL: NSURL, key:String){

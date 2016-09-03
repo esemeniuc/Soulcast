@@ -13,6 +13,7 @@ class MainVC: UIViewController {
   //
   let mapVC = MapVC()
   let outgoingVC = OutgoingVC()
+  var incomingVC:IncomingVC?
   
   
   override func viewDidLoad() {
@@ -27,7 +28,22 @@ class MainVC: UIViewController {
       view.addSubview(eachVC.view)
       eachVC.didMoveToParentViewController(self)
     }
+    //respond to incoming messages by launching an incomingVC
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveSoul), name: SoulCatcher.soulCaughtNotification, object: nil)
+    
+    
   }
+  
+  func didReceiveSoul(catcher:SoulCatcher) {
+    //respond to incoming messages by launching an incomingVC
+    incomingVC = IncomingVC()
+    addChildViewController(incomingVC!)
+    view.addSubview(incomingVC!.view)
+    incomingVC?.incomingCatcher = catcher
+    catcher.delegate = incomingVC
+    incomingVC?.didMoveToParentViewController(self)
+  }
+  
   
   
   

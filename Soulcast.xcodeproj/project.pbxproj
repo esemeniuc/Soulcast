@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6A519C27B5EFC0926D32B35E /* Pods_Soulcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */; };
+		BD0DBF121D7B652D00FBBD17 /* IncomingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */; };
 		BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD15511E1D74D1580093CA2F /* SoulQueue.swift */; };
 		BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */; };
 		BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */; };
@@ -36,6 +37,7 @@
 		603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.release.xcconfig"; sourceTree = "<group>"; };
 		91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.debug.xcconfig"; sourceTree = "<group>"; };
 		A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soulcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingVC.swift; sourceTree = "<group>"; };
 		BD15511E1D74D1580093CA2F /* SoulQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulQueue.swift; sourceTree = "<group>"; };
 		BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorderTests.swift; sourceTree = "<group>"; };
 		BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayerTests.swift; sourceTree = "<group>"; };
@@ -114,7 +116,7 @@
 			children = (
 				BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */,
 				BDB8F4B51D6BA8DA00E4C7E0 /* Soul.swift */,
-				BDB8F4A11D6BA79C00E4C7E0 /* ViewControllers */,
+				BDB8F4A11D6BA79C00E4C7E0 /* UI */,
 				BDB8F4A31D6BA7BF00E4C7E0 /* Audio */,
 				BDB8F4B91D6BB0A200E4C7E0 /* Transmission */,
 				BDB8F4A61D6BA7D600E4C7E0 /* Device */,
@@ -127,14 +129,15 @@
 			path = Soulcast;
 			sourceTree = "<group>";
 		};
-		BDB8F4A11D6BA79C00E4C7E0 /* ViewControllers */ = {
+		BDB8F4A11D6BA79C00E4C7E0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BDB8F4A41D6BA7D100E4C7E0 /* MapVC.swift */,
 				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
+				BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */,
 			);
-			name = ViewControllers;
+			name = UI;
 			sourceTree = "<group>";
 		};
 		BDB8F4A21D6BA7AF00E4C7E0 /* Tests */ = {
@@ -315,6 +318,7 @@
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,
 				BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */,
 				BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */,
+				BD0DBF121D7B652D00FBBD17 /* IncomingVC.swift in Sources */,
 				BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */,
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
 				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,

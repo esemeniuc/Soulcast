@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
+  let tempSoulCatcher = SoulCatcher()
+  
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     if window == nil {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -22,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.makeKeyAndVisible()
     registerForPushNotifications(application)
   
-    tester.testAllTheThings()
+//    tester.testAllTheThings()
     
     return true
   }
@@ -70,10 +72,9 @@ extension AppDelegate { //push
     for eachItem in aps {
       print(eachItem)
     }
+    //TODO: present incomingSoul
     
-//    tester.testIncoming(userInfo)
-//    let tempSoulCatcher = SoulCatcher()
-//    tempSoulCatcher.catchSoul(userInfo)
+    tempSoulCatcher.catchSoul(userInfo)
   }
   
 

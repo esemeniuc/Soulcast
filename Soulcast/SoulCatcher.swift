@@ -22,6 +22,7 @@ class SoulCatcher: NSObject {
   var catchingSoul: Soul?
   var delegate: SoulCatcherDelegate?
   var progress: Float = 0
+  static let soulCaughtNotification = "soulCaughtNotification"
   
   var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
 
@@ -31,22 +32,20 @@ class SoulCatcher: NSObject {
   
   func catchSoul(userInfo:[NSObject : AnyObject]) {
     if let soulInfo = userInfo["soulObject"] as? [NSObject : AnyObject] {
-      if soulInfo["soulType"] as? String == "broadcast" {
         print("Catching a broadcasted aps soul!")
         catchSoulObject(soulFromHash(soulInfo))
-        
-      } else if soulInfo["type"] as? String == "direct" {
-        print("Catching a directed aps soul!")
-        
-      } else {
-        assert(false, "Trying to catch a non-incoming soul!")
-      }
-    
+    } else {
+      assert(false)
     }
   }
   
   func catchSoulObject(incomingSoul:Soul) {
+    requestUIUpdate()
     startDownloading(incomingSoul)
+  }
+  
+  func requestUIUpdate() {
+    NSNotificationCenter.defaultCenter().postNotificationName(SoulCatcher.soulCaughtNotification, object: self)
   }
   
   private func startDownloading(incomingSoul:Soul) {
@@ -78,7 +77,7 @@ class SoulCatcher: NSObject {
           incomingSoul.localURL = filePath
           dispatch_async(dispatch_get_main_queue()) {
             self.delegate?.soulDidFinishDownloading(incomingSoul)
-            
+
           }
           singleSoulQueue.enqueue(incomingSoul)
           
@@ -105,9 +104,8 @@ class SoulCatcher: NSObject {
     incomingSoul.epoch = soulHash["epoch"] as? Int
     incomingSoul.latitude = (soulHash["latitude"] as? NSString)?.doubleValue
     incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
-    incomingSoul.radius = (soulHash["radius"] as? NSString)?.doubleValue
+    incomingSoul.radius = (soulHash["radius"] as? NSNumber)?.doubleValue
     incomingSoul.s3Key = soulHash["s3Key"] as? String
-    incomingSoul.type = SoulType(rawValue: soulHash["type"] as! String)
     return incomingSoul
   }
   

@@ -1,4 +1,4 @@
-
+//
 
 import UIKit
 import TheAmazingAudioEngine
@@ -23,7 +23,7 @@ class Soul: NSObject {
   // Usage: postToServer(someSoul.toParams())
   func toParams() -> NSDictionary {
     let contentParams = NSMutableDictionary()
-    contentParams["soul[soulType]"] = type!.rawValue
+//    contentParams["soul[soulType]"] = type!.rawValue
     contentParams["soul[s3Key]"] = s3Key
     contentParams["soul[epoch]"] = epoch
     contentParams["soul[longitude]"] = longitude

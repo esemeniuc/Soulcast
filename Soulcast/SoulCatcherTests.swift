@@ -12,6 +12,31 @@ class SoulCatcherTests {
   let soulCatcher = SoulCatcher()
   let soulPlayer = SoulPlayer()
   
+  
+  func mockUserInfo() -> [NSString : AnyObject] {
+    var mockUserInfo = [NSString : AnyObject]()
+      var aps = [NSString : AnyObject]()
+        aps["alert"] = "Hi2"
+        aps["badge"] = 1
+        aps["sound"] = "default"
+    mockUserInfo["aps"] = aps
+      var soulObject = [NSString : AnyObject]()
+        soulObject["radius"] = 5
+        soulObject["longitude"] = 10
+        soulObject["latitude"] = 11
+        soulObject["s3Key"] = "1428102802"
+        soulObject["epoch"] = 1000000000
+        soulObject["id"] = 14
+        soulObject["device_id"] = 15
+        soulObject["created_at"] = 5
+        soulObject["token"] = 5
+        soulObject["updated_at"] = 5
+        soulObject["soulType"] = 5
+    mockUserInfo[NSString(string: "soulObject")] = soulObject
+    return mockUserInfo
+  }
+
+  
   func testIncoming() {
     soulCatcher.delegate = self
     soulCatcher.catchSoulObject(mockIncomingSoul())

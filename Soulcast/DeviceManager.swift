@@ -38,7 +38,7 @@ class DeviceManager: NSObject {
   }
   
   func registerWithServer(device:Device) {
-    request(.POST, serverURL + newDeviceSuffix, parameters: (device.toParams() as! [String : AnyObject])).responseJSON { (response: Response<AnyObject, NSError>) in
+    request(.POST, serverURL + newDeviceSuffix, parameters: (device.toParams() )).responseJSON { (response: Response<AnyObject, NSError>) in
       switch response.result {
       case .Success:
         print("registerWithServer success")
@@ -74,7 +74,7 @@ class DeviceManager: NSObject {
     
     if let deviceID = updatingDevice.id {
       let patchURLString = serverURL + "/api/devices/" + String(deviceID) + ".json"
-      request(.PATCH, patchURLString, parameters: (updatingDevice.toParams() as! [String : AnyObject])).responseJSON(completionHandler: { (response:Response<AnyObject, NSError>) in
+      request(.PATCH, patchURLString, parameters: (updatingDevice.toParams() )).responseJSON(completionHandler: { (response:Response<AnyObject, NSError>) in
         //
         switch response.result {
         case .Success:
@@ -88,7 +88,7 @@ class DeviceManager: NSObject {
   }
   
   func getNearbyDevices(completion:([String:AnyObject])->()) {
-    request(.GET, serverURL + othersQuerySuffix, parameters: (Device.localDevice.toParams() as! [String : AnyObject])).responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
+    request(.GET, serverURL + othersQuerySuffix, parameters: (Device.localDevice.toParams() )).responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
       //
       switch response.result{
       case .Success:
