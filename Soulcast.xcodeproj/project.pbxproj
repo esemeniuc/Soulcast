@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		341759571D7CE31200CD680B /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341759561D7CE31200CD680B /* RecordButton.swift */; };
 		6A519C27B5EFC0926D32B35E /* Pods_Soulcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */; };
 		BD0DBF121D7B652D00FBBD17 /* IncomingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */; };
 		BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		341759561D7CE31200CD680B /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordButton.swift; path = ../RecordButton.swift; sourceTree = "<group>"; };
 		603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.release.xcconfig"; sourceTree = "<group>"; };
 		91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.debug.xcconfig"; sourceTree = "<group>"; };
 		A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soulcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +157,7 @@
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BDB8F4A41D6BA7D100E4C7E0 /* MapVC.swift */,
 				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
+				341759561D7CE31200CD680B /* RecordButton.swift */,
 				BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */,
 			);
 			name = UI;
@@ -338,6 +341,7 @@
 				BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */,
 				BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */,
 				BDB8F48C1D6B938200E4C7E0 /* AppDelegate.swift in Sources */,
+				341759571D7CE31200CD680B /* RecordButton.swift in Sources */,
 				BDB8F4B21D6BA80E00E4C7E0 /* SoulPlayer.swift in Sources */,
 				BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */,
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,

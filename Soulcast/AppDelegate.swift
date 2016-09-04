@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if window == nil {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
     }
-//    window?.rootViewController = MainVC()
-    window?.rootViewController = MockingVC()
+    window?.rootViewController = MainVC()
+//    window?.rootViewController = MockingVC()
     self.window?.makeKeyAndVisible()
     registerForPushNotifications(application)
     setAWSLoggingLevel()

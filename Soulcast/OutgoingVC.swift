@@ -13,7 +13,7 @@ protocol OutgoingVCDelegate {
 class OutgoingVC: UIViewController {
   
   var buttonSize:CGFloat = screenWidth * 1/3
-  var outgoingButton: UIButton!
+  var outgoingButton: RecordButton!
     //  var outgoingButton: SimpleOutgoingButton!
   var outgoingSoul:Soul?
   var recordingStartTime:NSDate!
@@ -54,7 +54,7 @@ class OutgoingVC: UIViewController {
   
   func addOutgoingButton() {
     view.frame = CGRectMake((screenWidth - buttonSize)/2, screenHeight - buttonSize, buttonSize, buttonSize)
-    outgoingButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
+    outgoingButton = RecordButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
     outgoingButton.backgroundColor = UIColor.redColor()
     //TODO: simplest implementation first.
     //TODO: make pixel perfect.
