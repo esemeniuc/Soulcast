@@ -12,6 +12,7 @@
 		BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */; };
 		BD0DBF161D7CBB7300FBBD17 /* put.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF151D7CBB7300FBBD17 /* put.swift */; };
 		BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */; };
+		BD0DBF1B1D7CD9C700FBBD17 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */; };
 		BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD15511E1D74D1580093CA2F /* SoulQueue.swift */; };
 		BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */; };
 		BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */; };
@@ -44,6 +45,7 @@
 		BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockingVC.swift; sourceTree = "<group>"; };
 		BD0DBF151D7CBB7300FBBD17 /* put.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = put.swift; sourceTree = "<group>"; };
 		BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepressingButton.swift; sourceTree = "<group>"; };
+		BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		BD15511E1D74D1580093CA2F /* SoulQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulQueue.swift; sourceTree = "<group>"; };
 		BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorderTests.swift; sourceTree = "<group>"; };
 		BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayerTests.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		BD0DBF191D7CD80900FBBD17 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
 		BDB8F47F1D6B938200E4C7E0 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +148,7 @@
 		BDB8F4A11D6BA79C00E4C7E0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				BD0DBF191D7CD80900FBBD17 /* Onboarding */,
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BDB8F4A41D6BA7D100E4C7E0 /* MapVC.swift */,
 				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
@@ -315,6 +326,7 @@
 			files = (
 				BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */,
 				BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */,
+				BD0DBF1B1D7CD9C700FBBD17 /* OnboardingVC.swift in Sources */,
 				BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */,
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */,

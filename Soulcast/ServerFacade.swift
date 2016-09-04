@@ -17,7 +17,7 @@ class ServerFacade {
     request(.POST, serverURL + "/souls/", parameters: (outgoingSoul.toParams() as! [String : AnyObject])).responseString { response in
       switch response.result{
       case .Success:
-        if response.response?.statusCode == 502 {
+        if invalid(response.response) {
           print("Outgoing Soul Post Failure!")
           failure((response.response?.statusCode)!)
         } else {
@@ -36,7 +36,7 @@ class ServerFacade {
     request(.POST, serverURL + "/echo/", parameters: (outgoingSoul.toParams() as! [String : AnyObject])).responseString { response in
       switch response.result{
       case .Success:
-        if response.response?.statusCode == 502 {
+        if invalid(response.response) {
           print("Echo Soul Failure!")
           failure((response.response?.statusCode)!)
         } else {
@@ -55,7 +55,7 @@ class ServerFacade {
     request(.POST, serverURL + "/devices/", parameters: localDevice.toParams()).responseString { (response) in
       switch response.result {
       case .Success:
-        if response.response?.statusCode == 502 {
+        if invalid(response.response) {
           print("Register local device failure!")
           failure((response.response?.statusCode)!)
         } else {
@@ -72,8 +72,9 @@ class ServerFacade {
   class func patch(localDevice: Device, success:()->(), failure: (Int)->()) {
     request(.PATCH, serverURL + "/devices/", parameters: localDevice.toParams()).responseString { (response) in
       switch response.result {
+        
       case .Success:
-        if response.response?.statusCode == 502 {
+        if invalid(response.response) {
           print("Update local device failure!")
           failure((response.response?.statusCode)!)
         } else {
@@ -87,4 +88,16 @@ class ServerFacade {
     }
   }
   
+  class func invalid(response: NSHTTPURLResponse?) -> Bool {
+    let statusCode = response!.statusCode
+    let stringForStatusCode = NSHTTPURLResponse.localizedStringForStatusCode(statusCode)
+    
+    if statusCode >= 400 {
+      print("invalid status code: \(statusCode) \(stringForStatusCode)")
+      
+      return true
+    } else {
+      return false
+    }
+  }
 }
