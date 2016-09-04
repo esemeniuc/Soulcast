@@ -13,6 +13,7 @@
 		BD0DBF161D7CBB7300FBBD17 /* put.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF151D7CBB7300FBBD17 /* put.swift */; };
 		BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */; };
 		BD0DBF1B1D7CD9C700FBBD17 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */; };
+		BD0DBF1D1D7CDA7700FBBD17 /* JKPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF1C1D7CDA7700FBBD17 /* JKPageViewController.swift */; };
 		BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD15511E1D74D1580093CA2F /* SoulQueue.swift */; };
 		BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */; };
 		BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */; };
@@ -46,6 +47,7 @@
 		BD0DBF151D7CBB7300FBBD17 /* put.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = put.swift; sourceTree = "<group>"; };
 		BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepressingButton.swift; sourceTree = "<group>"; };
 		BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
+		BD0DBF1C1D7CDA7700FBBD17 /* JKPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JKPageViewController.swift; sourceTree = "<group>"; };
 		BD15511E1D74D1580093CA2F /* SoulQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulQueue.swift; sourceTree = "<group>"; };
 		BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorderTests.swift; sourceTree = "<group>"; };
 		BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayerTests.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */,
+				BD0DBF1C1D7CDA7700FBBD17 /* JKPageViewController.swift */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				BDB8F4B21D6BA80E00E4C7E0 /* SoulPlayer.swift in Sources */,
 				BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */,
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,
+				BD0DBF1D1D7CDA7700FBBD17 /* JKPageViewController.swift in Sources */,
 				BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */,
 				BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */,
 				BD0DBF121D7B652D00FBBD17 /* IncomingVC.swift in Sources */,

@@ -54,13 +54,13 @@ extension MainVC: OutgoingVCDelegate, MapVCDelegate {
     //TODO: enable update to server periodically
   }
   func outgoingRadius() -> Double{
-    return Device.localDevice.radius!
+    return mapVC.userSpan.latitudeDelta
   }
   func outgoingLongitude() -> Double{
-    return Device.localDevice.longitude!
+    return (mapVC.latestLocation?.coordinate.longitude)!
   }
   func outgoingLatitude() -> Double{
-    return Device.localDevice.latitude!
+    return (mapVC.latestLocation?.coordinate.latitude)!
   }
   func outgoingDidStart(){
     

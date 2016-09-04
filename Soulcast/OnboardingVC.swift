@@ -1,9 +1,21 @@
-//
-//  OnboardingVC.swift
-//  Soulcast
-//
-//  Created by June Kim on 2016-09-04.
-//  Copyright © 2016 Soulcast-team. All rights reserved.
-//
+
 
 import Foundation
+import UIKit
+
+class OnboardingVC: UIViewController {
+  
+  let pageVC = JKPageViewController()
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = UIColor.whiteColor()
+    setupPageVC()
+  }
+  
+  func setupPageVC() {
+    //TODO
+  }
+  
+  
+}
