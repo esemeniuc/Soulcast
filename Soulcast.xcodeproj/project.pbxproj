@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		6A519C27B5EFC0926D32B35E /* Pods_Soulcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */; };
 		BD0DBF121D7B652D00FBBD17 /* IncomingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */; };
+		BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */; };
+		BD0DBF161D7CBB7300FBBD17 /* put.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF151D7CBB7300FBBD17 /* put.swift */; };
+		BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */; };
 		BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD15511E1D74D1580093CA2F /* SoulQueue.swift */; };
 		BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */; };
 		BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */; };
@@ -38,6 +41,9 @@
 		91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.debug.xcconfig"; sourceTree = "<group>"; };
 		A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soulcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingVC.swift; sourceTree = "<group>"; };
+		BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockingVC.swift; sourceTree = "<group>"; };
+		BD0DBF151D7CBB7300FBBD17 /* put.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = put.swift; sourceTree = "<group>"; };
+		BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepressingButton.swift; sourceTree = "<group>"; };
 		BD15511E1D74D1580093CA2F /* SoulQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulQueue.swift; sourceTree = "<group>"; };
 		BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorderTests.swift; sourceTree = "<group>"; };
 		BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayerTests.swift; sourceTree = "<group>"; };
@@ -143,6 +149,9 @@
 		BDB8F4A21D6BA7AF00E4C7E0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BD0DBF151D7CBB7300FBBD17 /* put.swift */,
+				BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */,
+				BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */,
 				BDB8F49F1D6BA6B400E4C7E0 /* SoulTests.swift */,
 				BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */,
 				BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */,
@@ -305,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */,
+				BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */,
 				BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */,
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */,
@@ -319,6 +329,8 @@
 				BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */,
 				BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */,
 				BD0DBF121D7B652D00FBBD17 /* IncomingVC.swift in Sources */,
+				BD0DBF161D7CBB7300FBBD17 /* put.swift in Sources */,
+				BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */,
 				BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */,
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
 				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,
