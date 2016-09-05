@@ -3,6 +3,22 @@
 import Foundation
 import UIKit
 
+
+
+struct PermissionRequest {
+  static let push = "Push Notification"
+  static let pushDescription = "To be able to listen to those around you, we need to be able to send you push notifications"
+  
+  static let audio = "Microphone Access"
+  static let audioDescription = "To be able to cast your voice to those around you, we need microphone access"
+  
+  static let location = "Location Permission"
+  static let locationDescription = "This is a location-based app. We need your location so that you can catch souls around you"
+  let type: String
+  let description: String
+  
+}
+
 class OnboardingVC: UIViewController {
   
   let pageVC = JKPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
@@ -32,33 +48,60 @@ class OnboardingVC: UIViewController {
   }
   
   func setupPermissionVCs() {
-    let pushPermissionVC = PermissionVC(
-    type: Permission.Push) {
-      AppDelegate.registerForPushNotifications(UIApplication.sharedApplication())
-    }
-    let audioPermissionVC = PermissionVC(
-    type: Permission.Microphone) {
-      //
-    }
-    let locationPermissionVC = PermissionVC(
-    type: Permission.Location) {
-      //
-    }
+    let pushPermissionVC =
+      PermissionVC(request: PermissionRequest(type: PermissionRequest.push, description: PermissionRequest.pushDescription), behavior: pushPermissionBehavior())
+    let audioPermissionVC =
+      PermissionVC(request: PermissionRequest(type: PermissionRequest.audio, description: PermissionRequest.audioDescription), behavior: audioPermissionBehavior())
+    let locationPermissionVC =
+      PermissionVC(request: PermissionRequest(type: PermissionRequest.location, description: PermissionRequest.locationDescription), behavior: locationPermissionBehavior())
+
     permissionVCs.append(pushPermissionVC)
     permissionVCs.append(audioPermissionVC)
     permissionVCs.append(locationPermissionVC)
-    
-    for eachVC in permissionVCs {
-      eachVC.delegate = self
-    }
     
     pushPermissionVC.view.backgroundColor = UIColor.blueColor()
     audioPermissionVC.view.backgroundColor = UIColor.brownColor()
     locationPermissionVC.view.backgroundColor = UIColor.cyanColor()
   }
   
+  func pushPermissionBehavior() -> PermissionBehavior {
+    return
+      PermissionBehavior(requestAction: {
+          AppDelegate.registerForPushNotifications(UIApplication.sharedApplication())
+        }, successAction: self.gotPushPermission,
+           failAction: {
+          //TODO:
+      })
+  }
+  
+  func gotPushPermission() {
+    self.pageVC.scrollToVC(self.pageVC.currentIndex + 1, direction: .Forward)
+
+  }
+  
+  func audioPermissionBehavior() -> PermissionBehavior {
+    return
+      PermissionBehavior(requestAction: {
+        //
+        }, successAction: {
+          self.pageVC.scrollToVC(self.pageVC.currentIndex + 1, direction: .Forward)
+        }, failAction: {
+          //
+      })
+  }
+  
+  func locationPermissionBehavior() -> PermissionBehavior {
+    return
+      PermissionBehavior(requestAction: {
+        //
+        }, successAction: {
+          //
+        }, failAction: {
+          //
+      })
+  }
+  
   func setupPageVC() {
-    //TODO
     pageVC.pages = permissionVCs
     addChildViewController(pageVC)
     view.addSubview(pageVC.view)
@@ -66,12 +109,5 @@ class OnboardingVC: UIViewController {
     pageVC.view.backgroundColor = UIColor.yellowColor()
   }
   
-}
-
-extension OnboardingVC: PermissionVCDelegate {
-  func didGetPermission(type:Permission) {
-    //TODO: scroll to next
-    pageVC.scrollToVC(pageVC.currentIndex + 1, direction: .Forward)
-  }
 }
 

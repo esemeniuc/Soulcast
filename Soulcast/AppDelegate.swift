@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if window == nil {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
     }
-    window?.rootViewController = MainVC()
+//    window?.rootViewController = MainVC()
 //        window?.rootViewController = MockingVC()
-//        window?.rootViewController = OnboardingVC()
+        window?.rootViewController = OnboardingVC()
     self.window?.makeKeyAndVisible()
     
     setAWSLoggingLevel()
@@ -56,7 +56,7 @@ extension AppDelegate { //push
     Device.localDevice.token = tokenString
     print("Token String: \(tokenString)")
     //send a message to the onboarding view controller in the view controller tree
-    OnboardingVC.getInstance((window?.rootViewController)!)?.didGetPermission(.Push)
+    OnboardingVC.getInstance((window?.rootViewController)!)?.gotPushPermission()
   }
   
   
