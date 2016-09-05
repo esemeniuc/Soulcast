@@ -39,11 +39,7 @@ class OutgoingVC: UIViewController {
   func configureAudio() {
     soulRecorder.delegate = self
     soulRecorder.setup()
-    do {
-      try audioController.start()
-    } catch {
-      print("audioController.start() fail!")
-    }
+
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OutgoingVC.soulDidFailToPlay(_:)), name: "soulDidFailToPlay", object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OutgoingVC.soulDidFinishPlaying(_:)), name: "soulDidFinishPlaying", object: nil)
   }

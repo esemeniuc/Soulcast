@@ -70,7 +70,11 @@ class SoulRecorder: NSObject {
   func setup() {
     displayLink = CADisplayLink(target: self, selector: #selector(SoulRecorder.displayLinkFired(_:)))
     displayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
-    
+    do {
+      try audioController.start()
+    } catch {
+      print("audioController.start() fail!")
+    }
   }
   
   func displayLinkFired(link:CADisplayLink) {
@@ -192,6 +196,17 @@ class SoulRecorder: NSObject {
     audioController.removeInputReceiver(recorder)
     recorder = nil
     
+  }
+  
+  static func askForMicrophonePermission(success:()->(), failure:()->()) {
+    //TODO:
+    AVAudioSession.sharedInstance().requestRecordPermission { (granted) in
+      if granted {
+        success()
+      } else {
+        failure()
+      }
+    }
   }
   
 }

@@ -72,9 +72,11 @@ import UIKit
   /// should call manually.
   func setInitialPage() {
     if pages.count > 0 {
+      currentVC = pages[0]
       setViewControllers([pages[0]], direction: .Forward, animated: false, completion: { (finished:Bool) -> Void in
-        //
+        
       })
+      (self.currentVC as? Appearable)?.willAppearOnScreen()
     } else if debugging {
       print("JKPageViewController does not have any pages!")
     }
@@ -100,11 +102,13 @@ extension JKPageViewController: UIPageViewControllerDelegate {
     if !completed { return }
     previousIndex = currentIndex
     currentIndex = nextIndex
-    
+    currentVC = pages[currentIndex]
   }
   func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+    
     nextVC = pendingViewControllers.first
     nextIndex = pages.indexOf(nextVC)!
+
   }
   
   
@@ -131,10 +135,28 @@ extension JKPageViewController: UIPageViewControllerDelegate {
   
   func scrollToVC(pageIndex:Int!, direction:UIPageViewControllerNavigationDirection) {
     if (pageIndex < 0 || pageIndex >= pages.count) {return}
+    (currentVC as? Appearable)?.willDisappearFromScreen()
+    (pages[pageIndex] as? Appearable)?.willAppearOnScreen()
     setViewControllers([pages[pageIndex]], direction: direction, animated: true) { (completed:Bool) -> Void in
       (self.pages[self.currentIndex] as? Appearable)?.didDisappearFromScreen()
       (self.pages[pageIndex] as? Appearable)?.didAppearOnScreen()
       self.currentIndex = pageIndex
+      self.currentVC = self.pages[pageIndex]
+    }
+  }
+  
+  func disableScroll() {
+    for eachView in view.subviews {
+      if eachView.isKindOfClass(UIScrollView) {
+        (eachView as! UIScrollView).scrollEnabled = false
+      }
+    }
+  }
+  func enableScroll() {
+    for eachView in view.subviews {
+      if eachView.isKindOfClass(UIScrollView) {
+        (eachView as! UIScrollView).scrollEnabled = true
+      }
     }
   }
   
@@ -144,6 +166,7 @@ extension JKPageViewController: UIScrollViewDelegate {
   func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     (pages[previousIndex] as? Appearable)?.didDisappearFromScreen()
     (pages[currentIndex] as? Appearable)?.didAppearOnScreen()
+    currentVC = pages[currentIndex]
     if debugging {
       print("previousIndex: \(previousIndex) viewController: \(pages[previousIndex])")
       print("currentIndex: \(currentIndex) viewController: \(pages[currentIndex])")

@@ -63,7 +63,6 @@ class MapVC: UIViewController {
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    manualAskLocationPermission()
   }
   
   
@@ -131,31 +130,8 @@ class MapVC: UIViewController {
     locationManager.startUpdatingLocation()
   }
   
-  func hasLocationPermission() -> Bool {
+  static func hasLocationPermission() -> Bool {
     return CLLocationManager.authorizationStatus() == .AuthorizedAlways || CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
-  }
-  
-  func manualAskLocationPermission() {
-    if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
-      //ask manually for permission.
-      let locationAlert = UIAlertController(title: "Allow location?", message: "SoulCast needs it to listen to those around you", preferredStyle: .Alert)
-      let cancelAction = UIAlertAction(title: "cancel", style: .Default, handler: { (action:UIAlertAction!) -> Void in
-        //TODO: overlay stuff on MapView, allowing them to ask location permission again.
-        
-      })
-      let successAction = UIAlertAction(title: "OK", style: .Default, handler: { (action:UIAlertAction!) -> Void in
-        self.systemAskLocationPermission()
-        
-      })
-      locationAlert.addAction(cancelAction)
-      locationAlert.addAction(successAction)
-      
-      presentViewController(locationAlert, animated: true, completion: { () -> Void in
-        //
-      })
-    }
-    
-
   }
   
   func addPermissionView() {
@@ -178,10 +154,10 @@ class MapVC: UIViewController {
   
   func permissionViewTapped(recognizer:UIGestureRecognizer) {
     recognizer.removeTarget(self, action: #selector(MapVC.permissionViewTapped(_:)))
-    manualAskLocationPermission()
+//    manualAskLocationPermission()
   }
   
-  func systemAskLocationPermission() {
+  static func systemAskLocationPermission(locationManager: CLLocationManager) {
     /*
      Must include in .plist
      <key>NSLocationAlwaysUsageDescription</key>
@@ -291,5 +267,6 @@ extension MapVC: CLLocationManagerDelegate {
     
     
   }
+  
   
 }

@@ -15,7 +15,6 @@ class MainVC: UIViewController {
   let outgoingVC = OutgoingVC()
   var incomingVC:IncomingVC?
   
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.blueColor()
