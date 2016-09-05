@@ -14,6 +14,9 @@ class OutgoingVC: UIViewController {
   
   var buttonSize:CGFloat = screenWidth * 1/3
   var outgoingButton: RecordButton!
+  var progress : CGFloat! = 0 //progress bar for the outgoing button
+  var progressTimer : NSTimer! //timer for outgoing button upon depressed
+    
     //  var outgoingButton: SimpleOutgoingButton!
   var outgoingSoul:Soul?
   var recordingStartTime:NSDate!
@@ -55,7 +58,8 @@ class OutgoingVC: UIViewController {
   func addOutgoingButton() {
     view.frame = CGRectMake((screenWidth - buttonSize)/2, screenHeight - buttonSize, buttonSize, buttonSize)
     outgoingButton = RecordButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
-    outgoingButton.backgroundColor = UIColor.redColor()
+    outgoingButton.backgroundColor = UIColor.clearColor()
+    outgoingButton.progressColor = UIColor.redColor()
     //TODO: simplest implementation first.
     //TODO: make pixel perfect.
     outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedDown(_:)), forControlEvents: UIControlEvents.TouchDown)
@@ -72,12 +76,14 @@ class OutgoingVC: UIViewController {
     if !SoulPlayer.playing {
       requestStartRecording()
     }
+    record()
   }
   
   func outgoingButtonTouchedUpInside(button:UIButton) {
     print("outgoingButtonTouchedUpInside")
     //    outgoingButton.buttonState = .Enabled
         requestFinishRecording()
+        stop()
   }
   
   func outgoingButtonTouchDraggedExit(button:UIButton) {
@@ -85,6 +91,28 @@ class OutgoingVC: UIViewController {
 //    outgoingButton.buttonState = .Enabled
     requestFinishRecording()
   }
+    
+    func record() {
+        self.progressTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(OutgoingVC.updateProgress), userInfo: nil, repeats: true)
+    }
+    
+    func updateProgress() {
+        
+        let maxDuration = CGFloat(5) // Max duration of the recordButton
+        
+        progress = progress + (CGFloat(0.05) / maxDuration)
+        outgoingButton.setProgress(progress)
+        
+        if progress >= 1 {
+            progressTimer.invalidate()
+        }
+        
+    }
+    
+    func stop() {
+        self.progressTimer.invalidate()
+        progress = 0
+    }
   
   func addDisplayLink() {
     displayLink = CADisplayLink(target: self, selector: #selector(OutgoingVC.displayLinkFired(_:)))

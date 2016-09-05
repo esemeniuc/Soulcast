@@ -27,6 +27,7 @@ class RecordButton : UIButton {
     }
     var progressColor: UIColor!  = .redColor() {
         didSet {
+            print("progressColor set to red")
             gradientMaskLayer.colors = [progressColor.CGColor, progressColor.CGColor]
         }
     }
@@ -42,15 +43,20 @@ class RecordButton : UIButton {
                 currentProgress = 0
                 setProgress(0)
                 setRecording(false)
+                print("RecordButton is Standby")
             case .RecordingStarted:
                 self.alpha = 1.0
                 setRecording(true)
+                print("RecordButton is RecordingStarted")
             case .MutedDuringPlayBack:
                 self.alpha = 0
+                 print("RecordButton is MutedDuringPlayBack")
             case .RecordingLongEnough:
                 finishingRecording()
+                 print("RecordButton is RecordingLongEnough")
             case .Finished:
                 resetButtonState()
+                 print("RecordButton is Finished")
             default:
                 //print("oldValue: \(oldValue.hashValue), state: \(state.hashValue)")
                 assert(false, "OOPS!!!")
