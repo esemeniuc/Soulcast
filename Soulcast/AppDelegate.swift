@@ -20,10 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if window == nil {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
     }
-//    window?.rootViewController = MainVC()
-    window?.rootViewController = MockingVC()
+    window?.rootViewController = MainVC()
+//        window?.rootViewController = MockingVC()
+//        window?.rootViewController = OnboardingVC()
     self.window?.makeKeyAndVisible()
-    registerForPushNotifications(application)
+    
     setAWSLoggingLevel()
     
     return true
@@ -38,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate { //push
   
-  func registerForPushNotifications(application: UIApplication) {
+  static func registerForPushNotifications(application: UIApplication) {
     let notificationSettings = UIUserNotificationSettings(
       forTypes: [.Badge, .Sound, .Alert], categories: nil)
     application.registerUserNotificationSettings(notificationSettings)
@@ -54,7 +55,10 @@ extension AppDelegate { //push
     let tokenString = AppDelegate.tokenString(from: deviceToken)
     Device.localDevice.token = tokenString
     print("Token String: \(tokenString)")
+    //send a message to the onboarding view controller in the view controller tree
+    OnboardingVC.getInstance((window?.rootViewController)!)?.didGetPermission(.Push)
   }
+  
   
   static func tokenString(from deviceToken:NSData) -> String{
     let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
