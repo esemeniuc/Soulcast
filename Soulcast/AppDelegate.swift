@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
     }
 //    window?.rootViewController = MainVC()
-//        window?.rootViewController = MockingVC()
-        window?.rootViewController = OnboardingVC()
+        window?.rootViewController = MockingVC()
+//        window?.rootViewController = OnboardingVC()
     self.window?.makeKeyAndVisible()
     
     setAWSLoggingLevel()

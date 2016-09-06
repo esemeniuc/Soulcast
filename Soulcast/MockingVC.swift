@@ -15,6 +15,9 @@ class MockingVC: UIViewController {
   let successView = UIView(width: screenWidth * 0.85, height: screenHeight * 0.85)
   let successLabel = UILabel(width: screenWidth * 0.65, height: screenHeight * 0.3)
   
+  var serverField:UITextField!
+  var backgroundTapRecognizer:UITapGestureRecognizer!
+  
   var failString = "FAIL" {
     didSet{
       failLabel.text = failString
@@ -26,6 +29,38 @@ class MockingVC: UIViewController {
     setupButtons()
     setupFailView()
     setupSuccessView()
+    setupServerChanger()
+  }
+  
+  func setupServerChanger() {
+    serverField = UITextField(width: CGRectGetWidth(view.bounds), height: 70)
+    serverField.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.15)
+    serverField.delegate = self
+    serverField.textAlignment = .Center
+    serverField.placeholder = "http://________.localtunnel.me"
+    serverField.autocorrectionType = .No
+    serverField.autocapitalizationType = .None
+    view.addSubview(serverField)
+    
+    backgroundTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
+    view.addGestureRecognizer(backgroundTapRecognizer)
+    
+    disableButtons()
+  }
+  
+  func didTapBackground() {
+    serverField.endEditing(true)
+  }
+  
+  func didFinishEditing() {
+    enableButtons()
+    
+    UIView.animateWithDuration(0.5, animations: {
+      self.serverField.center = CGPointMake(CGRectGetMidX(self.serverField.frame), CGRectGetMidY(self.serverField.frame) - CGRectGetHeight(self.serverField.frame))
+    }) { (finished) in
+      self.serverField.hidden = true
+    }
+
   }
   
   override func viewDidAppear(animated: Bool) {
@@ -183,7 +218,19 @@ class MockingVC: UIViewController {
 
 
 
-
+extension MockingVC: UITextFieldDelegate {
+  func textFieldDidEndEditing(textField: UITextField) {
+    serverURL = "http://" + textField.text! + ".localtunnel.me"
+    print(serverURL)
+    didFinishEditing()
+    
+  }
+  
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+        serverField.endEditing(true)
+    return true
+  }
+}
 
 
 
