@@ -7,6 +7,7 @@
 //
 import Foundation
 import UIKit
+//import QuartzCore
 
 enum RecordButtonState : Int {
     case Standby // 0
@@ -223,6 +224,15 @@ class RecordButton : UIButton {
         }
     }
     
+    func shakeInDenial(){
+        let animation = CABasicAnimation()
+        animation.duration = 0.1
+        animation.repeatCount = 4
+        animation.fromValue = -10
+        animation.toValue = 0
+        
+        self.layer.addAnimation(animation, forKey:"transform.translation.x")
+    }
     
     /**
      Set the relative length of the circle border to the specified progress

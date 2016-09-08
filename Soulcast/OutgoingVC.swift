@@ -14,10 +14,10 @@ class OutgoingVC: UIViewController {
   
   var buttonSize:CGFloat = screenWidth * 1/3
   var outgoingButton: RecordButton!
+  //HAX: needs to be hooked up to soul recorder
   var progress : CGFloat! = 0 //progress bar for the outgoing button
   var progressTimer : NSTimer! //timer for outgoing button upon depressed
     
-    //  var outgoingButton: SimpleOutgoingButton!
   var outgoingSoul:Soul?
   var recordingStartTime:NSDate!
   var soulRecorder = SoulRecorder()
@@ -71,19 +71,16 @@ class OutgoingVC: UIViewController {
   
   func outgoingButtonTouchedDown(button:UIButton) {
     print("outgoingButtonTouchedDown")
-
 //    outgoingButton.buttonState = .Recording
     if !SoulPlayer.playing {
       requestStartRecording()
     }
-    record()
   }
   
   func outgoingButtonTouchedUpInside(button:UIButton) {
     print("outgoingButtonTouchedUpInside")
     //    outgoingButton.buttonState = .Enabled
         requestFinishRecording()
-        stop()
   }
   
   func outgoingButtonTouchDraggedExit(button:UIButton) {
@@ -92,24 +89,18 @@ class OutgoingVC: UIViewController {
     requestFinishRecording()
   }
     
-    func record() {
-        self.progressTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(OutgoingVC.updateProgress), userInfo: nil, repeats: true)
+    func recordButtonViewPleaseStartRecording() {
+        print("REC BUTTON CHANGES TO RED NOW")
+        self.progressTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(OutgoingVC.recordButtonViewUpdateProgress), userInfo: nil, repeats: true)
     }
     
-    func updateProgress() {
-        
-        let maxDuration = CGFloat(5) // Max duration of the recordButton
-        
-        progress = progress + (CGFloat(0.05) / maxDuration)
+    func recordButtonViewUpdateProgress() {
+        progress = progress + (CGFloat(0.05) / CGFloat(soulRecorder.maximumRecordDuration))
         outgoingButton.setProgress(progress)
-        
-        if progress >= 1 {
-            progressTimer.invalidate()
-        }
-        
+        if progress >= 1 {progressTimer.invalidate()}
     }
     
-    func stop() {
+    func recordButtonViewStop() {
         self.progressTimer.invalidate()
         progress = 0
     }
@@ -132,20 +123,21 @@ class OutgoingVC: UIViewController {
   }
   
   func resetRecordingIndicator() {
+    recordButtonViewStop()
     //animate alpha = 0 ease out, upom completion, stroke = 0
-    //TODO:
+    //TODO: this is where reset view should happen
   }
   
   func requestStartRecording() {
     recordingStartTime = NSDate()
     soulRecorder.pleaseStartRecording()
-    
+    //HAX to get the view to change state
+    recordButtonViewPleaseStartRecording()
   }
   
   func requestFinishRecording() {
     soulRecorder.pleaseStopRecording()
     //replay, save, change ui to disabled.
-    
   }
   
   func playbackSoul(localSoul:Soul) {
@@ -171,6 +163,8 @@ class OutgoingVC: UIViewController {
   
   func animateNegativeShake() {
     //left to right a couple times, disable button in the meanwhile.
+    print("Animate nega shake here")
+    outgoingButton.shakeInDenial()
   }
   
 }
@@ -181,8 +175,12 @@ extension OutgoingVC: SoulRecorderDelegate {
   }
   
   func soulDidFailToRecord() {
+    print("SOUL FAILED TO RECORD: TOO SHORT")
     //negative animation, go back to being enabled
     animateNegativeShake()
+    //TODO: control the views to indicate to user that soul failed
+    recordButtonViewStop()
+    
   }
   
   func soulDidReachMinimumDuration() {

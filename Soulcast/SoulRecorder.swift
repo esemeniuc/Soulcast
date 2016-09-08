@@ -30,8 +30,7 @@ protocol SoulRecorderDelegate {
 
 class SoulRecorder: NSObject {
   let minimumRecordDuration:Int = 1
-  let maximumRecordDuration:Int = 20
-  var maximumDurationPassed = false
+  let maximumRecordDuration:Int = 5
   var currentRecordingPath:String!
   var displayLink:CADisplayLink!
   var displayCounter:Int = 0
@@ -158,12 +157,8 @@ class SoulRecorder: NSObject {
           print("outputPath(readOrWrite:FileReadWrite)")
         }
       }
-      
     }
-    
     return outputPath
-      
-    
   }
   
   private func discardRecording() {
