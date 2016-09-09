@@ -50,7 +50,7 @@ class RecordButton : UIButton {
                 setRecording(true)
                 print("RecordButton is RecordingStarted")
             case .MutedDuringPlayBack:
-                self.alpha = 0
+                self.alpha = 0.2
                  print("RecordButton is MutedDuringPlayBack")
             case .RecordingLongEnough:
                 finishingRecording()
@@ -243,6 +243,9 @@ class RecordButton : UIButton {
         progressLayer.strokeEnd = newProgress
     }
     
+    func setMutedDuringPlayBack() {
+         self.buttonState = .MutedDuringPlayBack
+    }
     func finishingRecording(){
         self.buttonState = .Finished
     }

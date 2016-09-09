@@ -122,8 +122,9 @@ class OutgoingVC: UIViewController {
     
   }
   
-  func resetRecordingIndicator() {
+  func muteViewDuringPlayingPlayBack() {
     recordButtonViewStop()
+    outgoingButton.setMutedDuringPlayBack()
     //animate alpha = 0 ease out, upom completion, stroke = 0
     //TODO: this is where reset view should happen
   }
@@ -188,7 +189,7 @@ extension OutgoingVC: SoulRecorderDelegate {
   }
   
   func soulDidFinishRecording(newSoul: Soul) {
-    resetRecordingIndicator()
+    muteViewDuringPlayingPlayBack()
     playbackSoul(newSoul)
     newSoul.epoch = Int(NSDate().timeIntervalSince1970)
     newSoul.radius = delegate?.outgoingRadius()
@@ -213,6 +214,7 @@ extension OutgoingVC {
   func soulDidFinishPlaying(notification:NSNotification) {
 //    let finishedSoul = notification.object as! Soul
     print("soulDidFinishPlaying")
+    outgoingButton.resetButtonState()
   }
 }
 
@@ -228,6 +230,7 @@ extension OutgoingVC: SoulCasterDelegate {
   }
   func soulDidFailToUpload() {
     printline("soulDidFailToUpload")
+    outgoingButton.resetButtonState()
   }
   func soulDidReachServer() {
     printline("soulDidReachServer")

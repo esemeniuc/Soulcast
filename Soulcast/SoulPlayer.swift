@@ -27,6 +27,8 @@ class SoulPlayer: NSObject {
       player?.completionBlock = {
         self.reset()
         SoulPlayer.playing = false
+        //TODO: post notification...
+        NSNotificationCenter.defaultCenter().postNotificationName("soulDidFinishPlaying", object: nil)
       }
     } catch is ErrorType {
       assert(false);
