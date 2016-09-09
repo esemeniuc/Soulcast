@@ -44,6 +44,7 @@
 		BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */; };
 		BDF478D11D826EE3004F6CAA /* IncomingQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CD1D826EE3004F6CAA /* IncomingQueue.swift */; };
 		BDF478D31D826F3C004F6CAA /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478D21D826F3C004F6CAA /* TimeAgo.swift */; };
+		BDF478D51D836E61004F6CAA /* IntegrationTestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478D41D836E61004F6CAA /* IntegrationTestButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionCell.swift; sourceTree = "<group>"; };
 		BDF478CD1D826EE3004F6CAA /* IncomingQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingQueue.swift; sourceTree = "<group>"; };
 		BDF478D21D826F3C004F6CAA /* TimeAgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
+		BDF478D41D836E61004F6CAA /* IntegrationTestButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegrationTestButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 			children = (
 				BD0DBF151D7CBB7300FBBD17 /* put.swift */,
 				BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */,
+				BDF478D41D836E61004F6CAA /* IntegrationTestButton.swift */,
 				BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */,
 				BDB8F49F1D6BA6B400E4C7E0 /* SoulTests.swift */,
 				BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */,
@@ -397,6 +400,7 @@
 				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,
 				BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */,
 				BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */,
+				BDF478D51D836E61004F6CAA /* IntegrationTestButton.swift in Sources */,
 				BD0DBF261D7E24C200FBBD17 /* LocationPermissionVC.swift in Sources */,
 				BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */,
 				BDB8F4A01D6BA6B400E4C7E0 /* SoulTests.swift in Sources */,
