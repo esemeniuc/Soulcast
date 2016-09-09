@@ -13,7 +13,8 @@ class MainVC: UIViewController {
   //
   let mapVC = MapVC()
   let outgoingVC = OutgoingVC()
-  var incomingVC:IncomingVC?
+  var incomingVC = IncomingCollectionVC()
+  var soulCatchers = Set<SoulCatcher>()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -27,23 +28,47 @@ class MainVC: UIViewController {
       view.addSubview(eachVC.view)
       eachVC.didMoveToParentViewController(self)
     }
-    //respond to incoming messages by launching an incomingVC
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(didReceiveSoul), name: SoulCatcher.soulCaughtNotification, object: nil)
     
     
   }
   
-  func didReceiveSoul(catcher:SoulCatcher) {
+  func receiveRemoteNotification(userInfo:[NSObject : AnyObject]){
+    let tempSoulCatcher = SoulCatcher()
+    tempSoulCatcher.delegate = self
+    tempSoulCatcher.catchSoul(userInfo)
+    soulCatchers.insert(tempSoulCatcher)
+    //TODO
+    
+  }
+  
+  func displaySoul(incomingSoul:Soul) {
     //respond to incoming messages by launching an incomingVC
-    incomingVC = IncomingVC()
-    addChildViewController(incomingVC!)
-    view.addSubview(incomingVC!.view)
-    incomingVC?.incomingCatcher = catcher
-    incomingVC?.didMoveToParentViewController(self)
+    if soloQueue.count == 0 {
+      addChildViewController(incomingVC)
+      view.addSubview(incomingVC.view)
+      incomingVC.didMoveToParentViewController(self)
+    }
+    soloQueue.enqueue(incomingSoul)
   }
   
   
   
+  static func getInstance(vc:UIViewController?) -> MainVC? {
+    if vc is MainVC {
+      return vc as? MainVC
+    }
+    if vc == nil {
+      return nil
+    }
+    var hypothesis:MainVC? = nil
+    for eachChildVC in (vc?.childViewControllers)! {
+      if let found = getInstance(eachChildVC) {
+        hypothesis = found
+      }
+    }
+    return hypothesis
+  }
+
   
 }
 
@@ -66,5 +91,22 @@ extension MainVC: OutgoingVCDelegate, MapVCDelegate {
   }
   func outgoingDidStop(){
     
+  }
+}
+
+extension MainVC: SoulCatcherDelegate {
+  func soulDidStartToDownload(catcher:SoulCatcher, soul:Soul){
+    //TODO:
+  }
+  func soulIsDownloading(catcher:SoulCatcher, progress:Float){
+    
+  }
+  func soulDidFinishDownloading(catcher:SoulCatcher, soul:Soul){
+    //play audio if available...
+    displaySoul(soul)
+    soulCatchers.remove(catcher)
+  }
+  func soulDidFailToDownload(catcher:SoulCatcher){
+    soulCatchers.remove(catcher)
   }
 }

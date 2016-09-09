@@ -10,10 +10,10 @@ import UIKit
 import AWSS3
 
 protocol SoulCatcherDelegate {
-  func soulDidStartToDownload(soul:Soul)
-  func soulIsDownloading(progress:Float)
-  func soulDidFinishDownloading(soul:Soul)
-  func soulDidFailToDownload()
+  func soulDidStartToDownload(catcher:SoulCatcher, soul:Soul)
+  func soulIsDownloading(catcher:SoulCatcher, progress:Float)
+  func soulDidFinishDownloading(catcher:SoulCatcher, soul:Soul)
+  func soulDidFailToDownload(catcher:SoulCatcher)
 }
 
 //downloads a soul and puts it in a queue
@@ -40,12 +40,11 @@ class SoulCatcher: NSObject {
   }
   
   func catchSoulObject(incomingSoul:Soul) {
-    requestUIUpdate()
     startDownloading(incomingSoul)
   }
   
-  func requestUIUpdate() {
-    NSNotificationCenter.defaultCenter().postNotificationName(SoulCatcher.soulCaughtNotification, object: self)
+  func rootVC() -> UIViewController {
+    return (UIApplication.sharedApplication().keyWindow?.rootViewController)!
   }
   
   private func startDownloading(incomingSoul:Soul) {
@@ -55,7 +54,7 @@ class SoulCatcher: NSObject {
     expression.progressBlock = {(task, progress) in
       dispatch_async(dispatch_get_main_queue(), {
         self.progress = Float(progress.fractionCompleted)
-        self.delegate?.soulIsDownloading(self.progress)
+        self.delegate?.soulIsDownloading(self, progress: self.progress)
       })
     }
     
@@ -64,11 +63,11 @@ class SoulCatcher: NSObject {
         if ((error) != nil){
           print("FAIL! error:\(error!)")
           dispatch_async(dispatch_get_main_queue()) {
-            self.delegate?.soulDidFailToDownload()
+            self.delegate?.soulDidFailToDownload(self)
           }
         } else if(self.progress != 1.0) {
           dispatch_async(dispatch_get_main_queue()) {
-            self.delegate?.soulDidFailToDownload()
+            self.delegate?.soulDidFailToDownload(self)
           }
         } else{
           print("startDownloading incomingSoul success!!")
@@ -76,10 +75,9 @@ class SoulCatcher: NSObject {
           let filePath = self.saveToCache(data!, key:incomingSoul.s3Key!)
           incomingSoul.localURL = filePath
           dispatch_async(dispatch_get_main_queue()) {
-            self.delegate?.soulDidFinishDownloading(incomingSoul)
+            self.delegate?.soulDidFinishDownloading(self, soul: incomingSoul)
 
           }
-          singleSoulQueue.enqueue(incomingSoul)
           
         }
       })

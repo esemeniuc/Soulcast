@@ -14,14 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  let tempSoulCatcher = SoulCatcher()
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     if window == nil {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
     }
-//    window?.rootViewController = MainVC()
-        window?.rootViewController = MockingVC()
+    window?.rootViewController = MainVC()
+//        window?.rootViewController = MockingVC()
 //        window?.rootViewController = OnboardingVC()
     self.window?.makeKeyAndVisible()
     
@@ -82,8 +81,8 @@ extension AppDelegate { //push
       print(eachItem)
     }
     //TODO: present incomingSoul
+    MainVC.getInstance((window?.rootViewController)!)?.receiveRemoteNotification(userInfo)
     
-    tempSoulCatcher.catchSoul(userInfo)
   }
   
 

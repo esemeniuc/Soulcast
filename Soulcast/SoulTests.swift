@@ -103,18 +103,18 @@ extension SoulTester: SoulCasterDelegate {
 }
 
 extension SoulTester: SoulCatcherDelegate {
-  func soulDidStartToDownload(soul:Soul){
+  func soulDidStartToDownload(catcher: SoulCatcher, soul:Soul){
     
   }
-  func soulIsDownloading(progress:Float){
+  func soulIsDownloading(catcher: SoulCatcher, progress:Float){
     
   }
-  func soulDidFinishDownloading(soul:Soul){
+  func soulDidFinishDownloading(catcher: SoulCatcher, soul:Soul){
     //play
     let soulPlayer = SoulPlayer()
     soulPlayer.startPlaying(soul)
   }
-  func soulDidFailToDownload(){
+  func soulDidFailToDownload(catcher: SoulCatcher){
     
   }
 }

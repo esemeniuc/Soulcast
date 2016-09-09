@@ -68,17 +68,17 @@ class SoulCatcherTests {
 
 
 extension SoulCatcherTests: SoulCatcherDelegate {
-  func soulDidStartToDownload(soul:Soul) {
+  func soulDidStartToDownload(catcher: SoulCatcher, soul:Soul) {
     print("soulDidStartToDownload")
   }
-  func soulIsDownloading(progress:Float) {
+  func soulIsDownloading(catcher: SoulCatcher, progress:Float) {
     print("Downloading soul with progress: \(progress)")
   }
-  func soulDidFinishDownloading(soul:Soul) {
+  func soulDidFinishDownloading(catcher: SoulCatcher, soul:Soul) {
     print("soulDidFinishDownloading")
     soulPlayer.startPlaying(soul)
   }
-  func soulDidFailToDownload() {
+  func soulDidFailToDownload(catcher: SoulCatcher) {
     print("soulDidFailToDownload")
     
   }

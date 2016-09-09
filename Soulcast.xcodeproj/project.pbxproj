@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6A519C27B5EFC0926D32B35E /* Pods_Soulcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */; };
-		BD0DBF121D7B652D00FBBD17 /* IncomingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */; };
 		BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */; };
 		BD0DBF161D7CBB7300FBBD17 /* put.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF151D7CBB7300FBBD17 /* put.swift */; };
 		BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */; };
@@ -40,13 +39,17 @@
 		BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */; };
 		BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */; };
 		BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */; };
+		BDF478CE1D826EE3004F6CAA /* IncomingCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */; };
+		BDF478CF1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */; };
+		BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */; };
+		BDF478D11D826EE3004F6CAA /* IncomingQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CD1D826EE3004F6CAA /* IncomingQueue.swift */; };
+		BDF478D31D826F3C004F6CAA /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478D21D826F3C004F6CAA /* TimeAgo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.release.xcconfig"; sourceTree = "<group>"; };
 		91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.debug.xcconfig"; sourceTree = "<group>"; };
 		A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soulcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingVC.swift; sourceTree = "<group>"; };
 		BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockingVC.swift; sourceTree = "<group>"; };
 		BD0DBF151D7CBB7300FBBD17 /* put.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = put.swift; sourceTree = "<group>"; };
 		BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepressingButton.swift; sourceTree = "<group>"; };
@@ -80,6 +83,11 @@
 		BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCaster.swift; sourceTree = "<group>"; };
 		BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcher.swift; sourceTree = "<group>"; };
 		BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingVC.swift; sourceTree = "<group>"; };
+		BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionVC.swift; sourceTree = "<group>"; };
+		BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionCell.swift; sourceTree = "<group>"; };
+		BDF478CD1D826EE3004F6CAA /* IncomingQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingQueue.swift; sourceTree = "<group>"; };
+		BDF478D21D826F3C004F6CAA /* TimeAgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,11 +179,11 @@
 		BDB8F4A11D6BA79C00E4C7E0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				BDF478C91D826ECF004F6CAA /* IncomingVC */,
 				BD0DBF191D7CD80900FBBD17 /* Onboarding */,
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BDB8F4A41D6BA7D100E4C7E0 /* MapVC.swift */,
 				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
-				BD0DBF111D7B652D00FBBD17 /* IncomingVC.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -223,6 +231,18 @@
 				BD15511E1D74D1580093CA2F /* SoulQueue.swift */,
 			);
 			name = Transmission;
+			sourceTree = "<group>";
+		};
+		BDF478C91D826ECF004F6CAA /* IncomingVC */ = {
+			isa = PBXGroup;
+			children = (
+				BDF478D21D826F3C004F6CAA /* TimeAgo.swift */,
+				BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */,
+				BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */,
+				BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */,
+				BDF478CD1D826EE3004F6CAA /* IncomingQueue.swift */,
+			);
+			name = IncomingVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -363,20 +383,24 @@
 				BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */,
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,
 				BD0DBF1F1D7CE51600FBBD17 /* PermissionVC.swift in Sources */,
+				BDF478D31D826F3C004F6CAA /* TimeAgo.swift in Sources */,
 				BD0DBF1D1D7CDA7700FBBD17 /* JKPageViewController.swift in Sources */,
 				BD0DBF241D7E24B500FBBD17 /* AudioPermissionVC.swift in Sources */,
 				BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */,
 				BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */,
-				BD0DBF121D7B652D00FBBD17 /* IncomingVC.swift in Sources */,
+				BDF478CE1D826EE3004F6CAA /* IncomingCollectionVC.swift in Sources */,
 				BD0DBF161D7CBB7300FBBD17 /* put.swift in Sources */,
 				BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */,
 				BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */,
+				BDF478D11D826EE3004F6CAA /* IncomingQueue.swift in Sources */,
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
 				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,
 				BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */,
 				BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */,
 				BD0DBF261D7E24C200FBBD17 /* LocationPermissionVC.swift in Sources */,
+				BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */,
 				BDB8F4A01D6BA6B400E4C7E0 /* SoulTests.swift in Sources */,
+				BDF478CF1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

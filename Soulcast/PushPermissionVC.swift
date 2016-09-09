@@ -25,6 +25,8 @@ class PushPermissionVC: PermissionVC {
   }
   
   
+  
+  
   static func getInstance(vc:UIViewController?) -> PushPermissionVC? {
     if vc is PushPermissionVC {
       return vc as? PushPermissionVC
