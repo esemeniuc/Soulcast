@@ -35,7 +35,7 @@ class IncomingCollectionCell: UICollectionViewCell {
   }
   
   func layoutStuff() {
-    backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(0.4)
+    backgroundColor = UIColor.whiteColor()
     layoutRadiusLabel()
     layoutTimeAgoLabel()
   }

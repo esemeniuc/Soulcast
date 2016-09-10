@@ -20,8 +20,7 @@ class OutgoingVC: UIViewController {
   var soulRecorder = SoulRecorder()
   var soulCaster = SoulCaster()
   var displayLink: CADisplayLink!
-  var soulPlayer = SoulPlayer()
-
+  
   var delegate: OutgoingVCDelegate?
   
   override func viewDidLoad() {

@@ -53,6 +53,9 @@ extension UIViewController {
   func debugColors() {
     view.debugColors()
   }
+  func isActiveOnScreen() -> Bool{
+    return isViewLoaded() && view.window != nil
+  }
 }
 
 extension UILabel {

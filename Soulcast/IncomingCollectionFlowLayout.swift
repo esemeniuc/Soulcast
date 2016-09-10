@@ -11,7 +11,7 @@ import UIKit
 
 class IncomingCollectionFlowLayout: UICollectionViewFlowLayout {
   //
-  let defaultSize:CGSize = CGSize(width: screenWidth * 0.95, height: screenHeight * 0.1)
+  let defaultSize:CGSize = CGSize(width: screenWidth * 0.9, height: screenHeight * 0.085)
   
   override init() {
     super.init()

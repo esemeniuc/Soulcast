@@ -13,7 +13,7 @@ class SoulCatcherTests {
   let soulPlayer = SoulPlayer()
   
   
-  func mockUserInfo() -> [NSString : AnyObject] {
+  static func mockUserInfo() -> [NSString : AnyObject] {
     var mockUserInfo = [NSString : AnyObject]()
       var aps = [NSString : AnyObject]()
         aps["alert"] = "Hi2"

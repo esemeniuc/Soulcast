@@ -32,6 +32,13 @@ class MainVC: UIViewController {
     
   }
   
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    let testButton = IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100))
+    view.addSubview(testButton)
+  }
+  
   func receiveRemoteNotification(userInfo:[NSObject : AnyObject]){
     let tempSoulCatcher = SoulCatcher()
     tempSoulCatcher.delegate = self
@@ -43,10 +50,16 @@ class MainVC: UIViewController {
   
   func displaySoul(incomingSoul:Soul) {
     //respond to incoming messages by launching an incomingVC
-    if soloQueue.count == 0 {
+    if soloQueue.isEmpty {
+      incomingVC.delegate = self
       addChildViewController(incomingVC)
+      incomingVC.view.frame = IncomingCollectionVC.beforeFrame
       view.addSubview(incomingVC.view)
+      incomingVC.view.userInteractionEnabled = true
       incomingVC.didMoveToParentViewController(self)
+      UIView.animateWithDuration(0.67) {
+        self.incomingVC.view.frame = IncomingCollectionVC.afterFrame
+      }
     }
     soloQueue.enqueue(incomingSoul)
   }
@@ -69,6 +82,17 @@ class MainVC: UIViewController {
     return hypothesis
   }
 
+  func dismissIncomingVC() {
+    incomingVC.willMoveToParentViewController(nil)
+    incomingVC.view.userInteractionEnabled = false
+    UIView.animateWithDuration(0.67, animations: { 
+      self.incomingVC.view.frame = IncomingCollectionVC.beforeFrame
+    }){ completed in
+      self.incomingVC.view.removeFromSuperview()
+      self.incomingVC.removeFromParentViewController()
+    }
+    
+  }
   
 }
 
@@ -108,5 +132,11 @@ extension MainVC: SoulCatcherDelegate {
   }
   func soulDidFailToDownload(catcher:SoulCatcher){
     soulCatchers.remove(catcher)
+  }
+}
+
+extension MainVC: IncomingCollectionVCDelegate {
+  func didRunOutOfSouls() {
+    dismissIncomingVC()
   }
 }

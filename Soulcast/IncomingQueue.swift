@@ -21,6 +21,15 @@ class IncomingQueue: NSObject, UICollectionViewDataSource {
     soulQueue.append(someSoul)
     delegate?.didEnqueue()
   }
+  var isEmpty:Bool { return count == 0 }
+  func peek() -> Soul? {
+    return soulQueue.head?.value
+  }
+  func purge() {
+    for _ in 0...count {
+      soulQueue.dequeue()
+    }
+  }
   
   func dequeue() -> Soul? {
     let tempSoul = soulQueue.dequeue()
@@ -38,7 +47,6 @@ class IncomingQueue: NSObject, UICollectionViewDataSource {
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    print("soulQueue.count: \(soulQueue.count)")
     return soulQueue.count
   }
   
@@ -56,6 +64,7 @@ class IncomingQueue: NSObject, UICollectionViewDataSource {
     return cell
     
   }
+  
   
   
 }
