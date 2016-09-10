@@ -34,7 +34,6 @@ class LocationPermissionVC: PermissionVC {
 
 }
 
-
 extension LocationPermissionVC: CLLocationManagerDelegate {
   
   func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {

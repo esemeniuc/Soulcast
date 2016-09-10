@@ -60,6 +60,11 @@ extension OnboardingVC: PermissionVCDelegate {
       }
       
     }
+    
+    if vc is LocationPermissionVC {
+      //TODO: replace self with MainVC
+    }
+    
   }
   
   func deniedPermission(vc: PermissionVC) {
