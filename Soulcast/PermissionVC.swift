@@ -8,7 +8,6 @@ protocol PermissionVCDelegate {
 }
 
 class PermissionVC: UIViewController {
-  
   private let permissionTitle: String
   private let permissionDescription: String
   private var titleLabel: UILabel!

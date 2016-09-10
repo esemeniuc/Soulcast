@@ -28,7 +28,11 @@ class AudioPermissionVC: PermissionVC {
   
   static var hasAudioPermission: Bool {
     get {
-      return NSUserDefaults.standardUserDefaults().valueForKey(hasAudioPermissionKey) as! Bool
+      if let status = NSUserDefaults.standardUserDefaults().valueForKey(hasAudioPermissionKey) as? Bool {
+        return status
+      } else {
+        return false
+      }
     }
     set {
       NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: hasAudioPermissionKey)

@@ -21,10 +21,14 @@ class PushPermissionVC: PermissionVC {
   }
   
   required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    super.init(coder: aDecoder)
   }
   
   static var hasPushPermission: Bool {
+    #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
+      return true
+    #endif
+
     return UIApplication.sharedApplication().isRegisteredForRemoteNotifications()
   }
   

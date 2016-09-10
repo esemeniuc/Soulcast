@@ -35,7 +35,7 @@ class Receptionist: NSObject {
     return LocationPermissionVC.hasLocationPermission
   }
   
-  class func launchingViewController() -> UIViewController {
+  class var launchingViewController: UIViewController {
     if needsOnboarding() {
       return OnboardingVC()
     } else {
