@@ -11,15 +11,27 @@ import Foundation
 class AudioPermissionVC: PermissionVC {
   let audioTitle = "Microphone Access"
   let audioDescription = "To be able to cast your voice to those around you, we need microphone access"
+  private static let hasAudioPermissionKey = "hasAudioPermission"
 
   init() {
     super.init(title: audioTitle, description: audioDescription) { }
     requestAction = {
       SoulRecorder.askForMicrophonePermission({
         self.gotPermission()
+        AudioPermissionVC.hasAudioPermission = true
         }, failure: {
           self.deniedPermission()
+          AudioPermissionVC.hasAudioPermission = false
       })
+    }
+  }
+  
+  static var hasAudioPermission: Bool {
+    get {
+      return NSUserDefaults.standardUserDefaults().valueForKey(hasAudioPermissionKey) as! Bool
+    }
+    set {
+      NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: hasAudioPermissionKey)
     }
   }
 

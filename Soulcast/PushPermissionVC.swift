@@ -24,7 +24,9 @@ class PushPermissionVC: PermissionVC {
     fatalError("init(coder:) has not been implemented")
   }
   
-  
+  static var hasPushPermission: Bool {
+    return UIApplication.sharedApplication().isRegisteredForRemoteNotifications()
+  }
   
   
   static func getInstance(vc:UIViewController?) -> PushPermissionVC? {

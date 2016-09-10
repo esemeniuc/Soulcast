@@ -12,8 +12,15 @@ import CoreLocation
 class LocationPermissionVC: PermissionVC {
   let locationTitle = "Location Permission"
   let locationDescription = "This is a location-based app. We need your location so that you can catch souls around you"
-  
   let locationManager = CLLocationManager()
+  private static let hasLocationPermissionKey = "hasLocationPermission"
+  
+  static var hasLocationPermission:Bool {
+    get {
+      let status = CLLocationManager.authorizationStatus()
+      return status == .AuthorizedAlways || status == .AuthorizedWhenInUse
+    }
+  }
   
   init() {
     super.init(title: locationTitle, description: locationDescription) { }
@@ -35,13 +42,12 @@ extension LocationPermissionVC: CLLocationManagerDelegate {
     case .NotDetermined:
       break
     case .AuthorizedWhenInUse:
-      // If authorized when in use
+      //TODO: test to get rid of ambiguity... what to do?
       break
     case .AuthorizedAlways:
       gotPermission()
       break
     case .Restricted:
-      // If restricted by e.g. parental controls. User can't enable Location Services
       break
     case .Denied:
       deniedPermission()
