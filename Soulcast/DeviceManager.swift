@@ -38,15 +38,10 @@ class DeviceManager: NSObject {
   }
   
   func registerWithServer(device:Device) {
-    request(.POST, serverURL + newDeviceSuffix, parameters: (device.toParams() )).responseJSON { (response: Response<AnyObject, NSError>) in
-      switch response.result {
-      case .Success:
-        print("registerWithServer success")
-        // get ID and update to device
-      case .Failure:
-        print("registerWithServer failure!")
-        
-      }
+    ServerFacade.post(device, success: { 
+      //
+      }) { (result) in
+        //
     }
   }
   

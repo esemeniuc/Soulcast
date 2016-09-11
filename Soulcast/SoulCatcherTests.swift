@@ -24,7 +24,7 @@ class SoulCatcherTests {
         soulObject["radius"] = 5
         soulObject["longitude"] = 10
         soulObject["latitude"] = 11
-        soulObject["s3Key"] = "1428102802"
+        soulObject["s3Key"] = "1473035478"
         soulObject["epoch"] = 1000000000
         soulObject["id"] = 14
         soulObject["device_id"] = 15

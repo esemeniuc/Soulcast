@@ -18,6 +18,8 @@ class MockingVC: UIViewController {
   var serverField:UITextField!
   var backgroundTapRecognizer:UITapGestureRecognizer!
   
+  var tempSoulCatcher = SoulCatcher()
+  
   var failString = "FAIL" {
     didSet{
       failLabel.text = failString
@@ -171,10 +173,16 @@ class MockingVC: UIViewController {
   
   func registerDeviceButtonTapped() {
     print("registerDeviceButtonTapped()")
+    let mockDevice = Device.localDevice
     
-    dump(Device.localDevice)
+    mockDevice.longitude = 0
+    mockDevice.latitude = 0
+    mockDevice.radius = 0
+    
+    dump(mockDevice)
     disableButtons()
-    ServerFacade.post(Device.localDevice, success: {
+    
+    ServerFacade.post(mockDevice, success: {
       self.flash(self.successView)
       self.enableButtons()
     }){ errorCode in
@@ -201,8 +209,12 @@ class MockingVC: UIViewController {
     print("echoSoulButtonTapped()")
     disableButtons()
     ServerFacade.echo(SoulCasterTests.mockSoul(), success: {
+      soul in
       self.flash(self.successView)
       self.enableButtons()
+      self.tempSoulCatcher = SoulCatcher()
+      self.tempSoulCatcher.delegate = self
+      self.tempSoulCatcher.catchSoulObject(soul)
     }) { (errorCode) in
       print(errorCode)
       self.updateFailForCode(errorCode)
@@ -216,7 +228,20 @@ class MockingVC: UIViewController {
 }
 
 
-
+extension MockingVC: SoulCatcherDelegate {
+  func soulDidStartToDownload(catcher:SoulCatcher, soul:Soul) {
+  
+  }
+  func soulIsDownloading(catcher:SoulCatcher, progress:Float) {
+  
+  }
+  func soulDidFinishDownloading(catcher:SoulCatcher, soul:Soul) {
+    soulPlayer.startPlaying(soul)
+  }
+  func soulDidFailToDownload(catcher:SoulCatcher) {
+  
+  }
+}
 
 extension MockingVC: UITextFieldDelegate {
   func textFieldDidEndEditing(textField: UITextField) {

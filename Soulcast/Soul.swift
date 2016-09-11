@@ -34,15 +34,30 @@ class Soul: NSObject {
   }
   
   
-  class func from(incomingParams:NSDictionary) -> Soul {
-    let contentSoul = Soul()
-    contentSoul.type = SoulType(rawValue: incomingParams["type"] as! String)
-    contentSoul.s3Key = incomingParams["s3Key"] as? String
-    contentSoul.epoch = incomingParams["epoch"] as? Int
-    contentSoul.latitude = (incomingParams["latitude"] as! NSString).doubleValue
-    contentSoul.longitude = (incomingParams["longitude"] as! NSString).doubleValue
-    contentSoul.radius = (incomingParams["radius"] as! NSString).doubleValue
-    return contentSoul
+  class func fromAPNSHash (soulHash:NSDictionary) -> Soul {
+    let incomingSoul = Soul()
+    let incomingDevice = Device()
+    incomingDevice.id = soulHash["device_id"] as? Int
+    //    incomingSoul.device = incomingDevice
+    incomingSoul.epoch = soulHash["epoch"] as? Int
+    incomingSoul.latitude = (soulHash["latitude"] as? NSString)?.doubleValue
+    incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
+    incomingSoul.radius = (soulHash["radius"] as? NSNumber)?.doubleValue
+    incomingSoul.s3Key = soulHash["s3Key"] as? String
+    return incomingSoul
+  }
+  
+  class func fromHash (soulHash:NSDictionary) -> Soul {
+    let incomingSoul = Soul()
+    let incomingDevice = Device()
+    incomingDevice.id = soulHash["soul[device_id]"] as? Int
+    //    incomingSoul.device = incomingDevice
+    incomingSoul.epoch = soulHash["soul[epoch]"] as? Int
+    incomingSoul.latitude = (soulHash["soul[latitude]"] as? NSString)?.doubleValue
+    incomingSoul.longitude = (soulHash["soul[longitude]"] as? NSString)?.doubleValue
+    incomingSoul.radius = (soulHash["soul[radius]"] as? NSNumber)?.doubleValue
+    incomingSoul.s3Key = soulHash["soul[s3Key]"] as? String
+    return incomingSoul
   }
   
   func printProperties() {

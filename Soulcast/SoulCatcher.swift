@@ -33,7 +33,7 @@ class SoulCatcher: NSObject {
   func catchSoul(userInfo:[NSObject : AnyObject]) {
     if let soulInfo = userInfo["soulObject"] as? [NSObject : AnyObject] {
         print("Catching a broadcasted aps soul!")
-        catchSoulObject(soulFromHash(soulInfo))
+        catchSoulObject(Soul.fromAPNSHash(soulInfo))
     } else {
       assert(false)
     }
@@ -94,18 +94,6 @@ class SoulCatcher: NSObject {
     
   }
   
-  private func soulFromHash (soulHash:NSDictionary) -> Soul {
-    let incomingSoul = Soul()
-    let incomingDevice = Device()
-    incomingDevice.id = soulHash["device_id"] as? Int
-//    incomingSoul.device = incomingDevice
-    incomingSoul.epoch = soulHash["epoch"] as? Int
-    incomingSoul.latitude = (soulHash["latitude"] as? NSString)?.doubleValue
-    incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
-    incomingSoul.radius = (soulHash["radius"] as? NSNumber)?.doubleValue
-    incomingSoul.s3Key = soulHash["s3Key"] as? String
-    return incomingSoul
-  }
   
   
   func saveToCache(data: NSData, key:String) -> String {

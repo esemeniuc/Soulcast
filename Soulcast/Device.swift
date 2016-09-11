@@ -66,16 +66,14 @@ class Device: NSObject {
   }
   
   func toParams() -> [String : AnyObject] {
-    var wrapperParams = [String : AnyObject]()
     var contentParams = [String : AnyObject]()
-    wrapperParams["device"] = contentParams
     if token != nil { contentParams["token"] = token }
     if longitude != nil { contentParams["longitude"] = longitude }
     if latitude != nil { contentParams["latitude"] = latitude }
     if radius != nil { contentParams["radius"] = radius }
-    if id != nil { contentParams["id"] = id }
+//    if id != nil { contentParams["device"] = id }
     if arn != nil { contentParams["arn"] = arn }
-    return wrapperParams
+    return contentParams
   }
   
 
