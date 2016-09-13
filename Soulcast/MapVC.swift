@@ -45,7 +45,9 @@ class MapVC: UIViewController {
   }
   var originalRegion: MKCoordinateRegion?
   var radiusLabel: UILabel!
-  var devicesLabel: UILabel!
+  var devicesLabel =
+    NumberOfDevicesLabel(frame:
+      CGRect(x: 22, y: 22, width: 55, height: 55))
   var devicesLabelUpdating = false
   var delegate: MapVCDelegate?
   
@@ -134,28 +136,6 @@ class MapVC: UIViewController {
     return CLLocationManager.authorizationStatus() == .AuthorizedAlways || CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
   }
   
-  func addPermissionView() {
-    permissionView = UIView(frame: mapView.frame)
-    permissionView.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.3)
-    
-    let permissionLabel = UILabel(frame: CGRectMake(0, 0, mapView.frame.size.width, 200))
-    permissionLabel.center = mapView.center
-    permissionLabel.text = "ALLOW LOCATION PERMISSION"
-    permissionLabel.textAlignment = .Center
-    permissionLabel.font = UIFont(name: "Helvetica", size: 20)
-    permissionLabel.textColor = UIColor.whiteColor().colorWithAlphaComponent(0.85)
-    permissionView.addSubview(permissionLabel)
-    
-    let permissionTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapVC.permissionViewTapped(_:)))
-    permissionView.addGestureRecognizer(permissionTapRecognizer)
-    
-    view.addSubview(permissionView)
-  }
-  
-  func permissionViewTapped(recognizer:UIGestureRecognizer) {
-    recognizer.removeTarget(self, action: #selector(MapVC.permissionViewTapped(_:)))
-//    manualAskLocationPermission()
-  }
   
   static func systemAskLocationPermission(locationManager: CLLocationManager) {
     /*
@@ -178,11 +158,10 @@ class MapVC: UIViewController {
     radiusLabel.textAlignment = .Right
     view.addSubview(radiusLabel)
     
-    devicesLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 160, height: 50))
-    devicesLabel.text = "No others nearby"
-    devicesLabel.decorateWhite(15)
-    devicesLabel.textAlignment = .Left
+    let devicesLabelTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(devicesLabelTapped))
+    devicesLabel.addGestureRecognizer(devicesLabelTapRecognizer)
     view.addSubview(devicesLabel)
+    
     updateDevicesLabel()
   }
   
@@ -201,21 +180,27 @@ class MapVC: UIViewController {
       deviceManager.getNearbyDevices({ (response:[String : AnyObject]) in
         self.devicesLabelUpdating = false
         let nearby = response["nearby"] as! Int
-        var newText = ""
-        if nearby == 0 {
-          newText = "No others nearby"
-        } else if nearby == 1 {
-          newText = String(nearby) + " other nearby"
-        } else {
-          newText = String(nearby) + " others nearby"
-        }
-        self.devicesLabel.text = newText
+        
+        self.devicesLabel.text = String(nearby)
+        self.devicesLabel.wiggle()
       })
 
     }
   }
   
+  func devicesLabelTapped() {
+    //TODO: explain...
+    presentRadiusExplainer()
+  }
   
+  func presentRadiusExplainer() {
+    let radiusExplainerView = RadiusExplainerView(maskCircleArea: devicesLabel.frame)
+    radiusExplainerView.alpha = 0
+    view.superview?.addSubview(radiusExplainerView)
+    UIView.animateWithDuration(0.37) { 
+      radiusExplainerView.alpha = 1
+    }
+  }
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()

@@ -82,7 +82,7 @@ class ServerFacade {
         print("Register local device success!")
         success()
         
-      case .Failure(let error) :
+      case .Failure(let _) :
         print("Register local device failure!")
         failure((response.response?.statusCode)!)
         

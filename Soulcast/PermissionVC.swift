@@ -78,7 +78,11 @@ class PermissionVC: UIViewController {
   }
   
   func switchToggle(turnOn:Bool){
-    toggleButton.setOn(turnOn, animated: true)
+    if hasPermission {
+      self.delegate?.gotPermission(self)
+    }
+      toggleButton.setOn(turnOn, animated: true)
+    
   }
   
   func toggleSwitched(theSwitch:UISwitch) {
@@ -93,7 +97,10 @@ class PermissionVC: UIViewController {
   
   func gotPermission() {
     hasPermission = true
-    switchToggle(true)
+    if !toggleButton.on {
+      switchToggle(true)
+    }
+    
     self.delegate?.gotPermission(self)
   }
   

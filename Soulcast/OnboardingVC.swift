@@ -51,20 +51,36 @@ class OnboardingVC: UIViewController {
 
 extension OnboardingVC: PermissionVCDelegate {
   func gotPermission(vc: PermissionVC) {
+    //FIXME: gets called multiple times per permission. fix
+    print("gotPermission")
     //if the permission matches the current one
     if pageVC.currentVC == vc {
       //wait
-      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.35 * Double(NSEC_PER_SEC)))
+      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.25 * Double(NSEC_PER_SEC)))
       dispatch_after(delayTime, dispatch_get_main_queue()) {
-        self.pageVC.scrollToVC(self.pageVC.currentIndex + 1, direction: .Forward)
+        if vc is LocationPermissionVC {
+          self.transitionToMainVC()
+        } else {
+          let index = self.pageVC.currentIndex
+          self.pageVC.scrollToVC(index + 1, direction: .Forward)
+        }
       }
       
     }
     
-    if vc is LocationPermissionVC {
-      //TODO: replace self with MainVC
-    }
-    
+  }
+  
+  func transitionToMainVC() {
+    let window = UIApplication.sharedApplication().keyWindow!
+    let mainVC = MainVC()
+    mainVC.view.alpha = 0
+    window.backgroundColor = UIColor.whiteColor()
+    window.rootViewController = mainVC
+    window.makeKeyAndVisible()
+    UIView.animateWithDuration(1, animations: {
+      mainVC.view.alpha = 1
+    })
+
   }
   
   func deniedPermission(vc: PermissionVC) {
@@ -76,5 +92,39 @@ extension OnboardingVC: PermissionVCDelegate {
     #endif
 
     //TODO:
+  }
+}
+
+
+extension UIWindow {
+  func replaceRootViewControllerWith(replacementController: UIViewController, animated: Bool, completion: (() -> Void)?) {
+    let snapshotImageView = UIImageView(image: self.snapshot())
+    self.addSubview(snapshotImageView)
+    self.rootViewController!.dismissViewControllerAnimated(false, completion: { () -> Void in // dismiss all modal view controllers
+      self.rootViewController = replacementController
+      self.bringSubviewToFront(snapshotImageView)
+      if animated {
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
+          snapshotImageView.alpha = 0
+          }, completion: { (success) -> Void in
+            snapshotImageView.removeFromSuperview()
+            completion?()
+        })
+      }
+      else {
+        snapshotImageView.removeFromSuperview()
+        completion?()
+      }
+    })
+  }
+}
+
+extension UIView {
+  func snapshot() -> UIImage {
+    UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.mainScreen().scale)
+    drawViewHierarchyInRect(bounds, afterScreenUpdates: true)
+    let result = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return result
   }
 }

@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if window == nil {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
     }
-//    window?.rootViewController = Receptionist.launchingViewController
+    window?.rootViewController = Receptionist.launchingViewController
 //    window?.rootViewController = MainVC()
-        window?.rootViewController = MockingVC()
+//        window?.rootViewController = MockingVC()
 //        window?.rootViewController = OnboardingVC()
     self.window?.makeKeyAndVisible()
     
