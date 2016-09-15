@@ -18,7 +18,7 @@ class MainVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.blueColor()
+    view.backgroundColor = UIColor.clearColor()
     let childVCs:[UIViewController] = [mapVC, outgoingVC]
     mapVC.delegate = self
     outgoingVC.delegate = self

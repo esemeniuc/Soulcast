@@ -13,8 +13,9 @@ protocol OutgoingVCDelegate {
 class OutgoingVC: UIViewController {
   
   var buttonSize:CGFloat = screenWidth * 1/3
-  var outgoingButton: UIButton!
-    //  var outgoingButton: SimpleOutgoingButton!
+  var outgoingButton: RecordButton!
+  var progress : CGFloat! = 0 //progress bar for the outgoing button
+    
   var outgoingSoul:Soul?
   var recordingStartTime:NSDate!
   var soulRecorder = SoulRecorder()
@@ -49,8 +50,9 @@ class OutgoingVC: UIViewController {
   
   func addOutgoingButton() {
     view.frame = CGRectMake((screenWidth - buttonSize)/2, screenHeight - buttonSize, buttonSize, buttonSize)
-    outgoingButton = UIButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
-    outgoingButton.backgroundColor = UIColor.redColor()
+    outgoingButton = RecordButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
+    outgoingButton.backgroundColor = UIColor.clearColor()
+    outgoingButton.progressColor = UIColor.redColor()
     //TODO: simplest implementation first.
     //TODO: make pixel perfect.
     outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedDown(_:)), forControlEvents: UIControlEvents.TouchDown)
@@ -62,8 +64,7 @@ class OutgoingVC: UIViewController {
   
   func outgoingButtonTouchedDown(button:UIButton) {
     print("outgoingButtonTouchedDown")
-
-//    outgoingButton.buttonState = .Recording
+    
     if !SoulPlayer.playing {
       requestStartRecording()
     }
@@ -71,15 +72,14 @@ class OutgoingVC: UIViewController {
   
   func outgoingButtonTouchedUpInside(button:UIButton) {
     print("outgoingButtonTouchedUpInside")
-    //    outgoingButton.buttonState = .Enabled
         requestFinishRecording()
   }
   
   func outgoingButtonTouchDraggedExit(button:UIButton) {
     print("outgoingButtonTouchDraggedExit")
-//    outgoingButton.buttonState = .Enabled
     requestFinishRecording()
   }
+    
   
   func addDisplayLink() {
     displayLink = CADisplayLink(target: self, selector: #selector(OutgoingVC.displayLinkFired(_:)))
@@ -98,66 +98,61 @@ class OutgoingVC: UIViewController {
     
   }
   
-  func resetRecordingIndicator() {
-    //animate alpha = 0 ease out, upom completion, stroke = 0
-    //TODO:
-  }
-  
   func requestStartRecording() {
     recordingStartTime = NSDate()
     soulRecorder.pleaseStartRecording()
-    
+    //HAX to get the view to change state
+   
   }
   
   func requestFinishRecording() {
     soulRecorder.pleaseStopRecording()
     //replay, save, change ui to disabled.
-    
   }
   
   func playbackSoul(localSoul:Soul) {
     print("playbackSoul localSoul:\(localSoul)")
+    //TODO: test to see if it mutes
+    outgoingButton.setMutedDuringPlayBack()
     soulPlayer.startPlaying(localSoul)
   }
   
-  func disableButtonUI() {
-    
-  }
-  
-  func turnButtonTintDud() {
-    
-  }
-  
-  func turnButtonTintRecordingLongEnough() {
-    
-  }
-  
-  func turnButtonTintFinished() {
-    
-  }
   
   func animateNegativeShake() {
     //left to right a couple times, disable button in the meanwhile.
+    print("Animate nega shake here")
+    outgoingButton.shakeInDenial()
   }
   
 }
 
 extension OutgoingVC: SoulRecorderDelegate {
   func soulDidStartRecording() {
-    turnButtonTintDud()
+    outgoingButton.startProgress()
+    
   }
+    
+    func soulIsRecording(progress: CGFloat) {
+        print("soulIsRecording with progress: \(progress)")
+        let haxProgress = progress + 1/60
+        outgoingButton.setProgress(haxProgress)
+    }
   
   func soulDidFailToRecord() {
+    print("SOUL FAILED TO RECORD: TOO SHORT")
     //negative animation, go back to being enabled
     animateNegativeShake()
+    //TODO: control the views to indicate to user that soul failed
+    outgoingButton.resetFail()
+    
   }
   
   func soulDidReachMinimumDuration() {
-    turnButtonTintRecordingLongEnough()
+    outgoingButton.tintLongEnough()
   }
-  
+    
   func soulDidFinishRecording(newSoul: Soul) {
-    resetRecordingIndicator()
+    outgoingButton.resetSuccess()
     playbackSoul(newSoul)
     newSoul.epoch = Int(NSDate().timeIntervalSince1970)
     newSoul.radius = delegate?.outgoingRadius()
@@ -182,6 +177,7 @@ extension OutgoingVC {
   func soulDidFinishPlaying(notification:NSNotification) {
 //    let finishedSoul = notification.object as! Soul
     print("soulDidFinishPlaying")
+    outgoingButton.resetSuccess()
   }
 }
 
@@ -197,6 +193,7 @@ extension OutgoingVC: SoulCasterDelegate {
   }
   func soulDidFailToUpload() {
     printline("soulDidFailToUpload")
+    outgoingButton.resetFail()
   }
   func soulDidReachServer() {
     printline("soulDidReachServer")

@@ -1,5 +1,6 @@
 
 import Foundation
+import UIKit
 
 class SoulRecorderTests {
   
@@ -25,6 +26,9 @@ extension SoulRecorderTests: SoulRecorderDelegate {
   func soulDidStartRecording(){
     print("SoulTester soulDidStartRecording")
   }
+    func soulIsRecording(progress: CGFloat) {
+        //
+    }
   func soulDidFinishRecording(newSoul: Soul){
     print("SoulTester soulDidFinishRecording")
     player.startPlaying(newSoul)
