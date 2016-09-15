@@ -1,6 +1,7 @@
 
 
 import Foundation
+import UIKit
 
 let tester = SoulTester()
 
@@ -64,6 +65,10 @@ extension SoulTester: SoulRecorderDelegate {
   func soulDidStartRecording(){
     
   }
+    
+    func soulIsRecording(progress: CGFloat) {
+        //
+    }
   func soulDidFinishRecording(newSoul: Soul){
     newSoul.epoch = 1234567890
     newSoul.s3Key = "fabulousTest"

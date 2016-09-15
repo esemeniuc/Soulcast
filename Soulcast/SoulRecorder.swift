@@ -23,6 +23,7 @@ enum RecorderState {
 
 protocol SoulRecorderDelegate {
   func soulDidStartRecording()
+  func soulIsRecording(progress:CGFloat)
   func soulDidFinishRecording(newSoul: Soul)
   func soulDidFailToRecord()
   func soulDidReachMinimumDuration()
@@ -83,6 +84,12 @@ class SoulRecorder: NSObject {
       if state == .RecordingLongEnough { pleaseStopRecording() }
       displayCounter = 0
     }
+    //TODO: send progress up to delegate
+    if state == .RecordingStarted || state == .RecordingLongEnough {
+        let currentRecordDuration = CGFloat(displayCounter) / 60
+        let progress:CGFloat = currentRecordDuration/CGFloat(maximumRecordDuration)
+        self.delegate?.soulIsRecording(progress)
+    }
   }
   
   func pleaseStartRecording() {
@@ -120,6 +127,7 @@ class SoulRecorder: NSObject {
     currentRecordingPath = outputPath()
     do {
       try recorder?.beginRecordingToFileAtPath(currentRecordingPath, fileType: AudioFileTypeID(kAudioFileM4AType))
+        delegate?.soulDidStartRecording()
     } catch {
       print("OOPS! at startRecording()")
     }
