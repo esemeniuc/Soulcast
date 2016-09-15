@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34D8B8081D8B464A003083F5 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D8B8071D8B464A003083F5 /* RecordButton.swift */; };
 		6A519C27B5EFC0926D32B35E /* Pods_Soulcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */; };
 		BD0078821D88865E0088939A /* NumberOfDevicesLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0078811D88865E0088939A /* NumberOfDevicesLabel.swift */; };
 		BD0078851D888FA80088939A /* RadiusExplainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0078841D888FA80088939A /* RadiusExplainerView.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		34D8B8071D8B464A003083F5 /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.release.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.release.xcconfig"; sourceTree = "<group>"; };
 		91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Soulcast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Soulcast/Pods-Soulcast.debug.xcconfig"; sourceTree = "<group>"; };
 		A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soulcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +205,7 @@
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BD0078831D888F930088939A /* Map */,
 				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
+				34D8B8071D8B464A003083F5 /* RecordButton.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */,
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,
 				BD0DBF1F1D7CE51600FBBD17 /* PermissionVC.swift in Sources */,
+				34D8B8081D8B464A003083F5 /* RecordButton.swift in Sources */,
 				BDF478D31D826F3C004F6CAA /* TimeAgo.swift in Sources */,
 				BD0DBF1D1D7CDA7700FBBD17 /* JKPageViewController.swift in Sources */,
 				BD0DBF241D7E24B500FBBD17 /* AudioPermissionVC.swift in Sources */,

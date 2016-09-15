@@ -39,9 +39,7 @@ class OutgoingVC: UIViewController {
   func configureAudio() {
     soulRecorder.delegate = self
     soulRecorder.setup()
-
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OutgoingVC.soulDidFailToPlay(_:)), name: "soulDidFailToPlay", object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OutgoingVC.soulDidFinishPlaying(_:)), name: "soulDidFinishPlaying", object: nil)
+    soulPlayer.subscribe(self)
   }
   
   func configureNetworking() {
@@ -113,7 +111,6 @@ class OutgoingVC: UIViewController {
   func playbackSoul(localSoul:Soul) {
     print("playbackSoul localSoul:\(localSoul)")
     //TODO: test to see if it mutes
-    outgoingButton.setMutedDuringPlayBack()
     soulPlayer.startPlaying(localSoul)
   }
   
@@ -152,7 +149,7 @@ extension OutgoingVC: SoulRecorderDelegate {
   }
     
   func soulDidFinishRecording(newSoul: Soul) {
-    outgoingButton.resetSuccess()
+    outgoingButton.mute()
     playbackSoul(newSoul)
     newSoul.epoch = Int(NSDate().timeIntervalSince1970)
     newSoul.radius = delegate?.outgoingRadius()
@@ -168,18 +165,6 @@ extension OutgoingVC: SoulRecorderDelegate {
   }
 }
 
-extension OutgoingVC {
-  func soulDidFailToPlay(notification:NSNotification) {
-    let failSoul = notification.object as! Soul
-    print("soulDidFailToPlay failSoul: \(failSoul)")
-  }
-  
-  func soulDidFinishPlaying(notification:NSNotification) {
-//    let finishedSoul = notification.object as! Soul
-    print("soulDidFinishPlaying")
-    outgoingButton.resetSuccess()
-  }
-}
 
 extension OutgoingVC: SoulCasterDelegate {
   func soulDidStartUploading() {
@@ -198,4 +183,16 @@ extension OutgoingVC: SoulCasterDelegate {
   func soulDidReachServer() {
     printline("soulDidReachServer")
   }
+}
+
+extension OutgoingVC: SoulPlayerDelegate {
+    func didStartPlaying(soul:Soul){
+        
+    }
+    func didFinishPlaying(soul:Soul){
+        outgoingButton.resetSuccess()
+    }
+    func didFailToPlay(soul:Soul){
+        
+    }
 }

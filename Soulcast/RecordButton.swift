@@ -7,14 +7,15 @@
 //
 import Foundation
 import UIKit
+//import QuartzCore
 
 enum RecordButtonState : Int {
     case Standby // 0
     case RecordingStarted // 1
     case RecordingLongEnough // 2
     case Finished // 3
-    case MutedDuringPlayBack
-    case Failed
+    case MutedDuringPlayBack //4
+    case Failed //5
 }
 
 class RecordButton : UIButton {
@@ -27,6 +28,7 @@ class RecordButton : UIButton {
     }
     var progressColor: UIColor!  = .redColor() {
         didSet {
+            print("progressColor set to red")
             gradientMaskLayer.colors = [progressColor.CGColor, progressColor.CGColor]
         }
     }
@@ -34,7 +36,7 @@ class RecordButton : UIButton {
     /// Closes the circle and hides when the RecordButton is finished
     var closeWhenFinished: Bool = false
     
-    var buttonState : RecordButtonState = .Standby {
+    private var buttonState : RecordButtonState = .Standby {
         didSet {
             switch buttonState {
             case .Standby:
@@ -42,15 +44,20 @@ class RecordButton : UIButton {
                 currentProgress = 0
                 setProgress(0)
                 setRecording(false)
+                print("RecordButton is Standby")
             case .RecordingStarted:
                 self.alpha = 1.0
                 setRecording(true)
+                print("RecordButton is RecordingStarted")
             case .MutedDuringPlayBack:
                 self.alpha = 0.2
+                 print("RecordButton is MutedDuringPlayBack")
             case .RecordingLongEnough:
                 finishingRecording()
+                 print("RecordButton is RecordingLongEnough")
             case .Finished:
-                resetButtonState()
+                resetSuccess()
+                 print("RecordButton is Finished")
             default:
                 //print("oldValue: \(oldValue.hashValue), state: \(state.hashValue)")
                 assert(false, "OOPS!!!")
@@ -70,9 +77,6 @@ class RecordButton : UIButton {
         
         super.init(frame: frame)
         
-        self.addTarget(self, action: #selector(RecordButton.didTouchDown as (RecordButton) -> () -> ()), forControlEvents: .TouchDown)
-        self.addTarget(self, action: #selector(RecordButton.didTouchUp as (RecordButton) -> () -> ()), forControlEvents: .TouchUpInside)
-        self.addTarget(self, action: #selector(RecordButton.didTouchUp as (RecordButton) -> () -> ()), forControlEvents: .TouchUpOutside)
         
         self.drawButton()
         
@@ -197,46 +201,56 @@ class RecordButton : UIButton {
         super.layoutSubviews()
     }
     
-    
-    func didTouchDown(){
+    func startProgress() {
         self.buttonState = .RecordingStarted
     }
     
-    func didTouchUp() {
-        if(closeWhenFinished) {
-            self.setProgress(1)
-            
-            UIView.animateWithDuration(0.3, animations: {
-                self.buttonState = .MutedDuringPlayBack
-                }, completion: { completion in
-                    self.setProgress(0)
-                    self.currentProgress = 0
-            })
-        } else {
-            self.buttonState = .Standby
-        }
+    
+    func shakeInDenial(){
+        let animation = CABasicAnimation()
+        animation.duration = 0.1
+        animation.repeatCount = 4
+        animation.fromValue = -10
+        animation.toValue = 0
+        
+        self.layer.addAnimation(animation, forKey:"transform.translation.x")
     }
     
-    
+    func tintLongEnough() {
+        //TODO:
+        print("tintLongEnough()")
+    }
     /**
      Set the relative length of the circle border to the specified progress
      
      - parameter newProgress: the relative lenght, a percentage as float.
      */
+    func resetSuccess() {
+        self.buttonState = .Standby
+    }
+    
+    func resetFail() {
+        //TODO: do something different
+        self.buttonState = .Standby
+    }
+    
     func setProgress(newProgress: CGFloat) {
+        /*
+         [CATransaction setDisableActions:YES];
+         myLayer.strokeEnd = 0.5;
+         [CATransaction setDisableActions:NO];
+ */
+        CATransaction.setDisableActions(true)
         progressLayer.strokeEnd = newProgress
+        CATransaction.setDisableActions(false)
     }
     
-    func setMutedDuringPlayBack() {
-        self.buttonState = .MutedDuringPlayBack
+    func mute() {
+         self.buttonState = .MutedDuringPlayBack
     }
-    
     func finishingRecording(){
         self.buttonState = .Finished
     }
     
-    func resetButtonState() {
-        self.buttonState = .Standby
-    }
 }
 
