@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     if window == nil {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
+      window?.backgroundColor = UIColor.whiteColor()
     }
     window?.rootViewController = Receptionist.launchingViewController
 //    window?.rootViewController = MainVC()

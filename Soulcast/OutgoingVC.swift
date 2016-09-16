@@ -12,8 +12,10 @@ protocol OutgoingVCDelegate {
 
 class OutgoingVC: UIViewController {
   
-  var buttonSize:CGFloat = screenWidth * 1/3
+  var buttonSize:CGFloat = screenWidth * 0.28
   var outgoingButton: RecordButton!
+  let inset:CGFloat = 15
+  
   var progress : CGFloat! = 0 //progress bar for the outgoing button
     
   var outgoingSoul:Soul?
@@ -47,12 +49,10 @@ class OutgoingVC: UIViewController {
   }
   
   func addOutgoingButton() {
-    view.frame = CGRectMake((screenWidth - buttonSize)/2, screenHeight - buttonSize, buttonSize, buttonSize)
+    view.frame = CGRectMake((screenWidth - buttonSize)/2, screenHeight - buttonSize - inset, buttonSize, buttonSize)
     outgoingButton = RecordButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
     outgoingButton.backgroundColor = UIColor.clearColor()
     outgoingButton.progressColor = UIColor.redColor()
-    //TODO: simplest implementation first.
-    //TODO: make pixel perfect.
     outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedDown(_:)), forControlEvents: UIControlEvents.TouchDown)
     outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedUpInside(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchDraggedExit(_:)), forControlEvents: UIControlEvents.TouchDragExit)
@@ -61,7 +61,6 @@ class OutgoingVC: UIViewController {
   }
   
   func outgoingButtonTouchedDown(button:UIButton) {
-    print("outgoingButtonTouchedDown")
     
     if !SoulPlayer.playing {
       requestStartRecording()
@@ -69,12 +68,10 @@ class OutgoingVC: UIViewController {
   }
   
   func outgoingButtonTouchedUpInside(button:UIButton) {
-    print("outgoingButtonTouchedUpInside")
         requestFinishRecording()
   }
   
   func outgoingButtonTouchDraggedExit(button:UIButton) {
-    print("outgoingButtonTouchDraggedExit")
     requestFinishRecording()
   }
     
@@ -130,7 +127,6 @@ extension OutgoingVC: SoulRecorderDelegate {
   }
     
     func soulIsRecording(progress: CGFloat) {
-        print("soulIsRecording with progress: \(progress)")
         let haxProgress = progress + 1/60
         outgoingButton.setProgress(haxProgress)
     }

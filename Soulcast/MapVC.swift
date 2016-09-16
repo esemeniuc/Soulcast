@@ -44,7 +44,6 @@ class MapVC: UIViewController {
     }
   }
   var originalRegion: MKCoordinateRegion?
-  var radiusLabel: UILabel!
   var devicesLabel =
     NumberOfDevicesLabel(frame:
       CGRect(x: 22, y: 22, width: 55, height: 55))
@@ -111,7 +110,6 @@ class MapVC: UIViewController {
       latitudeDelta = max(min(latitudeDelta, 10), 0.0005);
       longitudeDelta = max(min(longitudeDelta, 10), 0.0005);
       userSpan = MKCoordinateSpanMake(latitudeDelta, longitudeDelta)
-      updateRadiusLabel(latitudeDelta)
       updateDevicesLabel()
       self.mapView.setRegion(MKCoordinateRegionMake(originalRegion!.center, userSpan!), animated: false)
       self.delegate?.mapVCDidChangeradius(userSpan.latitudeDelta)
@@ -152,11 +150,6 @@ class MapVC: UIViewController {
   }
   
   func addLabels() {
-    radiusLabel = UILabel(frame: CGRect(x: view.frame.width - 180, y: 0, width: 180, height: 50))
-    radiusLabel.text = "Radius: " +  "  km"
-    radiusLabel.decorateWhite(15)
-    radiusLabel.textAlignment = .Right
-    view.addSubview(radiusLabel)
     
     let devicesLabelTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(devicesLabelTapped))
     devicesLabel.addGestureRecognizer(devicesLabelTapRecognizer)
@@ -165,11 +158,6 @@ class MapVC: UIViewController {
     updateDevicesLabel()
   }
   
-  func updateRadiusLabel(delta:Double) {
-    // one degree of latitude is always approximately 111 kilometers (69 miles).
-    radiusLabel.text = "Radius: " + String(format:"%.1f", (delta * 111 / 2)) + " km"
-    
-  }
   
   func updateDevicesLabel() {
     if devicesLabelUpdating {
@@ -219,7 +207,7 @@ extension MapVC: MKMapViewDelegate {
   }
   
   func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-    updateRadiusLabel(mapView.region.span.latitudeDelta)
+    
   }
   
   func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {

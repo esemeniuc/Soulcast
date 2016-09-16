@@ -161,6 +161,15 @@
 			name = Permission;
 			sourceTree = "<group>";
 		};
+		BD7D19BC1D8C51A4008B563F /* Outgoing */ = {
+			isa = PBXGroup;
+			children = (
+				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
+				34D8B8071D8B464A003083F5 /* RecordButton.swift */,
+			);
+			name = Outgoing;
+			sourceTree = "<group>";
+		};
 		BDB8F47F1D6B938200E4C7E0 = {
 			isa = PBXGroup;
 			children = (
@@ -200,12 +209,11 @@
 		BDB8F4A11D6BA79C00E4C7E0 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				BDF478C91D826ECF004F6CAA /* IncomingVC */,
+				BDF478C91D826ECF004F6CAA /* Incoming */,
 				BD0DBF191D7CD80900FBBD17 /* Onboarding */,
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BD0078831D888F930088939A /* Map */,
-				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
-				34D8B8071D8B464A003083F5 /* RecordButton.swift */,
+				BD7D19BC1D8C51A4008B563F /* Outgoing */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -256,7 +264,7 @@
 			name = Transmission;
 			sourceTree = "<group>";
 		};
-		BDF478C91D826ECF004F6CAA /* IncomingVC */ = {
+		BDF478C91D826ECF004F6CAA /* Incoming */ = {
 			isa = PBXGroup;
 			children = (
 				BDF478D21D826F3C004F6CAA /* TimeAgo.swift */,
@@ -265,7 +273,7 @@
 				BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */,
 				BDF478CD1D826EE3004F6CAA /* IncomingQueue.swift */,
 			);
-			name = IncomingVC;
+			name = Incoming;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

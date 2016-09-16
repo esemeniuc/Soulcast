@@ -13,6 +13,9 @@ let HelveticaNeue = "HelveticaNeue"
 let HelveticaNeueLight = "HelveticaNeue-Light"
 let HelveticaNeueMedium = "HelveticaNeue-Medium"
 
+let offBlue = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
+let offRed = UIColor(red:1.00, green:0.23, blue:0.19, alpha:1.0)
+
 func doOnce (taskName:String, task:() -> ()) -> (Bool) {
   if NSUserDefaults.standardUserDefaults().valueForKey("doOnce-" + taskName) == nil {
     task()

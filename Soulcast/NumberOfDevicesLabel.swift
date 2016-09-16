@@ -25,7 +25,7 @@ class NumberOfDevicesLabel: UILabel {
   }
   
   func setup() {
-    backgroundColor = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
+    backgroundColor = offBlue
     textAlignment = .Center
     font = UIFont(name: HelveticaNeueMedium, size: 20)
     text = "13"

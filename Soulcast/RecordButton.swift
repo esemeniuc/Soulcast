@@ -20,13 +20,13 @@ enum RecordButtonState : Int {
 
 class RecordButton : UIButton {
     
-    var buttonColor: UIColor! = .blueColor(){
+    var buttonColor = offBlue{
         didSet {
             circleLayer.backgroundColor = buttonColor.CGColor
             circleBorder.borderColor = buttonColor.CGColor
         }
     }
-    var progressColor: UIColor!  = .redColor() {
+    var progressColor = offRed {
         didSet {
             print("progressColor set to red")
             gradientMaskLayer.colors = [progressColor.CGColor, progressColor.CGColor]
