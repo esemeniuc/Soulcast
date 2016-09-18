@@ -30,13 +30,8 @@ class SoulCatcher: NSObject {
 
   }
   
-  func catchSoul(userInfo:[NSObject : AnyObject]) {
-    if let soulInfo = userInfo["soulObject"] as? [NSObject : AnyObject] {
-        print("Catching a broadcasted aps soul!")
-        catchSoulObject(Soul.fromAPNSHash(soulInfo))
-    } else {
-      assert(false)
-    }
+  func catchSoul(soulInfo:[String : AnyObject]) {
+    catchSoulObject(Soul.fromAPNSHash(soulInfo))
   }
   
   func catchSoulObject(incomingSoul:Soul) {

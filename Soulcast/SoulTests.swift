@@ -37,7 +37,7 @@ class SoulTester: NSObject {
   func testIncoming(userInfo: [NSObject : AnyObject]){
     //TODO: mock user info...
     let mockInfo = SoulCatcherTests.mockUserInfo()
-    soulCatcherTests.testIncoming(mockInfo)
+    soulCatcherTests.testIncoming(mockInfo["aps"] as! [String: AnyObject])
     return
 //    soulCatcherTests.testIncoming(userInfo)
   }

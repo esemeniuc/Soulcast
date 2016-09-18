@@ -13,7 +13,7 @@ class MainVC: UIViewController {
   //
   let mapVC = MapVC()
   let outgoingVC = OutgoingVC()
-  var incomingVC = IncomingCollectionVC()
+  var incomingVC:IncomingCollectionVC!
   var soulCatchers = Set<SoulCatcher>()
   
   override func viewDidLoad() {
@@ -34,36 +34,43 @@ class MainVC: UIViewController {
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    
-//    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+    if !soloQueue.isEmpty {
+      presentIncomingVC()
+    }
+    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
   }
   
-  func receiveRemoteNotification(userInfo:[NSObject : AnyObject]){
+  func receiveRemoteNotification(aps:[String : AnyObject]){
     let tempSoulCatcher = SoulCatcher()
     tempSoulCatcher.delegate = self
-    tempSoulCatcher.catchSoul(userInfo)
+    tempSoulCatcher.catchSoul(aps)
     soulCatchers.insert(tempSoulCatcher)
-    //TODO
     
   }
   
   func displaySoul(incomingSoul:Soul) {
-    //respond to incoming messages by launching an incomingVC
-    if soloQueue.isEmpty {
-      incomingVC.delegate = self
-      addChildViewController(incomingVC)
-      incomingVC.view.frame = IncomingCollectionVC.beforeFrame
-      view.addSubview(incomingVC.view)
-      incomingVC.view.userInteractionEnabled = true
-      incomingVC.didMoveToParentViewController(self)
-      UIView.animateWithDuration(0.67) {
-        self.incomingVC.view.frame = IncomingCollectionVC.afterFrame
+    if isViewLoaded() && view.window != nil {
+      if soloQueue.isEmpty {
+        presentIncomingVC()
       }
     }
     soloQueue.enqueue(incomingSoul)
   }
   
-  
+  func presentIncomingVC() {
+    if incomingVC == nil {
+      incomingVC = IncomingCollectionVC()
+    }
+    incomingVC.delegate = self
+    addChildViewController(incomingVC)
+    incomingVC.view.frame = IncomingCollectionVC.beforeFrame
+    view.addSubview(incomingVC.view)
+    incomingVC.view.userInteractionEnabled = true
+    incomingVC.didMoveToParentViewController(self)
+    UIView.animateWithDuration(0.67) {
+      self.incomingVC.view.frame = IncomingCollectionVC.afterFrame
+    }
+  }
   
   static func getInstance(vc:UIViewController?) -> MainVC? {
     if vc is MainVC {
@@ -126,6 +133,7 @@ extension MainVC: SoulCatcherDelegate {
   }
   func soulDidFinishDownloading(catcher:SoulCatcher, soul:Soul){
     //play audio if available...
+    
     displaySoul(soul)
     soulCatchers.remove(catcher)
   }

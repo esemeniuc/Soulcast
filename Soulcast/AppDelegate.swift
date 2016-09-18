@@ -16,19 +16,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    if window == nil {
-      window = UIWindow(frame: UIScreen.mainScreen().bounds)
-      window?.backgroundColor = UIColor.whiteColor()
-    }
+    makeWindow()
+    receive(launchOptions)
     window?.rootViewController = Receptionist.launchingViewController
 //    window?.rootViewController = MainVC()
 //        window?.rootViewController = MockingVC()
 //        window?.rootViewController = OnboardingVC()
+
     self.window?.makeKeyAndVisible()
-    
     setAWSLoggingLevel()
-    
     return true
+  }
+  
+  func makeWindow() {
+    if window == nil {
+      window = UIWindow(frame: UIScreen.mainScreen().bounds)
+      window?.backgroundColor = UIColor.whiteColor()
+    }
+  }
+  
+  func receive(launchOptions: [NSObject:AnyObject]?){
+    if let options = launchOptions{
+      //what is the format for launch options?
+      if let soulObject = options["soulObject"] as? [String: AnyObject] {
+        MainVC.getInstance((window?.rootViewController)!)?.receiveRemoteNotification(soulObject)
+      }
+    }
   }
   
   func setAWSLoggingLevel() {
@@ -77,13 +90,17 @@ extension AppDelegate { //push
   }
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-    let aps = userInfo["aps"] as! [String: AnyObject]
-    print("didReceiveRemoteNotification! aps: ")
-    for eachItem in aps {
-      print(eachItem)
+    if let aps = userInfo["aps"] as? [String: AnyObject] {
+      print("didReceiveRemoteNotification! aps: ")
+      for eachItem in aps {
+        print(eachItem)
+      }
+    }
+    if let soulObject = userInfo["soulObject"] as? [String: AnyObject]{
+      MainVC.getInstance((window?.rootViewController)!)?.receiveRemoteNotification(soulObject)
     }
     //TODO: present incomingSoul
-    MainVC.getInstance((window?.rootViewController)!)?.receiveRemoteNotification(userInfo)
+    
     
   }
   
