@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        window?.rootViewController = MockingVC()
 //        window?.rootViewController = OnboardingVC()
 
+//    tester.testAllTheThings()
     self.window?.makeKeyAndVisible()
     setAWSLoggingLevel()
     return true

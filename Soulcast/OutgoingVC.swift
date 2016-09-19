@@ -154,7 +154,7 @@ extension OutgoingVC: SoulRecorderDelegate {
     newSoul.latitude = delegate?.outgoingLatitude()
     newSoul.token = Device.localDevice.token
     newSoul.type = .Broadcast
-    soulCaster.cast(newSoul)
+    
     //TODO: optimize later by concurrently uploading data and metadata concurrently
 //    soulCaster.castSoulToServer(newSoul)
 
@@ -171,6 +171,7 @@ extension OutgoingVC: SoulCasterDelegate {
   }
   func soulDidFinishUploading(soul:Soul) {
     printline("soulDidFinishUploading")
+    soulCaster.cast(soul)
   }
   func soulDidFailToUpload() {
     printline("soulDidFailToUpload")

@@ -44,9 +44,9 @@ class SoulCatcherTests {
     // try 
   }
   
-  func testIncoming(userInfo: [String : AnyObject]) {
+  func testIncoming(soulObject: [String : AnyObject]) {
     soulCatcher.delegate = self
-    soulCatcher.catchSoul(userInfo["aps"] as! [String: AnyObject])
+    soulCatcher.catchSoul(soulObject)
   }
   
   func mockIncomingSoul() -> Soul {

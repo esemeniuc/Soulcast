@@ -40,10 +40,10 @@ class MainVC: UIViewController {
     view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
   }
   
-  func receiveRemoteNotification(aps:[String : AnyObject]){
+  func receiveRemoteNotification(soulObject:[String : AnyObject]){
     let tempSoulCatcher = SoulCatcher()
     tempSoulCatcher.delegate = self
-    tempSoulCatcher.catchSoul(aps)
+    tempSoulCatcher.catchSoul(soulObject)
     soulCatchers.insert(tempSoulCatcher)
     
   }
