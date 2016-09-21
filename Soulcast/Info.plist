@@ -2,6 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AWS</key>
+	<dict>
+		<key>CredentialsProvider</key>
+		<dict>
+			<key>CognitoIdentity</key>
+			<dict>
+				<key>Default</key>
+				<dict>
+					<key>PoolId</key>
+					<string>us-west-2:51fa302a-6c5d-4714-9d08-af795d811cf5</string>
+					<key>Region</key>
+					<string>us-west-2</string>
+				</dict>
+			</dict>
+		</dict>
+		<key>S3TransferUtility</key>
+		<dict>
+			<key>Default</key>
+			<dict>
+				<key>Region</key>
+				<string>us-west-2</string>
+			</dict>
+		</dict>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -22,14 +46,17 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>plist Location Always Use</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>plist Location When In Use</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string></string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -38,34 +65,5 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-  <key>AWS</key>
-  <dict>
-    <key>CredentialsProvider</key>
-    <dict>
-      <key>CognitoIdentity</key>
-      <dict>
-        <key>Default</key>
-        <dict>
-          <key>PoolId</key>
-          <string>us-west-2:51fa302a-6c5d-4714-9d08-af795d811cf5</string>
-          <key>Region</key>
-          <string>us-west-2</string>
-        </dict>
-      </dict>
-    </dict>
-    <key>S3TransferUtility</key>
-    <dict>
-      <key>Default</key>
-      <dict>
-        <key>Region</key>
-        <string>us-west-2</string>
-      </dict>
-    </dict>
-  </dict>
-  <key>NSAppTransportSecurity</key>
-  <dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
-  </dict>
 </dict>
 </plist>
