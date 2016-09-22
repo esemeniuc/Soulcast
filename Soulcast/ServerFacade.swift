@@ -13,6 +13,24 @@ class ServerFacade {
   //
   static let validStatusCodes = 100..<400
   
+  class func getLatest(success:([String : AnyObject])->(), failure:(Int)->()){
+    //TODO: test.
+    request(.GET,
+      serverURL + "/souls",
+      parameters: Device.localDevice.toParams(),
+      encoding: .JSON, headers: jsonHeader)
+      .validate(statusCode:validStatusCodes)
+      .responseJSON { (response) in
+        switch response.result {
+        case .Success(let JSON):
+          print("Got Latest Soul!")
+          success(JSON as! [String: AnyObject])
+        case .Failure:
+          failure(response.response!.statusCode)
+        }
+    }
+  }
+  
   class func post(outgoingSoul: Soul, success:()->(), failure: (Int)->()) {
     request(.POST,
       serverURL + "/souls/",

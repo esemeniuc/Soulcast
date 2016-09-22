@@ -106,6 +106,16 @@ class SoulCatcher: NSObject {
     }
     return filePath
   }
+  
+  static func fetchLatest(completion:(Soul?)->()){
+    ServerFacade.getLatest({ (successJSON) in
+      //TODO: objectify successJSON, download the thing, and run completion
+      
+      completion(MockFactory.mockSoulOne())
+      }) { (statuscode) in
+        print(statuscode)
+    }
+  }
 }
 
 
