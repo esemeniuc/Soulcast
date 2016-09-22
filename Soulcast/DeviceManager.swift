@@ -68,7 +68,7 @@ class DeviceManager: NSObject {
     Device.localDevice = updatingDevice
     
     if let deviceID = updatingDevice.id {
-      let patchURLString = serverURL + "/api/devices/" + String(deviceID) + ".json"
+      let patchURLString = serverURL + "/devices/" + String(deviceID) + ".json"
       request(.PATCH, patchURLString, parameters: (updatingDevice.toParams() )).responseJSON(completionHandler: { (response:Response<AnyObject, NSError>) in
         //
         switch response.result {

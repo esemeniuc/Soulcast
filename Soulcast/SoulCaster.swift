@@ -121,6 +121,7 @@ class SoulCaster: NSObject {
         if let _ = task.result {
           print("Upload Success!")
           self.delegate?.soulDidFinishUploading(self.outgoingSoul!)
+          self.postToServer(self.outgoingSoul!)
           //TODO: indicate success with some sick animation
         }
         return nil
@@ -135,10 +136,10 @@ class SoulCaster: NSObject {
     self.outgoingSoul = localSoul
     let uploadKey = localSoul.s3Key! + ".mp3"
     upload(NSURL(fileURLWithPath: localSoul.localURL!), key: uploadKey)
-    postToServer(localSoul)
+    
   }
   
-  func postToServer(localSoul:Soul) {
+  private func postToServer(localSoul:Soul) {
     
     ServerFacade.post(localSoul, success: {
       //success
@@ -149,22 +150,3 @@ class SoulCaster: NSObject {
   
 }
 
-extension SoulCaster {
-  private func castSoulToServer(outgoingSoul:Soul) {
-    //TODO:
-    
-  }
-  
-  /*
-  Prefix Verb         URI Pattern                   Controller#Action
-  api_souls GET       /api/souls(.:format)          api/souls#index
-  POST                /api/souls(.:format)          api/souls#create
-  new_api_soul GET    /api/souls/new(.:format)      api/souls#new
-  edit_api_soul GET   /api/souls/:id/edit(.:format) api/souls#edit
-  api_soul GET        /api/souls/:id(.:format)      api/souls#show
-  PATCH               /api/souls/:id(.:format)      api/souls#update
-  PUT                 /api/souls/:id(.:format)      api/souls#update
-  DELETE              /api/souls/:id(.:format)      api/souls#destroy
-*/
-  
-}

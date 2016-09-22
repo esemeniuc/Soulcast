@@ -155,8 +155,8 @@ extension OutgoingVC: SoulRecorderDelegate {
     newSoul.token = Device.localDevice.token
     newSoul.type = .Broadcast
     
-    //TODO: optimize later by concurrently uploading data and metadata concurrently
-//    soulCaster.castSoulToServer(newSoul)
+    soulCaster.cast(newSoul)
+
 
   }
 }
@@ -171,7 +171,7 @@ extension OutgoingVC: SoulCasterDelegate {
   }
   func soulDidFinishUploading(soul:Soul) {
     printline("soulDidFinishUploading")
-    soulCaster.cast(soul)
+    
   }
   func soulDidFailToUpload() {
     printline("soulDidFailToUpload")

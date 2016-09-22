@@ -26,7 +26,10 @@ class ServerFacade {
           print("Got Latest Soul!")
           success(JSON as! [String: AnyObject])
         case .Failure:
-          failure(response.response!.statusCode)
+          if response.response != nil {
+            failure(response.response!.statusCode)
+          }
+          
         }
     }
   }

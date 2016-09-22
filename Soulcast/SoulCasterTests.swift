@@ -19,7 +19,7 @@ class SoulCasterTests {
   
   func testOutgoingJson() {
     soulCaster.delegate = self
-    soulCaster.postToServer(SoulCasterTests.mockSoul())
+    soulCaster.cast(SoulCasterTests.mockSoul())
   }
   
   class func mockSoul() -> Soul {
