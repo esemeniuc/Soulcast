@@ -38,7 +38,7 @@ class MainVC: UIViewController {
       presentIncomingVC()
     }
 //    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
-    fetchLatestSoul()
+//    fetchLatestSoul()
     
   }
   

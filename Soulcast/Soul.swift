@@ -30,6 +30,9 @@ class Soul: NSObject {
     contentParams["soul[latitude]"] = latitude
     contentParams["soul[radius]"] = radius
     contentParams["soul[token]"] = token
+    if token == nil {
+      contentParams["soul[token]"] = "TOKENPOKEN"
+    }
     return contentParams
   }
   

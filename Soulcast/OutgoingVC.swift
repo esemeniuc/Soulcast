@@ -157,7 +157,6 @@ extension OutgoingVC: SoulRecorderDelegate {
     
     soulCaster.cast(newSoul)
 
-
   }
 }
 
