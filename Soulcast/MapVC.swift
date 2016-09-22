@@ -76,7 +76,7 @@ class MapVC: UIViewController {
   }
 
   func addMap() {
-    mapView.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height*0.9)
+    mapView.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
     mapView.mapType = .Standard
     mapView.scrollEnabled = false
     mapView.rotateEnabled = false
