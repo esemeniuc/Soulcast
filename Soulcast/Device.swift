@@ -71,7 +71,7 @@ class Device: NSObject {
     if longitude != nil { contentParams["longitude"] = longitude }
     if latitude != nil { contentParams["latitude"] = latitude }
     if radius != nil { contentParams["radius"] = radius }
-//    if id != nil { contentParams["device"] = id }
+//    if id != nil { contentParams["device_id"] = id }
     if arn != nil { contentParams["arn"] = arn }
     return contentParams
   }

@@ -38,8 +38,9 @@ class MainVC: UIViewController {
       presentIncomingVC()
     }
     deviceManager.register(Device.localDevice)
-//    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
-//    fetchLatestSoul()
+    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+    //    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+    //    fetchLatestSoul()
     
   }
   
@@ -98,11 +99,11 @@ class MainVC: UIViewController {
     }
     return hypothesis
   }
-
+  
   func dismissIncomingVC() {
     incomingVC.willMoveToParentViewController(nil)
     incomingVC.view.userInteractionEnabled = false
-    UIView.animateWithDuration(0.67, animations: { 
+    UIView.animateWithDuration(0.67, animations: {
       self.incomingVC.view.frame = IncomingCollectionVC.beforeFrame
     }){ completed in
       self.incomingVC.view.removeFromSuperview()

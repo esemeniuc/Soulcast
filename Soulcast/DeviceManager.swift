@@ -4,8 +4,6 @@ import AWSSNS
 
 let deviceManager = DeviceManager()
 
-
-
 class DeviceManager: NSObject {
   var tempDevice: Device!
 
@@ -43,7 +41,10 @@ class DeviceManager: NSObject {
     
     if let deviceID = updatingDevice.id {
       let patchURLString = serverURL + "/devices/" + String(deviceID) + ".json"
-      request(.PATCH, patchURLString, parameters: (updatingDevice.toParams() )).responseJSON(completionHandler: { (response:Response<AnyObject, NSError>) in
+      request(.PATCH,
+        patchURLString,
+        parameters: updatingDevice.toParams())
+        .responseJSON(completionHandler: { (response:Response<AnyObject, NSError>) in
         //
         switch response.result {
         case .Success:
