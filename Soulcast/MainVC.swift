@@ -37,6 +37,7 @@ class MainVC: UIViewController {
     if !soloQueue.isEmpty {
       presentIncomingVC()
     }
+    deviceManager.register(Device.localDevice)
 //    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
 //    fetchLatestSoul()
     

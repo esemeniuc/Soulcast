@@ -16,41 +16,15 @@ class DeviceManager: NSObject {
   func register(device: Device) {    //do once per lifetime.
     registerDeviceLocally(device)
     tempDevice = device
-    
-    AWSSNS.defaultSNS().createPlatformEndpoint(self.createPlatformEndpointInput(device)).continueWithBlock { (task:AWSTask!) -> AnyObject! in
-      if task.error == nil {
-        let endpointResponse = task.result as! AWSSNSCreateEndpointResponse
-        self.tempDevice.arn = endpointResponse.endpointArn
-        self.registerWithServer(self.tempDevice)
-      } else if task.error!.domain == AWSSNSErrorDomain{
-        if let errorInfo = task.error!.userInfo as NSDictionary! {
-          if errorInfo["Code"] as! String == "InvalidParameter" {
-            //
-          }
-        }
-      } else {
-        self.registerWithServer(self.tempDevice) //!!
-        assert(false, "AWSSNS is complaining! To investigate: \(task.error!.description)")
-      }
-      return nil
-      
-    }
+    self.registerWithServer(self.tempDevice)
   }
   
-  func registerWithServer(device:Device) {
+  private func registerWithServer(device:Device) {
     ServerFacade.post(device, success: { 
       //
       }) { (result) in
         //
     }
-  }
-  
-  func createPlatformEndpointInput(device:Device) -> AWSSNSCreatePlatformEndpointInput{
-    let input = AWSSNSCreatePlatformEndpointInput()
-    input.token = device.token
-    input.platformApplicationArn = SNSPlatformARN
-    return input
-    
   }
   
   func updateLocalDeviceID(id:Int) {
