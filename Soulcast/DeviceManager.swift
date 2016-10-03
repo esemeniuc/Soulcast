@@ -57,20 +57,23 @@ class DeviceManager: NSObject {
     }
   }
   
-  func getNearbyDevices(completion:([String:AnyObject])->()) {
+  func getNearbyDevices(completion:([String:AnyObject])->(), failure:()->()) {
+    let deviceID = Device.localDevice.id ?? 1;
     request(.GET,
-      serverURL + nearbySuffix,
-      parameters: (Device.localDevice.toParams() ))
+      serverURL + nearbySuffix + String(deviceID) + ".json",
+      parameters: Device.localDevice.toParams() )
       .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
-      //TODO:
-      switch response.result{
-      case .Success:
-        completion(response.result.value as! [String:AnyObject])
-      case .Failure:
-        print("getNearbyDevices fail")
-      }
-
+        //TODO:
+        switch response.result{
+        case .Success:
+          completion(response.result.value as! [String:AnyObject])
+        case .Failure:
+          print("getNearbyDevices fail")
+          failure()
+        }
+        
       })
+    
   }
   
 

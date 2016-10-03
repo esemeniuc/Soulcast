@@ -91,12 +91,11 @@ class ServerFacade {
       case .Success (let JSON):
         dump(JSON)
         
-        let responseJSON = JSON as! NSDictionary
+        if let responseJSON = JSON as? NSDictionary {
           let deviceID = responseJSON["id"]
-        if deviceID is Int {
-          
-          deviceManager.updateLocalDeviceID(deviceID as! Int)
-          
+          if deviceID is Int {
+            deviceManager.updateLocalDeviceID(deviceID as! Int)
+          }
         }
         
         

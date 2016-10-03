@@ -28,11 +28,15 @@ class NumberOfDevicesLabel: UILabel {
     backgroundColor = offBlue
     textAlignment = .Center
     font = UIFont(name: HelveticaNeueMedium, size: 20)
-    text = "13"
+    text = "0"
     textColor = UIColor.whiteColor()
     maskCircle()
     
-    
+  }
+  
+  override func didMoveToSuperview() {
+    super.didMoveToSuperview()
+    addBackgroundShadow()
   }
   
   func addGradient() {
@@ -72,11 +76,12 @@ class NumberOfDevicesLabel: UILabel {
       //
     userInteractionEnabled = true
     
+    
   }
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    addBackgroundShadow()
+    
   }
   
   func addBackgroundShadow() {
@@ -94,5 +99,12 @@ class NumberOfDevicesLabel: UILabel {
   
   func wiggle() {
     //TODO: animate.
+    let animation = CABasicAnimation()
+    animation.duration = 0.05
+    animation.repeatCount = 2
+    animation.fromValue = -3
+    animation.toValue = 0
+    
+    self.layer.addAnimation(animation, forKey:"transform.translation.x")
   }
 }

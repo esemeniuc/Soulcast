@@ -165,13 +165,19 @@ class MapVC: UIViewController {
     }
     devicesLabelUpdating = true
     if Device.localDevice.radius != nil {
-      deviceManager.getNearbyDevices({ (response:[String : AnyObject]) in
+      deviceManager.getNearbyDevices({
+        (response:[String : AnyObject]) in
         self.devicesLabelUpdating = false
-        let nearby = response["nearby"] as! Int
+        if let nearby = response["nearby"] {
+          
+          self.devicesLabel.text = String(nearby)
+          self.devicesLabel.wiggle()
+        }
         
-        self.devicesLabel.text = String(nearby)
-        self.devicesLabel.wiggle()
-      })
+      }) {
+        self.devicesLabelUpdating = false
+        self.devicesLabel.text = "0"
+      }
 
     }
   }
