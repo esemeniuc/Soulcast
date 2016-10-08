@@ -7,7 +7,7 @@
 # All lines starting with a # are ignored when running `fastlane`
 
 # If you want to automatically update fastlane if a new version is available:
-# update_fastlane
+update_fastlane
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
@@ -30,10 +30,15 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
+    match(type: "appstore",
+	app_identifier: "SC.Soulcast",
+          git_url: "git@github.com:kimjune01/soulcast-certificates.git",
+	shallow_clone: "false") # more information: https://codesigning.guide
+
     gym # Build your app - more options available
     pilot
-
+    ensure_git_status_clean
+    increment_build_number(xcodeproj: "Example.xcodeproj")
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
   end
@@ -69,5 +74,3 @@ end
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
 # All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
 
-# fastlane reports which actions are used
-# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer

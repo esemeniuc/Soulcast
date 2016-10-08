@@ -554,7 +554,7 @@
 			baseConfigurationReference = 91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: June Kim (L77MH25752)";
 				INFOPLIST_FILE = Soulcast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SC.Soulcast;
@@ -567,7 +567,7 @@
 			baseConfigurationReference = 603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: June Kim (L77MH25752)";
 				INFOPLIST_FILE = Soulcast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SC.Soulcast;
