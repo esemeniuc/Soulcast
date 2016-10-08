@@ -183,9 +183,10 @@ class MapVC: UIViewController {
   
   func presentRadiusExplainer() {
     let radiusExplainerView = RadiusExplainerView(maskCircleArea: devicesLabel.frame)
-    radiusExplainerView.alpha = 0
+    radiusExplainerView.alpha = 0.8
+    radiusExplainerView.backgroundColor = UIColor.greenColor()
     view.superview?.addSubview(radiusExplainerView)
-    UIView.animateWithDuration(0.37) { 
+    UIView.animateWithDuration(0.37) {
       radiusExplainerView.alpha = 1
     }
   }
