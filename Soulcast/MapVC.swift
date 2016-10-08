@@ -48,6 +48,7 @@ class MapVC: UIViewController {
     NumberOfDevicesLabel(frame:
       CGRect(x: 22, y: 22, width: 55, height: 55))
   var devicesLabelUpdating = false
+  var devicesLabelUpdatedRecently = false
   var delegate: MapVCDelegate?
   
   override func viewDidLoad() {
@@ -160,18 +161,28 @@ class MapVC: UIViewController {
   
   
   func updateDevicesLabel() {
-    if devicesLabelUpdating {
+    if devicesLabelUpdating || devicesLabelUpdatedRecently{
       return
     }
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.35 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      self.devicesLabelUpdatedRecently = false
+    }
+    
+    
     devicesLabelUpdating = true
+    devicesLabelUpdatedRecently = true
     if Device.localDevice.radius != nil {
       deviceManager.getNearbyDevices({
         (response:[String : AnyObject]) in
         self.devicesLabelUpdating = false
         if let nearby = response["nearby"] {
-          
-          self.devicesLabel.text = String(nearby)
-          self.devicesLabel.wiggle()
+          let oldText = self.devicesLabel.text
+          let newText = String(nearby)
+          if oldText != newText {
+            self.devicesLabel.text = newText
+            self.devicesLabel.wiggle()
+          }
         }
         
       }) {
