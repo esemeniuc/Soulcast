@@ -74,7 +74,7 @@ extension OnboardingVC: PermissionVCDelegate {
     let window = UIApplication.sharedApplication().keyWindow!
     let mainVC = MainVC()
     mainVC.view.alpha = 0
-    window.backgroundColor = UIColor.blackColor()
+    window.backgroundColor = UIColor.whiteColor()
     window.rootViewController = mainVC
     window.makeKeyAndVisible()
     UIView.animateWithDuration(1, animations: {

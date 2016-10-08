@@ -46,6 +46,7 @@ class PermissionVC: UIViewController {
     titleLabel.textAlignment = .Center
     titleLabel.text = permissionTitle
     titleLabel.font = UIFont(name: HelveticaNeueLight, size: 30)
+    titleLabel.textColor = UIColor.whiteColor()
 //    titleLabel.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.5)
     view.addSubview(titleLabel)
     
@@ -60,6 +61,7 @@ class PermissionVC: UIViewController {
     descriptionLabel.font = UIFont(name: HelveticaNeueLight, size: 20)
     descriptionLabel.numberOfLines = 0
     descriptionLabel.lineBreakMode = .ByWordWrapping
+    descriptionLabel.textColor = UIColor.whiteColor()
 //    descriptionLabel.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.5)
     view.addSubview(descriptionLabel)
     
