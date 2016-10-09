@@ -1,4 +1,4 @@
-app_identifier "SC.Soulcast" # The bundle identifier of your app
+app_identifier "ml.soulcast.app" # The bundle identifier of your app
 apple_id "kimjune01@gmail.com" # Your Apple email address
 
 team_id "59SVXWFZ98"  # Developer Portal Team ID
