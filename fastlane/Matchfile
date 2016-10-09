@@ -2,7 +2,7 @@ git_url "git@github.com:kimjune01/soulcast-certificates.git"
 
 type "development" # The default type, can be: appstore, adhoc or development
 shallow_clone 'false'
-app_identifier "SC.Soulcast" 
+app_identifier "ml.soulcast.app" 
 username "kimjune01@gmail.com" # Your Apple Developer Portal username
 
 # For all available options run `match --help`

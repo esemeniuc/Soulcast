@@ -31,7 +31,7 @@ platform :ios do
   desc "This will also make sure the profile is up to date"
   lane :beta do
     match(type: "appstore",
-	app_identifier: "SC.Soulcast",
+	app_identifier: "ml.soulcast.app",
           git_url: "git@github.com:kimjune01/soulcast-certificates.git",
 	shallow_clone: "false") # more information: https://codesigning.guide
 
