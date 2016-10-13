@@ -59,6 +59,7 @@
 		A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soulcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD0078811D88865E0088939A /* NumberOfDevicesLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberOfDevicesLabel.swift; sourceTree = "<group>"; };
 		BD0078841D888FA80088939A /* RadiusExplainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadiusExplainerView.swift; sourceTree = "<group>"; };
+		BD04C5641DB000B400DBAD2C /* Soulcast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Soulcast.entitlements; sourceTree = "<group>"; };
 		BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockingVC.swift; sourceTree = "<group>"; };
 		BD0DBF151D7CBB7300FBBD17 /* put.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = put.swift; sourceTree = "<group>"; };
 		BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepressingButton.swift; sourceTree = "<group>"; };
@@ -211,6 +212,7 @@
 				BDB8F4B31D6BA82700E4C7E0 /* SwiftJK.swift */,
 				BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */,
 				BDB8F4941D6B938200E4C7E0 /* LaunchScreen.storyboard */,
+				BD04C5641DB000B400DBAD2C /* Soulcast.entitlements */,
 				BDB8F4971D6B938200E4C7E0 /* Info.plist */,
 			);
 			path = Soulcast;
@@ -324,6 +326,11 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 59SVXWFZ98;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -555,14 +562,15 @@
 			baseConfigurationReference = 91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: June Kim (L77MH25752)";
+				CODE_SIGN_ENTITLEMENTS = Soulcast/Soulcast.entitlements;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Soulcast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ml.soulcast.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "577cbf0f-89df-454d-b323-cd1e4f2c4f22";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 2.3;
 			};
@@ -573,14 +581,15 @@
 			baseConfigurationReference = 603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: June Kim (L77MH25752)";
+				CODE_SIGN_ENTITLEMENTS = Soulcast/Soulcast.entitlements;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Soulcast/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ml.soulcast.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "577cbf0f-89df-454d-b323-cd1e4f2c4f22";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 2.3;
 			};

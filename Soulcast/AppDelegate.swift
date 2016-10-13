@@ -8,6 +8,7 @@
 
 import UIKit
 import AWSS3
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -55,9 +56,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate { //push
   
   static func registerForPushNotifications(application: UIApplication) {
-    let notificationSettings = UIUserNotificationSettings(
-      forTypes: [.Badge, .Sound, .Alert], categories: nil)
-    application.registerUserNotificationSettings(notificationSettings)
+    if #available(iOS 10, *) { //only support latest version of iOS...
+      UNUserNotificationCenter.currentNotificationCenter().requestAuthorizationWithOptions([.Badge, .Alert, .Sound]){ (granted, error) in
+        if (!granted) return
+        application.registerForRemoteNotifications()
+        if let appDelegate = application.delegate ,
+          let window = appDelegate.window,
+          let rootVC = window!.rootViewController,
+          let pushVC = PushPermissionVC.getInstance(rootVC){
+          pushVC.gotPermission()
+        }
+      }
+    }
   }
   
   func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
