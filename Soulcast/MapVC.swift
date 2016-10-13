@@ -183,7 +183,6 @@ class MapVC: UIViewController {
   }
   
   func devicesLabelTapped() {
-    //TODO: explain...
     presentRadiusExplainer()
   }
   

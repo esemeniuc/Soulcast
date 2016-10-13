@@ -58,7 +58,7 @@ extension AppDelegate { //push
   static func registerForPushNotifications(application: UIApplication) {
     if #available(iOS 10, *) { //only support latest version of iOS...
       UNUserNotificationCenter.currentNotificationCenter().requestAuthorizationWithOptions([.Badge, .Alert, .Sound]){ (granted, error) in
-        if (!granted) return
+        if (!granted) { return }
         application.registerForRemoteNotifications()
         if let appDelegate = application.delegate ,
           let window = appDelegate.window,

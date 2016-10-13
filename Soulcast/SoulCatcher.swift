@@ -66,7 +66,6 @@ class SoulCatcher: NSObject {
           }
         } else{
           print("startDownloading incomingSoul success!!")
-          //TODO: save data to local temp file...
           let filePath = self.saveToCache(data!, key:incomingSoul.s3Key!)
           incomingSoul.localURL = filePath
           dispatch_async(dispatch_get_main_queue()) {

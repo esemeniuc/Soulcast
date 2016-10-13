@@ -88,7 +88,6 @@ class SoulRecorder: NSObject {
       if state == .RecordingLongEnough { pleaseStopRecording() }
       displayCounter = 0
     }
-    //TODO: send progress up to delegate
     if state == .RecordingStarted || state == .RecordingLongEnough {
         let currentRecordDuration = CGFloat(displayCounter) / 60
         let progress:CGFloat = currentRecordDuration/CGFloat(maximumRecordDuration)
