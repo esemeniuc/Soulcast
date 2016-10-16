@@ -44,6 +44,8 @@
 		BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */; };
 		BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */; };
 		BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */; };
+		BDCE02B51DB2CD8F00D3D0CF /* EulaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCE02B41DB2CD8F00D3D0CF /* EulaVC.swift */; };
+		BDCE02B71DB2E47F00D3D0CF /* eula.txt in Resources */ = {isa = PBXBuildFile; fileRef = BDCE02B61DB2E47F00D3D0CF /* eula.txt */; };
 		BDF478CE1D826EE3004F6CAA /* IncomingCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */; };
 		BDF478CF1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */; };
 		BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */; };
@@ -95,6 +97,8 @@
 		BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCaster.swift; sourceTree = "<group>"; };
 		BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcher.swift; sourceTree = "<group>"; };
 		BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingVC.swift; sourceTree = "<group>"; };
+		BDCE02B41DB2CD8F00D3D0CF /* EulaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EulaVC.swift; sourceTree = "<group>"; };
+		BDCE02B61DB2E47F00D3D0CF /* eula.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eula.txt; sourceTree = "<group>"; };
 		BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionVC.swift; sourceTree = "<group>"; };
 		BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionCell.swift; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 			children = (
 				BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */,
 				BD67CA311D83B3D40092ABF3 /* Receptionist.swift */,
+				BDCE02B41DB2CD8F00D3D0CF /* EulaVC.swift */,
+				BDCE02B61DB2E47F00D3D0CF /* eula.txt */,
 				BD0DBF201D7E249E00FBBD17 /* Permission */,
 				BD0DBF1C1D7CDA7700FBBD17 /* JKPageViewController.swift */,
 			);
@@ -319,7 +325,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Soulcast-team";
 				TargetAttributes = {
 					BDB8F4871D6B938200E4C7E0 = {
@@ -358,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDB8F4961D6B938200E4C7E0 /* LaunchScreen.storyboard in Resources */,
+				BDCE02B71DB2E47F00D3D0CF /* eula.txt in Resources */,
 				BDB8F4931D6B938200E4C7E0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,6 +462,7 @@
 				BD0DBF261D7E24C200FBBD17 /* LocationPermissionVC.swift in Sources */,
 				BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */,
 				BD0078821D88865E0088939A /* NumberOfDevicesLabel.swift in Sources */,
+				BDCE02B51DB2CD8F00D3D0CF /* EulaVC.swift in Sources */,
 				BDB8F4A01D6BA6B400E4C7E0 /* SoulTests.swift in Sources */,
 				BDF478CF1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift in Sources */,
 			);
@@ -488,8 +496,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -533,8 +543,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -553,6 +565,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -561,6 +574,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Soulcast/Soulcast.entitlements;
 				CODE_SIGN_IDENTITY = "";
@@ -580,6 +594,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Soulcast/Soulcast.entitlements;
 				CODE_SIGN_IDENTITY = "";

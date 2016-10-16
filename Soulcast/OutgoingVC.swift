@@ -24,6 +24,17 @@ class OutgoingVC: UIViewController {
   var soulCaster = SoulCaster()
   var displayLink: CADisplayLink!
   
+  var firstTime:Bool {
+    get {
+      if let defaults = NSUserDefaults.standardUserDefaults().valueForKey("recordingFirstTime") as? Bool{
+        return defaults
+      } else {
+        return true
+      }
+    }
+    set {  NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "recordingFirstTime") }
+  }
+  
   var delegate: OutgoingVCDelegate?
   
   override func viewDidLoad() {
@@ -61,7 +72,16 @@ class OutgoingVC: UIViewController {
   }
   
   func outgoingButtonTouchedDown(button:UIButton) {
-    
+    if firstTime && !AudioPermissionVC.hasAudioPermission {
+      //ask for recording permissions
+      SoulRecorder.askForMicrophonePermission({ 
+        self.firstTime = false
+        }, failure: {
+          self.firstTime = true
+          //display can't do anything message
+      })
+      return
+    }
     if !SoulPlayer.playing {
       requestStartRecording()
     }
@@ -125,11 +145,11 @@ extension OutgoingVC: SoulRecorderDelegate {
     outgoingButton.startProgress()
     
   }
-    
-    func soulIsRecording(progress: CGFloat) {
-        let haxProgress = progress + 1/60
-        outgoingButton.setProgress(haxProgress)
-    }
+  
+  func soulIsRecording(progress: CGFloat) {
+    let haxProgress = progress + 1/60
+    outgoingButton.setProgress(haxProgress)
+  }
   
   func soulDidFailToRecord() {
     print("SOUL FAILED TO RECORD: TOO SHORT")
@@ -156,6 +176,10 @@ extension OutgoingVC: SoulRecorderDelegate {
     newSoul.type = .Broadcast
     
     soulCaster.cast(newSoul)
+
+    if !PushPermissionVC.hasPushPermission {
+      AppDelegate.registerForPushNotifications(UIApplication.sharedApplication())
+    }
 
   }
 }

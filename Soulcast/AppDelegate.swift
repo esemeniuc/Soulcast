@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func setAWSLoggingLevel() {
-    AWSLogger.defaultLogger().logLevel = .Warn
+    AWSLogger.defaultLogger().logLevel = .Error
   }
   
 

@@ -9,8 +9,15 @@
 import Foundation
 import UIKit
 
+protocol IncomingCollectionCellDelegate {
+  func didTapReport()
+}
+
 class IncomingCollectionCell: UICollectionViewCell {
 
+  var reportButton:UIButton!
+  var delegate:IncomingCollectionCellDelegate?
+  
   var radius:Float = 0 {
     didSet {
       let roundedRadius = round(radius*10)/10
@@ -34,13 +41,14 @@ class IncomingCollectionCell: UICollectionViewCell {
     layoutStuff()
   }
   
-  func layoutStuff() {
+  private func layoutStuff() {
     backgroundColor = UIColor.whiteColor()
     layoutRadiusLabel()
     layoutTimeAgoLabel()
+    addReportButton()
   }
   
-  func layoutRadiusLabel() {
+  private func layoutRadiusLabel() {
     //left middle relative to frame...
     radiusLabelFrame = CGRect(
       x: 5,
@@ -54,10 +62,9 @@ class IncomingCollectionCell: UICollectionViewCell {
     radiusLabel.text = "50km"
     contentView.addSubview(radiusLabel)
 
-//    radiusLabel.backgroundColor = UIColor.cyanColor().colorWithAlphaComponent(0.5)
   }
   
-  func layoutTimeAgoLabel() {
+  private func layoutTimeAgoLabel() {
     //right middle relative to frame...
     let labelWidth = CGRectGetWidth(frame)*0.4
     let labelHeight = CGRectGetHeight(frame)*0.8
@@ -74,7 +81,6 @@ class IncomingCollectionCell: UICollectionViewCell {
     contentView.addSubview(timeAgoLabel)
     
     
-//    timeAgoLabel.backgroundColor = UIColor.magentaColor().colorWithAlphaComponent(0.5)
   }
   
   
@@ -88,6 +94,33 @@ class IncomingCollectionCell: UICollectionViewCell {
     }
   }
   
+  private func addReportButton() {
+    reportButton = UIButton(type:.System)
+    reportButton.setTitle("Report", forState: .Normal)
+    reportButton.setTitleColor(UIColor.redColor(), forState: .Normal)
+    reportButton.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: 100,
+      height: self.contentView.height)
+    reportButton.center = CGPointMake(CGRectGetMidX(contentView.bounds), CGRectGetMidY(radiusLabelFrame))
+    contentView.addSubview(reportButton)
+    reportButton.hidden = true
+    reportButton.addTarget(self, action: #selector(reportButtonTapped), forControlEvents: .TouchUpInside)
+  }
+  
+  func showReportButton() {
+    reportButton.hidden = false
+  }
+  
+  func hideReportButton() {
+    reportButton.hidden = true
+  }
+  
+  func reportButtonTapped() {
+    hideReportButton()
+    delegate?.didTapReport()
+  }
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)

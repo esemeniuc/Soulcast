@@ -48,16 +48,38 @@ class IncomingCollectionVC: UICollectionViewController {
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     print("\(name()): collectionView didSelectItemAtIndexPath")
+    if indexPath.row == 0 {
+      enableReporting()
+      if let incomingCell = collectionView.cellForItemAtIndexPath(indexPath) as? IncomingCollectionCell {
+        incomingCell.delegate = self
+      }
+    }
   }
   
+
   
+  func notifyUserReported() {
+    let reportMessage = UIAlertController(title: "Reported", message: "This soul has been reported to the developers. We will take a closer look and take appropriate action!", preferredStyle: .Alert)
+    let okAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+      //
+    }
+    reportMessage.addAction(okAction)
+    presentViewController(reportMessage, animated: true) { 
+      //
+    }
+  }
   
   private func playFirstSoul() {
     soulPlayer.subscribe(self)
     soulPlayer.startPlaying(soloQueue.peek())
   }
   
-  
+  func enableReporting() {
+    let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+    if let collectionCell = cell as? IncomingCollectionCell {
+      collectionCell.showReportButton()
+    }
+  }
 }
 
 extension IncomingCollectionVC: IncomingQueueDelegate {
@@ -71,7 +93,7 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
   
   func didDequeue() {
     collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
-    
+
   }
   
   func didBecomeEmpty() {
@@ -82,7 +104,7 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
 
 extension IncomingCollectionVC: SoulPlayerDelegate {
   func didStartPlaying(soul: Soul) {
-    //
+
   }
   
   func didFinishPlaying(soul: Soul) {
@@ -99,6 +121,19 @@ extension IncomingCollectionVC: SoulPlayerDelegate {
   
   func didFailToPlay(soul: Soul) {
     //
+  }
+  
+}
+
+extension IncomingCollectionVC: IncomingCollectionCellDelegate {
+  func didTapReport() {
+    reportFirstSoul()
+    notifyUserReported()
+  }
+  func reportFirstSoul() {
+    if let peekSoul = soloQueue.peek() {
+      ServerFacade.report(peekSoul)
+    }
   }
   
 }

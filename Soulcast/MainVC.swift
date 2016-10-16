@@ -39,7 +39,7 @@ class MainVC: UIViewController {
     }
     deviceManager.register(Device.localDevice)
     UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-    //    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+        view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
     //    fetchLatestSoul()
     
   }
@@ -116,8 +116,7 @@ class MainVC: UIViewController {
 
 extension MainVC: OutgoingVCDelegate, MapVCDelegate {
   func mapVCDidChangeradius(radius:Double){
-    print("mapVCDidChangeradius: \(radius)")
-    //TODO: enable update to server periodically
+    
   }
   func outgoingRadius() -> Double{
     return mapVC.userSpan.latitudeDelta

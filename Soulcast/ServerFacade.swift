@@ -133,4 +133,14 @@ class ServerFacade {
     }
   }
   
+  class func report(soul:Soul) {
+    let epoch = soul.epoch ?? 0
+    request(.POST,
+            serverURL + "/report",
+            parameters: ["epoch": String(epoch)],
+            encoding: .JSON,
+            headers: ServerFacade.jsonHeader)
+    
+  }
+  
 }

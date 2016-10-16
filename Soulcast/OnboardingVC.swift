@@ -8,17 +8,17 @@ import UIKit
 class OnboardingVC: UIViewController {
   
   let pageVC = JKPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
-  var permissionVCs = [PermissionVC]()
+  var eachPageVCs = [UIViewController]()
   
-  private let pushPermissionVC = PushPermissionVC()
-  private let audioPermissionVC = AudioPermissionVC()
-  private let locationPermissionVC = LocationPermissionVC()
+//  private let pushPermissionVC = PushPermissionVC()
+//  private let audioPermissionVC = AudioPermissionVC()
+//  private let locationPermissionVC = LocationPermissionVC()
   
     
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.whiteColor()
-    setupPermissionVCs()
+    setupEachPageVCs()
     setupPageVC()
     
   }
@@ -27,25 +27,36 @@ class OnboardingVC: UIViewController {
     super.viewDidAppear(animated)
     //debugColors()
   }
-    
-  func setupPermissionVCs() {
-    
-    permissionVCs = [pushPermissionVC, audioPermissionVC, locationPermissionVC]
-    
-    for eachPermissionVC in permissionVCs {
-      eachPermissionVC.delegate = self
-    }
+
+  func setupEachPageVCs() {
+    let eulaVC = EulaVC()
+    eulaVC.delegate = self
+    let locationVC = LocationPermissionVC()
+    locationVC.delegate = self
+    eachPageVCs = [eulaVC, locationVC]
     
   }
       
   func setupPageVC() {
-    pageVC.pages = permissionVCs
+    pageVC.pages = eachPageVCs
     addChildViewController(pageVC)
     view.addSubview(pageVC.view)
     pageVC.didMoveToParentViewController(self)
     pageVC.disableScroll()
   }
   
+  func waitAndScrollFrom(vc:UIViewController) {
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.25 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      if vc is LocationPermissionVC {
+        self.transitionToMainVC()
+      } else {
+        let index = self.pageVC.currentIndex
+        self.pageVC.scrollToVC(index + 1, direction: .Forward)
+      }
+    }
+
+  }
 }
 
 
@@ -56,22 +67,16 @@ extension OnboardingVC: PermissionVCDelegate {
     //if the permission matches the current one
     if pageVC.currentVC == vc {
       //wait
-      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.25 * Double(NSEC_PER_SEC)))
-      dispatch_after(delayTime, dispatch_get_main_queue()) {
-        if vc is LocationPermissionVC {
-          self.transitionToMainVC()
-        } else {
-          let index = self.pageVC.currentIndex
-          self.pageVC.scrollToVC(index + 1, direction: .Forward)
-        }
-      }
-      
+      waitAndScrollFrom(vc)
     }
     
   }
   
   func transitionToMainVC() {
     let window = UIApplication.sharedApplication().keyWindow!
+    if window.rootViewController is MainVC {
+      return
+    }
     let mainVC = MainVC()
     mainVC.view.alpha = 0
     window.backgroundColor = UIColor.whiteColor()
@@ -92,6 +97,13 @@ extension OnboardingVC: PermissionVCDelegate {
     #endif
 
     //TODO:
+    self.transitionToMainVC()
+  }
+}
+
+extension OnboardingVC: EulaVCDelegate {
+  func didTapOKButton(vc:EulaVC) {
+    waitAndScrollFrom(vc)
   }
 }
 

@@ -48,7 +48,7 @@ class Receptionist: NSObject {
       hasLaunchedBefore = true
       return true
     }
-    if !hasPushPermission || !hasAudioPermission || !hasLocationPermission {
+    if !hasLocationPermission { //!hasPushPermission || !hasAudioPermission ||
       return true
     }
     return false
