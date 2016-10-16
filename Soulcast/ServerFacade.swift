@@ -37,7 +37,7 @@ class ServerFacade {
   class func post(outgoingSoul: Soul, success:()->(), failure: (Int)->()) {
     request(.POST,
       serverURL + "/souls/",
-      parameters: (outgoingSoul.toParams() as! [String : AnyObject]))
+      parameters: (outgoingSoul.toParams() ))
       .validate(statusCode: validStatusCodes)
       .responseString { response in
       switch response.result{
@@ -55,7 +55,7 @@ class ServerFacade {
   class func echo(outgoingSoul: Soul, success:(Soul)->(), failure: (Int)->()) {
     request(.POST,
       serverURL + "/echo/",
-      parameters: (outgoingSoul.toParams() as! [String : AnyObject]),
+      parameters: (outgoingSoul.toParams()),
       encoding: .JSON,
       headers: jsonHeader)
       .validate(statusCode: validStatusCodes)
@@ -134,10 +134,9 @@ class ServerFacade {
   }
   
   class func report(soul:Soul) {
-    let epoch = soul.epoch ?? 0
     request(.POST,
             serverURL + "/report",
-            parameters: ["epoch": String(epoch)],
+            parameters: soul.toParams(),
             encoding: .JSON,
             headers: ServerFacade.jsonHeader)
     

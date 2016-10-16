@@ -21,19 +21,15 @@ class Soul: NSObject {
   var type: SoulType?
   
   // Usage: postToServer(someSoul.toParams())
-  func toParams() -> NSDictionary {
-    let contentParams = NSMutableDictionary()
+  func toParams() -> [String : AnyObject] {
+    return [
 //    contentParams["soul[soulType]"] = type!.rawValue
-    contentParams["soul[s3Key]"] = s3Key
-    contentParams["soul[epoch]"] = epoch
-    contentParams["soul[longitude]"] = longitude
-    contentParams["soul[latitude]"] = latitude
-    contentParams["soul[radius]"] = radius
-    contentParams["soul[token]"] = token
-    if token == nil {
-      contentParams["soul[token]"] = "TOKENPOKEN"
-    }
-    return contentParams
+    "soul[s3Key]": s3Key ?? "",
+    "soul[epoch]": epoch ?? "",
+    "soul[longitude]": longitude ?? "",
+    "soul[latitude]": latitude ?? "",
+    "soul[radius]": radius ?? "",
+    "soul[token]": token ?? ""]
   }
   
   

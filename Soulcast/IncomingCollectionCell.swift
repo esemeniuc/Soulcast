@@ -98,6 +98,7 @@ class IncomingCollectionCell: UICollectionViewCell {
     reportButton = UIButton(type:.System)
     reportButton.setTitle("Report", forState: .Normal)
     reportButton.setTitleColor(UIColor.redColor(), forState: .Normal)
+    reportButton.setTitleColor(UIColor.redColor().colorWithAlphaComponent(0.3), forState: .Disabled)
     reportButton.frame = CGRect(
       x: 0,
       y: 0,
@@ -105,16 +106,16 @@ class IncomingCollectionCell: UICollectionViewCell {
       height: self.contentView.height)
     reportButton.center = CGPointMake(CGRectGetMidX(contentView.bounds), CGRectGetMidY(radiusLabelFrame))
     contentView.addSubview(reportButton)
-    reportButton.hidden = true
+    reportButton.enabled = false
     reportButton.addTarget(self, action: #selector(reportButtonTapped), forControlEvents: .TouchUpInside)
   }
   
   func showReportButton() {
-    reportButton.hidden = false
+    reportButton.enabled = true
   }
   
   func hideReportButton() {
-    reportButton.hidden = true
+    reportButton.enabled = false
   }
   
   func reportButtonTapped() {
