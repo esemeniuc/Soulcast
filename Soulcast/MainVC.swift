@@ -39,7 +39,7 @@ class MainVC: UIViewController {
     }
     deviceManager.register(Device.localDevice)
     UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-        view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+//        view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
     //    fetchLatestSoul()
     
   }

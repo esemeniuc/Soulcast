@@ -84,7 +84,11 @@ class IncomingCollectionVC: UICollectionViewController {
 
 extension IncomingCollectionVC: IncomingQueueDelegate {
   func didEnqueue() {
-    collectionView?.insertItemsAtIndexPaths([NSIndexPath(forRow: max(soloQueue.count-1, 0), inSection: 0)])
+    if soloQueue.count == 1 {
+      collectionView?.reloadData()
+    } else {
+      collectionView?.insertItemsAtIndexPaths([NSIndexPath(forRow: max(soloQueue.count-1, 0), inSection: 0)])
+    }
     //if only item, and player isn't playing, dequeue.
     if soloQueue.count == 1 && !SoulPlayer.playing {
       playFirstSoul()
