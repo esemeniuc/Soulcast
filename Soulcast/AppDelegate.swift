@@ -60,12 +60,6 @@ extension AppDelegate { //push
       UNUserNotificationCenter.currentNotificationCenter().requestAuthorizationWithOptions([.Badge, .Alert, .Sound]){ (granted, error) in
         if (!granted) { return }
         application.registerForRemoteNotifications()
-        if let appDelegate = application.delegate ,
-          let window = appDelegate.window,
-          let rootVC = window!.rootViewController,
-          let pushVC = PushPermissionVC.getInstance(rootVC){
-          pushVC.gotPermission()
-        }
       }
     }
   }
@@ -81,7 +75,7 @@ extension AppDelegate { //push
     Device.localDevice.token = tokenString
     print("Token String: \(tokenString)")
     //send a message to the onboarding view controller in the view controller tree
-    PushPermissionVC.getInstance((window?.rootViewController)!)?.gotPermission()
+
   }
   
   
@@ -97,7 +91,6 @@ extension AppDelegate { //push
   
   func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
     print("Failed to register:", error)
-    PushPermissionVC.getInstance((window?.rootViewController)!)?.deniedPermission()
   }
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

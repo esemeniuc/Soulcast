@@ -72,7 +72,7 @@ class OutgoingVC: UIViewController {
   }
   
   func outgoingButtonTouchedDown(button:UIButton) {
-    if firstTime && !AudioPermissionVC.hasAudioPermission {
+    if firstTime && !PermissionController.hasAudioPermission {
       //ask for recording permissions
       SoulRecorder.askForMicrophonePermission({ 
         self.firstTime = false
@@ -177,7 +177,7 @@ extension OutgoingVC: SoulRecorderDelegate {
     
     soulCaster.cast(newSoul)
 
-    if !PushPermissionVC.hasPushPermission {
+    if !PermissionController.hasPushPermission {
       AppDelegate.registerForPushNotifications(UIApplication.sharedApplication())
     }
 

@@ -24,13 +24,7 @@ class PushPermissionVC: PermissionVC {
     super.init(coder: aDecoder)
   }
   
-  static var hasPushPermission: Bool {
-    #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
-      return true
-    #endif
 
-    return UIApplication.sharedApplication().isRegisteredForRemoteNotifications()
-  }
   
   
   static func getInstance(vc:UIViewController?) -> PushPermissionVC? {

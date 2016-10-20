@@ -26,10 +26,10 @@ class Receptionist: NSObject {
     }
   }
   private static var hasPushPermission: Bool {
-    return PushPermissionVC.hasPushPermission
+    return PermissionController.hasPushPermission
   }
   private static var hasAudioPermission: Bool {
-    return AudioPermissionVC.hasAudioPermission
+    return PermissionController.hasAudioPermission
   }
   private static var hasLocationPermission: Bool {
     return LocationPermissionVC.hasLocationPermission
