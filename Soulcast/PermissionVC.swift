@@ -74,7 +74,11 @@ class PermissionVC: UIViewController {
   }
   
   func toggleTouched(theSwitch: UISwitch) {
-    
+    theSwitch.enabled = false
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      theSwitch.enabled = true
+    }
   }
   
   func switchToggle(turnOn:Bool){

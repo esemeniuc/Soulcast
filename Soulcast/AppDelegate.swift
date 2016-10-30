@@ -18,12 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     makeWindow()
-    receive(launchOptions)
     window?.rootViewController = Receptionist.launchingViewController
 //    window?.rootViewController = MainVC()
 //        window?.rootViewController = MockingVC()
 //        window?.rootViewController = OnboardingVC()
 
+    if let options = launchOptions {
+      receive(options)
+    }
 //    tester.testAllTheThings()
     self.window?.makeKeyAndVisible()
     setAWSLoggingLevel()
@@ -96,12 +98,16 @@ extension AppDelegate { //push
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
     if let aps = userInfo["aps"] as? [String: AnyObject] {
       print("didReceiveRemoteNotification! aps: ")
-      for eachItem in aps {
-        print(eachItem)
-      }
+
     }
+    for eachItem in userInfo {
+      print(eachItem)
+    }
+  
     if let soulObject = userInfo["soulObject"] as? [String: AnyObject]{
       MainVC.getInstance((window?.rootViewController)!)?.receiveRemoteNotification(soulObject)
+    } else {
+      
     }
     //TODO: present incomingSoul
     

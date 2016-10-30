@@ -51,11 +51,23 @@ class MapVC: UIViewController {
   var devicesLabelUpdatedRecently = false
   var delegate: MapVCDelegate?
   
+  var timer:NSTimer?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     addMap()
     addLabels()
-    
+    setupTimer()
+  }
+  
+  func setupTimer() {
+    timer = NSTimer(timeInterval: 35,
+                    target: self,
+                    selector: #selector(restartLocationUpdates(_:)),
+                    userInfo: nil,
+                    repeats: true)
+    NSRunLoop.currentRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
+    timer?.fire()
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -244,17 +256,13 @@ extension MapVC: CLLocationManagerDelegate {
       }
     }
     manager.stopUpdatingLocation()
-    NSTimer.scheduledTimerWithTimeInterval(30, target: self, selector: #selector(MapVC.restartLocationUpdates(_:)), userInfo: nil, repeats: false)
     latestLocation = locations.last
-    saveRegionData()
   }
   
-  
   func restartLocationUpdates(timer: NSTimer) {
-    timer.invalidate()
+    print("restartLocationUpdates")
     locationManager.startUpdatingLocation()
-    
-    
+    saveRegionData()
   }
   
   

@@ -18,7 +18,8 @@ class ServerFacade {
     request(.GET,
       serverURL + "/souls",
       parameters: Device.localDevice.toParams(),
-      encoding: .JSON, headers: jsonHeader)
+      encoding: .JSON,
+      headers: jsonHeader)
       .validate(statusCode:validStatusCodes)
       .responseJSON { (response) in
         switch response.result {
@@ -26,8 +27,8 @@ class ServerFacade {
           print("Got Latest Soul!")
           success(JSON as! [String: AnyObject])
         case .Failure:
-          if response.response != nil {
-            failure(response.response!.statusCode)
+          if let r = response.response {
+            failure(r.statusCode)
           }
           
         }
@@ -37,7 +38,9 @@ class ServerFacade {
   class func post(outgoingSoul: Soul, success:()->(), failure: (Int)->()) {
     request(.POST,
       serverURL + "/souls/",
-      parameters: (outgoingSoul.toParams() ))
+      parameters: outgoingSoul.toParams(),
+      encoding: .JSON,
+      headers: jsonHeader)
       .validate(statusCode: validStatusCodes)
       .responseString { response in
       switch response.result{
@@ -47,7 +50,9 @@ class ServerFacade {
         
       case .Failure:
         print("Outgoing Soul Post Failure!")
-        failure((response.response?.statusCode)!)
+        if let r = response.response {
+          failure(r.statusCode)
+        }
       }
     }
   }
@@ -71,7 +76,9 @@ class ServerFacade {
         
       case .Failure:
         print("Echo Soul Failure!")
-        failure((response.response?.statusCode)!)
+        if let r = response.response {
+          failure(r.statusCode)
+        }
       }
     }
   }
@@ -83,14 +90,12 @@ class ServerFacade {
       serverURL + "/devices/",
       parameters: localDevice.toParams(),
       encoding: .JSON,
-      headers: ServerFacade.jsonHeader)
+      headers: jsonHeader)
       .validate(statusCode: validStatusCodes)
       .responseJSON {
         (response) in
       switch response.result {
       case .Success (let JSON):
-        dump(JSON)
-        
         if let responseJSON = JSON as? NSDictionary {
           let deviceID = responseJSON["id"]
           if deviceID is Int {
@@ -98,37 +103,39 @@ class ServerFacade {
           }
         }
         
-        
         print("Register local device success!")
         success()
         
       case .Failure:
         print("Register local device failure!")
-        failure((response.response?.statusCode)!)
+        if let r = response.response {
+          failure(r.statusCode)
+        }
         
         }
     }
   }
   
   class func patch(localDevice: Device, success:()->(), failure: (Int)->()) {
-    let deviceID = localDevice.id!
-    
+    var deviceString = ""
+    if let deviceInt = localDevice.id {
+      deviceString = String(deviceInt)
+    }
     request(.PATCH,
-      serverURL + "/devices/" + String(deviceID),
+      serverURL + "/devices/" + deviceString,
       parameters: localDevice.toParams(),
       encoding: .JSON,
       headers: ServerFacade.jsonHeader)
       .validate(statusCode: validStatusCodes)
       .responseString { (response) in
       switch response.result {
-      case .Success (let jsonResponse):
-        dump(jsonResponse)
-        print("Update local device success!")
+      case .Success:
         success()
-        
       case .Failure :
-        print("Update local device failure!")
-        failure((response.response?.statusCode)!)
+        if let r = response.response {
+          failure(r.statusCode)
+        }
+        
       }
     }
   }

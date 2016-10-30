@@ -38,22 +38,12 @@ class DeviceManager: NSObject {
     updatingDevice.longitude = longitude
     updatingDevice.radius = radius
     Device.localDevice = updatingDevice
-    
-    if let deviceID = updatingDevice.id {
-      let patchURLString = serverURL + "/devices/" + String(deviceID) + ".json"
-      request(.PATCH,
-        patchURLString,
-        parameters: updatingDevice.toParams())
-        .responseJSON(completionHandler: { (response:Response<AnyObject, NSError>) in
+    ServerFacade.patch(updatingDevice, success: { 
+      //
+      print("updateDeviceRegion success!")
+      }) { code in
         //
-        switch response.result {
-        case .Success:
-          print("updateDeviceRegion success!")
-        case .Failure:
-          print("updateDeviceRegion fail")
-        }
-      })
-      
+        print("updateDeviceRegion fail")
     }
   }
   
@@ -66,6 +56,7 @@ class DeviceManager: NSObject {
         //TODO:
         switch response.result{
         case .Success:
+          print("getNearbyDevices success!")
           completion(response.result.value as! [String:AnyObject])
         case .Failure:
           print("getNearbyDevices fail")

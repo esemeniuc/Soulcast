@@ -17,7 +17,6 @@
 		BD0DBF1B1D7CD9C700FBBD17 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */; };
 		BD0DBF1D1D7CDA7700FBBD17 /* JKPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF1C1D7CDA7700FBBD17 /* JKPageViewController.swift */; };
 		BD0DBF1F1D7CE51600FBBD17 /* PermissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF1E1D7CE51600FBBD17 /* PermissionVC.swift */; };
-		BD0DBF221D7E24AD00FBBD17 /* PushPermissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF211D7E24AD00FBBD17 /* PushPermissionVC.swift */; };
 		BD0DBF261D7E24C200FBBD17 /* LocationPermissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF251D7E24C200FBBD17 /* LocationPermissionVC.swift */; };
 		BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD15511E1D74D1580093CA2F /* SoulQueue.swift */; };
 		BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */; };
@@ -68,7 +67,6 @@
 		BD0DBF1A1D7CD9C700FBBD17 /* OnboardingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		BD0DBF1C1D7CDA7700FBBD17 /* JKPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JKPageViewController.swift; sourceTree = "<group>"; };
 		BD0DBF1E1D7CE51600FBBD17 /* PermissionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionVC.swift; sourceTree = "<group>"; };
-		BD0DBF211D7E24AD00FBBD17 /* PushPermissionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPermissionVC.swift; sourceTree = "<group>"; };
 		BD0DBF251D7E24C200FBBD17 /* LocationPermissionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationPermissionVC.swift; sourceTree = "<group>"; };
 		BD15511E1D74D1580093CA2F /* SoulQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulQueue.swift; sourceTree = "<group>"; };
 		BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorderTests.swift; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 			children = (
 				BD0DBF1E1D7CE51600FBBD17 /* PermissionVC.swift */,
 				BD2BE1271DB948F600387190 /* PermissionController.swift */,
-				BD0DBF211D7E24AD00FBBD17 /* PushPermissionVC.swift */,
 				BD0DBF251D7E24C200FBBD17 /* LocationPermissionVC.swift */,
 			);
 			name = Permission;
@@ -437,7 +434,6 @@
 				BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */,
 				BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */,
 				BDB8F48C1D6B938200E4C7E0 /* AppDelegate.swift in Sources */,
-				BD0DBF221D7E24AD00FBBD17 /* PushPermissionVC.swift in Sources */,
 				BDB8F4B21D6BA80E00E4C7E0 /* SoulPlayer.swift in Sources */,
 				BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */,
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,

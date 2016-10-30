@@ -89,13 +89,6 @@ extension OnboardingVC: PermissionVCDelegate {
   }
   
   func deniedPermission(vc: PermissionVC) {
-    //Push permission always gets denied on simulator
-    #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
-      if vc is PushPermissionVC {
-        gotPermission(vc)
-      }
-    #endif
-
     //TODO:
     self.transitionToMainVC()
   }

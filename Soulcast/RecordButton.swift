@@ -28,7 +28,6 @@ class RecordButton : UIButton {
     }
     var progressColor = offRed {
         didSet {
-            print("progressColor set to red")
             gradientMaskLayer.colors = [progressColor.CGColor, progressColor.CGColor]
         }
     }

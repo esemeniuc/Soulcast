@@ -24,12 +24,12 @@ class Soul: NSObject {
   func toParams() -> [String : AnyObject] {
     return [
 //    contentParams["soul[soulType]"] = type!.rawValue
-    "soul[s3Key]": s3Key ?? "",
-    "soul[epoch]": epoch ?? "",
-    "soul[longitude]": longitude ?? "",
-    "soul[latitude]": latitude ?? "",
-    "soul[radius]": radius ?? "",
-    "soul[token]": token ?? ""]
+    "s3Key": s3Key ?? "",
+    "epoch": epoch ?? "",
+    "longitude": longitude ?? "",
+    "latitude": latitude ?? "",
+    "radius": radius ?? "",
+    "token": token ?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"]
   }
   
   
