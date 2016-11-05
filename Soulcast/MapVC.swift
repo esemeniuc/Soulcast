@@ -163,7 +163,6 @@ class MapVC: UIViewController {
   }
   
   func addLabels() {
-    
     let devicesLabelTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(devicesLabelTapped))
     devicesLabel.addGestureRecognizer(devicesLabelTapRecognizer)
     view.addSubview(devicesLabel)
@@ -173,10 +172,11 @@ class MapVC: UIViewController {
   
   
   func updateDevicesLabel() {
+    return;
     if devicesLabelUpdating || devicesLabelUpdatedRecently{
       return
     }
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.35 * Double(NSEC_PER_SEC)))
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.75 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) {
       self.devicesLabelUpdatedRecently = false
     }
@@ -218,13 +218,6 @@ class MapVC: UIViewController {
     }
   }
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-  
-  
-  
 }
 
 extension MapVC: MKMapViewDelegate {
@@ -246,17 +239,19 @@ extension MapVC: MKMapViewDelegate {
 extension MapVC: CLLocationManagerDelegate {
   
   func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    //update location
+    updateIfMoved(manager, location: locations.last)
+    updateDevicesLabel()
+  }
+    
+  func updateIfMoved(manager: CLLocationManager, location: CLLocation!) {
     if let previousLocation = latestLocation {
-      let distance = locations.last?.distanceFromLocation(previousLocation)
+      let distance = location.distanceFromLocation(previousLocation)
       if distance > 50 {
-        
-      } else {
-        //do nothing interesting
+        //moved a lot
       }
     }
     manager.stopUpdatingLocation()
-    latestLocation = locations.last
+    latestLocation = location
   }
   
   func restartLocationUpdates(timer: NSTimer) {

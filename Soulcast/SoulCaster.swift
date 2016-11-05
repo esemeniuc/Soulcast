@@ -72,8 +72,10 @@ class SoulCaster: NSObject {
     self.completionHandler = { (task, error) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
         if ((error) != nil){
+          assert(false, "OOPS!")
           print("Failed with Error: \(error?.localizedDescription)");
         } else if(self.uploadProgress != 1.0) {
+          assert(false, "OOPS!")
           print("Error: Failed - Likely due to invalid region / filename")
         } else {
           //success.
@@ -93,8 +95,8 @@ class SoulCaster: NSObject {
     assert(someSoul.longitude != nil)
     assert(someSoul.latitude != nil)
     assert(someSoul.radius != nil)
-//    assert(someSoul.token != nil)
     assert(someSoul.localURL != nil, "There's nothing to upload!!!")
+//    assert(someSoul.token != nil)
   }
   
   private func upload(fileURL: NSURL, key:String){

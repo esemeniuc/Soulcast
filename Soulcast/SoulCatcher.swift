@@ -56,22 +56,20 @@ class SoulCatcher: NSObject {
     self.completionHandler = { (task, location, data, error) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
         if ((error) != nil){
-          print("FAIL! error:\(error!)")
-          dispatch_async(dispatch_get_main_queue()) {
-            self.delegate?.soulDidFailToDownload(self)
-          }
+          print("startDownloading FAIL! error:\(error!)")
+          dump(incomingSoul)
+          assert(false, "startDownloading FAIL")
+          self.delegate?.soulDidFailToDownload(self)
         } else if(self.progress != 1.0) {
-          dispatch_async(dispatch_get_main_queue()) {
-            self.delegate?.soulDidFailToDownload(self)
-          }
+          print("startDownloading FAIL! error:\(error!)")
+          dump(incomingSoul)
+          assert(false, "startDownloading FAIL")
+          self.delegate?.soulDidFailToDownload(self)
         } else{
           print("startDownloading incomingSoul success!!")
           let filePath = self.saveToCache(data!, key:incomingSoul.s3Key!)
           incomingSoul.localURL = filePath
-          dispatch_async(dispatch_get_main_queue()) {
-            self.delegate?.soulDidFinishDownloading(self, soul: incomingSoul)
-
-          }
+          self.delegate?.soulDidFinishDownloading(self, soul: incomingSoul)
           
         }
       })

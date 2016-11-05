@@ -40,7 +40,6 @@ class NumberOfDevicesLabel: UILabel {
   }
   
   func addGradient() {
-    //TODO: figure out how to add gradient below text layer
     let topColor = UIColor(red:0.32, green:0.93, blue:0.78, alpha:1.0).CGColor
     let bottomColor = UIColor(red:0.35, green:0.78, blue:0.98, alpha:1.0).CGColor
     let rotationPercentage:Float = 0.08
