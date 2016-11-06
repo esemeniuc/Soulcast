@@ -58,12 +58,12 @@ class SoulCatcher: NSObject {
         if ((error) != nil){
           print("startDownloading FAIL! error:\(error!)")
           dump(incomingSoul)
-          assert(false, "startDownloading FAIL")
+//          assert(false, "startDownloading FAIL")
           self.delegate?.soulDidFailToDownload(self)
         } else if(self.progress != 1.0) {
           print("startDownloading FAIL! error:\(error!)")
           dump(incomingSoul)
-          assert(false, "startDownloading FAIL")
+//          assert(false, "startDownloading FAIL")
           self.delegate?.soulDidFailToDownload(self)
         } else{
           print("startDownloading incomingSoul success!!")

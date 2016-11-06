@@ -149,6 +149,15 @@ extension MainVC: SoulCatcherDelegate {
     soulCatchers.remove(catcher)
   }
   func soulDidFailToDownload(catcher:SoulCatcher){
+    //TODO: notify..
+    let alertController = UIAlertController(title: "soulDidFailToDownload", message: ":(", preferredStyle: .Alert)
+    let okAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
+      //
+    }
+    alertController.addAction(okAction)
+    presentViewController(alertController, animated: true) { 
+      //
+    }
     soulCatchers.remove(catcher)
   }
 }
