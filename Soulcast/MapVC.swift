@@ -170,9 +170,7 @@ class MapVC: UIViewController {
     updateDevicesLabel()
   }
   
-  
   func updateDevicesLabel() {
-    return;
     if devicesLabelUpdating || devicesLabelUpdatedRecently{
       return
     }
@@ -255,7 +253,6 @@ extension MapVC: CLLocationManagerDelegate {
   }
   
   func restartLocationUpdates(timer: NSTimer) {
-    print("restartLocationUpdates")
     locationManager.startUpdatingLocation()
     saveRegionData()
   }

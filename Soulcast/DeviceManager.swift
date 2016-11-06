@@ -11,7 +11,7 @@ class DeviceManager: NSObject {
     NSUserDefaults.standardUserDefaults().setValue(device.token, forKey: "token")
   }
   
-  func register(device: Device) {    //do once per lifetime.
+  func register(device: Device) { 
     registerDeviceLocally(device)
     tempDevice = device
     self.registerWithServer(self.tempDevice)
@@ -53,10 +53,8 @@ class DeviceManager: NSObject {
       serverURL + nearbySuffix + String(deviceID) + ".json",
       parameters: Device.localDevice.toParams() )
       .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
-        //TODO:
         switch response.result{
         case .Success:
-          print("getNearbyDevices success!")
           completion(response.result.value as! [String:AnyObject])
         case .Failure:
           print("getNearbyDevices fail")

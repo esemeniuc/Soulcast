@@ -158,7 +158,6 @@ class MockingVC: UIViewController {
   }
   
   func outgoingButtonTapped() {
-    print("outgoingButtonTapped()")
     dump(SoulCasterTests.mockSoul())
     disableButtons()
     ServerFacade.post(SoulCasterTests.mockSoul(), success: { 

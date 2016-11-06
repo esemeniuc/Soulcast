@@ -126,8 +126,6 @@ class OutgoingVC: UIViewController {
   }
   
   func playbackSoul(localSoul:Soul) {
-    print("playbackSoul localSoul:\(localSoul)")
-    //TODO: test to see if it mutes
     soulPlayer.startPlaying(localSoul)
   }
   
@@ -152,10 +150,7 @@ extension OutgoingVC: SoulRecorderDelegate {
   }
   
   func soulDidFailToRecord() {
-    print("SOUL FAILED TO RECORD: TOO SHORT")
-    //negative animation, go back to being enabled
     animateNegativeShake()
-    //TODO: control the views to indicate to user that soul failed
     outgoingButton.resetFail()
     
   }

@@ -59,12 +59,6 @@ class Soul: NSObject {
     return incomingSoul
   }
   
-  func printProperties() {
-    print("s3Key: \(s3Key)")
-    print("localURL: \(localURL)")
-    //TODO:
-  }
-  
 }
 
 class MockFactory {

@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       receive(launchOptions)
 //    tester.testAllTheThings()
     self.window?.makeKeyAndVisible()
-    setAWSLoggingLevel()
+    configureAWS()
     return true
   }
   
@@ -56,12 +56,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
     }
     
-    
-    
   }
 
-  func setAWSLoggingLevel() {
-    AWSLogger.defaultLogger().logLevel = .Error
+  func configureAWS() {
+    let credentialsProvider = AWSCognitoCredentialsProvider(
+      regionType: .USWest2,
+      identityPoolId: CognitoIdentityPoolId)
+    let configuration = AWSServiceConfiguration(
+      region: .USWest2,
+      credentialsProvider: credentialsProvider)
+    AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
+    AWSLogger.defaultLogger().logLevel = .Verbose
   }
   
 
@@ -90,9 +95,7 @@ extension AppDelegate { //push
   func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
     let tokenString = AppDelegate.tokenString(from: deviceToken)
     Device.localDevice.token = tokenString
-    print("Token String: \(tokenString)")
-    //send a message to the onboarding view controller in the view controller tree
-
+    deviceManager.register(Device.localDevice)
   }
   
   

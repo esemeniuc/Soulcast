@@ -24,6 +24,9 @@ class SoulCatcher: NSObject {
   var progress: Float = 0
   static let soulCaughtNotification = "soulCaughtNotification"
   
+  var trialCounter = 0
+  let MAX_TRIAL = 10
+  
   var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
 
   func setup() {
@@ -42,9 +45,17 @@ class SoulCatcher: NSObject {
     return (UIApplication.sharedApplication().keyWindow?.rootViewController)!
   }
   
+  private func tryAgain(soul: Soul) {
+    print("Trying to download a soul again!!")
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.15 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      self.startDownloading(soul)
+    }
+  }
+  
   private func startDownloading(incomingSoul:Soul) {
     let s3Key = incomingSoul.s3Key! as String + ".mp3"
-    
+    trialCounter += 1
     let expression = AWSS3TransferUtilityDownloadExpression()
     expression.progressBlock = {(task, progress) in
       dispatch_async(dispatch_get_main_queue(), {
@@ -58,15 +69,21 @@ class SoulCatcher: NSObject {
         if ((error) != nil){
           print("startDownloading FAIL! error:\(error!)")
           dump(incomingSoul)
-//          assert(false, "startDownloading FAIL")
-          self.delegate?.soulDidFailToDownload(self)
+          if self.trialCounter < self.MAX_TRIAL {
+            self.tryAgain(incomingSoul)
+          } else {
+            self.delegate?.soulDidFailToDownload(self)
+          }
         } else if(self.progress != 1.0) {
           print("startDownloading FAIL! error:\(error!)")
           dump(incomingSoul)
-//          assert(false, "startDownloading FAIL")
-          self.delegate?.soulDidFailToDownload(self)
+          if self.trialCounter < self.MAX_TRIAL {
+            self.tryAgain(incomingSoul)
+          } else {
+            self.delegate?.soulDidFailToDownload(self)
+          }
         } else{
-          print("startDownloading incomingSoul success!!")
+          self.trialCounter = 0
           let filePath = self.saveToCache(data!, key:incomingSoul.s3Key!)
           incomingSoul.localURL = filePath
           self.delegate?.soulDidFinishDownloading(self, soul: incomingSoul)

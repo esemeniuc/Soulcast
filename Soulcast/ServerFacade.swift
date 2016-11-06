@@ -47,7 +47,6 @@ class ServerFacade {
       case .Success:
         print("Outgoing Soul Post success!")
         success()
-        
       case .Failure:
         print("Outgoing Soul Post Failure!")
         if let r = response.response {
@@ -102,8 +101,6 @@ class ServerFacade {
             deviceManager.updateLocalDeviceID(deviceID as! Int)
           }
         }
-        
-        print("Register local device success!")
         success()
         
       case .Failure:

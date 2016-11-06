@@ -150,7 +150,7 @@ extension MainVC: SoulCatcherDelegate {
   }
   func soulDidFailToDownload(catcher:SoulCatcher){
     //TODO: notify..
-    let alertController = UIAlertController(title: "soulDidFailToDownload", message: ":(", preferredStyle: .Alert)
+    let alertController = UIAlertController(title: "Could not catch soul", message: "After trying numerous times to catch it, this one got away", preferredStyle: .Alert)
     let okAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
       //
     }
