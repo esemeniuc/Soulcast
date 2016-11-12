@@ -152,7 +152,24 @@ extension OutgoingVC: SoulRecorderDelegate {
   func soulDidFailToRecord() {
     animateNegativeShake()
     outgoingButton.resetFail()
+    tryShowExplainFailAlert()
+  }
+  
+  func tryShowExplainFailAlert() {
+    let defaults = NSUserDefaults.standardUserDefaults()
+    let alertedCount = (defaults.valueForKey("explainFailAlertedCount") as? Int) ?? 0
     
+    if alertedCount < 3 {
+      let alert = UIAlertController(title: "Recording is not long enough", message: "Tap and hold the button to record a soul", preferredStyle: .Alert)
+      let cancel = UIAlertAction(title: "OK", style: .Cancel) { alert in
+        //
+      }
+      alert.addAction(cancel)
+      presentViewController(alert, animated: false) {
+        //
+      }
+      defaults.setValue(alertedCount + 1, forKey: "explainFailAlertedCount")
+    }
   }
   
   func soulDidReachMinimumDuration() {

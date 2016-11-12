@@ -67,16 +67,13 @@ class SoulCatcher: NSObject {
     self.completionHandler = { (task, location, data, error) -> Void in
       dispatch_async(dispatch_get_main_queue(), {
         if ((error) != nil){
-          print("startDownloading FAIL! error:\(error!)")
-          dump(incomingSoul)
           if self.trialCounter < self.MAX_TRIAL {
             self.tryAgain(incomingSoul)
           } else {
+            print("startDownloading FAIL! error:\(error!)")
             self.delegate?.soulDidFailToDownload(self)
           }
         } else if(self.progress != 1.0) {
-          print("startDownloading FAIL! error:\(error!)")
-          dump(incomingSoul)
           if self.trialCounter < self.MAX_TRIAL {
             self.tryAgain(incomingSoul)
           } else {
