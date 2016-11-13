@@ -24,9 +24,10 @@
 		BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551241D7611C30093CA2F /* SoulCasterTests.swift */; };
 		BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */; };
 		BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551481D764B9D0093CA2F /* ServerFacade.swift */; };
+		BD22B7C51DD7E65D0068532F /* ImproveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22B7C41DD7E65D0068532F /* ImproveButton.swift */; };
 		BD2BE1281DB948F600387190 /* PermissionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BE1271DB948F600387190 /* PermissionController.swift */; };
 		BD67CA321D83B3D40092ABF3 /* Receptionist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CA311D83B3D40092ABF3 /* Receptionist.swift */; };
-		BD7D19BF1D8C5430008B563F /* FeedbackVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D19BE1D8C5430008B563F /* FeedbackVC.swift */; };
+		BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D19BE1D8C5430008B563F /* ImproveVC.swift */; };
 		BDB8F48C1D6B938200E4C7E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */; };
 		BDB8F4931D6B938200E4C7E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */; };
 		BDB8F4961D6B938200E4C7E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDB8F4941D6B938200E4C7E0 /* LaunchScreen.storyboard */; };
@@ -74,9 +75,10 @@
 		BD1551241D7611C30093CA2F /* SoulCasterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCasterTests.swift; sourceTree = "<group>"; };
 		BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcherTests.swift; sourceTree = "<group>"; };
 		BD1551481D764B9D0093CA2F /* ServerFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerFacade.swift; sourceTree = "<group>"; };
+		BD22B7C41DD7E65D0068532F /* ImproveButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveButton.swift; sourceTree = "<group>"; };
 		BD2BE1271DB948F600387190 /* PermissionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionController.swift; sourceTree = "<group>"; };
 		BD67CA311D83B3D40092ABF3 /* Receptionist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receptionist.swift; sourceTree = "<group>"; };
-		BD7D19BE1D8C5430008B563F /* FeedbackVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackVC.swift; sourceTree = "<group>"; };
+		BD7D19BE1D8C5430008B563F /* ImproveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveVC.swift; sourceTree = "<group>"; };
 		BDB8F4881D6B938200E4C7E0 /* Soulcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soulcast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -176,12 +178,13 @@
 			name = Outgoing;
 			sourceTree = "<group>";
 		};
-		BD7D19BD1D8C540F008B563F /* Feedback */ = {
+		BD7D19BD1D8C540F008B563F /* Improve */ = {
 			isa = PBXGroup;
 			children = (
-				BD7D19BE1D8C5430008B563F /* FeedbackVC.swift */,
+				BD7D19BE1D8C5430008B563F /* ImproveVC.swift */,
+				BD22B7C41DD7E65D0068532F /* ImproveButton.swift */,
 			);
-			name = Feedback;
+			name = Improve;
 			sourceTree = "<group>";
 		};
 		BDB8F47F1D6B938200E4C7E0 = {
@@ -229,7 +232,7 @@
 				BDF478C91D826ECF004F6CAA /* Incoming */,
 				BD0078831D888F930088939A /* Map */,
 				BD7D19BC1D8C51A4008B563F /* Outgoing */,
-				BD7D19BD1D8C540F008B563F /* Feedback */,
+				BD7D19BD1D8C540F008B563F /* Improve */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -422,10 +425,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */,
-				BD7D19BF1D8C5430008B563F /* FeedbackVC.swift in Sources */,
+				BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */,
 				BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */,
 				BD0DBF1B1D7CD9C700FBBD17 /* OnboardingVC.swift in Sources */,
 				BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */,
+				BD22B7C51DD7E65D0068532F /* ImproveButton.swift in Sources */,
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */,
 				BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */,

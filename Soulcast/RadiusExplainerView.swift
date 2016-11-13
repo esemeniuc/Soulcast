@@ -86,7 +86,10 @@ class RadiusExplainerView: UIView {
   
   func didTap() {
     dismiss()
+    
   }
+  
+  
   
   func dismiss() {
     UIView.animateWithDuration(0.19, animations: {

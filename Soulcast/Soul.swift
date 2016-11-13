@@ -6,7 +6,8 @@ import TheAmazingAudioEngine
 
 enum SoulType: String {
   case Broadcast = "Broadcast"
-  case Outgoing = "Outgoing"
+  case Improve = "Improve"
+  case Direct = "Direct"
 }
 
 class Soul: NSObject {
@@ -18,7 +19,7 @@ class Soul: NSObject {
   var radius: Double?
   var token: String?
 //  var device: Device?
-  var type: SoulType?
+  var type: SoulType = .Broadcast
   
   // Usage: postToServer(someSoul.toParams())
   func toParams() -> [String : AnyObject] {

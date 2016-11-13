@@ -11,7 +11,7 @@ protocol OutgoingVCDelegate {
 }
 
 class OutgoingVC: UIViewController {
-  
+  var soulType = SoulType.Broadcast
   var buttonSize:CGFloat = screenWidth * 0.28
   var outgoingButton: RecordButton!
   let inset:CGFloat = 15
@@ -23,6 +23,11 @@ class OutgoingVC: UIViewController {
   var soulRecorder = SoulRecorder()
   var soulCaster = SoulCaster()
   var displayLink: CADisplayLink!
+  
+  var maxRecordingDuration: Int {
+    get { return soulRecorder.maximumRecordDuration }
+    set { soulRecorder.maximumRecordDuration = newValue }
+  }
   
   var firstTime:Bool {
     get {
@@ -185,7 +190,7 @@ extension OutgoingVC: SoulRecorderDelegate {
     newSoul.longitude = delegate?.outgoingLongitude()
     newSoul.latitude = delegate?.outgoingLatitude()
     newSoul.token = Device.localDevice.token
-    newSoul.type = .Broadcast
+    newSoul.type = soulType
     
     soulCaster.cast(newSoul)
 
@@ -218,13 +223,14 @@ extension OutgoingVC: SoulCasterDelegate {
 }
 
 extension OutgoingVC: SoulPlayerDelegate {
-    func didStartPlaying(soul:Soul){
-        
-    }
-    func didFinishPlaying(soul:Soul){
-        outgoingButton.resetSuccess()
-    }
-    func didFailToPlay(soul:Soul){
-        
-    }
+  func didStartPlaying(soul:Soul){
+    
+  }
+  func didFinishPlaying(soul:Soul){
+    outgoingButton.resetSuccess()
+    delegate?.outgoingDidStop()
+  }
+  func didFailToPlay(soul:Soul){
+    
+  }
 }

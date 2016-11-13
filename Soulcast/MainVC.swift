@@ -16,6 +16,8 @@ class MainVC: UIViewController {
   var incomingVC:IncomingCollectionVC!
   var soulCatchers = Set<SoulCatcher>()
   
+  let improveVC = ImproveVC()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.clearColor()
@@ -41,7 +43,25 @@ class MainVC: UIViewController {
     UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 //        view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
     //    fetchLatestSoul()
+    let improveButton = ImproveButton(frame: CGRectZero)
     
+    improveButton.addTarget(self, action: #selector(improveButtonTapped), forControlEvents: .TouchUpInside)
+    view.addSubview(improveButton)
+    
+    
+  }
+  
+  func improveButtonTapped() {
+    print("feedbackButtonTapped")
+    promptImprove()
+  }
+  
+  func promptImprove() {
+    improveVC.delegate = self
+    improveVC.modalPresentationStyle = .OverCurrentContext
+    presentViewController(improveVC, animated: true) {
+      //
+    }
   }
   
   func fetchLatestSoul() {
@@ -167,3 +187,12 @@ extension MainVC: IncomingCollectionVCDelegate {
     dismissIncomingVC()
   }
 }
+
+extension MainVC: ImproveVCDelegate {
+  func didFinishGettingImprove() {
+    improveVC.dismissViewControllerAnimated(true) {
+      //
+    }
+  }
+}
+

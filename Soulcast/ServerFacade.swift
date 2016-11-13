@@ -36,6 +36,7 @@ class ServerFacade {
   }
   
   class func post(outgoingSoul: Soul, success:()->(), failure: (Int)->()) {
+    
     request(.POST,
       serverURL + "/souls/",
       parameters: outgoingSoul.toParams(),
@@ -43,16 +44,37 @@ class ServerFacade {
       headers: jsonHeader)
       .validate(statusCode: validStatusCodes)
       .responseString { response in
-      switch response.result{
-      case .Success:
-        print("Outgoing Soul Post success!")
-        success()
-      case .Failure:
-        print("Outgoing Soul Post Failure!")
-        if let r = response.response {
-          failure(r.statusCode)
+        switch response.result{
+        case .Success:
+          print("Outgoing Soul Post success!")
+          success()
+        case .Failure:
+          print("Outgoing Soul Post Failure!")
+          if let r = response.response {
+            failure(r.statusCode)
+          }
         }
-      }
+    }
+  }
+
+  class func improve(feedbackSoul: Soul, success:()->(), failure: (Int)->()) {
+    request(.POST,
+      serverURL + "/improves/",
+      parameters: feedbackSoul.toParams(),
+      encoding: .JSON,
+      headers: jsonHeader)
+      .validate(statusCode: validStatusCodes)
+      .responseString { response in
+        switch response.result{
+        case .Success:
+          print("Outgoing Soul Post success!")
+          success()
+        case .Failure:
+          print("Outgoing Soul Post Failure!")
+          if let r = response.response {
+            failure(r.statusCode)
+          }
+        }
     }
   }
   

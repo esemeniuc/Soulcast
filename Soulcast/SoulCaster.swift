@@ -142,11 +142,21 @@ class SoulCaster: NSObject {
   }
   
   private func postToServer(localSoul:Soul) {
-    
-    ServerFacade.post(localSoul, success: {
-      //success
-    }) { statusCode in
-      print(statusCode)
+    switch localSoul.type {
+    case .Broadcast:
+      ServerFacade.post(localSoul, success: {
+        //success
+      }) { statusCode in
+        print(statusCode)
+      }
+    case .Improve:
+      ServerFacade.improve(localSoul, success: {
+        //success
+      }) { statusCode in
+        print(statusCode)
+      }
+    case .Direct:
+      print("Posting direct soul to server!")
     }
   }
   
