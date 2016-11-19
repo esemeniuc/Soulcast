@@ -15,6 +15,7 @@ class MainVC: UIViewController {
   let outgoingVC = OutgoingVC()
   var incomingVC:IncomingCollectionVC!
   var soulCatchers = Set<SoulCatcher>()
+  var bufferSoulObject: [String : AnyObject]?
   
   let improveVC = ImproveVC()
   
@@ -73,10 +74,13 @@ class MainVC: UIViewController {
   }
   
   func receiveRemoteNotification(soulObject:[String : AnyObject]){
-    let tempSoulCatcher = SoulCatcher()
-    tempSoulCatcher.delegate = self
-    tempSoulCatcher.catchSoul(soulObject)
-    soulCatchers.insert(tempSoulCatcher)
+    bufferSoulObject = soulObject
+    if app.applicationState == .Active {
+      let tempSoulCatcher = SoulCatcher()
+      tempSoulCatcher.delegate = self
+      tempSoulCatcher.catchSoul(soulObject)
+      soulCatchers.insert(tempSoulCatcher)
+    }
     
   }
   

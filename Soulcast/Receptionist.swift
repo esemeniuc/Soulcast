@@ -25,30 +25,13 @@ class Receptionist: NSObject {
       NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: hasLaunchedKey)
     }
   }
-  private static var hasPushPermission: Bool {
-    return PermissionController.hasPushPermission
-  }
-  private static var hasAudioPermission: Bool {
-    return PermissionController.hasAudioPermission
-  }
-  private static var hasLocationPermission: Bool {
-    return LocationPermissionVC.hasLocationPermission
-  }
   
-  class var launchingViewController: UIViewController {
-    if needsOnboarding() {
-      return OnboardingVC()
-    } else {
-      return MainVC()
-    }
-  }
-  
-  private class func needsOnboarding() -> Bool {
+  class func needsOnboarding() -> Bool {
     if !hasLaunchedBefore {
       hasLaunchedBefore = true
       return true
     }
-    if !hasLocationPermission { //!hasPushPermission || !hasAudioPermission ||
+    if !PermissionController.hasLocationPermission {
       return true
     }
     return false

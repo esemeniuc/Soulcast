@@ -15,12 +15,7 @@ class LocationPermissionVC: PermissionVC {
   let locationManager = CLLocationManager()
   private static let hasLocationPermissionKey = "hasLocationPermission"
   
-  static var hasLocationPermission:Bool {
-    get {
-      let status = CLLocationManager.authorizationStatus()
-      return status == .AuthorizedAlways || status == .AuthorizedWhenInUse
-    }
-  }
+
   
   init() {
     super.init(title: locationTitle, description: locationDescription) { }

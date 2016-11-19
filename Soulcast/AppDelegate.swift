@@ -10,20 +10,20 @@ import UIKit
 import AWSS3
 import UserNotifications
 
-@UIApplicationMain
+
+
+let app = UIApplication.sharedApplication()
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     makeWindow()
-    window?.rootViewController = Receptionist.launchingViewController
-//    window?.rootViewController = MainVC()
-//        window?.rootViewController = MockingVC()
-//        window?.rootViewController = OnboardingVC()
+    let mainCoordinator = MainCoordinator()
+    window!.rootViewController = mainCoordinator.launchingViewController
 
-      receive(launchOptions)
+    receive(launchOptions)
 //    tester.testAllTheThings()
     self.window?.makeKeyAndVisible()
     configureAWS()
