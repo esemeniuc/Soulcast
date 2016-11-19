@@ -13,12 +13,7 @@ class ServerFacade {
   
   class func getLatest(success:([String : AnyObject])->(), failure:(Int)->()){
     //TODO: test.
-    request(.GET,
-      serverURL + "/souls",
-      parameters: Device.localDevice.toParams(),
-      encoding: .JSON,
-      headers: jsonHeader)
-      .validate()
+    get("souls", parameters: Device.localDevice.toParams())
       .responseJSON { (response) in
         switch response.result {
         case .Success(let JSON):
@@ -34,13 +29,7 @@ class ServerFacade {
   }
   
   class func post(outgoingSoul: Soul, success:()->(), failure: (Int)->()) {
-    
-    request(.POST,
-      serverURL + "/souls/",
-      parameters: outgoingSoul.toParams(),
-      encoding: .JSON,
-      headers: jsonHeader)
-      .validate()
+    post("souls", parameters: outgoingSoul.toParams())
       .responseString { response in
         switch response.result{
         case .Success:
@@ -56,12 +45,7 @@ class ServerFacade {
   }
 
   class func improve(feedbackSoul: Soul, success:()->(), failure: (Int)->()) {
-    request(.POST,
-      serverURL + "/improves/",
-      parameters: feedbackSoul.toParams(),
-      encoding: .JSON,
-      headers: jsonHeader)
-      .validate()
+    post("improves", parameters: feedbackSoul.toParams())
       .responseString { response in
         switch response.result{
         case .Success:
@@ -77,22 +61,14 @@ class ServerFacade {
   }
   
   class func echo(outgoingSoul: Soul, success:(Soul)->(), failure: (Int)->()) {
-    request(.POST,
-      serverURL + "/echo/",
-      parameters: (outgoingSoul.toParams()),
-      encoding: .JSON,
-      headers: jsonHeader)
-      .validate()
+    post("echo", parameters: outgoingSoul.toParams())
       .responseJSON { response in
       switch response.result{
       case .Success(let JSON):
         print("Echo Soul success!")
         let soul = Soul.fromHash(JSON as! NSDictionary)
         dump(soul)
-        
         success(soul)
-        
-        
       case .Failure:
         print("Echo Soul Failure!")
         if let r = response.response {
@@ -105,12 +81,7 @@ class ServerFacade {
   static let jsonHeader = ["Content-type":"application/json", "Accept":"application/json"]
   
   class func post(localDevice: Device, success:()->(), failure: (Int)->()) {
-    request(.POST,
-      serverURL + "/devices/",
-      parameters: localDevice.toParams(),
-      encoding: .JSON,
-      headers: jsonHeader)
-      .validate()
+    post("devices", parameters: localDevice.toParams())
       .responseJSON {
         (response) in
       switch response.result {
@@ -138,12 +109,7 @@ class ServerFacade {
     if let deviceInt = localDevice.id {
       deviceString = String(deviceInt)
     }
-    request(.PATCH,
-      serverURL + "/devices/" + deviceString,
-      parameters: localDevice.toParams(),
-      encoding: .JSON,
-      headers: ServerFacade.jsonHeader)
-      .validate()
+    patch("devices" + deviceString, parameters: localDevice.toParams())
       .responseString { (response) in
       switch response.result {
       case .Success:
@@ -159,11 +125,37 @@ class ServerFacade {
   
   class func report(soul:Soul) {
     request(.POST,
-            serverURL + "/report",
+            serverURL + "report",
             parameters: soul.toParams(),
             encoding: .JSON,
             headers: ServerFacade.jsonHeader)
     
   }
   
+  private class func get( route: String, parameters: [String: AnyObject]? = nil)
+    -> Request {
+      return request(.GET,
+                     serverURL + route,
+                     parameters: parameters,
+                     encoding: .JSON,
+                     headers: ServerFacade.jsonHeader).validate()
+  }
+  
+  private class func post( route: String, parameters: [String: AnyObject]? = nil)
+    -> Request {
+      return request(.POST,
+                     serverURL + route,
+                     parameters: parameters,
+                     encoding: .JSON,
+                     headers: ServerFacade.jsonHeader).validate()
+  }
+  
+  private class func patch( route: String, parameters: [String: AnyObject]? = nil)
+    -> Request {
+      return request(.PATCH,
+                     serverURL + route,
+                     parameters: parameters,
+                     encoding: .JSON,
+                     headers: ServerFacade.jsonHeader).validate()
+  }
 }
