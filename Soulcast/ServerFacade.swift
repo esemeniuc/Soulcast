@@ -10,8 +10,6 @@ import Foundation
 import Alamofire
 
 class ServerFacade {
-  //
-  static let validStatusCodes = 100..<400
   
   class func getLatest(success:([String : AnyObject])->(), failure:(Int)->()){
     //TODO: test.
@@ -20,7 +18,7 @@ class ServerFacade {
       parameters: Device.localDevice.toParams(),
       encoding: .JSON,
       headers: jsonHeader)
-      .validate(statusCode:validStatusCodes)
+      .validate()
       .responseJSON { (response) in
         switch response.result {
         case .Success(let JSON):
@@ -42,7 +40,7 @@ class ServerFacade {
       parameters: outgoingSoul.toParams(),
       encoding: .JSON,
       headers: jsonHeader)
-      .validate(statusCode: validStatusCodes)
+      .validate()
       .responseString { response in
         switch response.result{
         case .Success:
@@ -63,7 +61,7 @@ class ServerFacade {
       parameters: feedbackSoul.toParams(),
       encoding: .JSON,
       headers: jsonHeader)
-      .validate(statusCode: validStatusCodes)
+      .validate()
       .responseString { response in
         switch response.result{
         case .Success:
@@ -84,7 +82,7 @@ class ServerFacade {
       parameters: (outgoingSoul.toParams()),
       encoding: .JSON,
       headers: jsonHeader)
-      .validate(statusCode: validStatusCodes)
+      .validate()
       .responseJSON { response in
       switch response.result{
       case .Success(let JSON):
@@ -112,7 +110,7 @@ class ServerFacade {
       parameters: localDevice.toParams(),
       encoding: .JSON,
       headers: jsonHeader)
-      .validate(statusCode: validStatusCodes)
+      .validate()
       .responseJSON {
         (response) in
       switch response.result {
@@ -145,7 +143,7 @@ class ServerFacade {
       parameters: localDevice.toParams(),
       encoding: .JSON,
       headers: ServerFacade.jsonHeader)
-      .validate(statusCode: validStatusCodes)
+      .validate()
       .responseString { (response) in
       switch response.result {
       case .Success:

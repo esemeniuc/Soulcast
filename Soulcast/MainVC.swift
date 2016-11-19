@@ -9,62 +9,53 @@
 import Foundation
 import UIKit
 
+protocol MainVCDelegate: class {
+  func promptImprove()
+  func presentIncomingVC()
+}
+
 class MainVC: UIViewController {
-  //
   let mapVC = MapVC()
   let outgoingVC = OutgoingVC()
-  var incomingVC:IncomingCollectionVC!
   var soulCatchers = Set<SoulCatcher>()
-  var bufferSoulObject: [String : AnyObject]?
   
-  let improveVC = ImproveVC()
-  
+  weak var delegate: MainVCDelegate?
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.clearColor()
-    let childVCs:[UIViewController] = [mapVC, outgoingVC]
+    add(children:[mapVC, outgoingVC])
+    addImproveButton()
+  }
+  
+  func addImproveButton() {
+    let improveButton = ImproveButton(frame: CGRectZero)
+    improveButton.addTarget(self, action: #selector(improveButtonTapped), forControlEvents: .TouchUpInside)
+    view.addSubview(improveButton)
+  }
+  
+  func add(children childVCs:[UIViewController]) {
     mapVC.delegate = self
     outgoingVC.delegate = self
-    
     for eachVC in childVCs {
       addChildViewController(eachVC)
       view.addSubview(eachVC.view)
       eachVC.didMoveToParentViewController(self)
     }
-    
-    
   }
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    if !soloQueue.isEmpty {
-      presentIncomingVC()
-    }
-    deviceManager.register(Device.localDevice)
-    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+    pushHandler.activate()
 //        view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
-    //    fetchLatestSoul()
-    let improveButton = ImproveButton(frame: CGRectZero)
-    
-    improveButton.addTarget(self, action: #selector(improveButtonTapped), forControlEvents: .TouchUpInside)
-    view.addSubview(improveButton)
-    
     
   }
   
   func improveButtonTapped() {
     print("feedbackButtonTapped")
-    promptImprove()
+    delegate?.promptImprove()
   }
-  
-  func promptImprove() {
-    improveVC.delegate = self
-    improveVC.modalPresentationStyle = .OverCurrentContext
-    presentViewController(improveVC, animated: true) {
-      //
-    }
-  }
-  
+    
   func fetchLatestSoul() {
     SoulCatcher.fetchLatest { resultSoul in
       if resultSoul != nil {
@@ -74,39 +65,22 @@ class MainVC: UIViewController {
   }
   
   func receiveRemoteNotification(soulObject:[String : AnyObject]){
-    bufferSoulObject = soulObject
-    if app.applicationState == .Active {
       let tempSoulCatcher = SoulCatcher()
       tempSoulCatcher.delegate = self
       tempSoulCatcher.catchSoul(soulObject)
       soulCatchers.insert(tempSoulCatcher)
-    }
     
   }
   
   func displaySoul(incomingSoul:Soul) {
     if isViewLoaded() && view.window != nil {
       if soloQueue.isEmpty {
-        presentIncomingVC()
+        delegate?.presentIncomingVC()
       }
     }
     soloQueue.enqueue(incomingSoul)
   }
-  
-  func presentIncomingVC() {
-    if incomingVC == nil {
-      incomingVC = IncomingCollectionVC()
-    }
-    incomingVC.delegate = self
-    addChildViewController(incomingVC)
-    incomingVC.view.frame = IncomingCollectionVC.beforeFrame
-    view.addSubview(incomingVC.view)
-    incomingVC.view.userInteractionEnabled = true
-    incomingVC.didMoveToParentViewController(self)
-    UIView.animateWithDuration(0.67) {
-      self.incomingVC.view.frame = IncomingCollectionVC.afterFrame
-    }
-  }
+
   
   static func getInstance(vc:UIViewController?) -> MainVC? {
     if vc is MainVC {
@@ -124,17 +98,6 @@ class MainVC: UIViewController {
     return hypothesis
   }
   
-  func dismissIncomingVC() {
-    incomingVC.willMoveToParentViewController(nil)
-    incomingVC.view.userInteractionEnabled = false
-    UIView.animateWithDuration(0.67, animations: {
-      self.incomingVC.view.frame = IncomingCollectionVC.beforeFrame
-    }){ completed in
-      self.incomingVC.view.removeFromSuperview()
-      self.incomingVC.removeFromParentViewController()
-    }
-    
-  }
   
 }
 
@@ -173,7 +136,6 @@ extension MainVC: SoulCatcherDelegate {
     soulCatchers.remove(catcher)
   }
   func soulDidFailToDownload(catcher:SoulCatcher){
-    //TODO: notify..
     let alertController = UIAlertController(title: "Could not catch soul", message: "After trying numerous times to catch it, this one got away", preferredStyle: .Alert)
     let okAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
       //
@@ -186,17 +148,4 @@ extension MainVC: SoulCatcherDelegate {
   }
 }
 
-extension MainVC: IncomingCollectionVCDelegate {
-  func didRunOutOfSouls() {
-    dismissIncomingVC()
-  }
-}
-
-extension MainVC: ImproveVCDelegate {
-  func didFinishGettingImprove() {
-    improveVC.dismissViewControllerAnimated(true) {
-      //
-    }
-  }
-}
 

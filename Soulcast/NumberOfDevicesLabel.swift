@@ -97,7 +97,6 @@ class NumberOfDevicesLabel: UILabel {
   }
   
   func wiggle() {
-    //TODO: animate.
     let animation = CABasicAnimation()
     animation.duration = 0.05
     animation.repeatCount = 2

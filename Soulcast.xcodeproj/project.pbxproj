@@ -25,6 +25,7 @@
 		BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */; };
 		BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551481D764B9D0093CA2F /* ServerFacade.swift */; };
 		BD22B7C51DD7E65D0068532F /* ImproveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22B7C41DD7E65D0068532F /* ImproveButton.swift */; };
+		BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22E76C1DE1041600C79E33 /* PushHandler.swift */; };
 		BD2BE1281DB948F600387190 /* PermissionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BE1271DB948F600387190 /* PermissionController.swift */; };
 		BD67CA321D83B3D40092ABF3 /* Receptionist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CA311D83B3D40092ABF3 /* Receptionist.swift */; };
 		BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D19BE1D8C5430008B563F /* ImproveVC.swift */; };
@@ -48,6 +49,7 @@
 		BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */; };
 		BDCE02B51DB2CD8F00D3D0CF /* EulaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCE02B41DB2CD8F00D3D0CF /* EulaVC.swift */; };
 		BDCE02B71DB2E47F00D3D0CF /* eula.txt in Resources */ = {isa = PBXBuildFile; fileRef = BDCE02B61DB2E47F00D3D0CF /* eula.txt */; };
+		BDD072F21DE10807008EDF4E /* LaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD072F11DE10807008EDF4E /* LaunchHelper.swift */; };
 		BDF478CE1D826EE3004F6CAA /* IncomingCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */; };
 		BDF478CF1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */; };
 		BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */; };
@@ -78,6 +80,7 @@
 		BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcherTests.swift; sourceTree = "<group>"; };
 		BD1551481D764B9D0093CA2F /* ServerFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerFacade.swift; sourceTree = "<group>"; };
 		BD22B7C41DD7E65D0068532F /* ImproveButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveButton.swift; sourceTree = "<group>"; };
+		BD22E76C1DE1041600C79E33 /* PushHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushHandler.swift; sourceTree = "<group>"; };
 		BD2BE1271DB948F600387190 /* PermissionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionController.swift; sourceTree = "<group>"; };
 		BD67CA311D83B3D40092ABF3 /* Receptionist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receptionist.swift; sourceTree = "<group>"; };
 		BD7D19BE1D8C5430008B563F /* ImproveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveVC.swift; sourceTree = "<group>"; };
@@ -103,6 +106,7 @@
 		BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingVC.swift; sourceTree = "<group>"; };
 		BDCE02B41DB2CD8F00D3D0CF /* EulaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EulaVC.swift; sourceTree = "<group>"; };
 		BDCE02B61DB2E47F00D3D0CF /* eula.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eula.txt; sourceTree = "<group>"; };
+		BDD072F11DE10807008EDF4E /* LaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchHelper.swift; sourceTree = "<group>"; };
 		BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionVC.swift; sourceTree = "<group>"; };
 		BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionCell.swift; sourceTree = "<group>"; };
@@ -220,10 +224,11 @@
 			isa = PBXGroup;
 			children = (
 				BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */,
+				BDD072F11DE10807008EDF4E /* LaunchHelper.swift */,
 				BDB8F4B51D6BA8DA00E4C7E0 /* Soul.swift */,
 				BDB8F4A11D6BA79C00E4C7E0 /* UI */,
-				BDB8F4A31D6BA7BF00E4C7E0 /* Audio */,
 				BDB8F4B91D6BB0A200E4C7E0 /* Transmission */,
+				BDB8F4A31D6BA7BF00E4C7E0 /* Audio */,
 				BDB8F4A61D6BA7D600E4C7E0 /* Device */,
 				BDB8F4A21D6BA7AF00E4C7E0 /* Tests */,
 				BDB8F4B31D6BA82700E4C7E0 /* SwiftJK.swift */,
@@ -297,9 +302,18 @@
 			name = Transmission;
 			sourceTree = "<group>";
 		};
+		BDD072F31DE108E1008EDF4E /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				BD22E76C1DE1041600C79E33 /* PushHandler.swift */,
+			);
+			name = Push;
+			sourceTree = "<group>";
+		};
 		BDF478C91D826ECF004F6CAA /* Incoming */ = {
 			isa = PBXGroup;
 			children = (
+				BDD072F31DE108E1008EDF4E /* Push */,
 				BDF478D21D826F3C004F6CAA /* TimeAgo.swift */,
 				BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */,
 				BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */,
@@ -473,8 +487,10 @@
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
 				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,
 				BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */,
+				BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */,
 				BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */,
 				BDF478D51D836E61004F6CAA /* IntegrationTestButton.swift in Sources */,
+				BDD072F21DE10807008EDF4E /* LaunchHelper.swift in Sources */,
 				BD0DBF261D7E24C200FBBD17 /* LocationPermissionVC.swift in Sources */,
 				BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */,
 				BD0078821D88865E0088939A /* NumberOfDevicesLabel.swift in Sources */,

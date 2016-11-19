@@ -3,13 +3,15 @@
 import Foundation
 import UIKit
 
-
+protocol OnboardingVCDelegate {
+  func transitionToMainVC()
+}
 
 class OnboardingVC: UIViewController {
   
   let pageVC = JKPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
   var eachPageVCs = [UIViewController]()
-  
+  var delegate: OnboardingVCDelegate?
 //  private let pushPermissionVC = PushPermissionVC()
 //  private let audioPermissionVC = AudioPermissionVC()
 //  private let locationPermissionVC = LocationPermissionVC()
@@ -49,13 +51,12 @@ class OnboardingVC: UIViewController {
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.25 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) {
       if vc is LocationPermissionVC {
-        self.transitionToMainVC()
+        self.delegate?.transitionToMainVC()
       } else {
         let index = self.pageVC.currentIndex
         self.pageVC.scrollToVC(index + 1, direction: .Forward)
       }
     }
-
   }
 }
 
@@ -69,28 +70,10 @@ extension OnboardingVC: PermissionVCDelegate {
       //wait
       waitAndScrollFrom(vc)
     }
-    
-  }
-  
-  func transitionToMainVC() {
-    let window = UIApplication.sharedApplication().keyWindow!
-    if window.rootViewController is MainVC {
-      return
-    }
-    let mainVC = MainVC()
-    mainVC.view.alpha = 0
-    window.backgroundColor = UIColor.whiteColor()
-    window.rootViewController = mainVC
-    window.makeKeyAndVisible()
-    UIView.animateWithDuration(1, animations: {
-      mainVC.view.alpha = 1
-    })
-
   }
   
   func deniedPermission(vc: PermissionVC) {
-    //TODO:
-    self.transitionToMainVC()
+    delegate?.transitionToMainVC()
   }
 }
 

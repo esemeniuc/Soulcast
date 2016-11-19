@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-protocol ImproveVCDelegate {
+protocol ImproveVCDelegate: class {
   func didFinishGettingImprove()
 }
 
 class ImproveVC: UIViewController {
   
-  var delegate:ImproveVCDelegate?
+  weak var delegate:ImproveVCDelegate?
   var outgoingVC = OutgoingVC()
   
-  let descriptionText = "Help us improve Soulcast. We're listening!"
+  let descriptionText = "Help us improve Soulcast. \nWe're listening!"
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -46,7 +46,7 @@ class ImproveVC: UIViewController {
       x: inset,
       y: inset,
       width: view.bounds.width - 2 * inset,
-      height: view.bounds.width - 2 * inset))
+      height: view.bounds.width * 1.2 ))
     descriptionLabel.text = descriptionText
     descriptionLabel.numberOfLines = 0
     descriptionLabel.textColor = UIColor.darkGrayColor()

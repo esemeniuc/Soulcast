@@ -14,61 +14,38 @@ import UserNotifications
 
 let app = UIApplication.sharedApplication()
 
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
+  let mainCoordinator = MainCoordinator()
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    makeWindow()
-    let mainCoordinator = MainCoordinator()
-    window!.rootViewController = mainCoordinator.launchingViewController
-
+    launchWindow()
     receive(launchOptions)
-//    tester.testAllTheThings()
-    self.window?.makeKeyAndVisible()
-    configureAWS()
+    LaunchHelper.launch()
+    //    tester.testAllTheThings()
     return true
   }
   
-  func makeWindow() {
+  func launchWindow() {
     if window == nil {
       window = UIWindow(frame: UIScreen.mainScreen().bounds)
       window?.backgroundColor = UIColor.whiteColor()
     }
+    window!.rootViewController = mainCoordinator.rootVC
+    window!.makeKeyAndVisible()
+
   }
   
   func receive(launchOptions: [NSObject:AnyObject]?){
     if let options = launchOptions,
       let userInfo = options[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String:AnyObject],
       let soulHash = userInfo["soulObject"] as? [String:AnyObject] {
-      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
-      dispatch_after(delayTime, dispatch_get_main_queue()) {
-//        let soulObject = Soul.fromHash(soulHash)
-//        let alert = UIAlertController(title: "options", message: String(soulObject), preferredStyle: .Alert)
-//        self.window!.rootViewController!.presentViewController(alert, animated: true, completion: {
-//          //
-//        })
-        if let theWindow = self.window,
-          let rootVC = theWindow.rootViewController,
-          let mainVC = MainVC.getInstance(rootVC) {
-          mainVC.receiveRemoteNotification(soulHash)
-        }
-      }
+      pushHandler.handle(soulHash)
     }
     
   }
-
-  func configureAWS() {
-    let credentialsProvider = AWSCognitoCredentialsProvider(
-      regionType: .USWest2,
-      identityPoolId: CognitoIdentityPoolId)
-    let configuration = AWSServiceConfiguration(
-      region: .USWest2,
-      credentialsProvider: credentialsProvider)
-    AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
-    AWSLogger.defaultLogger().logLevel = .Verbose
-  }
-  
 
 }
 
@@ -98,7 +75,6 @@ extension AppDelegate { //push
     deviceManager.register(Device.localDevice)
   }
   
-  
   static func tokenString(from deviceToken:NSData) -> String{
     let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
     var tokenString = ""
@@ -114,11 +90,8 @@ extension AppDelegate { //push
   }
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-    for eachItem in userInfo {
-      print(eachItem)
-    }
-    if let soulObject = userInfo["soulObject"] as? [String: AnyObject]{
-      MainVC.getInstance((window?.rootViewController)!)?.receiveRemoteNotification(soulObject)
+    if let soulHash = userInfo["soulObject"] as? [String: AnyObject]{
+      pushHandler.handle(soulHash)
     } else {
       assert(false, "The soul object isn't recognized!")
     }
@@ -131,7 +104,6 @@ extension AppDelegate { //push
 extension AppDelegate { //aws
   
   func application(application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: () -> Void) {
-    
     AWSS3TransferUtility.interceptApplication(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
   }
   
@@ -159,6 +131,7 @@ extension AppDelegate { //etc
   
   func applicationDidBecomeActive(application: UIApplication) {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    pushHandler.activate()
   }
 
 }
