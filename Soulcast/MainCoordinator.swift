@@ -17,7 +17,7 @@ class MainCoordinator: NSObject {
   var onboardingVC: OnboardingVC?
   
   var rootVC:UIViewController {
-    return HistoryVC()
+//    return HistoryVC()
     return navVC
   }
   
@@ -44,6 +44,8 @@ class MainCoordinator: NSObject {
 extension MainCoordinator: UINavigationControllerDelegate {
   func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
     switch viewController {
+    case is OnboardingVC:
+      navigationController.navigationBarHidden = true
       case is MainVC:
       navigationController.navigationBarHidden = true
     case is ImproveVC:
@@ -61,6 +63,7 @@ extension MainCoordinator: OnboardingVCDelegate {
     }
     if mainVC == nil {
       mainVC = MainVC()
+      mainVC!.delegate = self
     }
     mainVC!.view.alpha = 0
     window.backgroundColor = UIColor.whiteColor()
@@ -84,7 +87,19 @@ extension MainCoordinator: MainVCDelegate {
     historyVC.delegate = self
     navVC.pushViewController(historyVC, animated: true)
   }
-  
+  func presentIncomingVC() {
+    //TODO: screenshot background and make it window's background...
+    if incomingVC == nil {
+      incomingVC = IncomingCollectionVC()
+    }
+    incomingVC.delegate = self
+//    self.incomingVC.view.frame = IncomingCollectionVC.afterFrame
+//    incomingVC.view.frame = IncomingCollectionVC.beforeFrame
+    self.incomingVC.view.userInteractionEnabled = true
+    navVC.presentViewController(incomingVC, animated: true) {
+      self.incomingVC.view.userInteractionEnabled = true
+    }
+  }
 }
 
 
@@ -101,30 +116,13 @@ extension MainCoordinator: IncomingCollectionVCDelegate {
   func didRunOutOfSouls() {
     dismissIncomingVC()
   }
-  func presentIncomingVC() {
-    if incomingVC == nil {
-      incomingVC = IncomingCollectionVC()
-    }
-    incomingVC.delegate = self
-    incomingVC.view.frame = IncomingCollectionVC.beforeFrame
-    navVC.presentViewController(incomingVC, animated: false) {
+  
+  func dismissIncomingVC() {
+    incomingVC.dismissViewControllerAnimated(true) { 
       //
     }
-    incomingVC.view.userInteractionEnabled = true
-    UIView.animateWithDuration(0.67) {
-      self.incomingVC.view.frame = IncomingCollectionVC.afterFrame
-    }
-  }
-  func dismissIncomingVC() {
-    incomingVC.willMoveToParentViewController(nil)
-    incomingVC.view.userInteractionEnabled = false
-    UIView.animateWithDuration(0.67, animations: {
-      self.incomingVC.view.frame = IncomingCollectionVC.beforeFrame
-    }){ completed in
-      self.incomingVC.view.removeFromSuperview()
-      self.incomingVC.removeFromParentViewController()
-    }
-    
+//    incomingVC.view.userInteractionEnabled = false
+//    navVC.popToRootViewControllerAnimated(true)
   }
 }
 

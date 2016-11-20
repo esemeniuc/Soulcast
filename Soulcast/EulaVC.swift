@@ -29,22 +29,22 @@ class EulaVC: UIViewController {
   weak var delegate: EulaVCDelegate?
   
   override func viewDidLoad() {
-    let margin:CGFloat = 25
+    let margin:CGFloat = 15
     okButton.setTitle("Agree", forState: .Normal)
     let buttonWidth:CGFloat = 100
     let buttonHeight:CGFloat = 50
-    okButton.frame = CGRectMake(
-      (screenWidth - buttonWidth)/2,
-      screenHeight - buttonHeight - margin,
-      buttonWidth, buttonHeight)
+    okButton.frame = CGRect(
+      x: (screenWidth - buttonWidth)/2,
+      y: screenHeight - buttonHeight - margin,
+      width: buttonWidth, height: buttonHeight)
     okButton.addTarget(self, action: #selector(okButtonTapped), forControlEvents: .TouchUpInside)
     
     
-    eulaContainerView.frame = CGRectMake(
-      margin,
-      margin,
-      screenWidth - 2*margin,
-      screenHeight - 3*margin - buttonHeight)
+    eulaContainerView.frame = CGRect(
+      x: margin,
+      y: margin,
+      width: screenWidth - 2*margin,
+      height: screenHeight - 3*margin - buttonHeight)
     view.addSubview(eulaContainerView)
 
     eulaTextView.text = agreementString
