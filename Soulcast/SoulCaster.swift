@@ -10,7 +10,7 @@ enum UploaderState: String {
   case Finished = "Finished"
 }
 
-protocol SoulCasterDelegate {
+protocol SoulCasterDelegate: class {
   func soulDidStartUploading()
   func soulIsUploading(progress:Float)
   func soulDidFinishUploading(soul:Soul)
@@ -27,7 +27,7 @@ class SoulCaster: NSObject {
   let fileContentTypeStr = "audio/mpeg"
   
   var outgoingSoul:Soul?
-  var delegate:SoulCasterDelegate?
+  weak var delegate:SoulCasterDelegate?
   
   var state:UploaderState = .NotReady {
     didSet {

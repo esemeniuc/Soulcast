@@ -2,7 +2,7 @@
 import Foundation
 import UIKit
 
-protocol PermissionVCDelegate {
+protocol PermissionVCDelegate: class {
   func gotPermission(vc:PermissionVC)
   func deniedPermission(vc:PermissionVC)
 }
@@ -15,7 +15,7 @@ class PermissionVC: UIViewController {
   var requestAction: () -> ()
   var hasPermission: Bool = false
   
-  var delegate: PermissionVCDelegate?
+  weak var delegate: PermissionVCDelegate?
   
   let toggleButton = UISwitch()
   

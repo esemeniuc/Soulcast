@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 
-protocol OnboardingVCDelegate {
+protocol OnboardingVCDelegate: class {
   func transitionToMainVC()
 }
 
@@ -11,7 +11,7 @@ class OnboardingVC: UIViewController {
   
   let pageVC = JKPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
   var eachPageVCs = [UIViewController]()
-  var delegate: OnboardingVCDelegate?
+  weak var delegate: OnboardingVCDelegate?
 //  private let pushPermissionVC = PushPermissionVC()
 //  private let audioPermissionVC = AudioPermissionVC()
 //  private let locationPermissionVC = LocationPermissionVC()

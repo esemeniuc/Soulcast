@@ -5,7 +5,7 @@ import UIKit
 
 let soloQueue = IncomingQueue()
 
-protocol IncomingQueueDelegate {
+protocol IncomingQueueDelegate: class {
   func didEnqueue()
   func didDequeue()
   func didBecomeEmpty()
@@ -15,7 +15,7 @@ class IncomingQueue: NSObject, UICollectionViewDataSource {
   let cellIdentifier:String = NSStringFromClass(IncomingCollectionCell)
   var count:Int {return soulQueue.count}
   private let soulQueue = Queue<Soul>()
-  var delegate:IncomingQueueDelegate?
+  weak var delegate:IncomingQueueDelegate?
   
   func enqueue(someSoul:Soul) {
     soulQueue.append(someSoul)

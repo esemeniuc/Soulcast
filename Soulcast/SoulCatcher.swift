@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import AWSS3
 
-protocol SoulCatcherDelegate {
+protocol SoulCatcherDelegate: class {
   func soulDidStartToDownload(catcher:SoulCatcher, soul:Soul)
   func soulIsDownloading(catcher:SoulCatcher, progress:Float)
   func soulDidFinishDownloading(catcher:SoulCatcher, soul:Soul)
@@ -20,7 +20,7 @@ protocol SoulCatcherDelegate {
 class SoulCatcher: NSObject {
   
   var catchingSoul: Soul?
-  var delegate: SoulCatcherDelegate?
+  weak var delegate: SoulCatcherDelegate?
   var progress: Float = 0
   static let soulCaughtNotification = "soulCaughtNotification"
   

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol EulaVCDelegate {
+protocol EulaVCDelegate: class {
   func didTapOKButton(vc:EulaVC)
 }
 
@@ -26,7 +26,7 @@ class EulaVC: UIViewController {
   let okButton = UIButton(type: .System)
   let eulaContainerView = UIView()
   let eulaTextView = UITextView()
-  var delegate: EulaVCDelegate?
+  weak var delegate: EulaVCDelegate?
   
   override func viewDidLoad() {
     let margin:CGFloat = 25

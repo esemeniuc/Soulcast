@@ -2,7 +2,7 @@
 
 import UIKit
 
-protocol OutgoingVCDelegate {
+protocol OutgoingVCDelegate: class {
   func outgoingRadius() -> Double
   func outgoingLongitude() -> Double
   func outgoingLatitude() -> Double
@@ -40,7 +40,7 @@ class OutgoingVC: UIViewController {
     set {  NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "recordingFirstTime") }
   }
   
-  var delegate: OutgoingVCDelegate?
+  weak var delegate: OutgoingVCDelegate?
   
   override func viewDidLoad() {
     super.viewDidLoad()

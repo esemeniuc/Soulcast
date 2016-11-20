@@ -9,17 +9,19 @@
 import Foundation
 import UIKit
 
-protocol HistoryDataSourceDelegate {
+protocol HistoryDataSourceDelegate: class {
   func willFetch()
   func didFetch(success:Bool)
 }
 
 class HistoryDataSource: NSObject {
   private var souls = [Soul]()
-  var delegate: HistoryDataSourceDelegate?
+  //  private var soulCatchers = Set<SoulCatcher>()
+  weak var delegate: HistoryDataSourceDelegate?
   func fetch() {
     delegate?.willFetch()
     MockServerFacade.getHistory({ souls in
+      
       self.souls = souls
       
       self.delegate?.didFetch(true)
@@ -32,6 +34,21 @@ class HistoryDataSource: NSObject {
       return nil
     }
     return souls[index]
+  }
+}
+
+extension HistoryDataSource: SoulCatcherDelegate {
+  func soulDidStartToDownload(catcher: SoulCatcher, soul: Soul) {
+    //
+  }
+  func soulIsDownloading(catcher: SoulCatcher, progress: Float) {
+    //
+  }
+  func soulDidFinishDownloading(catcher: SoulCatcher, soul: Soul) {
+    //
+  }
+  func soulDidFailToDownload(catcher: SoulCatcher) {
+    //
   }
 }
 

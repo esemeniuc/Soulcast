@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol IncomingCollectionVCDelegate {
+protocol IncomingCollectionVCDelegate: class {
   func didRunOutOfSouls()
 }
 
@@ -27,7 +27,7 @@ class IncomingCollectionVC: UICollectionViewController {
     width: screenWidth - inset * 2,
     height: screenHeight * (1-topSpaceProportion))
   let cellIdentifier:String = NSStringFromClass(IncomingCollectionCell)
-  var delegate:IncomingCollectionVCDelegate?
+  weak var delegate:IncomingCollectionVCDelegate?
   
   init() {
     super.init(collectionViewLayout: IncomingCollectionFlowLayout())

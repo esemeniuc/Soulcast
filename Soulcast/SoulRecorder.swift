@@ -21,7 +21,7 @@ enum RecorderState {
   case Err
 }
 
-protocol SoulRecorderDelegate {
+protocol SoulRecorderDelegate: class {
   func soulDidStartRecording()
   func soulIsRecording(progress:CGFloat)
   func soulDidFinishRecording(newSoul: Soul)
@@ -36,7 +36,7 @@ class SoulRecorder: NSObject {
   var displayLink:CADisplayLink!
   var displayCounter:Int = 0
   var recorder:AERecorder?
-  var delegate:SoulRecorderDelegate?
+  weak var delegate:SoulRecorderDelegate?
   //records and spits out the url
   var state: RecorderState = .Standby{
     didSet{

@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-protocol IncomingCollectionCellDelegate {
+protocol IncomingCollectionCellDelegate: class {
   func didTapReport()
 }
 
 class IncomingCollectionCell: UICollectionViewCell {
 
   var reportButton:UIButton!
-  var delegate:IncomingCollectionCellDelegate?
+  weak var delegate:IncomingCollectionCellDelegate?
   
   var radius:Float = 0 {
     didSet {

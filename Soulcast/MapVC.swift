@@ -3,7 +3,7 @@
 import UIKit
 import MapKit
 
-protocol MapVCDelegate {
+protocol MapVCDelegate: class {
   func mapVCDidChangeradius(radius:Double)
 }
 
@@ -49,7 +49,7 @@ class MapVC: UIViewController {
       CGRect(x: 22, y: 22, width: 55, height: 55))
   var devicesLabelUpdating = false
   var devicesLabelUpdatedRecently = false
-  var delegate: MapVCDelegate?
+  weak var delegate: MapVCDelegate?
   
   var timer:NSTimer?
   
