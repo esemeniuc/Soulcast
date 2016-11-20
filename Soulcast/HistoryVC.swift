@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol HistoryVCDelegate: class {
+  //TODO:
+}
+
 ///displays a list of souls played in the past in reverse chronological order since 24 hours ago
 class HistoryVC: UIViewController {
   //title label
@@ -17,6 +21,7 @@ class HistoryVC: UIViewController {
   override func viewDidLoad() {
     addTableView()
   }
+  weak var delegate: HistoryVCDelegate?
   
   func addTableView() {
     let tableHeight = view.bounds.height * 0.9
@@ -84,10 +89,14 @@ extension HistoryVC: HistoryDataSourceDelegate {
   
   func didFetch(success: Bool) {
     if success {
-      tableView.reloadData()
+      //remove loading
     } else {
       //show failure, retry button.
     }
+  }
+  
+  func didAppend() {
+    tableView.reloadData()
   }
   
 }

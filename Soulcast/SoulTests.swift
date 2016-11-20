@@ -94,9 +94,8 @@ extension SoulTester: SoulCasterDelegate {
   func soulDidFinishUploading(soul:Soul){
     //download
     soul.type = .Broadcast
-    let soulCatcher = SoulCatcher()
+    let soulCatcher = SoulCatcher(soul:soul)
     soulCatcher.delegate = self
-    soulCatcher.catchSoulObject(soul)
   }
   func soulDidFailToUpload(){
     

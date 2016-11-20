@@ -79,13 +79,21 @@ extension MainCoordinator: MainVCDelegate {
     navVC.pushViewController(improveVC, animated: true)
   }
 
+  func promptHistory() {
+    let historyVC = HistoryVC()
+    historyVC.delegate = self
+    navVC.pushViewController(historyVC, animated: true)
+  }
+  
 }
 
 
-extension MainCoordinator: ImproveVCDelegate {
+extension MainCoordinator: ImproveVCDelegate, HistoryVCDelegate {
   func didFinishGettingImprove() {
     navVC.popToRootViewControllerAnimated(true)
   }
+  
+  
 }
 
 

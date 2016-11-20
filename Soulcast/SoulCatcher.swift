@@ -19,7 +19,7 @@ protocol SoulCatcherDelegate: class {
 //downloads a soul and puts it in a queue
 class SoulCatcher: NSObject {
   
-  var catchingSoul: Soul?
+  var catchingSoul: Soul
   weak var delegate: SoulCatcherDelegate?
   var progress: Float = 0
   static let soulCaughtNotification = "soulCaughtNotification"
@@ -29,15 +29,22 @@ class SoulCatcher: NSObject {
   
   var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
 
-  func setup() {
-
+  init(soul:Soul) {
+    catchingSoul = soul
+    super.init()
+    catchSoulObject(catchingSoul)
+  }
+  init(soulHash:[String : AnyObject]) {
+    catchingSoul = Soul.fromAPNSHash(soulHash)
+    super.init()
+    catchSoulObject(catchingSoul)
   }
   
-  func catchSoul(soulInfo:[String : AnyObject]) {
+  private func catchSoul(soulInfo:[String : AnyObject]) {
     catchSoulObject(Soul.fromAPNSHash(soulInfo))
   }
   
-  func catchSoulObject(incomingSoul:Soul) {
+  private func catchSoulObject(incomingSoul:Soul) {
     startDownloading(incomingSoul)
   }
   

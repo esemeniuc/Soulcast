@@ -12,17 +12,19 @@ import UIKit
 protocol HistoryDataSourceDelegate: class {
   func willFetch()
   func didFetch(success:Bool)
+  func didAppend()
 }
 
 class HistoryDataSource: NSObject {
-  private var souls = [Soul]()
-  //  private var soulCatchers = Set<SoulCatcher>()
+  private var souls = [Soul]() 
+  private var soulCatchers = Set<SoulCatcher>()
   weak var delegate: HistoryDataSourceDelegate?
+  
   func fetch() {
     delegate?.willFetch()
     MockServerFacade.getHistory({ souls in
       
-      self.souls = souls
+      self.catchSouls(souls)
       
       self.delegate?.didFetch(true)
       }, failure:  { failureCode in
@@ -35,6 +37,14 @@ class HistoryDataSource: NSObject {
     }
     return souls[index]
   }
+  func catchSouls(souls:[Soul]) {
+    for eachSoul in souls {
+      let catcher = SoulCatcher(soul: eachSoul)
+      catcher.delegate = self
+      soulCatchers.insert(catcher)
+      
+    }
+  }
 }
 
 extension HistoryDataSource: SoulCatcherDelegate {
@@ -46,9 +56,13 @@ extension HistoryDataSource: SoulCatcherDelegate {
   }
   func soulDidFinishDownloading(catcher: SoulCatcher, soul: Soul) {
     //
+    souls.append(soul)
+    soulCatchers.remove(catcher)
+    delegate?.didAppend()
   }
   func soulDidFailToDownload(catcher: SoulCatcher) {
     //
+    soulCatchers.remove(catcher)
   }
 }
 

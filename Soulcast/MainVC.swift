@@ -12,6 +12,7 @@ import UIKit
 protocol MainVCDelegate: class {
   func promptImprove()
   func presentIncomingVC()
+  func promptHistory()
 }
 
 class MainVC: UIViewController {
@@ -26,12 +27,19 @@ class MainVC: UIViewController {
     view.backgroundColor = UIColor.clearColor()
     add(children:[mapVC, outgoingVC])
     addImproveButton()
+    addHistoryButton()
   }
   
   func addImproveButton() {
     let improveButton = ImproveButton(frame: CGRectZero)
     improveButton.addTarget(self, action: #selector(improveButtonTapped), forControlEvents: .TouchUpInside)
     view.addSubview(improveButton)
+  }
+  
+  func addHistoryButton() {
+    let historyButton = HistoryButton(frame:CGRectZero)
+    historyButton.addTarget(self, action: #selector(historyButtonTapped), forControlEvents: .TouchUpInside)
+    view.addSubview(historyButton)
   }
   
   func add(children childVCs:[UIViewController]) {
@@ -55,6 +63,11 @@ class MainVC: UIViewController {
     print("feedbackButtonTapped")
     delegate?.promptImprove()
   }
+  
+  func historyButtonTapped() {
+    print("historyButtonTapped")
+    delegate?.promptHistory()
+  }
     
   func fetchLatestSoul() {
     SoulCatcher.fetchLatest { resultSoul in
@@ -64,10 +77,9 @@ class MainVC: UIViewController {
     }
   }
   
-  func receiveRemoteNotification(soulObject:[String : AnyObject]){
-      let tempSoulCatcher = SoulCatcher()
+  func receiveRemoteNotification(hash:[String : AnyObject]){
+    let tempSoulCatcher = SoulCatcher(soulHash:hash)
       tempSoulCatcher.delegate = self
-      tempSoulCatcher.catchSoul(soulObject)
       soulCatchers.insert(tempSoulCatcher)
     
   }

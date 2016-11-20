@@ -18,7 +18,7 @@ class MockingVC: UIViewController {
   var serverField:UITextField!
   var backgroundTapRecognizer:UITapGestureRecognizer!
   
-  var tempSoulCatcher = SoulCatcher()
+  var tempSoulCatcher: SoulCatcher?
   
   var failString = "FAIL" {
     didSet{
@@ -211,9 +211,8 @@ class MockingVC: UIViewController {
       soul in
       self.flash(self.successView)
       self.enableButtons()
-      self.tempSoulCatcher = SoulCatcher()
-      self.tempSoulCatcher.delegate = self
-      self.tempSoulCatcher.catchSoulObject(soul)
+      self.tempSoulCatcher = SoulCatcher(soul:soul)
+      self.tempSoulCatcher!.delegate = self
     }) { (errorCode) in
       print(errorCode)
       self.updateFailForCode(errorCode)

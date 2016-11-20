@@ -9,7 +9,7 @@
 import Foundation
 
 class SoulCatcherTests {
-  let soulCatcher = SoulCatcher()
+  var soulCatcher: SoulCatcher?
   let soulPlayer = SoulPlayer()
   
   
@@ -38,15 +38,15 @@ class SoulCatcherTests {
 
   
   func testIncoming() {
-    soulCatcher.delegate = self
-    soulCatcher.catchSoulObject(mockIncomingSoul())
+    soulCatcher = SoulCatcher(soul: mockIncomingSoul())
+    soulCatcher!.delegate = self
     // troubleshooting:
     // try 
   }
   
-  func testIncoming(soulObject: [String : AnyObject]) {
-    soulCatcher.delegate = self
-    soulCatcher.catchSoul(soulObject)
+  func testIncoming(hash: [String : AnyObject]) {
+    soulCatcher = SoulCatcher(soulHash: hash)
+    soulCatcher!.delegate = self
   }
   
   func mockIncomingSoul() -> Soul {

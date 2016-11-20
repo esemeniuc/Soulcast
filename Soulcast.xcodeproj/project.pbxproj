@@ -51,6 +51,7 @@
 		BDCE02B71DB2E47F00D3D0CF /* eula.txt in Resources */ = {isa = PBXBuildFile; fileRef = BDCE02B61DB2E47F00D3D0CF /* eula.txt */; };
 		BDD072F21DE10807008EDF4E /* LaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD072F11DE10807008EDF4E /* LaunchHelper.swift */; };
 		BDD072F51DE112BD008EDF4E /* HistoryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD072F41DE112BD008EDF4E /* HistoryDataSource.swift */; };
+		BDD072F71DE13624008EDF4E /* HistoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD072F61DE13624008EDF4E /* HistoryButton.swift */; };
 		BDF478CE1D826EE3004F6CAA /* IncomingCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */; };
 		BDF478CF1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */; };
 		BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */; };
@@ -109,6 +110,7 @@
 		BDCE02B61DB2E47F00D3D0CF /* eula.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eula.txt; sourceTree = "<group>"; };
 		BDD072F11DE10807008EDF4E /* LaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchHelper.swift; sourceTree = "<group>"; };
 		BDD072F41DE112BD008EDF4E /* HistoryDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryDataSource.swift; sourceTree = "<group>"; };
+		BDD072F61DE13624008EDF4E /* HistoryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryButton.swift; sourceTree = "<group>"; };
 		BDF478CA1D826EE3004F6CAA /* IncomingCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionVC.swift; sourceTree = "<group>"; };
 		BDF478CB1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		BDF478CC1D826EE3004F6CAA /* IncomingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCollectionCell.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			children = (
 				BDB5CC191DDED10100740EF4 /* HistoryVC.swift */,
 				BDD072F41DE112BD008EDF4E /* HistoryDataSource.swift */,
+				BDD072F61DE13624008EDF4E /* HistoryButton.swift */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */,
 				BDF478D11D826EE3004F6CAA /* IncomingQueue.swift in Sources */,
 				BD67CA321D83B3D40092ABF3 /* Receptionist.swift in Sources */,
+				BDD072F71DE13624008EDF4E /* HistoryButton.swift in Sources */,
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
 				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,
 				BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */,
