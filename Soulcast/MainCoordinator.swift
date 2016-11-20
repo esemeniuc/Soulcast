@@ -16,7 +16,10 @@ class MainCoordinator: NSObject {
   let improveVC = ImproveVC()
   var onboardingVC: OnboardingVC?
   
-  var rootVC:UIViewController { return navVC }
+  var rootVC:UIViewController {
+    return HistoryVC()
+    return navVC
+  }
   
   
   override init() {

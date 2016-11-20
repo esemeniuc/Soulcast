@@ -12,8 +12,8 @@ protocol SoulPlayerDelegate: AnyObject {
 }
 
 class SoulPlayer: NSObject {
-  private var tempSoul: Soul!
-  private var player: AEAudioFilePlayer!
+  private var tempSoul: Soul?
+  private var player: AEAudioFilePlayer?
   static var playing = false
   private var subscribers:[SoulPlayerDelegate] = []
   
@@ -26,7 +26,7 @@ class SoulPlayer: NSObject {
     let filePath = NSURL(fileURLWithPath: soul.localURL! as String)
     do {
       player = try AEAudioFilePlayer(URL: filePath)
-      audioController.addChannels([player])
+      audioController.addChannels([player!])
       player?.removeUponFinish = true
       SoulPlayer.playing = true
       sendStartMessage(soul)
@@ -42,6 +42,10 @@ class SoulPlayer: NSObject {
       return
     }
 
+  }
+  
+  func lastSoul() -> Soul? {
+    return tempSoul
   }
   
   //HAX.. use a real queue??
@@ -72,8 +76,9 @@ class SoulPlayer: NSObject {
   }
   
   func reset() {
-    audioController.removeChannels([player])
-    
+    if player != nil {
+      audioController.removeChannels([player!])
+    }
   }
   
   func subscribe(subscriber:SoulPlayerDelegate) {

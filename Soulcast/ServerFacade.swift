@@ -11,6 +11,23 @@ import Alamofire
 
 class ServerFacade {
   
+  class func getHistory(success:([Soul])->(), failure:(Int)->()) {
+    get("history", parameters: Device.localDevice.toParams()).responseJSON { (response) in
+      switch response.result {
+      case .Success(let JSON):
+        print("Got history!\(JSON)")
+        success([MockFactory.mockSoulOne()])
+      case .Failure(let error):
+        print("Failed to get history! error: \(error)")
+        if let failResponse = response.response {
+          failure(failResponse.statusCode)
+        } else {
+          failure(error.code)
+        }
+      }
+    }
+  }
+  
   class func getLatest(success:([String : AnyObject])->(), failure:(Int)->()){
     //TODO: test.
     get("souls", parameters: Device.localDevice.toParams())
@@ -157,5 +174,17 @@ class ServerFacade {
                      parameters: parameters,
                      encoding: .JSON,
                      headers: ServerFacade.jsonHeader).validate()
+  }
+}
+
+
+class MockServerFacade: ServerFacade {
+  class override func getHistory(success:([Soul])->(), failure:(Int)->()) {
+    success([
+      MockFactory.mockSoulOne(),
+      MockFactory.mockSoulOne(),
+      MockFactory.mockSoulOne(),
+      MockFactory.mockSoulOne(),
+      MockFactory.mockSoulOne(), ])
   }
 }
