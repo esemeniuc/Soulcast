@@ -60,7 +60,7 @@ class IncomingQueue: NSObject, UICollectionViewDataSource {
     }
     let theSoul = someNode!.value
     cell.radius = Float(theSoul.radius!)
-    cell.timeAgo = theSoul.epoch!
+    cell.epoch = theSoul.epoch!
     return cell
     
   }

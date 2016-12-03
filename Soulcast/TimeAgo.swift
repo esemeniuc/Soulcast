@@ -1,7 +1,9 @@
 
 import Foundation
 
-
+public func timeAgo(epoch epoch:Int) -> String{
+  return timeAgoSince(NSDate(timeIntervalSince1970: NSTimeInterval(epoch)))
+}
 
 public func timeAgoSince(date: NSDate) -> String {
   

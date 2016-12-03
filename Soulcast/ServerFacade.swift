@@ -206,10 +206,10 @@ class MockServerFacade: ServerFacade {
   class override func getHistory(success:([Soul])->(), failure:(Int)->()) {
     success([
       MockFactory.mockSoulOne(),
-      MockFactory.mockSoulOne(),
-      MockFactory.mockSoulOne(),
-      MockFactory.mockSoulOne(),
-      MockFactory.mockSoulOne(), ])
+      MockFactory.mockSoulTwo(),
+      MockFactory.mockSoulThree(),
+      MockFactory.mockSoulFour(),
+      MockFactory.mockSoulFive(), ])
   }
   class override func block(soul:Soul, success:()->(), failure:(Int)->()) {
     success()

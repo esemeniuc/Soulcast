@@ -24,9 +24,9 @@ class IncomingCollectionCell: UICollectionViewCell {
       radiusLabel.text = String(roundedRadius) + "km"
     }
   }
-  var timeAgo:Int = 0 {
+  var epoch:Int = 0 {
     didSet {
-      timeAgoLabel.text = timeAgoSince(NSDate(timeIntervalSince1970: NSTimeInterval(timeAgo)))
+      timeAgoLabel.text = timeAgo(epoch: epoch)
     }
   }
   private var radiusLabel:UILabel = UILabel()
