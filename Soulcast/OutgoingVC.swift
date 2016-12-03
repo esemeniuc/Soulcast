@@ -179,14 +179,14 @@ extension OutgoingVC: SoulRecorderDelegate {
   
   func soulDidReachMinimumDuration() {
     outgoingButton.tintLongEnough()
-  }
+  }  
     
   func soulDidFinishRecording(newSoul: Soul) {
     outgoingButton.mute()
     playbackSoul(newSoul)
     newSoul.epoch = Int(NSDate().timeIntervalSince1970)
     newSoul.radius = delegate?.outgoingRadius()
-    newSoul.s3Key = String(newSoul.epoch!)
+    newSoul.s3Key = Randomizer.randomString(withLength: 10)
     newSoul.longitude = delegate?.outgoingLongitude()
     newSoul.latitude = delegate?.outgoingLatitude()
     newSoul.token = Device.localDevice.token

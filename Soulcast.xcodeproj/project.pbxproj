@@ -24,6 +24,7 @@
 		BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551241D7611C30093CA2F /* SoulCasterTests.swift */; };
 		BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */; };
 		BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551481D764B9D0093CA2F /* ServerFacade.swift */; };
+		BD16D0601DEA4A3A0017591C /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD16D05F1DEA4A3A0017591C /* Randomizer.swift */; };
 		BD22B7C51DD7E65D0068532F /* ImproveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22B7C41DD7E65D0068532F /* ImproveButton.swift */; };
 		BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22E76C1DE1041600C79E33 /* PushHandler.swift */; };
 		BD2BE1281DB948F600387190 /* PermissionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BE1271DB948F600387190 /* PermissionController.swift */; };
@@ -81,6 +82,7 @@
 		BD1551241D7611C30093CA2F /* SoulCasterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCasterTests.swift; sourceTree = "<group>"; };
 		BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcherTests.swift; sourceTree = "<group>"; };
 		BD1551481D764B9D0093CA2F /* ServerFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerFacade.swift; sourceTree = "<group>"; };
+		BD16D05F1DEA4A3A0017591C /* Randomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizer.swift; sourceTree = "<group>"; };
 		BD22B7C41DD7E65D0068532F /* ImproveButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveButton.swift; sourceTree = "<group>"; };
 		BD22E76C1DE1041600C79E33 /* PushHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushHandler.swift; sourceTree = "<group>"; };
 		BD2BE1271DB948F600387190 /* PermissionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */,
+				BD16D05F1DEA4A3A0017591C /* Randomizer.swift */,
 				34D8B8071D8B464A003083F5 /* RecordButton.swift */,
 			);
 			name = Outgoing;
@@ -480,6 +483,7 @@
 				BD0DBF1F1D7CE51600FBBD17 /* PermissionVC.swift in Sources */,
 				34D8B8081D8B464A003083F5 /* RecordButton.swift in Sources */,
 				BDF478D31D826F3C004F6CAA /* TimeAgo.swift in Sources */,
+				BD16D0601DEA4A3A0017591C /* Randomizer.swift in Sources */,
 				BD2BE1281DB948F600387190 /* PermissionController.swift in Sources */,
 				BD0DBF1D1D7CDA7700FBBD17 /* JKPageViewController.swift in Sources */,
 				BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */,

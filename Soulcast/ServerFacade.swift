@@ -11,6 +11,30 @@ import Alamofire
 
 class ServerFacade {
   
+  class func block(soul:Soul, success:()->(), failure:(Int)->()) {
+    //TODO: check interface with cwaffles
+    assert(soul.token != nil, "This soul does not have a token! A Ronen Token")
+    let localToken = Device.localDevice.token ?? "RONENTOKEN"
+    post("blocks", parameters:[
+      "block": soul.token!,
+      "token": localToken,
+      "blockedToken": soul.token! ])
+      .responseJSON { response in
+        switch response.result {
+        case .Success(let JSON):
+          print("block success!! \(JSON)")
+          success()
+        case .Failure(let error):
+          print("Failed to get block! error: \(error)")
+          if let failResponse = response.response {
+            failure(failResponse.statusCode)
+          } else {
+            failure(error.code)
+          }
+        }
+    }
+  }
+  
   class func getHistory(success:([Soul])->(), failure:(Int)->()) {
     get("history", parameters: Device.localDevice.toParams()).responseJSON { (response) in
       switch response.result {
@@ -186,5 +210,8 @@ class MockServerFacade: ServerFacade {
       MockFactory.mockSoulOne(),
       MockFactory.mockSoulOne(),
       MockFactory.mockSoulOne(), ])
+  }
+  class override func block(soul:Soul, success:()->(), failure:(Int)->()) {
+    success()
   }
 }

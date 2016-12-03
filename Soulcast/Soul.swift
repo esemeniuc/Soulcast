@@ -65,7 +65,7 @@ class Soul: NSObject {
 class MockFactory {
   static func mockSoulOne() -> Soul {
     let newMockSoul = Soul()
-    newMockSoul.s3Key = "helloEricTesting"
+    newMockSoul.s3Key = "1479619472"
     newMockSoul.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"
     newMockSoul.epoch = 493417238
     newMockSoul.longitude = 49.343

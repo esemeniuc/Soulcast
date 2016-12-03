@@ -19,7 +19,8 @@ class SoulPlayer: NSObject {
   
   func startPlaying(soul:Soul!) {
     guard !SoulPlayer.playing else{
-      tryPlayingAgain(soul)
+      reset()
+      startPlaying(soul)
       return
     }
     tempSoul = soul
@@ -32,7 +33,7 @@ class SoulPlayer: NSObject {
       sendStartMessage(soul)
       player?.completionBlock = {
         self.reset()
-        SoulPlayer.playing = false
+        
         self.sendFinishMessage(soul)
       }
     } catch {
@@ -78,6 +79,7 @@ class SoulPlayer: NSObject {
   func reset() {
     if player != nil {
       audioController.removeChannels([player!])
+      SoulPlayer.playing = false
     }
   }
   

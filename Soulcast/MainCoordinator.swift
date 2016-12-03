@@ -17,8 +17,8 @@ class MainCoordinator: NSObject {
   var onboardingVC: OnboardingVC?
   
   var rootVC:UIViewController {
-//    return HistoryVC()
-    return navVC
+    return HistoryVC()
+//    return navVC
   }
   
   
