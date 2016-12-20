@@ -12,6 +12,10 @@ import UIKit
   func willDisappearFromScreen()
 }
 
+protocol JKPageVCDelegate: class{
+  func jkDidFinishScrolling(to pageIndex:Int)
+}
+
 /** A pre-configured wrapper class for UIPageViewController with a simple implementation that:
 
  - encapsulates common delegate methods
@@ -37,9 +41,12 @@ import UIKit
   }
   var currentVC:UIViewController!
   var nextVC:UIViewController!
-  var previousIndex:Int! = 0
-  var currentIndex:Int! = 0
-  var nextIndex:Int! = 0
+  var previousIndex = 0
+  var currentIndex = 0
+  var nextIndex = 0
+  var initialIndex = 0
+  
+  weak var jkDelegate:JKPageVCDelegate?
   
   override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?) {
     super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
@@ -56,25 +63,21 @@ import UIKit
     dataSource = self
   }
   
-  /// dead space at the bottom gets removed and makes UIPageControl's background appear transparent
-  override func viewDidLayoutSubviews() {
-    recursivelyIterateSubviews(view)
-    
-  }
+ 
   
   /// should call to conform to Apple's guidelines for adding child view controllers
   override func didMoveToParentViewController(parent: UIViewController?) {
     super.didMoveToParentViewController(parent)
     parent!.view.gestureRecognizers = gestureRecognizers
-    
+    recursivelyIterateSubviews(view)
   }
   
   /// should call manually.
   func setInitialPage() {
     if pages.count > 0 {
-      currentVC = pages[0]
-      setViewControllers([pages[0]], direction: .Forward, animated: false, completion: { (finished:Bool) -> Void in
-        
+      currentVC = pages[initialIndex]
+      currentIndex = initialIndex
+      setViewControllers([pages[initialIndex]], direction: .Forward, animated: false, completion: { (finished:Bool) -> Void in
       })
       (self.currentVC as? Appearable)?.willAppearOnScreen()
     } else if debugging {
@@ -87,9 +90,9 @@ import UIKit
       print("\(String.fromCString(object_getClassName(view))) :: frame: \(view.frame)")
     }
     for eachSubview in view.subviews {
-      if let scrollView = eachSubview as? UIScrollView {
-        scrollView.delegate = self
-        scrollView.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
+      if eachSubview is UIScrollView {
+        (eachSubview as! UIScrollView).delegate = self
+        eachSubview.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
       }
       recursivelyIterateSubviews(eachSubview)
     }
@@ -103,6 +106,7 @@ extension JKPageViewController: UIPageViewControllerDelegate {
     previousIndex = currentIndex
     currentIndex = nextIndex
     currentVC = pages[currentIndex]
+    
   }
   func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
     
@@ -142,6 +146,7 @@ extension JKPageViewController: UIPageViewControllerDelegate {
       (self.pages[pageIndex] as? Appearable)?.didAppearOnScreen()
       self.currentIndex = pageIndex
       self.currentVC = self.pages[pageIndex]
+      self.jkDelegate?.jkDidFinishScrolling(to: self.currentIndex)
     }
   }
   
@@ -158,6 +163,9 @@ extension JKPageViewController: UIPageViewControllerDelegate {
         (eachView as! UIScrollView).scrollEnabled = true
       }
     }
+  }
+  override func prefersStatusBarHidden() -> Bool {
+    return true
   }
   
 }

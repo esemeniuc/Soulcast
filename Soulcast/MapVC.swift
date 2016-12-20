@@ -55,6 +55,7 @@ class MapVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
     addMap()
     addLabels()
     setupTimer()
@@ -77,6 +78,7 @@ class MapVC: UIViewController {
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
+    view.backgroundColor = UIColor.purpleColor()
   }
   
   

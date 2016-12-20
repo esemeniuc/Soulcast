@@ -32,6 +32,7 @@
 		BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D19BE1D8C5430008B563F /* ImproveVC.swift */; };
 		BDB5CC1A1DDED10100740EF4 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5CC191DDED10100740EF4 /* HistoryVC.swift */; };
 		BDB5CC1C1DDED2F600740EF4 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5CC1B1DDED2F600740EF4 /* MainCoordinator.swift */; };
+		BDB6C88D1E089E2E0023FD12 /* PageTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6C88C1E089E2E0023FD12 /* PageTab.swift */; };
 		BDB8F48C1D6B938200E4C7E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */; };
 		BDB8F4931D6B938200E4C7E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */; };
 		BDB8F4961D6B938200E4C7E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDB8F4941D6B938200E4C7E0 /* LaunchScreen.storyboard */; };
@@ -90,6 +91,7 @@
 		BD7D19BE1D8C5430008B563F /* ImproveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveVC.swift; sourceTree = "<group>"; };
 		BDB5CC191DDED10100740EF4 /* HistoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		BDB5CC1B1DDED2F600740EF4 /* MainCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		BDB6C88C1E089E2E0023FD12 /* PageTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTab.swift; sourceTree = "<group>"; };
 		BDB8F4881D6B938200E4C7E0 /* Soulcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soulcast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				BDB5CC1B1DDED2F600740EF4 /* MainCoordinator.swift */,
+				BDB6C88C1E089E2E0023FD12 /* PageTab.swift */,
 				BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */,
 				BD67CA311D83B3D40092ABF3 /* Receptionist.swift */,
 				BD0DBF191D7CD80900FBBD17 /* Onboarding */,
@@ -500,6 +503,7 @@
 				BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */,
 				BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */,
 				BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */,
+				BDB6C88D1E089E2E0023FD12 /* PageTab.swift in Sources */,
 				BDF478D51D836E61004F6CAA /* IntegrationTestButton.swift in Sources */,
 				BDD072F21DE10807008EDF4E /* LaunchHelper.swift in Sources */,
 				BDD072F51DE112BD008EDF4E /* HistoryDataSource.swift in Sources */,

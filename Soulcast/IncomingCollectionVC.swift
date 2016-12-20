@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol IncomingCollectionVCDelegate: class {
-  func didRunOutOfSouls()
+  func didRunOutOfSouls(ivc:IncomingCollectionVC)
 }
 
 class IncomingCollectionVC: UICollectionViewController {
@@ -46,39 +46,37 @@ class IncomingCollectionVC: UICollectionViewController {
     collectionView?.registerClass(IncomingCollectionCell.self, forCellWithReuseIdentifier: cellIdentifier)
   }
   
-  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    print("\(name()): collectionView didSelectItemAtIndexPath")
-    if indexPath.row == 0 {
-      enableReporting()
-      if let incomingCell = collectionView.cellForItemAtIndexPath(indexPath) as? IncomingCollectionCell {
-        incomingCell.delegate = self
-      }
+  override func willMoveToParentViewController(parent: UIViewController?) {
+    super.willMoveToParentViewController(parent)
+    //TODO: animate
+    view.frame = IncomingCollectionVC.beforeFrame
+    UIView.animateWithDuration(0.3) { 
+      self.view.frame = IncomingCollectionVC.afterFrame
     }
   }
   
-
+  func animateAway(completion:()->()) {
+    UIView.animateWithDuration(0.3, animations: { 
+      self.view.frame = IncomingCollectionVC.beforeFrame
+    }) { (success) in
+      completion()
+    }
+  }
   
-  func notifyUserReported() {
-    let reportMessage = UIAlertController(title: "Reported", message: "This soul has been reported to the developers. We will take a closer look and take appropriate action!", preferredStyle: .Alert)
-    let okAction = UIAlertAction(title: "OK", style: .Default) { (action) in
-      //
-    }
-    reportMessage.addAction(okAction)
-    presentViewController(reportMessage, animated: true) { 
-      //
-    }
+  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    print("\(name()): collectionView didSelectItemAtIndexPath")
+    
+  }
+  
+  func stop() {
+    animateAway { }
+    soulPlayer.reset()
   }
   
   private func playFirstSoul() {
     soulPlayer.subscribe(self)
+    soulPlayer.reset()
     soulPlayer.startPlaying(soloQueue.peek())
-  }
-  
-  func enableReporting() {
-    let cell = collectionView?.cellForItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
-    if let collectionCell = cell as? IncomingCollectionCell {
-      collectionCell.showReportButton()
-    }
   }
 }
 
@@ -90,8 +88,11 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
       collectionView?.insertItemsAtIndexPaths([NSIndexPath(forRow: max(soloQueue.count-1, 0), inSection: 0)])
     }
     //if only item, and player isn't playing, dequeue.
-    if soloQueue.count == 1 && !SoulPlayer.playing {
+    if !SoulPlayer.playing {
       playFirstSoul()
+      UIView.animateWithDuration(0.3) {
+        self.view.frame = IncomingCollectionVC.afterFrame
+      }
     }
   }
   
@@ -101,7 +102,7 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
   }
   
   func didBecomeEmpty() {
-    self.delegate?.didRunOutOfSouls()
+    self.delegate?.didRunOutOfSouls(self)
     
   }
 }
@@ -125,19 +126,6 @@ extension IncomingCollectionVC: SoulPlayerDelegate {
   
   func didFailToPlay(soul: Soul) {
     //
-  }
-  
-}
-
-extension IncomingCollectionVC: IncomingCollectionCellDelegate {
-  func didTapReport() {
-    reportFirstSoul()
-    notifyUserReported()
-  }
-  func reportFirstSoul() {
-    if let peekSoul = soloQueue.peek() {
-      ServerFacade.report(peekSoul)
-    }
   }
   
 }

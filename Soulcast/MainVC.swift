@@ -12,7 +12,7 @@ import UIKit
 protocol MainVCDelegate: class {
   func promptImprove()
   func presentIncomingVC()
-  func promptHistory()
+  func mainVCWillDisappear()
 }
 
 class MainVC: UIViewController {
@@ -27,19 +27,20 @@ class MainVC: UIViewController {
     view.backgroundColor = UIColor.clearColor()
     add(children:[mapVC, outgoingVC])
     addImproveButton()
-    addHistoryButton()
+    //
+//    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+    
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    delegate?.mainVCWillDisappear()
   }
   
   func addImproveButton() {
     let improveButton = ImproveButton(frame: CGRectZero)
     improveButton.addTarget(self, action: #selector(improveButtonTapped), forControlEvents: .TouchUpInside)
     view.addSubview(improveButton)
-  }
-  
-  func addHistoryButton() {
-    let historyButton = HistoryButton(frame:CGRectZero)
-    historyButton.addTarget(self, action: #selector(historyButtonTapped), forControlEvents: .TouchUpInside)
-    view.addSubview(historyButton)
   }
   
   func add(children childVCs:[UIViewController]) {
@@ -55,8 +56,7 @@ class MainVC: UIViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     pushHandler.activate()
-//        view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
-    
+    view.backgroundColor = UIColor.redColor()
   }
   
   func improveButtonTapped() {
@@ -64,11 +64,6 @@ class MainVC: UIViewController {
     delegate?.promptImprove()
   }
   
-  func historyButtonTapped() {
-    print("historyButtonTapped")
-    delegate?.promptHistory()
-  }
-    
   func fetchLatestSoul() {
     SoulCatcher.fetchLatest { resultSoul in
       if resultSoul != nil {

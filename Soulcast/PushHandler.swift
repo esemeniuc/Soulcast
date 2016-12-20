@@ -15,14 +15,30 @@ class PushHandler {
   var bufferHash: [String:AnyObject]?
   
   func handle(soulHash: [String:AnyObject]) {
-    if let appDelegate = app.delegate as? AppDelegate,
-      let mainVC = appDelegate.mainCoordinator.mainVC where
-      app.applicationState == .Active && mainVC.isViewLoaded() {
-      mainVC.receiveRemoteNotification(soulHash)
-    } else {
+    guard let appDelegate = app.delegate as? AppDelegate else {
       bufferHash = soulHash
+      return
     }
-    //DEBUG
+    guard app.applicationState == .Active else {
+      bufferHash = soulHash
+      return
+    }
+    let coordinator = appDelegate.mainCoordinator
+    // at mainVC screen
+    let mainVC = coordinator.mainVC
+    let historyVC = coordinator.historyVC
+    if mainVC.view.window != nil && historyVC.view.window == nil{
+      mainVC.receiveRemoteNotification(soulHash)
+      return
+    }
+    // at historyVC screen
+    if historyVC.view.window != nil && mainVC.view.window == nil {
+      coordinator.scrollToMainVC() {
+        mainVC.receiveRemoteNotification(soulHash)
+      }
+    }
+      
+      //DEBUG
     //        let soulObject = Soul.fromHash(soulHash)
     //        let alert = UIAlertController(title: "options", message: String(soulObject), preferredStyle: .Alert)
     //        self.window!.rootViewController!.presentViewController(alert, animated: true, completion: {

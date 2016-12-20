@@ -49,15 +49,6 @@ class SoulPlayer: NSObject {
     return tempSoul
   }
   
-  //HAX.. use a real queue??
-  func tryPlayingAgain(soul: Soul) {
-    print("Trying to play a soul again!!")
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.15 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      self.startPlaying(soul)
-    }
-  }
-  
   func sendStartMessage(soul:Soul) {
     for eachSubscriber in subscribers {
       eachSubscriber.didStartPlaying(soul)

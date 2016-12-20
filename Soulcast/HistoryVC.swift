@@ -23,7 +23,12 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   var startedPlaylisting: Bool = false
   
   override func viewDidLoad() {
+    super.viewDidLoad()
     addTableView()
+    dataSource.fetch()
+    //
+//    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+    
   }
   weak var delegate: HistoryVCDelegate?
   
@@ -41,13 +46,13 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   }
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-    dataSource.fetch()
     soulPlayer.subscribe(self)
-    
+    startPlaylisting()
   }
   override func viewWillDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
     soulPlayer.unsubscribe(self)
+    deselectAllRows()
   }
   func startPlaylisting() {
     let first = NSIndexPath(forRow: 0, inSection: 0)
@@ -83,6 +88,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       soulPlayer.startPlaying(selectedSoul)
     }
   }
+  
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let headerView = UITableViewHeaderFooterView(reuseIdentifier: String(UITableViewHeaderFooterView))
     return headerView
@@ -117,7 +123,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   
   func didFetch(success: Bool) {
     if success {
-      
       //remove loading
     } else {
       //show failure, retry button.
@@ -128,10 +133,14 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     tableView.reloadData()
   }
   func didFinishUpdating(soulCount: Int) {
-    //TODO:
-    if !startedPlaylisting {
-      startPlaylisting()
+    guard isViewLoaded() && view.window != nil else {
+      return
     }
+    tableView.reloadData()
+    //TODO:
+//    if !startedPlaylisting {
+      startPlaylisting()
+//    }
     startedPlaylisting = true
   }
   func didConfirmBlock(soul: Soul) {
@@ -156,7 +165,15 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       playNextSoul()
     }
   }
+
   func didFailToPlay(soul:Soul) {
     
+  }
+  
+  func deselectAllRows() {
+    for rowIndex in 0...dataSource.soulCount() {
+      let indexPath = NSIndexPath(forRow: rowIndex, inSection: 0)
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
   }
 }

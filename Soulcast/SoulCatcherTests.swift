@@ -12,7 +12,6 @@ class SoulCatcherTests {
   var soulCatcher: SoulCatcher?
   let soulPlayer = SoulPlayer()
   
-  
   static func mockUserInfo() -> [NSString : AnyObject] {
     var mockUserInfo = [NSString : AnyObject]()
       var aps = [NSString : AnyObject]()
@@ -24,8 +23,8 @@ class SoulCatcherTests {
         soulObject["radius"] = 5
         soulObject["longitude"] = 10
         soulObject["latitude"] = 11
-        soulObject["s3Key"] = "1473035478"
-        soulObject["epoch"] = 1474433040
+        soulObject["s3Key"] = "1479619472"
+        soulObject["epoch"] = 1479619472
         soulObject["id"] = 14
         soulObject["device_id"] = 15
         soulObject["created_at"] = 5

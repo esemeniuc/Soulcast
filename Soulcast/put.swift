@@ -10,6 +10,11 @@ extension UIViewController {
     view.addSubview(vc.view)
     vc.didMoveToParentViewController(vc)
   }
+  func removeChildVC(vc: UIViewController) {
+    vc.willMoveToParentViewController(nil)
+    vc.view.removeFromSuperview()
+    vc.removeFromParentViewController()
+  }
   func name() -> String {
     return  NSStringFromClass(self.dynamicType).componentsSeparatedByString(".").last!
   }

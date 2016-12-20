@@ -9,36 +9,82 @@
 import Foundation
 import UIKit
 
-class MainCoordinator: NSObject {
-  var mainVC: MainVC?
-  private var navVC: UINavigationController
+class MainCoordinator: NSObject, JKPageVCDelegate {
+  let pageVC = JKPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+  var mainVC: MainVC = MainVC()
+  private var navVC: UINavigationController?
+  let historyVC = HistoryVC()
   var incomingVC:IncomingCollectionVC!
   let improveVC = ImproveVC()
   var onboardingVC: OnboardingVC?
+  var pages: [UIViewController] = []
+  var pushHandleAction:(()->())? = nil
   
   var rootVC:UIViewController {
-    return HistoryVC()
-//    return navVC
+//    return HistoryVC()
+    if navVC != nil {
+      return navVC!
+    } else {
+      return pageVC
+    }
   }
   
+  struct Page {
+    static let history = 0
+    static let main = 1
+  }
   
   override init() {
+    pages = [historyVC, mainVC]
     if Receptionist.needsOnboarding() {
       onboardingVC = OnboardingVC()
       navVC = UINavigationController(rootViewController: onboardingVC!)
       super.init()
       onboardingVC!.delegate = self
+      navVC!.delegate = self
     } else {
-      mainVC = MainVC()
-      navVC = UINavigationController(rootViewController: mainVC!)
+      pageVC.initialIndex = 1
+      pageVC.pages = pages
+      
       super.init()
-      mainVC!.delegate = self
     }
-    navVC.delegate = self
+    pageVC.jkDelegate = self
+    mainVC.delegate = self
+    addPageTab()
   }
   
-  
+  func addPageTab() {
+    let leftTab = PageTab(direction: .Left)
+    let leftTabTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabTapped))
+    leftTab.addGestureRecognizer(leftTabTapRecognizer)
+    mainVC.view.addSubview(leftTab)
 
+    let rightTab = PageTab(direction: .Right)
+    let rightTabTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabTapped))
+    rightTab.addGestureRecognizer(rightTabTapRecognizer)
+    historyVC.view.addSubview(rightTab)
+  }
+  
+  func tabTapped() {
+    if pageVC.currentIndex == Page.history {
+      pageVC.scrollToVC(Page.main, direction: .Forward)
+    } else if pageVC.currentIndex == Page.main {
+      pageVC.scrollToVC(Page.history, direction: .Reverse)
+    }
+  }
+  
+  func scrollToMainVC(completion:()->()) {
+    pushHandleAction = completion
+    pageVC.scrollToVC(Page.main, direction: .Forward)
+  }
+  
+  func jkDidFinishScrolling(to pageIndex: Int) {
+    if pageIndex == Page.main {
+      pushHandleAction?()
+      pushHandleAction = nil
+    }
+  }
+  
 }
 
 extension MainCoordinator: UINavigationControllerDelegate {
@@ -61,15 +107,14 @@ extension MainCoordinator: OnboardingVCDelegate {
     if window.rootViewController is MainVC {
       return
     }
-    if mainVC == nil {
-      mainVC = MainVC()
-      mainVC!.delegate = self
-    }
-    mainVC!.view.alpha = 0
+    mainVC.view.alpha = 0
     window.backgroundColor = UIColor.whiteColor()
-    navVC.viewControllers = [mainVC!]
+    //
+    pageVC.initialIndex = 1
+    pageVC.pages = pages
+    window.rootViewController = pageVC
     UIView.animateWithDuration(1, animations: {
-      self.mainVC!.view.alpha = 1
+      self.mainVC.view.alpha = 1
     })
     
   }
@@ -79,33 +124,34 @@ extension MainCoordinator: MainVCDelegate {
   
   func promptImprove() {
     improveVC.delegate = self
-    navVC.pushViewController(improveVC, animated: true)
+    //TODO:
+    pageVC.presentViewController(improveVC, animated: true) { 
+      //
+    }
   }
 
-  func promptHistory() {
-    let historyVC = HistoryVC()
-    historyVC.delegate = self
-    navVC.pushViewController(historyVC, animated: true)
-  }
   func presentIncomingVC() {
-    //TODO: screenshot background and make it window's background...
     if incomingVC == nil {
       incomingVC = IncomingCollectionVC()
     }
     incomingVC.delegate = self
-//    self.incomingVC.view.frame = IncomingCollectionVC.afterFrame
-//    incomingVC.view.frame = IncomingCollectionVC.beforeFrame
-    self.incomingVC.view.userInteractionEnabled = true
-    navVC.presentViewController(incomingVC, animated: true) {
-      self.incomingVC.view.userInteractionEnabled = true
+    mainVC.addChildVC(incomingVC)
+  }
+  
+  func mainVCWillDisappear() {
+    if incomingVC != nil {
+      incomingVC.stop()
+      soloQueue.purge()
     }
   }
+  
 }
 
 
 extension MainCoordinator: ImproveVCDelegate, HistoryVCDelegate {
   func didFinishGettingImprove() {
-    navVC.popToRootViewControllerAnimated(true)
+    //TODO:
+//    navVC.popToRootViewControllerAnimated(true)
   }
   
   
@@ -113,16 +159,13 @@ extension MainCoordinator: ImproveVCDelegate, HistoryVCDelegate {
 
 
 extension MainCoordinator: IncomingCollectionVCDelegate {
-  func didRunOutOfSouls() {
-    dismissIncomingVC()
+  func didRunOutOfSouls(ivc:IncomingCollectionVC) {
+    //TODO: animate
+    ivc.animateAway() {
+      self.mainVC.removeChildVC(ivc)
+      
+    }
   }
   
-  func dismissIncomingVC() {
-    incomingVC.dismissViewControllerAnimated(true) { 
-      //
-    }
-//    incomingVC.view.userInteractionEnabled = false
-//    navVC.popToRootViewControllerAnimated(true)
-  }
 }
 

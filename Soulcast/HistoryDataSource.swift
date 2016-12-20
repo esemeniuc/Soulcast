@@ -43,8 +43,14 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   }
   func timerExpired() {
     updateTimer.invalidate()
+//    assertSorted()
     delegate?.didFinishUpdating(souls.count)
     print("HistoryDataSource timerExpired!!")
+  }
+  func assertSorted() {
+    for soulIndex in 0...(souls.count-1) {
+      assert(souls[soulIndex].epoch > souls[soulIndex + 1].epoch)
+    }
   }
   func soul(forIndex index:Int) -> Soul? {
     guard index < souls.count else {
@@ -59,6 +65,8 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
     return NSIndexPath()
   }
   func catchSouls(souls:[Soul]) {
+    soulCatchers.removeAll(keepCapacity: true)
+    self.souls.removeAll(keepCapacity: true)
     for eachSoul in souls {
       let catcher = SoulCatcher(soul: eachSoul)
       catcher.delegate = self
@@ -73,9 +81,21 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
     }
   }
   func insertByEpoch(soul: Soul) {
-    let insertionIndex = souls.indexOf({$0.epoch < soul.epoch}) ?? 0
+    var insertionIndex =  0
+    for eachSoul in souls {
+      if eachSoul.epoch > soul.epoch {
+        insertionIndex = indexPath(forSoul: eachSoul).row + 1
+      }
+    }
     souls.insert(soul, atIndex: insertionIndex)
     delegate?.didUpdate(souls.count)
+  }
+  
+  func debugEpoch() {
+    for eachSoul in souls {
+      print(eachSoul.epoch!)
+    }
+    print(" ")
   }
   
   //SoulCatcherDelegate
@@ -95,6 +115,9 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
     //
     soulCatchers.remove(catcher)
   }
+  func soulCount() -> Int {
+    return souls.count
+  }
 }
 
 extension HistoryDataSource: UITableViewDataSource {
@@ -107,7 +130,7 @@ extension HistoryDataSource: UITableViewDataSource {
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return "History"
+    return "Recent Souls"
   }
   
   func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
