@@ -14,7 +14,7 @@ protocol HistoryDataSourceDelegate: class {
   func didFetch(success:Bool)
   func didUpdate(soulCount:Int)
   func didFinishUpdating(soulCount:Int)
-  func didConfirmBlock(soul: Soul)
+  func didRequestBlock(soul: Soul)
 }
 
 class HistoryDataSource: NSObject, SoulCatcherDelegate {
@@ -145,12 +145,14 @@ extension HistoryDataSource: UITableViewDataSource {
     switch editingStyle {
     case .Delete:
       if let blockingSoul = soul(forIndex: indexPath.row) {
-        delegate?.didConfirmBlock(blockingSoul)
+        delegate?.didRequestBlock(blockingSoul)
       }
     case .Insert:      break
     case .None:      break
     }
   }
+  
+
   
   func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
     return false

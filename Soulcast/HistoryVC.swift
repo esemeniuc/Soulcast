@@ -27,7 +27,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     addTableView()
     dataSource.fetch()
     //
-//    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
     
   }
   weak var delegate: HistoryVCDelegate?
@@ -130,7 +130,10 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   }
   
   func didUpdate(soulcount: Int) {
-    tableView.reloadData()
+//    tableView.reloadData()
+    tableView.beginUpdates()
+    tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
+    tableView.endUpdates()
   }
   func didFinishUpdating(soulCount: Int) {
     guard isViewLoaded() && view.window != nil else {
@@ -143,14 +146,34 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
 //    }
     startedPlaylisting = true
   }
-  func didConfirmBlock(soul: Soul) {
+  func didRequestBlock(soul: Soul) {
+    presentViewController(blockAlertController(soul), animated: true) {
+      //
+    }
+    return
+    
+  }
+  private func block(soul:Soul) {
     MockServerFacade.block(soul, success: {
       //remove soul at index
+      
       self.dataSource.remove(soul)
-      }) { statusCode in
-        print(statusCode)
+    }) { statusCode in
+      print(statusCode)
     }
   }
+  
+  func blockAlertController(soul:Soul) -> UIAlertController {
+    let controller = UIAlertController(title: "Block Soul", message: "You will no longer hear from the device that casted this soul.", preferredStyle: .Alert)
+    controller.addAction(UIAlertAction(title: "Block", style: .Default, handler: {(action) in
+      self.block(soul)
+    }))
+    controller.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) in
+      //
+    }))
+    return controller
+  }
+  
   
   //SoulPlayerDelegate
   func didStartPlaying(soul:Soul) {
@@ -176,4 +199,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
   }
+  
+
 }

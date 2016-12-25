@@ -53,12 +53,22 @@ class MapVC: UIViewController {
   
   var timer:NSTimer?
   
+  let tiltCamera = MKMapCamera()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
     addMap()
     addLabels()
     setupTimer()
+    setupTiltCamera()
+  }
+  
+  func setupTiltCamera() {
+    tiltCamera.centerCoordinate = mapView.centerCoordinate
+    tiltCamera.pitch = 80.0
+    tiltCamera.altitude = 100.0
+    tiltCamera.heading = 0
   }
   
   func setupTimer() {
@@ -78,7 +88,7 @@ class MapVC: UIViewController {
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    view.backgroundColor = UIColor.purpleColor()
+
   }
   
   
@@ -218,13 +228,13 @@ class MapVC: UIViewController {
     }
   }
   
+  
 }
 
 extension MapVC: MKMapViewDelegate {
   func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
     let mapRegion = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: userSpan!)
     mapView.setRegion(mapRegion, animated: true)
-    
   }
   
   func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {

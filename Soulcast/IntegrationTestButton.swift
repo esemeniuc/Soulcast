@@ -17,7 +17,7 @@ class IntegrationTestButton: UIButton {
   func setup() {
     backgroundColor = UIColor.cyanColor().colorWithAlphaComponent(0.7)
     addTarget(self, action: #selector(integrationTest), forControlEvents: .TouchUpInside)
-    setTitle("Integrate", forState: .Normal)
+    setTitle("Push Soul", forState: .Normal)
   }
   
   func integrationTest() {

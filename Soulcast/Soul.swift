@@ -67,7 +67,7 @@ class MockFactory {
     let newMockSoul = Soul()
     newMockSoul.s3Key = "1479619472"
     newMockSoul.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"
-    newMockSoul.epoch = 1479619472
+    newMockSoul.epoch = 1480719472
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
@@ -78,7 +78,7 @@ class MockFactory {
     let newMockSoul = Soul()
     newMockSoul.s3Key = "1479599118"
     newMockSoul.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"
-    newMockSoul.epoch = 1480789665
+    newMockSoul.epoch = 1481889665
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
@@ -89,7 +89,7 @@ class MockFactory {
     let newMockSoul = Soul()
     newMockSoul.s3Key = "1479612020"
     newMockSoul.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"
-    newMockSoul.epoch = 1480799665
+    newMockSoul.epoch = 1481899665
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
@@ -100,9 +100,9 @@ class MockFactory {
     let newMockSoul = Soul()
     newMockSoul.s3Key = "1479612126"
     newMockSoul.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"
-    newMockSoul.epoch = 1480800565
+    newMockSoul.epoch = 1481900565
     newMockSoul.longitude = 49.343
-    newMockSoul.latitude = 223.234
+    newMockSoul.latitude = 223.23
     newMockSoul.radius = 44.44
     newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
     return newMockSoul
@@ -111,9 +111,9 @@ class MockFactory {
     let newMockSoul = Soul()
     newMockSoul.s3Key = "fabulousTest"
     newMockSoul.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"
-    newMockSoul.epoch = 1480800665
+    newMockSoul.epoch = 1481900665
     newMockSoul.longitude = 49.343
-    newMockSoul.latitude = 223.234
+    newMockSoul.latitude = 223.23
     newMockSoul.radius = 44.44
     newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
     return newMockSoul

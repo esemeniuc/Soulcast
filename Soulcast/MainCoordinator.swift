@@ -49,6 +49,7 @@ class MainCoordinator: NSObject, JKPageVCDelegate {
       super.init()
     }
     pageVC.jkDelegate = self
+    pageVC.disableScroll()
     mainVC.delegate = self
     addPageTab()
   }

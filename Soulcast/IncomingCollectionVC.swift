@@ -44,8 +44,18 @@ class IncomingCollectionVC: UICollectionViewController {
     super.viewDidLoad()
     collectionView!.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.6)
     collectionView?.registerClass(IncomingCollectionCell.self, forCellWithReuseIdentifier: cellIdentifier)
+    addDoubleTapToDismiss()
   }
   
+  func addDoubleTapToDismiss() {
+    let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+    doubleTapRecognizer.numberOfTapsRequired = 2
+    view.addGestureRecognizer(doubleTapRecognizer)
+  }
+  func doubleTapped() {
+    soloQueue.purge()
+    stop()
+  }
   override func willMoveToParentViewController(parent: UIViewController?) {
     super.willMoveToParentViewController(parent)
     //TODO: animate
@@ -109,7 +119,7 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
 
 extension IncomingCollectionVC: SoulPlayerDelegate {
   func didStartPlaying(soul: Soul) {
-
+    
   }
   
   func didFinishPlaying(soul: Soul) {
@@ -118,7 +128,6 @@ extension IncomingCollectionVC: SoulPlayerDelegate {
       if !soloQueue.isEmpty {
         playFirstSoul()
       }
-
     } else {
       soloQueue.purge()
     }

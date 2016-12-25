@@ -36,7 +36,8 @@ class ServerFacade {
   }
   
   class func getHistory(success:([Soul])->(), failure:(Int)->()) {
-    get("history", parameters: Device.localDevice.toParams()).responseJSON { (response) in
+    let deviceID = Device.localDevice.id ?? 0
+    get("history/" + String(deviceID)).responseJSON { (response) in
       switch response.result {
       case .Success(let JSON):
         print("Got history!\(JSON)")
