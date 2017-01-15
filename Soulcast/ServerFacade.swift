@@ -14,11 +14,10 @@ class ServerFacade {
   class func block(soul:Soul, success:()->(), failure:(Int)->()) {
     //TODO: check interface with cwaffles
     assert(soul.token != nil, "This soul does not have a token! A Ronen Token")
-    let localToken = Device.localDevice.token ?? "RONENTOKEN"
+    let localToken = Device.localDevice.token ?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     post("blocks", parameters:[
-      "block": soul.token!,
-      "token": localToken,
-      "blockedToken": soul.token! ])
+      "blockee_token": soul.token!,
+      "blocker_token": localToken ])
       .responseJSON { response in
         switch response.result {
         case .Success(let JSON):
@@ -36,12 +35,12 @@ class ServerFacade {
   }
   
   class func getHistory(success:([Soul])->(), failure:(Int)->()) {
-    let deviceID = Device.localDevice.id ?? 0
-    get("history/" + String(deviceID)).responseJSON { (response) in
+    let deviceID = Device.localDevice.id ?? 1 //TODO: disallow nils...
+    get("device_history/" + String(deviceID)).responseJSON { (response) in
       switch response.result {
       case .Success(let JSON):
         print("Got history!\(JSON)")
-        success([MockFactory.mockSoulOne()])
+        success(Soul.fromArray(JSON as! [[String:AnyObject]]))
       case .Failure(let error):
         print("Failed to get history! error: \(error)")
         if let failResponse = response.response {
@@ -151,7 +150,7 @@ class ServerFacade {
     if let deviceInt = localDevice.id {
       deviceString = String(deviceInt)
     }
-    patch("devices" + deviceString, parameters: localDevice.toParams())
+    patch("devices/" + deviceString, parameters: localDevice.toParams())
       .responseString { (response) in
       switch response.result {
       case .Success:

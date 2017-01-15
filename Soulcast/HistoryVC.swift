@@ -21,6 +21,8 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   var selectedSoul: Soul?
   var playlisting: Bool = false
   var startedPlaylisting: Bool = false
+  weak var delegate: HistoryVCDelegate?
+  let refreshControl = UIRefreshControl()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -28,9 +30,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     dataSource.fetch()
     //
     view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
-    
   }
-  weak var delegate: HistoryVCDelegate?
   
   func addTableView() {
     let tableHeight = view.bounds.height * 0.95
@@ -43,7 +43,10 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     dataSource.delegate = self
     tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: String(UITableViewCell))
     tableView.registerClass(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: String(UITableViewHeaderFooterView))
+    refreshControl.addTarget(self, action: #selector(refresh(_:)), forControlEvents: .ValueChanged)
+    tableView.addSubview(refreshControl)
   }
+
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     soulPlayer.subscribe(self)
@@ -60,8 +63,10 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     selectedSoul = dataSource.soul(forIndex: 0)
     // play first soul
     soulPlayer.reset()
-    soulPlayer.startPlaying(selectedSoul!)
-    playlisting = true
+    if let thisSoul = selectedSoul {
+      soulPlayer.startPlaying(thisSoul)
+      playlisting = true
+    }
   }
   func playNextSoul() {
     if selectedSoul != nil {
@@ -70,10 +75,14 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       selectedSoul = dataSource.soul(forIndex: nextIndex)
       tableView.selectRowAtIndexPath(nextIndexPath, animated: true, scrollPosition: .None)
     }
-    if let soul = selectedSoul {
+    if selectedSoul != nil {
       soulPlayer.reset()
       soulPlayer.startPlaying(selectedSoul)
     }
+  }
+  
+  func refresh(refreshControl:UIRefreshControl) {
+    dataSource.fetch()
   }
   
   // UITableViewDelegate
@@ -119,21 +128,20 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   // HistoryDataSourceDelegate
   func willFetch() {
     //show loading
+    refreshControl.beginRefreshing()
   }
   
   func didFetch(success: Bool) {
     if success {
-      //remove loading
+      
     } else {
       //show failure, retry button.
     }
+    refreshControl.endRefreshing()
   }
   
   func didUpdate(soulcount: Int) {
-//    tableView.reloadData()
-    tableView.beginUpdates()
-    tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
-    tableView.endUpdates()
+    tableView.reloadData()
   }
   func didFinishUpdating(soulCount: Int) {
     guard isViewLoaded() && view.window != nil else {
@@ -154,9 +162,8 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     
   }
   private func block(soul:Soul) {
-    MockServerFacade.block(soul, success: {
+    ServerFacade.block(soul, success: {
       //remove soul at index
-      
       self.dataSource.remove(soul)
     }) { statusCode in
       print(statusCode)

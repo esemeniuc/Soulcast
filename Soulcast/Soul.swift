@@ -57,8 +57,32 @@ class Soul: NSObject {
     incomingSoul.longitude = (soulHash["soul[longitude]"] as? NSString)?.doubleValue
     incomingSoul.radius = (soulHash["soul[radius]"] as? NSNumber)?.doubleValue
     incomingSoul.s3Key = soulHash["soul[s3Key]"] as? String
+    incomingSoul.token = soulHash["soul[token]"] as? String
     return incomingSoul
   }
+  
+  class func fromArray (soulsJSON: [[String: AnyObject]]) -> [Soul] {
+    var souls = [Soul]()
+    for eachSoulJson in soulsJSON {
+      souls.append(fromServerHash(eachSoulJson))
+    }
+    return souls
+  }
+  
+  class func fromServerHash (soulHash:NSDictionary) -> Soul {
+    let incomingSoul = Soul()
+    let incomingDevice = Device()
+    incomingDevice.id = soulHash["device_id"] as? Int
+    //    incomingSoul.device = incomingDevice
+    incomingSoul.epoch = soulHash["epoch"] as? Int
+    incomingSoul.latitude = (soulHash["latitude"] as? NSString)?.doubleValue
+    incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
+    incomingSoul.radius = (soulHash["radius"] as? NSNumber)?.doubleValue
+    incomingSoul.s3Key = soulHash["s3Key"] as? String
+    incomingSoul.token = soulHash["token"] as? String
+    return incomingSoul
+  }
+  
   
 }
 

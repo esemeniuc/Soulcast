@@ -1,4 +1,4 @@
-//
+  //
 //  HistoryDataSource.swift
 //  Soulcast
 //
@@ -24,8 +24,9 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   var updateTimer: NSTimer = NSTimer()
   
   func fetch() {
+    //TODO:
     delegate?.willFetch()
-    MockServerFacade.getHistory({ souls in
+    ServerFacade.getHistory({ souls in
       self.catchSouls(souls)
       self.delegate?.didFetch(true)
       }, failure:  { failureCode in

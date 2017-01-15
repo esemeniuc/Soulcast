@@ -48,9 +48,8 @@ class DeviceManager: NSObject {
   }
   
   func getNearbyDevices(completion:([String:AnyObject])->(), failure:()->()) {
-    let deviceID = Device.localDevice.id ?? 1;
     request(.GET,
-      serverURL + nearbySuffix + String(deviceID) + ".json",
+      serverURL + nearbySuffix,
       parameters: Device.localDevice.toParams() )
       .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
         switch response.result{
