@@ -49,6 +49,11 @@
 		BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */; };
 		BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */; };
 		BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */; };
+		BDBDE7EC1E2C190000161E96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBDE7EB1E2C190000161E96 /* AppDelegate.swift */; };
+		BDBDE7EE1E2C190000161E96 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBDE7ED1E2C190000161E96 /* ViewController.swift */; };
+		BDBDE7F11E2C190000161E96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDBDE7EF1E2C190000161E96 /* Main.storyboard */; };
+		BDBDE7F31E2C190000161E96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDBDE7F21E2C190000161E96 /* Assets.xcassets */; };
+		BDBDE7F61E2C190000161E96 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDBDE7F41E2C190000161E96 /* LaunchScreen.storyboard */; };
 		BDCE02B51DB2CD8F00D3D0CF /* EulaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCE02B41DB2CD8F00D3D0CF /* EulaVC.swift */; };
 		BDCE02B71DB2E47F00D3D0CF /* eula.txt in Resources */ = {isa = PBXBuildFile; fileRef = BDCE02B61DB2E47F00D3D0CF /* eula.txt */; };
 		BDD072F21DE10807008EDF4E /* LaunchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD072F11DE10807008EDF4E /* LaunchHelper.swift */; };
@@ -110,6 +115,13 @@
 		BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCaster.swift; sourceTree = "<group>"; };
 		BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcher.swift; sourceTree = "<group>"; };
 		BDB8F4BE1D6BB4DC00E4C7E0 /* OutgoingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingVC.swift; sourceTree = "<group>"; };
+		BDBDE7E91E2C18FF00161E96 /* Soulground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soulground.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDBDE7EB1E2C190000161E96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BDBDE7ED1E2C190000161E96 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BDBDE7F01E2C190000161E96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BDBDE7F21E2C190000161E96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BDBDE7F51E2C190000161E96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BDBDE7F71E2C190000161E96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDCE02B41DB2CD8F00D3D0CF /* EulaVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EulaVC.swift; sourceTree = "<group>"; };
 		BDCE02B61DB2E47F00D3D0CF /* eula.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = eula.txt; sourceTree = "<group>"; };
 		BDD072F11DE10807008EDF4E /* LaunchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchHelper.swift; sourceTree = "<group>"; };
@@ -129,6 +141,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A519C27B5EFC0926D32B35E /* Pods_Soulcast.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDBDE7E61E2C18FF00161E96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				BDB8F48A1D6B938200E4C7E0 /* Soulcast */,
+				BDBDE7EA1E2C190000161E96 /* Soulground */,
 				BDB8F4891D6B938200E4C7E0 /* Products */,
 				2AFE0B2DD5953037D39FAB3B /* Pods */,
 				240B620F0BF0D31F1EC90F27 /* Frameworks */,
@@ -227,6 +247,7 @@
 			isa = PBXGroup;
 			children = (
 				BDB8F4881D6B938200E4C7E0 /* Soulcast.app */,
+				BDBDE7E91E2C18FF00161E96 /* Soulground.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -314,6 +335,19 @@
 			name = Transmission;
 			sourceTree = "<group>";
 		};
+		BDBDE7EA1E2C190000161E96 /* Soulground */ = {
+			isa = PBXGroup;
+			children = (
+				BDBDE7EB1E2C190000161E96 /* AppDelegate.swift */,
+				BDBDE7ED1E2C190000161E96 /* ViewController.swift */,
+				BDBDE7EF1E2C190000161E96 /* Main.storyboard */,
+				BDBDE7F21E2C190000161E96 /* Assets.xcassets */,
+				BDBDE7F41E2C190000161E96 /* LaunchScreen.storyboard */,
+				BDBDE7F71E2C190000161E96 /* Info.plist */,
+			);
+			path = Soulground;
+			sourceTree = "<group>";
+		};
 		BDD072F31DE108E1008EDF4E /* Push */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,13 +392,30 @@
 			productReference = BDB8F4881D6B938200E4C7E0 /* Soulcast.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BDBDE7E81E2C18FF00161E96 /* Soulground */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BDBDE7FA1E2C190000161E96 /* Build configuration list for PBXNativeTarget "Soulground" */;
+			buildPhases = (
+				BDBDE7E51E2C18FF00161E96 /* Sources */,
+				BDBDE7E61E2C18FF00161E96 /* Frameworks */,
+				BDBDE7E71E2C18FF00161E96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Soulground;
+			productName = Soulground;
+			productReference = BDBDE7E91E2C18FF00161E96 /* Soulground.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		BDB8F4801D6B938200E4C7E0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Soulcast-team";
 				TargetAttributes = {
@@ -377,6 +428,11 @@
 								enabled = 1;
 							};
 						};
+					};
+					BDBDE7E81E2C18FF00161E96 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 59SVXWFZ98;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -394,6 +450,7 @@
 			projectRoot = "";
 			targets = (
 				BDB8F4871D6B938200E4C7E0 /* Soulcast */,
+				BDBDE7E81E2C18FF00161E96 /* Soulground */,
 			);
 		};
 /* End PBXProject section */
@@ -406,6 +463,16 @@
 				BDB8F4961D6B938200E4C7E0 /* LaunchScreen.storyboard in Resources */,
 				BDCE02B71DB2E47F00D3D0CF /* eula.txt in Resources */,
 				BDB8F4931D6B938200E4C7E0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BDBDE7E71E2C18FF00161E96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDBDE7F61E2C190000161E96 /* LaunchScreen.storyboard in Resources */,
+				BDBDE7F31E2C190000161E96 /* Assets.xcassets in Resources */,
+				BDBDE7F11E2C190000161E96 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +583,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BDBDE7E51E2C18FF00161E96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BDBDE7EE1E2C190000161E96 /* ViewController.swift in Sources */,
+				BDBDE7EC1E2C190000161E96 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -523,6 +599,22 @@
 			isa = PBXVariantGroup;
 			children = (
 				BDB8F4951D6B938200E4C7E0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		BDBDE7EF1E2C190000161E96 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BDBDE7F01E2C190000161E96 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BDBDE7F41E2C190000161E96 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BDBDE7F51E2C190000161E96 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -658,6 +750,37 @@
 			};
 			name = Release;
 		};
+		BDBDE7F81E2C190000161E96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEVELOPMENT_TEAM = 59SVXWFZ98;
+				INFOPLIST_FILE = Soulground/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = SC.Soulground;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		BDBDE7F91E2C190000161E96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEVELOPMENT_TEAM = 59SVXWFZ98;
+				INFOPLIST_FILE = Soulground/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = SC.Soulground;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -678,6 +801,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		BDBDE7FA1E2C190000161E96 /* Build configuration list for PBXNativeTarget "Soulground" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDBDE7F81E2C190000161E96 /* Debug */,
+				BDBDE7F91E2C190000161E96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
