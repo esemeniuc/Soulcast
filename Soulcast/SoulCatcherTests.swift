@@ -15,23 +15,23 @@ class SoulCatcherTests {
   static func mockUserInfo() -> [NSString : AnyObject] {
     var mockUserInfo = [NSString : AnyObject]()
       var aps = [NSString : AnyObject]()
-        aps["alert"] = "Hi2"
-        aps["badge"] = 1
-        aps["sound"] = "default"
-    mockUserInfo["aps"] = aps
+        aps["alert"] = "Hi2" as AnyObject?
+        aps["badge"] = 1 as AnyObject?
+        aps["sound"] = "default" as AnyObject?
+    mockUserInfo["aps"] = aps as AnyObject?
       var soulObject = [NSString : AnyObject]()
-        soulObject["radius"] = 5
-        soulObject["longitude"] = 10
-        soulObject["latitude"] = 11
-        soulObject["s3Key"] = "1479619472"
-        soulObject["epoch"] = 1479619472
-        soulObject["id"] = 14
-        soulObject["device_id"] = 15
-        soulObject["created_at"] = 5
-        soulObject["token"] = 5
-        soulObject["updated_at"] = 5
-        soulObject["soulType"] = 5
-    mockUserInfo[NSString(string: "soulObject")] = soulObject
+        soulObject["radius"] = 5 as AnyObject?
+        soulObject["longitude"] = 10 as AnyObject?
+        soulObject["latitude"] = 11 as AnyObject?
+        soulObject["s3Key"] = "1479619472" as AnyObject?
+        soulObject["epoch"] = 1479619472 as AnyObject?
+        soulObject["id"] = 14 as AnyObject?
+        soulObject["device_id"] = 15 as AnyObject?
+        soulObject["created_at"] = 5 as AnyObject?
+        soulObject["token"] = 5 as AnyObject?
+        soulObject["updated_at"] = 5 as AnyObject?
+        soulObject["soulType"] = 5 as AnyObject?
+    mockUserInfo[NSString(string: "soulObject")] = soulObject as AnyObject?
     return mockUserInfo
   }
 
@@ -43,7 +43,7 @@ class SoulCatcherTests {
     // try 
   }
   
-  func testIncoming(hash: [String : AnyObject]) {
+  func testIncoming(_ hash: [String : AnyObject]) {
     soulCatcher = SoulCatcher(soulHash: hash)
     soulCatcher!.delegate = self
   }
@@ -67,17 +67,17 @@ class SoulCatcherTests {
 
 
 extension SoulCatcherTests: SoulCatcherDelegate {
-  func soulDidStartToDownload(catcher: SoulCatcher, soul:Soul) {
+  func soulDidStartToDownload(_ catcher: SoulCatcher, soul:Soul) {
     print("soulDidStartToDownload")
   }
-  func soulIsDownloading(catcher: SoulCatcher, progress:Float) {
+  func soulIsDownloading(_ catcher: SoulCatcher, progress:Float) {
     print("Downloading soul with progress: \(progress)")
   }
-  func soulDidFinishDownloading(catcher: SoulCatcher, soul:Soul) {
+  func soulDidFinishDownloading(_ catcher: SoulCatcher, soul:Soul) {
     print("soulDidFinishDownloading")
     soulPlayer.startPlaying(soul)
   }
-  func soulDidFailToDownload(catcher: SoulCatcher) {
+  func soulDidFailToDownload(_ catcher: SoulCatcher) {
     print("soulDidFailToDownload")
     
   }

@@ -41,25 +41,25 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     tableView.allowsMultipleSelectionDuringEditing = false
     tableView.allowsMultipleSelection = false
     dataSource.delegate = self
-    tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: String(UITableViewCell))
-    tableView.registerClass(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: String(UITableViewHeaderFooterView))
-    refreshControl.addTarget(self, action: #selector(refresh(_:)), forControlEvents: .ValueChanged)
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell()))
+    tableView.register(UITableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: String(describing: UITableViewHeaderFooterView()))
+    refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
     tableView.addSubview(refreshControl)
   }
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     soulPlayer.subscribe(self)
     startPlaylisting()
   }
-  override func viewWillDisappear(animated: Bool) {
+  override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     soulPlayer.unsubscribe(self)
     deselectAllRows()
   }
   func startPlaylisting() {
-    let first = NSIndexPath(forRow: 0, inSection: 0)
-    tableView.selectRowAtIndexPath(first, animated: true, scrollPosition: .None)
+    let first = IndexPath(row: 0, section: 0)
+    tableView.selectRow(at: first, animated: true, scrollPosition: .none)
     selectedSoul = dataSource.soul(forIndex: 0)
     // play first soul
     soulPlayer.reset()
@@ -71,9 +71,9 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   func playNextSoul() {
     if selectedSoul != nil {
       let nextIndex = dataSource.indexPath(forSoul: selectedSoul!).row + 1
-      let nextIndexPath = NSIndexPath(forItem: nextIndex , inSection: 0)
+      let nextIndexPath = IndexPath(item: nextIndex , section: 0)
       selectedSoul = dataSource.soul(forIndex: nextIndex)
-      tableView.selectRowAtIndexPath(nextIndexPath, animated: true, scrollPosition: .None)
+      tableView.selectRow(at: nextIndexPath, animated: true, scrollPosition: .none)
     }
     if selectedSoul != nil {
       soulPlayer.reset()
@@ -81,47 +81,47 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     }
   }
   
-  func refresh(refreshControl:UIRefreshControl) {
+  func refresh(_ refreshControl:UIRefreshControl) {
     dataSource.fetch()
   }
   
   // UITableViewDelegate
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     playlisting = false
     selectedSoul = dataSource.soul(forIndex:indexPath.row)
     if SoulPlayer.playing {
       soulPlayer.reset()
-      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+      tableView.deselectRow(at: indexPath, animated: true)
     } else {
       soulPlayer.reset()
       soulPlayer.startPlaying(selectedSoul)
     }
   }
   
-  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let headerView = UITableViewHeaderFooterView(reuseIdentifier: String(UITableViewHeaderFooterView))
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let headerView = UITableViewHeaderFooterView(reuseIdentifier: String(describing: UITableViewHeaderFooterView()))
     return headerView
   }
-  func tableView(tableView: UITableView, canFocusRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+  func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
     return true
   }
-  func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
     return 55
   }
-  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     return 60
   }
-  func tableView(tableView: UITableView, shouldShowMenuForRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+  func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
     return true
   }
-  func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+  func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
     return "Block"
   }
   
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 55
   }
-  func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+  func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
     soulPlayer.reset()
     selectedSoul = nil
   }
@@ -131,7 +131,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     refreshControl.beginRefreshing()
   }
   
-  func didFetch(success: Bool) {
+  func didFetch(_ success: Bool) {
     if success {
       
     } else {
@@ -140,11 +140,11 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     refreshControl.endRefreshing()
   }
   
-  func didUpdate(soulcount: Int) {
+  func didUpdate(_ soulcount: Int) {
     tableView.reloadData()
   }
-  func didFinishUpdating(soulCount: Int) {
-    guard isViewLoaded() && view.window != nil else {
+  func didFinishUpdating(_ soulCount: Int) {
+    guard isViewLoaded && view.window != nil else {
       return
     }
     tableView.reloadData()
@@ -154,14 +154,14 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
 //    }
     startedPlaylisting = true
   }
-  func didRequestBlock(soul: Soul) {
-    presentViewController(blockAlertController(soul), animated: true) {
+  func didRequestBlock(_ soul: Soul) {
+    present(blockAlertController(soul), animated: true) {
       //
     }
     return
     
   }
-  private func block(soul:Soul) {
+  fileprivate func block(_ soul:Soul) {
     ServerFacade.block(soul, success: {
       //remove soul at index
       self.dataSource.remove(soul)
@@ -170,12 +170,12 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     }
   }
   
-  func blockAlertController(soul:Soul) -> UIAlertController {
-    let controller = UIAlertController(title: "Block Soul", message: "You will no longer hear from the device that casted this soul.", preferredStyle: .Alert)
-    controller.addAction(UIAlertAction(title: "Block", style: .Default, handler: {(action) in
+  func blockAlertController(_ soul:Soul) -> UIAlertController {
+    let controller = UIAlertController(title: "Block Soul", message: "You will no longer hear from the device that casted this soul.", preferredStyle: .alert)
+    controller.addAction(UIAlertAction(title: "Block", style: .default, handler: {(action) in
       self.block(soul)
     }))
-    controller.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) in
+    controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
       //
     }))
     return controller
@@ -183,27 +183,27 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   
   
   //SoulPlayerDelegate
-  func didStartPlaying(soul:Soul) {
+  func didStartPlaying(_ soul:Soul) {
     
   }
-  func didFinishPlaying(soul:Soul) {
+  func didFinishPlaying(_ soul:Soul) {
     //deselect current row if same
     if soul == selectedSoul {
-      tableView.deselectRowAtIndexPath(dataSource.indexPath(forSoul: soul), animated: true)
+      tableView.deselectRow(at: dataSource.indexPath(forSoul: soul) as IndexPath, animated: true)
     }
     if playlisting {
       playNextSoul()
     }
   }
 
-  func didFailToPlay(soul:Soul) {
+  func didFailToPlay(_ soul:Soul) {
     
   }
   
   func deselectAllRows() {
     for rowIndex in 0...dataSource.soulCount() {
-      let indexPath = NSIndexPath(forRow: rowIndex, inSection: 0)
-      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+      let indexPath = IndexPath(row: rowIndex, section: 0)
+      tableView.deselectRow(at: indexPath, animated: true)
     }
   }
   

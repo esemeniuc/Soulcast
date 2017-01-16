@@ -4,7 +4,7 @@ import UIKit
 import MapKit
 
 protocol MapVCDelegate: class {
-  func mapVCDidChangeradius(radius:Double)
+  func mapVCDidChangeradius(_ radius:Double)
 }
 
 class MapVC: UIViewController {
@@ -51,7 +51,7 @@ class MapVC: UIViewController {
   var devicesLabelUpdatedRecently = false
   weak var delegate: MapVCDelegate?
   
-  var timer:NSTimer?
+  var timer:Timer?
   
   let tiltCamera = MKMapCamera()
   
@@ -72,21 +72,21 @@ class MapVC: UIViewController {
   }
   
   func setupTimer() {
-    timer = NSTimer(timeInterval: 35,
+    timer = Timer(timeInterval: 35,
                     target: self,
                     selector: #selector(restartLocationUpdates(_:)),
                     userInfo: nil,
                     repeats: true)
-    NSRunLoop.currentRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
+    RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
     timer?.fire()
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     monitorLocation()
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 
   }
@@ -101,11 +101,11 @@ class MapVC: UIViewController {
   }
 
   func addMap() {
-    mapView.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)
-    mapView.mapType = .Standard
-    mapView.scrollEnabled = false
-    mapView.rotateEnabled = false
-    mapView.zoomEnabled = false
+    mapView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+    mapView.mapType = .standard
+    mapView.isScrollEnabled = false
+    mapView.isRotateEnabled = false
+    mapView.isZoomEnabled = false
     mapView.showsUserLocation = true
     if let location = latestLocation {
       if let span = userSpan {
@@ -125,11 +125,11 @@ class MapVC: UIViewController {
     mapView.addGestureRecognizer(pinchRecognizer)
   }
   
-  func didPanOnMapView(pinchRecognizer:UIPinchGestureRecognizer) {
+  func didPanOnMapView(_ pinchRecognizer:UIPinchGestureRecognizer) {
     switch pinchRecognizer.state {
-    case .Began:
+    case .began:
       originalRegion = mapView.region
-    case .Changed:
+    case .changed:
       var latitudeDelta = Double(originalRegion!.span.latitudeDelta) / Double(pinchRecognizer.scale)
       var longitudeDelta = Double(originalRegion!.span.longitudeDelta) / Double(pinchRecognizer.scale);
       latitudeDelta = max(min(latitudeDelta, 10), 0.0005);
@@ -138,7 +138,7 @@ class MapVC: UIViewController {
       updateDevicesLabel()
       self.mapView.setRegion(MKCoordinateRegionMake(originalRegion!.center, userSpan!), animated: false)
       self.delegate?.mapVCDidChangeradius(userSpan.latitudeDelta)
-    case .Ended:
+    case .ended:
       saveRegionData()
       
       break
@@ -156,20 +156,20 @@ class MapVC: UIViewController {
   }
   
   static func hasLocationPermission() -> Bool {
-    return CLLocationManager.authorizationStatus() == .AuthorizedAlways || CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
+    return CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse
   }
   
   
-  static func systemAskLocationPermission(locationManager: CLLocationManager) {
+  static func systemAskLocationPermission(_ locationManager: CLLocationManager) {
     /*
      Must include in .plist
      <key>NSLocationAlwaysUsageDescription</key>
      <string>Optional message</string>
      */
-    if locationManager.respondsToSelector(#selector(CLLocationManager.requestAlwaysAuthorization)) {
+    if locationManager.responds(to: #selector(CLLocationManager.requestAlwaysAuthorization)) {
       locationManager.requestAlwaysAuthorization()
     }
-    if locationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)) {
+    if locationManager.responds(to: #selector(CLLocationManager.requestWhenInUseAuthorization)) {
       locationManager.requestWhenInUseAuthorization()
     }
   }
@@ -186,8 +186,8 @@ class MapVC: UIViewController {
     if devicesLabelUpdating || devicesLabelUpdatedRecently{
       return
     }
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.75 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
+    let delayTime = DispatchTime.now() + Double(Int64(0.75 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
       self.devicesLabelUpdatedRecently = false
     }
     
@@ -200,7 +200,7 @@ class MapVC: UIViewController {
         self.devicesLabelUpdating = false
         if let nearby = response["nearby"] {
           let oldText = self.devicesLabel.text
-          let newText = String(nearby)
+          let newText = String(describing: nearby)
           if oldText != newText {
             self.devicesLabel.text = newText
             self.devicesLabel.wiggle()
@@ -223,39 +223,39 @@ class MapVC: UIViewController {
     let radiusExplainerView = RadiusExplainerView(maskCircleArea: devicesLabel.frame)
     radiusExplainerView.alpha = 0
     view.superview?.addSubview(radiusExplainerView)
-    UIView.animateWithDuration(0.37) { 
+    UIView.animate(withDuration: 0.37, animations: { 
       radiusExplainerView.alpha = 1
-    }
+    }) 
   }
   
   
 }
 
 extension MapVC: MKMapViewDelegate {
-  func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+  func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
     let mapRegion = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: userSpan!)
     mapView.setRegion(mapRegion, animated: true)
   }
   
-  func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+  func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
     
   }
   
-  func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+  func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
     //
   }
 }
 
 extension MapVC: CLLocationManagerDelegate {
   
-  func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     updateIfMoved(manager, location: locations.last)
     updateDevicesLabel()
   }
     
-  func updateIfMoved(manager: CLLocationManager, location: CLLocation!) {
+  func updateIfMoved(_ manager: CLLocationManager, location: CLLocation!) {
     if let previousLocation = latestLocation {
-      let distance = location.distanceFromLocation(previousLocation)
+      let distance = location.distance(from: previousLocation)
       if distance > 50 {
         //moved a lot
       }
@@ -264,7 +264,7 @@ extension MapVC: CLLocationManagerDelegate {
     latestLocation = location
   }
   
-  func restartLocationUpdates(timer: NSTimer) {
+  func restartLocationUpdates(_ timer: Timer) {
     locationManager.startUpdatingLocation()
     saveRegionData()
   }

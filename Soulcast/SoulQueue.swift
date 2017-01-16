@@ -9,7 +9,7 @@ class SoulQueue {
   
   var elementCount:Int = 0
   
-  func enqueue(incomingSoul:Soul){
+  func enqueue(_ incomingSoul:Soul){
 //    assert(incomingSoul.type == .Broadcast)
     
     elementCount += 1

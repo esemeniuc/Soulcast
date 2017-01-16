@@ -9,7 +9,7 @@ protocol OnboardingVCDelegate: class {
 
 class OnboardingVC: UIViewController {
   
-  let pageVC = JKPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+  let pageVC = JKPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
   var eachPageVCs = [UIViewController]()
   weak var delegate: OnboardingVCDelegate?
 //  private let pushPermissionVC = PushPermissionVC()
@@ -19,13 +19,13 @@ class OnboardingVC: UIViewController {
     
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white
     setupEachPageVCs()
     setupPageVC()
     
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     //debugColors()
   }
@@ -43,18 +43,18 @@ class OnboardingVC: UIViewController {
     pageVC.pages = eachPageVCs
     addChildViewController(pageVC)
     view.addSubview(pageVC.view)
-    pageVC.didMoveToParentViewController(self)
+    pageVC.didMove(toParentViewController: self)
     pageVC.disableScroll()
   }
   
-  func waitAndScrollFrom(vc:UIViewController) {
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.25 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
+  func waitAndScrollFrom(_ vc:UIViewController) {
+    let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
       if vc is LocationPermissionVC {
         self.delegate?.transitionToMainVC()
       } else {
         let index = self.pageVC.currentIndex
-        self.pageVC.scrollToVC(index + 1, direction: .Forward)
+        self.pageVC.scrollToVC(index + 1, direction: .forward)
       }
     }
   }
@@ -62,7 +62,7 @@ class OnboardingVC: UIViewController {
 
 
 extension OnboardingVC: PermissionVCDelegate {
-  func gotPermission(vc: PermissionVC) {
+  func gotPermission(_ vc: PermissionVC) {
     //FIXME: gets called multiple times per permission. fix
     print("gotPermission")
     //if the permission matches the current one
@@ -72,13 +72,13 @@ extension OnboardingVC: PermissionVCDelegate {
     }
   }
   
-  func deniedPermission(vc: PermissionVC) {
+  func deniedPermission(_ vc: PermissionVC) {
     delegate?.transitionToMainVC()
   }
 }
 
 extension OnboardingVC: EulaVCDelegate {
-  func didTapOKButton(vc:EulaVC) {
+  func didTapOKButton(_ vc:EulaVC) {
     waitAndScrollFrom(vc)
   }
 }

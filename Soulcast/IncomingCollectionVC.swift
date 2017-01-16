@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 protocol IncomingCollectionVCDelegate: class {
-  func didRunOutOfSouls(ivc:IncomingCollectionVC)
+  func didRunOutOfSouls(_ ivc:IncomingCollectionVC)
 }
 
 class IncomingCollectionVC: UICollectionViewController {
-  private static let inset:CGFloat = 8
-  private static let topSpaceProportion:CGFloat = 0.38
+  fileprivate static let inset:CGFloat = 8
+  fileprivate static let topSpaceProportion:CGFloat = 0.38
   static var beforeFrame = CGRect(
     x: inset,
     y: screenHeight,
@@ -42,8 +42,8 @@ class IncomingCollectionVC: UICollectionViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView!.backgroundColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.6)
-    collectionView?.registerClass(IncomingCollectionCell.self, forCellWithReuseIdentifier: cellIdentifier)
+    collectionView!.backgroundColor = UIColor.darkGray.withAlphaComponent(0.6)
+    collectionView?.register(IncomingCollectionCell.self, forCellWithReuseIdentifier: cellIdentifier)
     addDoubleTapToDismiss()
   }
   
@@ -56,24 +56,24 @@ class IncomingCollectionVC: UICollectionViewController {
     soloQueue.purge()
     stop()
   }
-  override func willMoveToParentViewController(parent: UIViewController?) {
-    super.willMoveToParentViewController(parent)
+  override func willMove(toParentViewController parent: UIViewController?) {
+    super.willMove(toParentViewController: parent)
     //TODO: animate
     view.frame = IncomingCollectionVC.beforeFrame
-    UIView.animateWithDuration(0.3) { 
+    UIView.animate(withDuration: 0.3, animations: { 
       self.view.frame = IncomingCollectionVC.afterFrame
-    }
+    }) 
   }
   
-  func animateAway(completion:()->()) {
-    UIView.animateWithDuration(0.3, animations: { 
+  func animateAway(_ completion:@escaping ()->()) {
+    UIView.animate(withDuration: 0.3, animations: { 
       self.view.frame = IncomingCollectionVC.beforeFrame
-    }) { (success) in
+    }, completion: { (success) in
       completion()
-    }
+    }) 
   }
   
-  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     print("\(name()): collectionView didSelectItemAtIndexPath")
     
   }
@@ -83,7 +83,7 @@ class IncomingCollectionVC: UICollectionViewController {
     soulPlayer.reset()
   }
   
-  private func playFirstSoul() {
+  fileprivate func playFirstSoul() {
     soulPlayer.subscribe(self)
     soulPlayer.reset()
     soulPlayer.startPlaying(soloQueue.peek())
@@ -95,19 +95,19 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
     if soloQueue.count == 1 {
       collectionView?.reloadData()
     } else {
-      collectionView?.insertItemsAtIndexPaths([NSIndexPath(forRow: max(soloQueue.count-1, 0), inSection: 0)])
+      collectionView?.insertItems(at: [IndexPath(row: max(soloQueue.count-1, 0), section: 0)])
     }
     //if only item, and player isn't playing, dequeue.
     if !SoulPlayer.playing {
       playFirstSoul()
-      UIView.animateWithDuration(0.3) {
+      UIView.animate(withDuration: 0.3, animations: {
         self.view.frame = IncomingCollectionVC.afterFrame
-      }
+      }) 
     }
   }
   
   func didDequeue() {
-    collectionView?.deleteItemsAtIndexPaths([NSIndexPath(forItem: 0, inSection: 0)])
+    collectionView?.deleteItems(at: [IndexPath(item: 0, section: 0)])
 
   }
   
@@ -118,11 +118,11 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
 }
 
 extension IncomingCollectionVC: SoulPlayerDelegate {
-  func didStartPlaying(soul: Soul) {
+  func didStartPlaying(_ soul: Soul) {
     
   }
   
-  func didFinishPlaying(soul: Soul) {
+  func didFinishPlaying(_ soul: Soul) {
     soloQueue.dequeue()
     if (isActiveOnScreen()) {
       if !soloQueue.isEmpty {
@@ -133,7 +133,7 @@ extension IncomingCollectionVC: SoulPlayerDelegate {
     }
   }
   
-  func didFailToPlay(soul: Soul) {
+  func didFailToPlay(_ soul: Soul) {
     //
   }
   

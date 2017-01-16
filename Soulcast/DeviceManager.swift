@@ -7,17 +7,17 @@ let deviceManager = DeviceManager()
 class DeviceManager: NSObject {
   var tempDevice: Device!
 
-  private func registerDeviceLocally(device: Device) {
-    NSUserDefaults.standardUserDefaults().setValue(device.token, forKey: "token")
+  fileprivate func registerDeviceLocally(_ device: Device) {
+    UserDefaults.standard.setValue(device.token, forKey: "token")
   }
   
-  func register(device: Device) { 
+  func register(_ device: Device) { 
     registerDeviceLocally(device)
     tempDevice = device
     self.registerWithServer(self.tempDevice)
   }
   
-  private func registerWithServer(device:Device) {
+  fileprivate func registerWithServer(_ device:Device) {
     ServerFacade.post(device, success: { 
       //
       }) { (result) in
@@ -25,14 +25,14 @@ class DeviceManager: NSObject {
     }
   }
   
-  func updateLocalDeviceID(id:Int) {
+  func updateLocalDeviceID(_ id:Int) {
     let updatingDevice = Device.localDevice
     updatingDevice.id = id
     Device.localDevice = updatingDevice
 
   }
   
-  func updateDeviceRegion(latitude:Double, longitude:Double, radius:Double) {
+  func updateDeviceRegion(_ latitude:Double, longitude:Double, radius:Double) {
     let updatingDevice = Device.localDevice
     updatingDevice.latitude = latitude
     updatingDevice.longitude = longitude
@@ -47,15 +47,14 @@ class DeviceManager: NSObject {
     }
   }
   
-  func getNearbyDevices(completion:([String:AnyObject])->(), failure:()->()) {
-    request(.GET,
-      serverURL + nearbySuffix,
+  func getNearbyDevices(_ completion:@escaping ([String:AnyObject])->(), failure:@escaping ()->()) {
+    request(serverURL + nearbySuffix,
       parameters: Device.localDevice.toParams() )
-      .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
+      .responseJSON(completionHandler: { response in
         switch response.result{
-        case .Success:
+        case .success:
           completion(response.result.value as! [String:AnyObject])
-        case .Failure:
+        case .failure:
           print("getNearbyDevices fail")
           failure()
         }

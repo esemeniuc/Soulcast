@@ -19,7 +19,7 @@ class OutgoingVC: UIViewController {
   var progress : CGFloat! = 0 //progress bar for the outgoing button
     
   var outgoingSoul:Soul?
-  var recordingStartTime:NSDate!
+  var recordingStartTime:Date!
   var soulRecorder = SoulRecorder()
   var soulCaster = SoulCaster()
   var displayLink: CADisplayLink!
@@ -31,13 +31,13 @@ class OutgoingVC: UIViewController {
   
   var firstTime:Bool {
     get {
-      if let defaults = NSUserDefaults.standardUserDefaults().valueForKey("recordingFirstTime") as? Bool{
+      if let defaults = UserDefaults.standard.value(forKey: "recordingFirstTime") as? Bool{
         return defaults
       } else {
         return true
       }
     }
-    set {  NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: "recordingFirstTime") }
+    set {  UserDefaults.standard.setValue(newValue, forKey: "recordingFirstTime") }
   }
   
   weak var delegate: OutgoingVCDelegate?
@@ -50,7 +50,7 @@ class OutgoingVC: UIViewController {
     configureNetworking()
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     //requestStartRecording()
   }
 
@@ -65,18 +65,18 @@ class OutgoingVC: UIViewController {
   }
   
   func addOutgoingButton() {
-    view.frame = CGRectMake((screenWidth - buttonSize)/2, screenHeight - buttonSize - inset, buttonSize, buttonSize)
+    view.frame = CGRect(x: (screenWidth - buttonSize)/2, y: screenHeight - buttonSize - inset, width: buttonSize, height: buttonSize)
     outgoingButton = RecordButton(frame: CGRect(x: 0, y: 0, width: buttonSize, height: buttonSize))
-    outgoingButton.backgroundColor = UIColor.clearColor()
-    outgoingButton.progressColor = UIColor.redColor()
-    outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedDown(_:)), forControlEvents: UIControlEvents.TouchDown)
-    outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedUpInside(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-    outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchDraggedExit(_:)), forControlEvents: UIControlEvents.TouchDragExit)
+    outgoingButton.backgroundColor = UIColor.clear
+    outgoingButton.progressColor = UIColor.red
+    outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedDown(_:)), for: UIControlEvents.touchDown)
+    outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchedUpInside(_:)), for: UIControlEvents.touchUpInside)
+    outgoingButton.addTarget(self, action: #selector(OutgoingVC.outgoingButtonTouchDraggedExit(_:)), for: UIControlEvents.touchDragExit)
     
     view.addSubview(outgoingButton)
   }
   
-  func outgoingButtonTouchedDown(button:UIButton) {
+  func outgoingButtonTouchedDown(_ button:UIButton) {
     if firstTime && !PermissionController.hasAudioPermission {
       //ask for recording permissions
       SoulRecorder.askForMicrophonePermission({ 
@@ -92,22 +92,22 @@ class OutgoingVC: UIViewController {
     }
   }
   
-  func outgoingButtonTouchedUpInside(button:UIButton) {
+  func outgoingButtonTouchedUpInside(_ button:UIButton) {
         requestFinishRecording()
   }
   
-  func outgoingButtonTouchDraggedExit(button:UIButton) {
+  func outgoingButtonTouchDraggedExit(_ button:UIButton) {
     requestFinishRecording()
   }
     
   
   func addDisplayLink() {
     displayLink = CADisplayLink(target: self, selector: #selector(OutgoingVC.displayLinkFired(_:)))
-    displayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+    displayLink.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
   }
   
-  func displayLinkFired(link:CADisplayLink) {
-    if soulRecorder.state == .RecordingStarted || soulRecorder.state == .RecordingLongEnough {
+  func displayLinkFired(_ link:CADisplayLink) {
+    if soulRecorder.state == .recordingStarted || soulRecorder.state == .recordingLongEnough {
       incrementRecordingIndicator()
     }
     
@@ -119,7 +119,7 @@ class OutgoingVC: UIViewController {
   }
   
   func requestStartRecording() {
-    recordingStartTime = NSDate()
+    recordingStartTime = Date()
     soulRecorder.pleaseStartRecording()
     //HAX to get the view to change state
    
@@ -130,7 +130,7 @@ class OutgoingVC: UIViewController {
     //replay, save, change ui to disabled.
   }
   
-  func playbackSoul(localSoul:Soul) {
+  func playbackSoul(_ localSoul:Soul) {
     soulPlayer.startPlaying(localSoul)
   }
   
@@ -149,7 +149,7 @@ extension OutgoingVC: SoulRecorderDelegate {
     
   }
   
-  func soulIsRecording(progress: CGFloat) {
+  func soulIsRecording(_ progress: CGFloat) {
     let haxProgress = progress + 1/60
     outgoingButton.setProgress(haxProgress)
   }
@@ -161,16 +161,16 @@ extension OutgoingVC: SoulRecorderDelegate {
   }
   
   func tryShowExplainFailAlert() {
-    let defaults = NSUserDefaults.standardUserDefaults()
-    let alertedCount = (defaults.valueForKey("explainFailAlertedCount") as? Int) ?? 0
+    let defaults = UserDefaults.standard
+    let alertedCount = (defaults.value(forKey: "explainFailAlertedCount") as? Int) ?? 0
     
     if alertedCount < 3 {
-      let alert = UIAlertController(title: "Recording is not long enough", message: "Tap and hold the button to record a soul", preferredStyle: .Alert)
-      let cancel = UIAlertAction(title: "OK", style: .Cancel) { alert in
+      let alert = UIAlertController(title: "Recording is not long enough", message: "Tap and hold the button to record a soul", preferredStyle: .alert)
+      let cancel = UIAlertAction(title: "OK", style: .cancel) { alert in
         //
       }
       alert.addAction(cancel)
-      presentViewController(alert, animated: false) {
+      present(alert, animated: false) {
         //
       }
       defaults.setValue(alertedCount + 1, forKey: "explainFailAlertedCount")
@@ -181,10 +181,10 @@ extension OutgoingVC: SoulRecorderDelegate {
     outgoingButton.tintLongEnough()
   }  
     
-  func soulDidFinishRecording(newSoul: Soul) {
+  func soulDidFinishRecording(_ newSoul: Soul) {
     outgoingButton.mute()
     playbackSoul(newSoul)
-    newSoul.epoch = Int(NSDate().timeIntervalSince1970)
+    newSoul.epoch = Int(Date().timeIntervalSince1970)
     newSoul.radius = delegate?.outgoingRadius()
     newSoul.s3Key = Randomizer.randomString(withLength: 10)
     newSoul.longitude = delegate?.outgoingLongitude()
@@ -195,7 +195,7 @@ extension OutgoingVC: SoulRecorderDelegate {
     soulCaster.cast(newSoul)
 
     if !PermissionController.hasPushPermission {
-      AppDelegate.registerForPushNotifications(UIApplication.sharedApplication())
+      AppDelegate.registerForPushNotifications(UIApplication.shared)
     }
 
   }
@@ -206,10 +206,10 @@ extension OutgoingVC: SoulCasterDelegate {
   func soulDidStartUploading() {
     printline("soulDidStartUploading")
   }
-  func soulIsUploading(progress:Float) {
+  func soulIsUploading(_ progress:Float) {
     printline("soulIsUploading progress: \(progress)")
   }
-  func soulDidFinishUploading(soul:Soul) {
+  func soulDidFinishUploading(_ soul:Soul) {
     printline("soulDidFinishUploading")
     
   }
@@ -223,14 +223,14 @@ extension OutgoingVC: SoulCasterDelegate {
 }
 
 extension OutgoingVC: SoulPlayerDelegate {
-  func didStartPlaying(soul:Soul){
+  func didStartPlaying(_ soul:Soul){
     
   }
-  func didFinishPlaying(soul:Soul){
+  func didFinishPlaying(_ soul:Soul){
     outgoingButton.resetSuccess()
     delegate?.outgoingDidStop()
   }
-  func didFailToPlay(soul:Soul){
+  func didFailToPlay(_ soul:Soul){
     
   }
 }

@@ -22,10 +22,10 @@ class IncomingCollectionCell: UICollectionViewCell {
       timeAgoLabel.text = timeAgo(epoch: epoch)
     }
   }
-  private var radiusLabel:UILabel = UILabel()
-  private var timeAgoLabel: UILabel = UILabel()
-  private var radiusLabelFrame:CGRect!
-  private var timeAgoLabelFrame:CGRect!
+  fileprivate var radiusLabel:UILabel = UILabel()
+  fileprivate var timeAgoLabel: UILabel = UILabel()
+  fileprivate var radiusLabelFrame:CGRect!
+  fileprivate var timeAgoLabelFrame:CGRect!
   //has a label on the left
   //has a label on the right
   
@@ -34,41 +34,41 @@ class IncomingCollectionCell: UICollectionViewCell {
     layoutStuff()
   }
   
-  private func layoutStuff() {
-    backgroundColor = UIColor.whiteColor()
+  fileprivate func layoutStuff() {
+    backgroundColor = UIColor.white
     layoutRadiusLabel()
     layoutTimeAgoLabel()
   }
   
-  private func layoutRadiusLabel() {
+  fileprivate func layoutRadiusLabel() {
     //left middle relative to frame...
     radiusLabelFrame = CGRect(
       x: 5,
       y: 5,
-      width: CGRectGetWidth(frame)*0.4,
-      height: CGRectGetHeight(frame)*0.8)
-    radiusLabel.frame = CGRectZero
+      width: frame.width*0.4,
+      height: frame.height*0.8)
+    radiusLabel.frame = CGRect.zero
     radiusLabel.font = UIFont(name: HelveticaNeueLight, size: 15)
-    radiusLabel.textAlignment = .Left
-    radiusLabel.textColor = UIColor.darkGrayColor()
+    radiusLabel.textAlignment = .left
+    radiusLabel.textColor = UIColor.darkGray
     radiusLabel.text = "50km"
     contentView.addSubview(radiusLabel)
 
   }
   
-  private func layoutTimeAgoLabel() {
+  fileprivate func layoutTimeAgoLabel() {
     //right middle relative to frame...
-    let labelWidth = CGRectGetWidth(frame)*0.4
-    let labelHeight = CGRectGetHeight(frame)*0.8
+    let labelWidth = frame.width*0.4
+    let labelHeight = frame.height*0.8
     timeAgoLabelFrame = CGRect(
-      x: CGRectGetWidth(frame) - labelWidth - 5,
+      x: frame.width - labelWidth - 5,
       y: 5,
       width: labelWidth,
       height: labelHeight)
     timeAgoLabel.frame = timeAgoLabelFrame
     timeAgoLabel.font = UIFont(name: HelveticaNeueLight, size: 15)
-    timeAgoLabel.textColor = UIColor.darkGrayColor()
-    timeAgoLabel.textAlignment = .Right
+    timeAgoLabel.textColor = UIColor.darkGray
+    timeAgoLabel.textAlignment = .right
     timeAgoLabel.text = "5m"
     contentView.addSubview(timeAgoLabel)
     

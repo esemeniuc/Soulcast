@@ -10,10 +10,10 @@ import UIKit
 import AWSS3
 
 protocol SoulCatcherDelegate: class {
-  func soulDidStartToDownload(catcher:SoulCatcher, soul:Soul)
-  func soulIsDownloading(catcher:SoulCatcher, progress:Float)
-  func soulDidFinishDownloading(catcher:SoulCatcher, soul:Soul)
-  func soulDidFailToDownload(catcher:SoulCatcher)
+  func soulDidStartToDownload(_ catcher:SoulCatcher, soul:Soul)
+  func soulIsDownloading(_ catcher:SoulCatcher, progress:Float)
+  func soulDidFinishDownloading(_ catcher:SoulCatcher, soul:Soul)
+  func soulDidFailToDownload(_ catcher:SoulCatcher)
 }
 
 //downloads a soul and puts it in a queue
@@ -35,44 +35,44 @@ class SoulCatcher: NSObject {
     catchSoulObject(catchingSoul)
   }
   init(soulHash:[String : AnyObject]) {
-    catchingSoul = Soul.fromAPNSHash(soulHash)
+    catchingSoul = Soul.fromAPNSHash(soulHash as NSDictionary)
     super.init()
     catchSoulObject(catchingSoul)
   }
   
-  private func catchSoul(soulInfo:[String : AnyObject]) {
-    catchSoulObject(Soul.fromAPNSHash(soulInfo))
+  fileprivate func catchSoul(_ soulInfo:[String : AnyObject]) {
+    catchSoulObject(Soul.fromAPNSHash(soulInfo as NSDictionary))
   }
   
-  private func catchSoulObject(incomingSoul:Soul) {
+  fileprivate func catchSoulObject(_ incomingSoul:Soul) {
     startDownloading(incomingSoul)
   }
   
   func rootVC() -> UIViewController {
-    return (UIApplication.sharedApplication().keyWindow?.rootViewController)!
+    return (UIApplication.shared.keyWindow?.rootViewController)!
   }
   
-  private func tryAgain(soul: Soul) {
+  fileprivate func tryAgain(_ soul: Soul) {
     print("Trying to download a soul again!!")
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.15 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
+    let delayTime = DispatchTime.now() + Double(Int64(0.15 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
       self.startDownloading(soul)
     }
   }
   
-  private func startDownloading(incomingSoul:Soul) {
+  fileprivate func startDownloading(_ incomingSoul:Soul) {
     let s3Key = incomingSoul.s3Key! as String + ".mp3"
     trialCounter += 1
     let expression = AWSS3TransferUtilityDownloadExpression()
     expression.progressBlock = {(task, progress) in
-      dispatch_async(dispatch_get_main_queue(), {
+      DispatchQueue.main.async(execute: {
         self.progress = Float(progress.fractionCompleted)
         self.delegate?.soulIsDownloading(self, progress: self.progress)
       })
     }
     
     self.completionHandler = { (task, location, data, error) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
+      DispatchQueue.main.async(execute: {
         if ((error) != nil){
           if self.trialCounter < self.MAX_TRIAL {
             self.tryAgain(incomingSoul)
@@ -96,10 +96,10 @@ class SoulCatcher: NSObject {
       })
     }
     
-    let transferUtility = AWSS3TransferUtility.defaultS3TransferUtility()
+    let transferUtility = AWSS3TransferUtility.default()
 
-    transferUtility.downloadDataFromBucket(
-      S3BucketName,
+    transferUtility.downloadData(
+      fromBucket: S3BucketName,
       key: s3Key,
       expression: expression,
       completionHander: completionHandler)
@@ -109,15 +109,15 @@ class SoulCatcher: NSObject {
   
   
   
-  func saveToCache(data: NSData, key:String) -> String {
-    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+  func saveToCache(_ data: Data, key:String) -> String {
+    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     let tempPath = paths.first
     let filePath = tempPath! + "/" + key + ".m4a"
     do {
-      if NSFileManager.defaultManager().fileExistsAtPath(filePath) {
-        try NSFileManager.defaultManager().removeItemAtPath(filePath)
+      if FileManager.default.fileExists(atPath: filePath) {
+        try FileManager.default.removeItem(atPath: filePath)
       }
-      data.writeToFile(filePath, atomically: true)
+      try? data.write(to: URL(fileURLWithPath: filePath), options: [.atomic])
       
     } catch {
       print("movedFileToDocuments error!")
@@ -125,7 +125,7 @@ class SoulCatcher: NSObject {
     return filePath
   }
   
-  static func fetchLatest(completion:(Soul?)->()){
+  static func fetchLatest(_ completion:@escaping (Soul?)->()){
     ServerFacade.getLatest({ (successJSON) in
       //TODO: objectify successJSON, download the thing, and run completion
       

@@ -6,25 +6,25 @@ import TheAmazingAudioEngine
 let audioController = AEAudioController(audioDescription: AEAudioController.nonInterleaved16BitStereoAudioDescription(), inputEnabled: true)
 
 enum FileReadWrite {
-  case Read
-  case Write
+  case read
+  case write
 }
 
 enum RecorderState {
-  case Standby // 0
-  case RecordingStarted
-  case RecordingLongEnough // 2
-  case Paused
-  case Failed // 4
-  case Finished // 5
-  case Unknown // 6
-  case Err
+  case standby // 0
+  case recordingStarted
+  case recordingLongEnough // 2
+  case paused
+  case failed // 4
+  case finished // 5
+  case unknown // 6
+  case err
 }
 
 protocol SoulRecorderDelegate: class {
   func soulDidStartRecording()
-  func soulIsRecording(progress:CGFloat)
-  func soulDidFinishRecording(newSoul: Soul)
+  func soulIsRecording(_ progress:CGFloat)
+  func soulDidFinishRecording(_ newSoul: Soul)
   func soulDidFailToRecord()
   func soulDidReachMinimumDuration()
 }
@@ -38,24 +38,24 @@ class SoulRecorder: NSObject {
   var recorder:AERecorder?
   weak var delegate:SoulRecorderDelegate?
   //records and spits out the url
-  var state: RecorderState = .Standby{
+  var state: RecorderState = .standby{
     didSet{
       switch (oldValue, state){
-      case (.Standby, .RecordingStarted):
+      case (.standby, .recordingStarted):
         break
-      case (.RecordingStarted, .RecordingLongEnough):
+      case (.recordingStarted, .recordingLongEnough):
         break
-      case (.RecordingStarted, .Failed):
+      case (.recordingStarted, .failed):
         break
-      case (.RecordingLongEnough, .Failed):
+      case (.recordingLongEnough, .failed):
         assert(false, "Should not be here!!")
-      case (.RecordingLongEnough, .Finished):
+      case (.recordingLongEnough, .finished):
         break
-      case (.Failed, .Standby):
+      case (.failed, .standby):
         break
-      case (.Finished, .Standby):
+      case (.finished, .standby):
         break
-      case (let x, .Err):
+      case (let x, .err):
         print("state x.hashValue: \(x.hashValue)")
       default:
         print("oldValue: \(oldValue.hashValue), state: \(state.hashValue)")
@@ -69,26 +69,26 @@ class SoulRecorder: NSObject {
   }
   func setup() {
     displayLink = CADisplayLink(target: self, selector: #selector(SoulRecorder.displayLinkFired(_:)))
-    displayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+    displayLink.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
     do {
-      try audioController.start()
+      try audioController?.start()
     } catch {
       print("audioController.start() fail!")
     }
   }
   
-  func displayLinkFired(link:CADisplayLink) {
-    if state == .RecordingStarted || state == .RecordingLongEnough { displayCounter += 1 }
+  func displayLinkFired(_ link:CADisplayLink) {
+    if state == .recordingStarted || state == .recordingLongEnough { displayCounter += 1 }
     if displayCounter == 60 * minimumRecordDuration {
       print("displayCounter == 60 * minimumRecordDuration")
-      if state == .RecordingStarted { minimumDurationDidPass() }
+      if state == .recordingStarted { minimumDurationDidPass() }
     }
     if displayCounter == 60 * maximumRecordDuration {
       print("displayCounter == 60 * maximumRecordDuration")
-      if state == .RecordingLongEnough { pleaseStopRecording() }
+      if state == .recordingLongEnough { pleaseStopRecording() }
       displayCounter = 0
     }
-    if state == .RecordingStarted || state == .RecordingLongEnough {
+    if state == .recordingStarted || state == .recordingLongEnough {
         let currentRecordDuration = CGFloat(displayCounter) / 60
         let progress:CGFloat = currentRecordDuration/CGFloat(maximumRecordDuration)
         self.delegate?.soulIsRecording(progress)
@@ -101,69 +101,69 @@ class SoulRecorder: NSObject {
       
       assert(false, "Should not be recording while audio is being played")
     }
-    if state != .Standby {
+    if state != .standby {
       assert(false, "OOPS!! Tried to start recording from an inappropriate state!")
     } else {
       startRecording()
-      state = .RecordingStarted
+      state = .recordingStarted
     }
   }
   
   func pleaseStopRecording() {
     print("pleaseStopRecording()")
-    if state == .RecordingStarted {
+    if state == .recordingStarted {
       discardRecording()
-    } else if state == .RecordingLongEnough {
+    } else if state == .recordingLongEnough {
       saveRecording()
     }
     displayCounter = 0
   }
   
-  private func startRecording() {
+  fileprivate func startRecording() {
     print("startRecording()")
     do {
-      try audioController.start()
+      try audioController?.start()
     } catch {
       assert(true, "audioController start error")
     }
     recorder = AERecorder(audioController: audioController)
     currentRecordingPath = outputPath()
     do {
-      try recorder?.beginRecordingToFileAtPath(currentRecordingPath, fileType: AudioFileTypeID(kAudioFileM4AType))
+      try recorder?.beginRecordingToFile(atPath: currentRecordingPath, fileType: AudioFileTypeID(kAudioFileM4AType))
         delegate?.soulDidStartRecording()
     } catch {
       print("OOPS! at startRecording()")
     }
-    audioController.addOutputReceiver(recorder)
-    audioController.addInputReceiver(recorder)
+    audioController?.addOutputReceiver(recorder)
+    audioController?.addInputReceiver(recorder)
     
   }
   
-  private func minimumDurationDidPass() {
+  fileprivate func minimumDurationDidPass() {
     print("minimumDurationDidPass()")
-    state = .RecordingLongEnough
+    state = .recordingLongEnough
     delegate?.soulDidReachMinimumDuration()
   }
   
-  private func pauseRecording() {
+  fileprivate func pauseRecording() {
     //TODO:
   }
   
-  private func resumeRecording() {
+  fileprivate func resumeRecording() {
     //TODO:
   }
   
   func outputPath() -> String {
     var outputPath:String!
-    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     if paths.count > 0 {
-      let randomNumberString = String(NSDate.timeIntervalSinceReferenceDate().description)
+      let randomNumberString = String(Date.timeIntervalSinceReferenceDate.description)
       print("randomNumberString: \(randomNumberString)")
-      outputPath = paths[0] + "/Recording" + randomNumberString + ".m4a"
-      let manager = NSFileManager.defaultManager()
-      if manager.fileExistsAtPath(outputPath) {
+      outputPath = paths[0] + "/Recording" + randomNumberString! + ".m4a"
+      let manager = FileManager.default
+      if manager.fileExists(atPath: outputPath) {
         do {
-          try manager.removeItemAtPath(outputPath)
+          try manager.removeItem(atPath: outputPath)
         } catch {
           print("outputPath(readOrWrite:FileReadWrite)")
         }
@@ -172,17 +172,17 @@ class SoulRecorder: NSObject {
     return outputPath
   }
   
-  private func discardRecording() {
+  fileprivate func discardRecording() {
     print("discardRecording")
-    state = .Failed
+    state = .failed
     recorder?.finishRecording()
     resetRecorder()
     delegate?.soulDidFailToRecord()
   }
   
-  private func saveRecording() {
+  fileprivate func saveRecording() {
     print("saveRecording")
-    state = .Finished
+    state = .finished
     recorder?.finishRecording()
     let newSoul = Soul()
     newSoul.localURL = currentRecordingPath
@@ -191,16 +191,16 @@ class SoulRecorder: NSObject {
     
   }
   
-  private func resetRecorder() {
+  fileprivate func resetRecorder() {
     print("resetRecorder")
-    state = .Standby
-    audioController.removeOutputReceiver(recorder)
-    audioController.removeInputReceiver(recorder)
+    state = .standby
+    audioController?.removeOutputReceiver(recorder)
+    audioController?.removeInputReceiver(recorder)
     recorder = nil
     
   }
   
-  static func askForMicrophonePermission(success:()->(), failure:()->()) {
+  static func askForMicrophonePermission(_ success:@escaping ()->(), failure:@escaping ()->()) {
     //TODO:
     AVAudioSession.sharedInstance().requestRecordPermission { (granted) in
       if granted {

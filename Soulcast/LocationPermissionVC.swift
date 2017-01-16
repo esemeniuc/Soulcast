@@ -13,7 +13,7 @@ class LocationPermissionVC: PermissionVC {
   let locationTitle = "Location Permission"
   let locationDescription = "This is a location-based app. We need your location so that you can catch souls around you"
   let locationManager = CLLocationManager()
-  private static let hasLocationPermissionKey = "hasLocationPermission"
+  fileprivate static let hasLocationPermissionKey = "hasLocationPermission"
   
 
   
@@ -31,19 +31,19 @@ class LocationPermissionVC: PermissionVC {
 
 extension LocationPermissionVC: CLLocationManagerDelegate {
   
-  func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
     switch status {
-    case .NotDetermined:
+    case .notDetermined:
       break
-    case .AuthorizedWhenInUse:
+    case .authorizedWhenInUse:
       //TODO: test to get rid of ambiguity... what to do?
       break
-    case .AuthorizedAlways:
+    case .authorizedAlways:
       gotPermission()
       break
-    case .Restricted:
+    case .restricted:
       break
-    case .Denied:
+    case .denied:
       deniedPermission()
       break
     }

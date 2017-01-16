@@ -6,17 +6,10 @@ target 'Soulcast' do
   use_frameworks!
 
 	pod "TheAmazingAudioEngine"
-pod 'Alamofire', '~> 3.5'    
+pod 'Alamofire'    
 pod 'AWSCognito'
     pod 'AWSS3'
     pod 'AWSSNS'
 end
 
 
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |configuration|
-      configuration.build_settings['SWIFT_VERSION'] = "2.3"
-    end
-  end
-end

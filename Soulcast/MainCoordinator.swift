@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 class MainCoordinator: NSObject, JKPageVCDelegate {
-  let pageVC = JKPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+  let pageVC = JKPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
   var mainVC: MainVC = MainVC()
-  private var navVC: UINavigationController?
+  fileprivate var navVC: UINavigationController?
   let historyVC = HistoryVC()
   var incomingVC:IncomingCollectionVC!
   let improveVC = ImproveVC()
@@ -55,12 +55,12 @@ class MainCoordinator: NSObject, JKPageVCDelegate {
   }
   
   func addPageTab() {
-    let leftTab = PageTab(direction: .Left)
+    let leftTab = PageTab(direction: .left)
     let leftTabTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabTapped))
     leftTab.addGestureRecognizer(leftTabTapRecognizer)
     mainVC.view.addSubview(leftTab)
 
-    let rightTab = PageTab(direction: .Right)
+    let rightTab = PageTab(direction: .right)
     let rightTabTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabTapped))
     rightTab.addGestureRecognizer(rightTabTapRecognizer)
     historyVC.view.addSubview(rightTab)
@@ -68,15 +68,15 @@ class MainCoordinator: NSObject, JKPageVCDelegate {
   
   func tabTapped() {
     if pageVC.currentIndex == Page.history {
-      pageVC.scrollToVC(Page.main, direction: .Forward)
+      pageVC.scrollToVC(Page.main, direction: .forward)
     } else if pageVC.currentIndex == Page.main {
-      pageVC.scrollToVC(Page.history, direction: .Reverse)
+      pageVC.scrollToVC(Page.history, direction: .reverse)
     }
   }
   
-  func scrollToMainVC(completion:()->()) {
+  func scrollToMainVC(_ completion:@escaping ()->()) {
     pushHandleAction = completion
-    pageVC.scrollToVC(Page.main, direction: .Forward)
+    pageVC.scrollToVC(Page.main, direction: .forward)
   }
   
   func jkDidFinishScrolling(to pageIndex: Int) {
@@ -89,14 +89,14 @@ class MainCoordinator: NSObject, JKPageVCDelegate {
 }
 
 extension MainCoordinator: UINavigationControllerDelegate {
-  func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+  func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
     switch viewController {
     case is OnboardingVC:
-      navigationController.navigationBarHidden = true
+      navigationController.isNavigationBarHidden = true
       case is MainVC:
-      navigationController.navigationBarHidden = true
+      navigationController.isNavigationBarHidden = true
     case is ImproveVC:
-      navigationController.navigationBarHidden = false
+      navigationController.isNavigationBarHidden = false
     default: break
     }
   }
@@ -104,17 +104,17 @@ extension MainCoordinator: UINavigationControllerDelegate {
 
 extension MainCoordinator: OnboardingVCDelegate {
   func transitionToMainVC() {
-    let window = UIApplication.sharedApplication().keyWindow!
+    let window = UIApplication.shared.keyWindow!
     if window.rootViewController is MainVC {
       return
     }
     mainVC.view.alpha = 0
-    window.backgroundColor = UIColor.whiteColor()
+    window.backgroundColor = UIColor.white
     //
     pageVC.initialIndex = 1
     pageVC.pages = pages
     window.rootViewController = pageVC
-    UIView.animateWithDuration(1, animations: {
+    UIView.animate(withDuration: 1, animations: {
       self.mainVC.view.alpha = 1
     })
     
@@ -126,7 +126,7 @@ extension MainCoordinator: MainVCDelegate {
   func promptImprove() {
     improveVC.delegate = self
     //TODO:
-    pageVC.presentViewController(improveVC, animated: true) { 
+    pageVC.present(improveVC, animated: true) { 
       //
     }
   }
@@ -160,7 +160,7 @@ extension MainCoordinator: ImproveVCDelegate, HistoryVCDelegate {
 
 
 extension MainCoordinator: IncomingCollectionVCDelegate {
-  func didRunOutOfSouls(ivc:IncomingCollectionVC) {
+  func didRunOutOfSouls(_ ivc:IncomingCollectionVC) {
     //TODO: animate
     ivc.animateAway() {
       self.mainVC.removeChildVC(ivc)

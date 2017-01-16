@@ -48,7 +48,7 @@ protocol JKPageVCDelegate: class{
   
   weak var jkDelegate:JKPageVCDelegate?
   
-  override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : AnyObject]?) {
+  override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [String : Any]?) {
     super.init(transitionStyle: style, navigationOrientation: navigationOrientation, options: options)
   }
   
@@ -66,8 +66,8 @@ protocol JKPageVCDelegate: class{
  
   
   /// should call to conform to Apple's guidelines for adding child view controllers
-  override func didMoveToParentViewController(parent: UIViewController?) {
-    super.didMoveToParentViewController(parent)
+  override func didMove(toParentViewController parent: UIViewController?) {
+    super.didMove(toParentViewController: parent)
     parent!.view.gestureRecognizers = gestureRecognizers
     recursivelyIterateSubviews(view)
   }
@@ -77,7 +77,7 @@ protocol JKPageVCDelegate: class{
     if pages.count > 0 {
       currentVC = pages[initialIndex]
       currentIndex = initialIndex
-      setViewControllers([pages[initialIndex]], direction: .Forward, animated: false, completion: { (finished:Bool) -> Void in
+      setViewControllers([pages[initialIndex]], direction: .forward, animated: false, completion: { (finished:Bool) -> Void in
       })
       (self.currentVC as? Appearable)?.willAppearOnScreen()
     } else if debugging {
@@ -85,14 +85,14 @@ protocol JKPageVCDelegate: class{
     }
   }
   
-  func recursivelyIterateSubviews(view: UIView) {
+  func recursivelyIterateSubviews(_ view: UIView) {
     if debugging {
-      print("\(String.fromCString(object_getClassName(view))) :: frame: \(view.frame)")
+      print("\(String(cString: object_getClassName(view))) :: frame: \(view.frame)")
     }
     for eachSubview in view.subviews {
       if eachSubview is UIScrollView {
         (eachSubview as! UIScrollView).delegate = self
-        eachSubview.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
+        eachSubview.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
       }
       recursivelyIterateSubviews(eachSubview)
     }
@@ -101,43 +101,43 @@ protocol JKPageVCDelegate: class{
 }
 
 extension JKPageViewController: UIPageViewControllerDelegate {
-  func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+  func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
     if !completed { return }
     previousIndex = currentIndex
     currentIndex = nextIndex
     currentVC = pages[currentIndex]
     
   }
-  func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
+  func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
     
     nextVC = pendingViewControllers.first
-    nextIndex = pages.indexOf(nextVC)!
+    nextIndex = pages.index(of: nextVC)!
 
   }
   
   
-  func viewControllerAtIndex(index: Int) -> UIViewController?{
+  func viewControllerAtIndex(_ index: Int) -> UIViewController?{
     if pages.count == 0 || index >= pages.count {
       return nil
     }
     return pages[index]
   }
   
-  func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+  func presentationCount(for pageViewController: UIPageViewController) -> Int {
     if pageControlEnabled {
       return pages.count
     }
     return 0
   }
   
-  func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+  func presentationIndex(for pageViewController: UIPageViewController) -> Int {
     if pageControlEnabled {
       return currentIndex
     }
     return 0
   }
   
-  func scrollToVC(pageIndex:Int!, direction:UIPageViewControllerNavigationDirection) {
+  func scrollToVC(_ pageIndex:Int!, direction:UIPageViewControllerNavigationDirection) {
     if (pageIndex < 0 || pageIndex >= pages.count) {return}
     (currentVC as? Appearable)?.willDisappearFromScreen()
     (pages[pageIndex] as? Appearable)?.willAppearOnScreen()
@@ -152,26 +152,26 @@ extension JKPageViewController: UIPageViewControllerDelegate {
   
   func disableScroll() {
     for eachView in view.subviews {
-      if eachView.isKindOfClass(UIScrollView) {
-        (eachView as! UIScrollView).scrollEnabled = false
+      if eachView.isKind(of: UIScrollView.self) {
+        (eachView as! UIScrollView).isScrollEnabled = false
       }
     }
   }
   func enableScroll() {
     for eachView in view.subviews {
-      if eachView.isKindOfClass(UIScrollView) {
-        (eachView as! UIScrollView).scrollEnabled = true
+      if eachView.isKind(of: UIScrollView.self) {
+        (eachView as! UIScrollView).isScrollEnabled = true
       }
     }
   }
-  override func prefersStatusBarHidden() -> Bool {
+  override var prefersStatusBarHidden : Bool {
     return true
   }
   
 }
 
 extension JKPageViewController: UIScrollViewDelegate {
-  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
     (pages[previousIndex] as? Appearable)?.didDisappearFromScreen()
     (pages[currentIndex] as? Appearable)?.didAppearOnScreen()
     currentVC = pages[currentIndex]
@@ -181,7 +181,7 @@ extension JKPageViewController: UIScrollViewDelegate {
     }
   }
   
-  func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+  func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
     if debugging {
       print("nextIndex: \(nextIndex) viewController: \(pages[nextIndex])")
     }
@@ -193,13 +193,13 @@ extension JKPageViewController: UIScrollViewDelegate {
 }
 
 extension JKPageViewController: UIPageViewControllerDataSource {
-  func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+  func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
     if currentIndex == 0 {
       return nil
     }
     return viewControllerAtIndex(currentIndex-1)
   }
-  func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+  func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
     if (currentIndex == pages.count - 1) {
       return nil
     }

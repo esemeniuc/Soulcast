@@ -12,8 +12,8 @@ enum UploaderState: String {
 
 protocol SoulCasterDelegate: class {
   func soulDidStartUploading()
-  func soulIsUploading(progress:Float)
-  func soulDidFinishUploading(soul:Soul)
+  func soulIsUploading(_ progress:Float)
+  func soulDidFinishUploading(_ soul:Soul)
   func soulDidFailToUpload()
   func soulDidReachServer()
 }
@@ -38,7 +38,7 @@ class SoulCaster: NSObject {
         break
         
       case (.Uploading, .Finished):
-        NSNotificationCenter.defaultCenter().postNotificationName("uploadingFinished", object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "uploadingFinished"), object: nil)
         break
         
       case (.Finished, .Standby):
@@ -64,13 +64,13 @@ class SoulCaster: NSObject {
     uploadProgress = 0
     
     self.progressBlock = {(task, progress) in
-      dispatch_async(dispatch_get_main_queue(), {
+      DispatchQueue.main.async(execute: {
         self.uploadProgress = Float(progress.fractionCompleted)
         self.delegate?.soulIsUploading(self.uploadProgress)
       })
     }
     self.completionHandler = { (task, error) -> Void in
-      dispatch_async(dispatch_get_main_queue(), {
+      DispatchQueue.main.async(execute: {
         if ((error) != nil){
           assert(false, "OOPS!")
           print("Failed with Error: \(error?.localizedDescription)");
@@ -86,7 +86,7 @@ class SoulCaster: NSObject {
     //TODO: reachability
   }
   
-  func validate(someSoul:Soul) {
+  func validate(_ someSoul:Soul) {
     if state != .Standby {
       assert(false, "tried to upload in a bad state! \(state.rawValue)")
     }
@@ -99,19 +99,19 @@ class SoulCaster: NSObject {
 //    assert(someSoul.token != nil)
   }
   
-  private func upload(fileURL: NSURL, key:String){
+  fileprivate func upload(_ fileURL: URL, key:String){
     let expression = AWSS3TransferUtilityUploadExpression()
     expression.progressBlock = progressBlock
     
     //continuewithblock substitutes with completion handler...
     
-    AWSS3TransferUtility.defaultS3TransferUtility().uploadFile(
+    AWSS3TransferUtility.default().uploadFile(
       fileURL,
       bucket: S3BucketName,
       key: key,
       contentType: fileContentTypeStr,
       expression: expression,
-      completionHander: completionHandler).continueWithBlock { (task) -> AnyObject? in
+      completionHander: completionHandler).continue({ (task) -> AnyObject? in
         if let error = task.error {
           print("AWSS3TransferUtility.defaultS3TransferUtility().uploadFile error: \(error.localizedDescription)")
           //TODO: indicate failure
@@ -127,21 +127,21 @@ class SoulCaster: NSObject {
           //TODO: indicate success with some sick animation
         }
         return nil
-    }
+        })
     
     self.delegate?.soulDidStartUploading()
 
   }
   
-  func cast(localSoul:Soul) {
+  func cast(_ localSoul:Soul) {
     validate(localSoul)
     self.outgoingSoul = localSoul
     let uploadKey = localSoul.s3Key! + ".mp3"
-    upload(NSURL(fileURLWithPath: localSoul.localURL!), key: uploadKey)
+    upload(URL(fileURLWithPath: localSoul.localURL!), key: uploadKey)
     
   }
   
-  private func postToServer(localSoul:Soul) {
+  fileprivate func postToServer(_ localSoul:Soul) {
     switch localSoul.type {
     case .Broadcast:
       ServerFacade.post(localSoul, success: {

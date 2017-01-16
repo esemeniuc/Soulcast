@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 enum PageDirection {
-  case Left
-  case Right
+  case left
+  case right
 }
 
 class PageTab: UIView {
@@ -21,10 +21,10 @@ class PageTab: UIView {
     let tabHeight:CGFloat = 100
     let arrowWidth: CGFloat = 25
     let pageTab = UIView()
-    pageTab.backgroundColor = UIColor.darkGrayColor()
+    pageTab.backgroundColor = UIColor.darkGray
     pageTab.layer.cornerRadius = 5
     switch direction {
-    case .Left:
+    case .left:
       self.init(frame: CGRect(
         x: 0,
         y: (screenHeight - tabHeight)/2,
@@ -43,7 +43,7 @@ class PageTab: UIView {
         width: arrowWidth,
         height: arrowWidth)
       pageTab.addSubview(leftArrowView)
-    case .Right:
+    case .right:
       self.init(frame: CGRect(
         x: screenWidth - tabWidth/2,
         y: (screenHeight - tabHeight)/2,

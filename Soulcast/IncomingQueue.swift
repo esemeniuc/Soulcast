@@ -14,10 +14,10 @@ protocol IncomingQueueDelegate: class {
 class IncomingQueue: NSObject, UICollectionViewDataSource {
   let cellIdentifier:String = NSStringFromClass(IncomingCollectionCell)
   var count:Int {return soulQueue.count}
-  private let soulQueue = Queue<Soul>()
+  fileprivate let soulQueue = Queue<Soul>()
   weak var delegate:IncomingQueueDelegate?
   
-  func enqueue(someSoul:Soul) {
+  func enqueue(_ someSoul:Soul) {
     soulQueue.append(someSoul)
     delegate?.didEnqueue()
   }
@@ -42,16 +42,16 @@ class IncomingQueue: NSObject, UICollectionViewDataSource {
     return tempSoul
   }
   
-  func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
     return 1
   }
   
-  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return soulQueue.count
   }
   
-  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! IncomingCollectionCell
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! IncomingCollectionCell
     var someNode = soulQueue.head
     if indexPath.row != 0 {
       for _ in 1 ... indexPath.row {
@@ -87,15 +87,15 @@ private final class QueueNode<T> {
 public final class Queue<T> {
   // note, these are both optionals, to handle
   // an empty queue
-  private var head: QueueNode<T>? = nil
-  private var tail: QueueNode<T>? = nil
+  fileprivate var head: QueueNode<T>? = nil
+  fileprivate var tail: QueueNode<T>? = nil
   
   public init() { }
 }
 
 extension Queue {
   // append is the standard name in Swift for this operation
-  public func append(newElement: T) {
+  public func append(_ newElement: T) {
     let oldTail = tail
     self.tail = QueueNode(value: newElement)
     if  head == nil { head = tail }
@@ -114,8 +114,23 @@ extension Queue {
   }
 }
 
-public struct QueueIndex<T>: ForwardIndexType {
-  private let node: QueueNode<T>?
+public struct QueueIndex<T>: Comparable {
+  /// Returns a Boolean value indicating whether the value of the first
+  /// argument is less than that of the second argument.
+  ///
+  /// This function is the only requirement of the `Comparable` protocol. The
+  /// remainder of the relational operator functions are implemented by the
+  /// standard library for any type that conforms to `Comparable`.
+  ///
+  /// - Parameters:
+  ///   - lhs: A value to compare.
+  ///   - rhs: Another value to compare.
+  public static func <(lhs: QueueIndex<T>, rhs: QueueIndex<T>) -> Bool {
+    return lhs.node === rhs.node
+
+  }
+
+  fileprivate let node: QueueNode<T>?
   public func successor() -> QueueIndex<T> {
     return QueueIndex(node: node?.next)
   }
@@ -125,7 +140,16 @@ public func ==<T>(lhs: QueueIndex<T>, rhs: QueueIndex<T>) -> Bool {
   return lhs.node === rhs.node
 }
 
-extension Queue: MutableCollectionType {
+extension Queue: MutableCollection {
+  /// Returns the position immediately after the given index.
+  ///
+  /// - Parameter i: A valid index of the collection. `i` must be less than
+  ///   `endIndex`.
+  /// - Returns: The index value immediately after `i`.
+  public func index(after i: QueueIndex<T>) -> QueueIndex<T> {
+    return i
+  }
+
   public typealias Index = QueueIndex<T>
   public var startIndex: Index { return Index(node: head) }
   public var endIndex: Index { return Index(node: nil) }
@@ -141,9 +165,9 @@ extension Queue: MutableCollectionType {
     }
   }
   
-  public typealias Generator = IndexingGenerator<Queue>
-  public func generate() -> Generator {
-    return Generator(self)
+  public typealias Iterator = IndexingIterator<Queue>
+  public func makeIterator() -> Iterator {
+    return Iterator(_elements: self)
   }
   
 }

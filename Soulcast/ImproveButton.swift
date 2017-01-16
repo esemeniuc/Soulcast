@@ -14,7 +14,7 @@ class ImproveButton: UIButton {
   let margin:CGFloat = 25
   
   override init(frame: CGRect) {
-    assert(frame == CGRectZero)
+    assert(frame == CGRect.zero)
     super.init(frame: CGRect(
       x: screenWidth - buttonSize - margin,
       y: screenHeight - buttonSize - margin,
@@ -22,11 +22,11 @@ class ImproveButton: UIButton {
       height: buttonSize))
     
     backgroundColor = offBlue
-    setTitleColor(UIColor.blackColor(), forState: .Normal)
+    setTitleColor(UIColor.black, for: UIControlState())
     let italicFont = UIFont(name: "Baskerville-BoldItalic", size: 15)!
-    let attributedTitle = NSAttributedString(string: "i", attributes: (NSDictionary(object: italicFont, forKey: NSFontAttributeName) as! [String : AnyObject]))
+    let attributedTitle = NSAttributedString(string: "i", attributes: (NSDictionary(object: italicFont, forKey: NSFontAttributeName as NSCopying) as! [String : AnyObject]))
     
-    setAttributedTitle(attributedTitle, forState: .Normal)
+    setAttributedTitle(attributedTitle, for: UIControlState())
     clipsToBounds = false
     layer.cornerRadius = buttonSize/2
     
@@ -36,15 +36,15 @@ class ImproveButton: UIButton {
   override func didMoveToSuperview() {
     super.didMoveToSuperview()
     alpha = 0
-    UIView.animateWithDuration(1) {
+    UIView.animate(withDuration: 1, animations: {
       self.alpha = 1
-    }
+    }) 
     let shadowView = UIView(frame: bounds)
     let circlePath = UIBezierPath(
       roundedRect: frame,
       cornerRadius: layer.cornerRadius)
-    shadowView.layer.shadowColor = UIColor.blackColor().colorWithAlphaComponent(0.4).CGColor
-    shadowView.layer.shadowPath = circlePath.CGPath
+    shadowView.layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
+    shadowView.layer.shadowPath = circlePath.cgPath
     shadowView.layer.shadowOffset = CGSize(width: 2, height: 2)
     shadowView.layer.shadowOpacity = 1
     shadowView.layer.shadowRadius = 6

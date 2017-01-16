@@ -10,34 +10,34 @@ import Foundation
 import UIKit
 
 protocol EulaVCDelegate: class {
-  func didTapOKButton(vc:EulaVC)
+  func didTapOKButton(_ vc:EulaVC)
 }
 
 class EulaVC: UIViewController {
   var agreementString:String {
     var content = ""
-    if let path = NSBundle.mainBundle().pathForResource("eula", ofType: "txt"){
-      do {try content = String(contentsOfFile: path, encoding: NSUTF8StringEncoding) }
+    if let path = Bundle.main.path(forResource: "eula", ofType: "txt"){
+      do {try content = String(contentsOfFile: path, encoding: String.Encoding.utf8) }
       catch {}
     }
     return content
     
   }
-  let okButton = UIButton(type: .System)
+  let okButton = UIButton(type: .system)
   let eulaContainerView = UIView()
   let eulaTextView = UITextView()
   weak var delegate: EulaVCDelegate?
   
   override func viewDidLoad() {
     let margin:CGFloat = 15
-    okButton.setTitle("Agree", forState: .Normal)
+    okButton.setTitle("Agree", for: UIControlState())
     let buttonWidth:CGFloat = 100
     let buttonHeight:CGFloat = 50
     okButton.frame = CGRect(
       x: (screenWidth - buttonWidth)/2,
       y: screenHeight - buttonHeight - margin,
       width: buttonWidth, height: buttonHeight)
-    okButton.addTarget(self, action: #selector(okButtonTapped), forControlEvents: .TouchUpInside)
+    okButton.addTarget(self, action: #selector(okButtonTapped), for: .touchUpInside)
     
     
     eulaContainerView.frame = CGRect(
@@ -48,8 +48,8 @@ class EulaVC: UIViewController {
     view.addSubview(eulaContainerView)
 
     eulaTextView.text = agreementString
-    eulaTextView.editable = false
-    eulaTextView.scrollEnabled = true
+    eulaTextView.isEditable = false
+    eulaTextView.isScrollEnabled = true
     eulaContainerView.addSubview(eulaTextView)
     
     view.addSubview(okButton)
@@ -57,7 +57,7 @@ class EulaVC: UIViewController {
   
   
   func okButtonTapped() {
-    okButton.enabled = false
+    okButton.isEnabled = false
     delegate?.didTapOKButton(self)
   }
   

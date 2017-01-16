@@ -12,8 +12,8 @@ class SoulRecorderTests {
   func testRecording(){
     recorder.delegate = self
     recorder.pleaseStartRecording()
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
+    let delayTime = DispatchTime.now() + Double(Int64(2 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
       self.recorder.pleaseStopRecording()
     }
   }
@@ -26,10 +26,10 @@ extension SoulRecorderTests: SoulRecorderDelegate {
   func soulDidStartRecording(){
     print("SoulTester soulDidStartRecording")
   }
-    func soulIsRecording(progress: CGFloat) {
+    func soulIsRecording(_ progress: CGFloat) {
         //
     }
-  func soulDidFinishRecording(newSoul: Soul){
+  func soulDidFinishRecording(_ newSoul: Soul){
     print("SoulTester soulDidFinishRecording")
     player.startPlaying(newSoul)
   }

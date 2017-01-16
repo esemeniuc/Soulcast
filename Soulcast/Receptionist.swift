@@ -12,17 +12,17 @@ import UIKit
 
 class Receptionist: NSObject {
   
-  private static let hasLaunchedKey = "hasLaunchedOnce"
+  fileprivate static let hasLaunchedKey = "hasLaunchedOnce"
   
-  private static var hasLaunchedBefore: Bool {
+  fileprivate static var hasLaunchedBefore: Bool {
     get {
-      if let hasLaunched = NSUserDefaults.standardUserDefaults().valueForKey(hasLaunchedKey) as? Bool {
+      if let hasLaunched = UserDefaults.standard.value(forKey: hasLaunchedKey) as? Bool {
         return hasLaunched
       } else {
         return false
       }
     } set {
-      NSUserDefaults.standardUserDefaults().setValue(newValue, forKey: hasLaunchedKey)
+      UserDefaults.standard.setValue(newValue, forKey: hasLaunchedKey)
     }
   }
   

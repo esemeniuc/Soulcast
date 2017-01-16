@@ -34,7 +34,7 @@ class SoulTester: NSObject {
     soulCatcherTests.testIncoming()
   }
   
-  func testIncoming(userInfo: [NSObject : AnyObject]){
+  func testIncoming(_ userInfo: [AnyHashable: Any]){
     let mockInfo = SoulCatcherTests.mockUserInfo()
     soulCatcherTests.testIncoming(mockInfo["soulObject"] as! [String: AnyObject])
     return
@@ -65,10 +65,10 @@ extension SoulTester: SoulRecorderDelegate {
     
   }
     
-    func soulIsRecording(progress: CGFloat) {
+    func soulIsRecording(_ progress: CGFloat) {
         //
     }
-  func soulDidFinishRecording(newSoul: Soul){
+  func soulDidFinishRecording(_ newSoul: Soul){
     newSoul.epoch = 1234567890
     newSoul.s3Key = "fabulousTest"
     //upload
@@ -88,10 +88,10 @@ extension SoulTester: SoulCasterDelegate {
   func soulDidStartUploading(){
     
   }
-  func soulIsUploading(progress:Float){
+  func soulIsUploading(_ progress:Float){
     
   }
-  func soulDidFinishUploading(soul:Soul){
+  func soulDidFinishUploading(_ soul:Soul){
     //download
     soul.type = .Broadcast
     let soulCatcher = SoulCatcher(soul:soul)
@@ -106,18 +106,18 @@ extension SoulTester: SoulCasterDelegate {
 }
 
 extension SoulTester: SoulCatcherDelegate {
-  func soulDidStartToDownload(catcher: SoulCatcher, soul:Soul){
+  func soulDidStartToDownload(_ catcher: SoulCatcher, soul:Soul){
     
   }
-  func soulIsDownloading(catcher: SoulCatcher, progress:Float){
+  func soulIsDownloading(_ catcher: SoulCatcher, progress:Float){
     
   }
-  func soulDidFinishDownloading(catcher: SoulCatcher, soul:Soul){
+  func soulDidFinishDownloading(_ catcher: SoulCatcher, soul:Soul){
     //play
     let soulPlayer = SoulPlayer()
     soulPlayer.startPlaying(soul)
   }
-  func soulDidFailToDownload(catcher: SoulCatcher){
+  func soulDidFailToDownload(_ catcher: SoulCatcher){
     
   }
 }

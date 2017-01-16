@@ -11,56 +11,56 @@ import Alamofire
 
 class ServerFacade {
   
-  class func block(soul:Soul, success:()->(), failure:(Int)->()) {
+  class func block(_ soul:Soul, success:@escaping ()->(), failure:@escaping (Int)->()) {
     //TODO: check interface with cwaffles
     assert(soul.token != nil, "This soul does not have a token! A Ronen Token")
     let localToken = Device.localDevice.token ?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     post("blocks", parameters:[
-      "blockee_token": soul.token!,
-      "blocker_token": localToken ])
+      "blockee_token": soul.token! as AnyObject,
+      "blocker_token": localToken as AnyObject ])
       .responseJSON { response in
         switch response.result {
-        case .Success(let JSON):
+        case .success(let JSON):
           print("block success!! \(JSON)")
           success()
-        case .Failure(let error):
+        case .failure(let error):
           print("Failed to get block! error: \(error)")
           if let failResponse = response.response {
             failure(failResponse.statusCode)
           } else {
-            failure(error.code)
+//            failure(error)
           }
         }
     }
   }
   
-  class func getHistory(success:([Soul])->(), failure:(Int)->()) {
+  class func getHistory(_ success:@escaping ([Soul])->(), failure:@escaping (Int)->()) {
     let deviceID = Device.localDevice.id ?? 1 //TODO: disallow nils...
     get("device_history/" + String(deviceID)).responseJSON { (response) in
       switch response.result {
-      case .Success(let JSON):
+      case .success(let JSON):
         print("Got history!\(JSON)")
         success(Soul.fromArray(JSON as! [[String:AnyObject]]))
-      case .Failure(let error):
+      case .failure(let error):
         print("Failed to get history! error: \(error)")
         if let failResponse = response.response {
           failure(failResponse.statusCode)
         } else {
-          failure(error.code)
+//          failure(error.code)
         }
       }
     }
   }
   
-  class func getLatest(success:([String : AnyObject])->(), failure:(Int)->()){
+  class func getLatest(_ success:@escaping ([String : AnyObject])->(), failure:@escaping (Int)->()){
     //TODO: test.
     get("souls", parameters: Device.localDevice.toParams())
       .responseJSON { (response) in
         switch response.result {
-        case .Success(let JSON):
+        case .success(let JSON):
           print("Got Latest Soul!")
           success(JSON as! [String: AnyObject])
-        case .Failure:
+        case .failure:
           if let r = response.response {
             failure(r.statusCode)
           }
@@ -69,15 +69,15 @@ class ServerFacade {
     }
   }
   
-  class func post(outgoingSoul: Soul, success:()->(), failure: (Int)->()) {
+  class func post(_ outgoingSoul: Soul, success:@escaping ()->(), failure: @escaping (Int)->()) {
     post("souls", parameters: outgoingSoul.toParams())
       .responseString { response in
         switch response.result{
-        case .Success:
+        case .success:
           print("Outgoing Soul Post success!")
           success()
-        case .Failure:
-          print("Outgoing Soul Post Failure!")
+        case .failure:
+          print("Outgoing Soul Post failure!")
           if let r = response.response {
             failure(r.statusCode)
           }
@@ -85,15 +85,15 @@ class ServerFacade {
     }
   }
 
-  class func improve(feedbackSoul: Soul, success:()->(), failure: (Int)->()) {
+  class func improve(_ feedbackSoul: Soul, success:@escaping ()->(), failure: @escaping (Int)->()) {
     post("improves", parameters: feedbackSoul.toParams())
       .responseString { response in
         switch response.result{
-        case .Success:
+        case .success:
           print("Outgoing Soul Post success!")
           success()
-        case .Failure:
-          print("Outgoing Soul Post Failure!")
+        case .failure:
+          print("Outgoing Soul Post failure!")
           if let r = response.response {
             failure(r.statusCode)
           }
@@ -101,17 +101,17 @@ class ServerFacade {
     }
   }
   
-  class func echo(outgoingSoul: Soul, success:(Soul)->(), failure: (Int)->()) {
+  class func echo(_ outgoingSoul: Soul, success:@escaping (Soul)->(), failure: @escaping (Int)->()) {
     post("echo", parameters: outgoingSoul.toParams())
       .responseJSON { response in
       switch response.result{
-      case .Success(let JSON):
+      case .success(let JSON):
         print("Echo Soul success!")
         let soul = Soul.fromHash(JSON as! NSDictionary)
         dump(soul)
         success(soul)
-      case .Failure:
-        print("Echo Soul Failure!")
+      case .failure:
+        print("Echo Soul failure!")
         if let r = response.response {
           failure(r.statusCode)
         }
@@ -121,12 +121,12 @@ class ServerFacade {
   
   static let jsonHeader = ["Content-type":"application/json", "Accept":"application/json"]
   
-  class func post(localDevice: Device, success:()->(), failure: (Int)->()) {
+  class func post(_ localDevice: Device, success:@escaping ()->(), failure: @escaping (Int)->()) {
     post("devices", parameters: localDevice.toParams())
       .responseJSON {
         (response) in
       switch response.result {
-      case .Success (let JSON):
+      case .success (let JSON):
         if let responseJSON = JSON as? NSDictionary {
           let deviceID = responseJSON["id"]
           if deviceID is Int {
@@ -135,7 +135,7 @@ class ServerFacade {
         }
         success()
         
-      case .Failure:
+      case .failure:
         print("Register local device failure!")
         if let r = response.response {
           failure(r.statusCode)
@@ -145,17 +145,17 @@ class ServerFacade {
     }
   }
   
-  class func patch(localDevice: Device, success:()->(), failure: (Int)->()) {
+  class func patch(_ localDevice: Device, success:@escaping ()->(), failure: @escaping (Int)->()) {
     var deviceString = ""
     if let deviceInt = localDevice.id {
       deviceString = String(deviceInt)
     }
     patch("devices/" + deviceString, parameters: localDevice.toParams())
-      .responseString { (response) in
+      .responseJSON { (response) in
       switch response.result {
-      case .Success:
+      case .success:
         success()
-      case .Failure :
+      case .failure :
         if let r = response.response {
           failure(r.statusCode)
         }
@@ -164,46 +164,45 @@ class ServerFacade {
     }
   }
   
-  class func report(soul:Soul) {
-    request(.POST,
-            serverURL + "report",
+  class func report(_ soul:Soul) {
+    request(serverURL + "report",
+            method: .post,
             parameters: soul.toParams(),
-            encoding: .JSON,
+            encoding: JSONEncoding.default,
             headers: ServerFacade.jsonHeader)
     
   }
   
-  private class func get( route: String, parameters: [String: AnyObject]? = nil)
-    -> Request {
-      return request(.GET,
-                     serverURL + route,
+  fileprivate class func get( _ route: String, parameters: [String: AnyObject]? = nil)
+    -> DataRequest {
+      return request(serverURL + route,
                      parameters: parameters,
-                     encoding: .JSON,
+                     encoding: JSONEncoding.default,
                      headers: ServerFacade.jsonHeader).validate()
   }
   
-  private class func post( route: String, parameters: [String: AnyObject]? = nil)
-    -> Request {
-      return request(.POST,
-                     serverURL + route,
+  fileprivate class func post( _ route: String, parameters: [String: AnyObject]? = nil)
+    -> DataRequest {
+      return request(serverURL + route,
+                     method: .post,
                      parameters: parameters,
-                     encoding: .JSON,
+                     encoding: JSONEncoding.default,
                      headers: ServerFacade.jsonHeader).validate()
   }
   
-  private class func patch( route: String, parameters: [String: AnyObject]? = nil)
-    -> Request {
-      return request(.PATCH,
-                     serverURL + route,
+  fileprivate class func patch( _ route: String, parameters: [String: AnyObject]? = nil)
+    -> DataRequest {
+      return request(serverURL + route,
+                     method: .patch,
                      parameters: parameters,
-                     encoding: .JSON,
+                     encoding: JSONEncoding.default,
                      headers: ServerFacade.jsonHeader).validate()
   }
 }
 
 
 class MockServerFacade: ServerFacade {
-  class override func getHistory(success:([Soul])->(), failure:(Int)->()) {
+  class override func getHistory(_ success:@escaping ([Soul])->(), failure:@escaping (Int)->()) {
     success([
       MockFactory.mockSoulOne(),
       MockFactory.mockSoulTwo(),
@@ -211,7 +210,7 @@ class MockServerFacade: ServerFacade {
       MockFactory.mockSoulFour(),
       MockFactory.mockSoulFive(), ])
   }
-  class override func block(soul:Soul, success:()->(), failure:(Int)->()) {
+  class override func block(_ soul:Soul, success:@escaping ()->(), failure:@escaping (Int)->()) {
     success()
   }
 }

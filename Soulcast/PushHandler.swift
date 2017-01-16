@@ -14,12 +14,12 @@ let pushHandler = PushHandler()
 class PushHandler {
   var bufferHash: [String:AnyObject]?
   
-  func handle(soulHash: [String:AnyObject]) {
+  func handle(_ soulHash: [String:AnyObject]) {
     guard let appDelegate = app.delegate as? AppDelegate else {
       bufferHash = soulHash
       return
     }
-    guard app.applicationState == .Active else {
+    guard app.applicationState == .active else {
       bufferHash = soulHash
       return
     }

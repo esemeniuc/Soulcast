@@ -15,7 +15,7 @@ class Randomizer {
     let len = UInt32(letters.length)
     for _ in 0...len {
       let rand = arc4random_uniform(len)
-      var nextChar = letters.characterAtIndex(Int(rand))
+      var nextChar = letters.character(at: Int(rand))
       randomString += NSString(characters: &nextChar, length: 1) as String
     }
     return randomString

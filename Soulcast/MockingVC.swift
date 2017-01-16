@@ -27,7 +27,7 @@ class MockingVC: UIViewController {
   }
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white
     setupButtons()
     setupFailView()
     setupSuccessView()
@@ -35,13 +35,13 @@ class MockingVC: UIViewController {
   }
   
   func setupServerChanger() {
-    serverField = UITextField(width: CGRectGetWidth(view.bounds), height: 70)
-    serverField.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.15)
+    serverField = UITextField(width: view.bounds.width, height: 70)
+    serverField.backgroundColor = UIColor.black.withAlphaComponent(0.15)
     serverField.delegate = self
-    serverField.textAlignment = .Center
+    serverField.textAlignment = .center
     serverField.placeholder = "http://________.localtunnel.me"
-    serverField.autocorrectionType = .No
-    serverField.autocapitalizationType = .None
+    serverField.autocorrectionType = .no
+    serverField.autocapitalizationType = .none
     view.addSubview(serverField)
     
     backgroundTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
@@ -57,104 +57,104 @@ class MockingVC: UIViewController {
   func didFinishEditing() {
     enableButtons()
     
-    UIView.animateWithDuration(0.5, animations: {
-      self.serverField.center = CGPointMake(CGRectGetMidX(self.serverField.frame), CGRectGetMidY(self.serverField.frame) - CGRectGetHeight(self.serverField.frame))
-    }) { (finished) in
-      self.serverField.hidden = true
-    }
+    UIView.animate(withDuration: 0.5, animations: {
+      self.serverField.center = CGPoint(x: self.serverField.frame.midX, y: self.serverField.frame.midY - self.serverField.frame.height)
+    }, completion: { (finished) in
+      self.serverField.isHidden = true
+    }) 
 
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 
   }
   
   func setupFailView() {
-    failView.backgroundColor = UIColor.redColor()
+    failView.backgroundColor = UIColor.red
     failView.layer.opacity = 0
-    failLabel.textAlignment = .Center
+    failLabel.textAlignment = .center
     failLabel.font = UIFont(name: "Helvetica", size: 30)
     failLabel.adjustsFontSizeToFitWidth = true
-    failLabel.textColor = UIColor.whiteColor()
+    failLabel.textColor = UIColor.white
     failLabel.text = failString
     failView.addSubview(failLabel)
-    failView.center = CGPoint(x: CGRectGetMidX(view.bounds), y: CGRectGetMidY(view.bounds))
-    failLabel.center = CGPoint(x: CGRectGetMidX(failView.bounds), y: CGRectGetMidY(failView.bounds))
-    failView.userInteractionEnabled = false
+    failView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
+    failLabel.center = CGPoint(x: failView.bounds.midX, y: failView.bounds.midY)
+    failView.isUserInteractionEnabled = false
   }
   
   func setupSuccessView() {
-    successView.backgroundColor = UIColor.greenColor()
+    successView.backgroundColor = UIColor.green
     successView.layer.opacity = 0
-    successLabel.textColor = UIColor.whiteColor()
+    successLabel.textColor = UIColor.white
     successLabel.font = UIFont(name: "Helvetica", size: 40)
     successLabel.text = "SUCCCESS"
     successLabel.adjustsFontSizeToFitWidth = true
     successView.addSubview(successLabel)
-    successView.center = CGPoint(x: CGRectGetMidX(view.bounds), y: CGRectGetMidY(view.bounds))
-    successLabel.center = CGPoint(x: CGRectGetMidX(failView.bounds), y: CGRectGetMidY(failView.bounds))
-    successView.userInteractionEnabled = false
+    successView.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
+    successLabel.center = CGPoint(x: failView.bounds.midX, y: failView.bounds.midY)
+    successView.isUserInteractionEnabled = false
   }
   
-  func updateFailForCode(code:Int) {
-    failString = NSHTTPURLResponse.localizedStringForStatusCode(code)
+  func updateFailForCode(_ code:Int) {
+    failString = HTTPURLResponse.localizedString(forStatusCode: code)
     flash(failView)
   }
 
-  func flash(flashee:UIView) {
+  func flash(_ flashee:UIView) {
     view.addSubview(flashee)
-    UIView.animateWithDuration(0.8, animations: {
+    UIView.animate(withDuration: 0.8, animations: {
       flashee.layer.opacity = 1
-    }) { (completed) in
-      UIView.animateWithDuration(0.6, animations: {
+    }, completion: { (completed) in
+      UIView.animate(withDuration: 0.6, animations: {
         flashee.layer.opacity = 0
         }, completion: { (completed) in
           flashee.removeFromSuperview()
       })
-    }
+    }) 
   }
   
   func disableButtons() {
-    outgoingMockButton.enabled = false
-    registerDeviceMockButton.enabled = false
-    updateDeviceMockButton.enabled = false
-    echoSoulMockButton.enabled = false
+    outgoingMockButton.isEnabled = false
+    registerDeviceMockButton.isEnabled = false
+    updateDeviceMockButton.isEnabled = false
+    echoSoulMockButton.isEnabled = false
   }
   
   func enableButtons() {
-    outgoingMockButton.enabled = true
-    registerDeviceMockButton.enabled = true
-    updateDeviceMockButton.enabled = true
-    echoSoulMockButton.enabled = true
+    outgoingMockButton.isEnabled = true
+    registerDeviceMockButton.isEnabled = true
+    updateDeviceMockButton.isEnabled = true
+    echoSoulMockButton.isEnabled = true
   }
   
   func setupButtons() {
     let opacity:CGFloat = 0.6
-    outgoingMockButton.backgroundColor = UIColor.blueColor().colorWithAlphaComponent(opacity)
-    registerDeviceMockButton.backgroundColor = UIColor.redColor().colorWithAlphaComponent(opacity)
-    updateDeviceMockButton.backgroundColor = UIColor.orangeColor().colorWithAlphaComponent(opacity)
-    echoSoulMockButton.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(opacity)
+    outgoingMockButton.backgroundColor = UIColor.blue.withAlphaComponent(opacity)
+    registerDeviceMockButton.backgroundColor = UIColor.red.withAlphaComponent(opacity)
+    updateDeviceMockButton.backgroundColor = UIColor.orange.withAlphaComponent(opacity)
+    echoSoulMockButton.backgroundColor = UIColor.green.withAlphaComponent(opacity)
     
     outgoingMockButton.setupDepression()
     registerDeviceMockButton.setupDepression()
     updateDeviceMockButton.setupDepression()
     echoSoulMockButton.setupDepression()
     
-    outgoingMockButton.setTitle("outgoing", forState: .Normal)
-    registerDeviceMockButton.setTitle("register", forState: .Normal)
-    updateDeviceMockButton.setTitle("update", forState: .Normal)
-    echoSoulMockButton.setTitle("echo", forState: .Normal)
+    outgoingMockButton.setTitle("outgoing", for: UIControlState())
+    registerDeviceMockButton.setTitle("register", for: UIControlState())
+    updateDeviceMockButton.setTitle("update", for: UIControlState())
+    echoSoulMockButton.setTitle("echo", for: UIControlState())
     
-    outgoingMockButton.addTarget(self, action: #selector(outgoingButtonTapped), forControlEvents: .TouchUpInside)
-    registerDeviceMockButton.addTarget(self, action: #selector(registerDeviceButtonTapped), forControlEvents: .TouchUpInside)
-    updateDeviceMockButton.addTarget(self, action: #selector(updateDeviceButtonTapped), forControlEvents: .TouchUpInside)
-    echoSoulMockButton.addTarget(self, action: #selector(echoSoulButtonTapped), forControlEvents: .TouchUpInside)
+    outgoingMockButton.addTarget(self, action: #selector(outgoingButtonTapped), for: .touchUpInside)
+    registerDeviceMockButton.addTarget(self, action: #selector(registerDeviceButtonTapped), for: .touchUpInside)
+    updateDeviceMockButton.addTarget(self, action: #selector(updateDeviceButtonTapped), for: .touchUpInside)
+    echoSoulMockButton.addTarget(self, action: #selector(echoSoulButtonTapped), for: .touchUpInside)
     
-    put(outgoingMockButton, inside: view, onThe: .Top, withPadding: 50)
-    put(registerDeviceMockButton, besideAtThe: .Bottom, of: outgoingMockButton, withSpacing: 50)
-    put(updateDeviceMockButton, besideAtThe: .Bottom, of: registerDeviceMockButton, withSpacing: 50)
-    put(echoSoulMockButton, besideAtThe: .Bottom, of: updateDeviceMockButton, withSpacing: 50)
+    put(outgoingMockButton, inside: view, onThe: .top, withPadding: 50)
+    put(registerDeviceMockButton, besideAtThe: .bottom, of: outgoingMockButton, withSpacing: 50)
+    put(updateDeviceMockButton, besideAtThe: .bottom, of: registerDeviceMockButton, withSpacing: 50)
+    put(echoSoulMockButton, besideAtThe: .bottom, of: updateDeviceMockButton, withSpacing: 50)
   }
   
   func outgoingButtonTapped() {
@@ -227,29 +227,29 @@ class MockingVC: UIViewController {
 
 
 extension MockingVC: SoulCatcherDelegate {
-  func soulDidStartToDownload(catcher:SoulCatcher, soul:Soul) {
+  func soulDidStartToDownload(_ catcher:SoulCatcher, soul:Soul) {
   
   }
-  func soulIsDownloading(catcher:SoulCatcher, progress:Float) {
+  func soulIsDownloading(_ catcher:SoulCatcher, progress:Float) {
   
   }
-  func soulDidFinishDownloading(catcher:SoulCatcher, soul:Soul) {
+  func soulDidFinishDownloading(_ catcher:SoulCatcher, soul:Soul) {
     soulPlayer.startPlaying(soul)
   }
-  func soulDidFailToDownload(catcher:SoulCatcher) {
+  func soulDidFailToDownload(_ catcher:SoulCatcher) {
   
   }
 }
 
 extension MockingVC: UITextFieldDelegate {
-  func textFieldDidEndEditing(textField: UITextField) {
+  func textFieldDidEndEditing(_ textField: UITextField) {
     serverURL = "http://" + textField.text! + ".localtunnel.me"
     print(serverURL)
     didFinishEditing()
     
   }
   
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         serverField.endEditing(true)
     return true
   }

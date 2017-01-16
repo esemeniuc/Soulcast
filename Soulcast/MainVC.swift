@@ -24,7 +24,7 @@ class MainVC: UIViewController {
     
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.clearColor()
+    view.backgroundColor = UIColor.clear
     add(children:[mapVC, outgoingVC])
     addImproveButton()
     //
@@ -32,14 +32,14 @@ class MainVC: UIViewController {
     
   }
   
-  override func viewWillDisappear(animated: Bool) {
+  override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     delegate?.mainVCWillDisappear()
   }
   
   func addImproveButton() {
-    let improveButton = ImproveButton(frame: CGRectZero)
-    improveButton.addTarget(self, action: #selector(improveButtonTapped), forControlEvents: .TouchUpInside)
+    let improveButton = ImproveButton(frame: CGRect.zero)
+    improveButton.addTarget(self, action: #selector(improveButtonTapped), for: .touchUpInside)
     view.addSubview(improveButton)
   }
   
@@ -49,14 +49,14 @@ class MainVC: UIViewController {
     for eachVC in childVCs {
       addChildViewController(eachVC)
       view.addSubview(eachVC.view)
-      eachVC.didMoveToParentViewController(self)
+      eachVC.didMove(toParentViewController: self)
     }
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     pushHandler.activate()
-    view.backgroundColor = UIColor.redColor()
+    view.backgroundColor = UIColor.red
   }
   
   func improveButtonTapped() {
@@ -72,15 +72,15 @@ class MainVC: UIViewController {
     }
   }
   
-  func receiveRemoteNotification(hash:[String : AnyObject]){
+  func receiveRemoteNotification(_ hash:[String : AnyObject]){
     let tempSoulCatcher = SoulCatcher(soulHash:hash)
       tempSoulCatcher.delegate = self
       soulCatchers.insert(tempSoulCatcher)
     
   }
   
-  func displaySoul(incomingSoul:Soul) {
-    if isViewLoaded() && view.window != nil {
+  func displaySoul(_ incomingSoul:Soul) {
+    if isViewLoaded && view.window != nil {
       if soloQueue.isEmpty {
         delegate?.presentIncomingVC()
       }
@@ -89,7 +89,7 @@ class MainVC: UIViewController {
   }
 
   
-  static func getInstance(vc:UIViewController?) -> MainVC? {
+  static func getInstance(_ vc:UIViewController?) -> MainVC? {
     if vc is MainVC {
       return vc as? MainVC
     }
@@ -109,7 +109,7 @@ class MainVC: UIViewController {
 }
 
 extension MainVC: OutgoingVCDelegate, MapVCDelegate {
-  func mapVCDidChangeradius(radius:Double){
+  func mapVCDidChangeradius(_ radius:Double){
     
   }
   func outgoingRadius() -> Double{
@@ -130,25 +130,25 @@ extension MainVC: OutgoingVCDelegate, MapVCDelegate {
 }
 
 extension MainVC: SoulCatcherDelegate {
-  func soulDidStartToDownload(catcher:SoulCatcher, soul:Soul){
+  func soulDidStartToDownload(_ catcher:SoulCatcher, soul:Soul){
     //TODO:
   }
-  func soulIsDownloading(catcher:SoulCatcher, progress:Float){
+  func soulIsDownloading(_ catcher:SoulCatcher, progress:Float){
     
   }
-  func soulDidFinishDownloading(catcher:SoulCatcher, soul:Soul){
+  func soulDidFinishDownloading(_ catcher:SoulCatcher, soul:Soul){
     //play audio if available...
     
     displaySoul(soul)
     soulCatchers.remove(catcher)
   }
-  func soulDidFailToDownload(catcher:SoulCatcher){
-    let alertController = UIAlertController(title: "Could not catch soul", message: "After trying numerous times to catch it, this one got away", preferredStyle: .Alert)
-    let okAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in
+  func soulDidFailToDownload(_ catcher:SoulCatcher){
+    let alertController = UIAlertController(title: "Could not catch soul", message: "After trying numerous times to catch it, this one got away", preferredStyle: .alert)
+    let okAction = UIAlertAction(title: "OK", style: .cancel) { (action) in
       //
     }
     alertController.addAction(okAction)
-    presentViewController(alertController, animated: true) { 
+    present(alertController, animated: true) { 
       //
     }
     soulCatchers.remove(catcher)

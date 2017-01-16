@@ -23,18 +23,18 @@ class Soul: NSObject {
   
   // Usage: postToServer(someSoul.toParams())
   func toParams() -> [String : AnyObject] {
-    return [
-//    contentParams["soul[soulType]"] = type!.rawValue
-    "s3Key": s3Key ?? "",
-    "epoch": epoch ?? "",
-    "longitude": longitude ?? "",
-    "latitude": latitude ?? "",
-    "radius": radius ?? "",
-    "token": token ?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"]
+    var params = [String : Any]()
+    params["s3Key"] = s3Key
+    params["epoch"] = epoch
+    params["longitude"] = longitude
+    params["latitude"] = latitude
+    params["radius"] = radius
+    params["token"] = token
+    return params as [String : AnyObject]
   }
   
   
-  class func fromAPNSHash (soulHash:NSDictionary) -> Soul {
+  class func fromAPNSHash (_ soulHash:NSDictionary) -> Soul {
     let incomingSoul = Soul()
     let incomingDevice = Device()
     incomingDevice.id = soulHash["device_id"] as? Int
@@ -47,7 +47,7 @@ class Soul: NSObject {
     return incomingSoul
   }
   
-  class func fromHash (soulHash:NSDictionary) -> Soul {
+  class func fromHash (_ soulHash:NSDictionary) -> Soul {
     let incomingSoul = Soul()
     let incomingDevice = Device()
     incomingDevice.id = soulHash["soul[device_id]"] as? Int
@@ -61,15 +61,15 @@ class Soul: NSObject {
     return incomingSoul
   }
   
-  class func fromArray (soulsJSON: [[String: AnyObject]]) -> [Soul] {
+  class func fromArray (_ soulsJSON: [[String: AnyObject]]) -> [Soul] {
     var souls = [Soul]()
     for eachSoulJson in soulsJSON {
-      souls.append(fromServerHash(eachSoulJson))
+      souls.append(fromServerHash(eachSoulJson as NSDictionary))
     }
     return souls
   }
   
-  class func fromServerHash (soulHash:NSDictionary) -> Soul {
+  class func fromServerHash (_ soulHash:NSDictionary) -> Soul {
     let incomingSoul = Soul()
     let incomingDevice = Device()
     incomingDevice.id = soulHash["device_id"] as? Int

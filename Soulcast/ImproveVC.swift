@@ -23,7 +23,7 @@ class ImproveVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     layoutStuff()
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white
   }
   
   func layoutStuff() {
@@ -37,7 +37,7 @@ class ImproveVC: UIViewController {
     outgoingVC.maxRecordingDuration = 10
     addChildVC(outgoingVC)
     view.addSubview(outgoingVC.view)
-    outgoingVC.didMoveToParentViewController(self)
+    outgoingVC.didMove(toParentViewController: self)
   }
   
   func addDescriptionLabel() {
@@ -49,7 +49,7 @@ class ImproveVC: UIViewController {
       height: view.bounds.width * 1.2 ))
     descriptionLabel.text = descriptionText
     descriptionLabel.numberOfLines = 0
-    descriptionLabel.textColor = UIColor.darkGrayColor()
+    descriptionLabel.textColor = UIColor.darkGray
     descriptionLabel.font = UIFont(name: HelveticaNeue, size: 20)
     view.addSubview(descriptionLabel)
   }
@@ -70,7 +70,7 @@ extension ImproveVC: OutgoingVCDelegate {
   }
   func outgoingDidStop() {
     print("outgoingDidStop")
-    dismissViewControllerAnimated(true) { 
+    dismiss(animated: true) { 
       //
     }
   }

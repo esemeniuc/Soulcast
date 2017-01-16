@@ -6,28 +6,28 @@ import TheAmazingAudioEngine
 let soulPlayer = SoulPlayer()
 
 protocol SoulPlayerDelegate: AnyObject {
-  func didStartPlaying(soul:Soul)
-  func didFinishPlaying(soul:Soul)
-  func didFailToPlay(soul:Soul)
+  func didStartPlaying(_ soul:Soul)
+  func didFinishPlaying(_ soul:Soul)
+  func didFailToPlay(_ soul:Soul)
 }
 
 class SoulPlayer: NSObject {
-  private var tempSoul: Soul?
-  private var player: AEAudioFilePlayer?
+  fileprivate var tempSoul: Soul?
+  fileprivate var player: AEAudioFilePlayer?
   static var playing = false
-  private var subscribers:[SoulPlayerDelegate] = []
+  fileprivate var subscribers:[SoulPlayerDelegate] = []
   
-  func startPlaying(soul:Soul!) {
+  func startPlaying(_ soul:Soul!) {
     guard !SoulPlayer.playing else{
       reset()
       startPlaying(soul)
       return
     }
     tempSoul = soul
-    let filePath = NSURL(fileURLWithPath: soul.localURL! as String)
+    let filePath = URL(fileURLWithPath: soul.localURL! as String)
     do {
-      player = try AEAudioFilePlayer(URL: filePath)
-      audioController.addChannels([player!])
+      player = try AEAudioFilePlayer(url: filePath)
+      audioController?.addChannels([player!])
       player?.removeUponFinish = true
       SoulPlayer.playing = true
       sendStartMessage(soul)
@@ -49,19 +49,19 @@ class SoulPlayer: NSObject {
     return tempSoul
   }
   
-  func sendStartMessage(soul:Soul) {
+  func sendStartMessage(_ soul:Soul) {
     for eachSubscriber in subscribers {
       eachSubscriber.didStartPlaying(soul)
     }
   }
   
-  func sendFinishMessage(soul:Soul) {
+  func sendFinishMessage(_ soul:Soul) {
     for eachSubscriber in subscribers {
       eachSubscriber.didFinishPlaying(soul)
     }
   }
   
-  func sendFailMessage(soul:Soul) {
+  func sendFailMessage(_ soul:Soul) {
     for eachSubscriber in subscribers {
       eachSubscriber.didFailToPlay(soul)
     }
@@ -69,12 +69,12 @@ class SoulPlayer: NSObject {
   
   func reset() {
     if player != nil {
-      audioController.removeChannels([player!])
+      audioController?.removeChannels([player!])
       SoulPlayer.playing = false
     }
   }
   
-  func subscribe(subscriber:SoulPlayerDelegate) {
+  func subscribe(_ subscriber:SoulPlayerDelegate) {
     var contains = false
     for eachSubscriber in subscribers {
       if eachSubscriber === subscriber {
@@ -88,9 +88,9 @@ class SoulPlayer: NSObject {
     } 
   }
   
-  func unsubscribe(subscriber:SoulPlayerDelegate) {
-    if let removalIndex = subscribers.indexOf({$0 === subscriber}) {
-      subscribers.removeAtIndex(removalIndex)
+  func unsubscribe(_ subscriber:SoulPlayerDelegate) {
+    if let removalIndex = subscribers.index(where: {$0 === subscriber}) {
+      subscribers.remove(at: removalIndex)
     }
 
   }

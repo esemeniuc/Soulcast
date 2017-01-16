@@ -6,8 +6,8 @@ class SwiftJK {
   
 }
 
-let screenWidth = UIScreen.mainScreen().bounds.width
-let screenHeight = UIScreen.mainScreen().bounds.height
+let screenWidth = UIScreen.main.bounds.width
+let screenHeight = UIScreen.main.bounds.height
 
 let HelveticaNeue = "HelveticaNeue"
 let HelveticaNeueLight = "HelveticaNeue-Light"
@@ -16,10 +16,10 @@ let HelveticaNeueMedium = "HelveticaNeue-Medium"
 let offBlue = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
 let offRed = UIColor(red:1.00, green:0.23, blue:0.19, alpha:1.0)
 
-func doOnce (taskName:String, task:() -> ()) -> (Bool) {
-  if NSUserDefaults.standardUserDefaults().valueForKey("doOnce-" + taskName) == nil {
+func doOnce (_ taskName:String, task:() -> ()) -> (Bool) {
+  if UserDefaults.standard.value(forKey: "doOnce-" + taskName) == nil {
     task()
-    NSUserDefaults.standardUserDefaults().setValue(true, forKey: "doOnce-" + taskName)
+    UserDefaults.standard.setValue(true, forKey: "doOnce-" + taskName)
     return true
   } else {
     return false
@@ -28,7 +28,7 @@ func doOnce (taskName:String, task:() -> ()) -> (Bool) {
 
 var debugging = true
 
-func printline(string:String) {
+func printline(_ string:String) {
   if debugging {
     print(string)
   }
@@ -59,17 +59,17 @@ extension UIViewController {
     view.debugColors()
   }
   func isActiveOnScreen() -> Bool{
-    return isViewLoaded() && view.window != nil
+    return isViewLoaded && view.window != nil
   }
 }
 
 extension UILabel {
-  func decorateWhite(fontSize:CGFloat) {
-    self.textColor = UIColor.whiteColor()
-    self.shadowColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
+  func decorateWhite(_ fontSize:CGFloat) {
+    self.textColor = UIColor.white
+    self.shadowColor = UIColor.black.withAlphaComponent(0.3)
     self.shadowOffset = CGSize(width: 1, height: 1)
     self.font = UIFont(name: "Helvetica", size: fontSize)
-    self.textAlignment = NSTextAlignment.Center
+    self.textAlignment = NSTextAlignment.center
     
   }
 }

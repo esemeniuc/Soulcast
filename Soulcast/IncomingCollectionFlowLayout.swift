@@ -19,31 +19,31 @@ class IncomingCollectionFlowLayout: UICollectionViewFlowLayout {
   }
   
   func setup() {
-    scrollDirection = .Vertical
+    scrollDirection = .vertical
     itemSize = defaultSize
     minimumLineSpacing = 5
     sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
   }
   
-  override func initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
-    let attributes = super.initialLayoutAttributesForAppearingItemAtIndexPath(itemIndexPath)!
+  override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath)!
     attributes.frame = CGRect(
-      x: CGRectGetMinX(attributes.frame),
-      y: CGRectGetMinY(attributes.frame),
-      width: CGRectGetWidth(attributes.frame),
-      height: CGRectGetHeight(attributes.frame)/10)
+      x: attributes.frame.minX,
+      y: attributes.frame.minY,
+      width: attributes.frame.width,
+      height: attributes.frame.height/10)
     attributes.alpha = 0
     return attributes
   }
   
-  override func finalLayoutAttributesForDisappearingItemAtIndexPath(itemIndexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
-    let attributes = super.finalLayoutAttributesForDisappearingItemAtIndexPath(itemIndexPath)!
+  override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath)!
     if itemIndexPath.row == 0 {
       attributes.frame = CGRect(
-        x: CGRectGetMinX(attributes.frame),
-        y: CGRectGetMinY(attributes.frame),
-        width: CGRectGetWidth(attributes.frame),
-        height: CGRectGetHeight(attributes.frame)/10)
+        x: attributes.frame.minX,
+        y: attributes.frame.minY,
+        width: attributes.frame.width,
+        height: attributes.frame.height/10)
     }
     return attributes
   }

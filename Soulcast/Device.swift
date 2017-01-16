@@ -4,7 +4,7 @@ class Device: NSObject {
   var id: Int?
   var token: String? {
     didSet {
-      NSUserDefaults.standardUserDefaults().setValue(token, forKey: "token")
+      UserDefaults.standard.setValue(token, forKey: "token")
     }
   }
   var longitude: Double?
@@ -15,20 +15,20 @@ class Device: NSObject {
   class var localDevice:Device {
     get{
     let localDevice = Device()
-    localDevice.token = NSUserDefaults.standardUserDefaults().valueForKey("token") as! String?
+    localDevice.token = UserDefaults.standard.value(forKey: "token") as! String?
     if let locationDictionary: NSDictionary =
-    NSUserDefaults.standardUserDefaults().valueForKey("locationDictionary") as? NSDictionary {
+    UserDefaults.standard.value(forKey: "locationDictionary") as? NSDictionary {
     localDevice.longitude = locationDictionary["longitude"]as! Double?
     localDevice.latitude = locationDictionary["latitude"] as! Double?
     localDevice.radius = locationDictionary["radius"] as! Double?
     }
-    localDevice.id = NSUserDefaults.standardUserDefaults().valueForKey("id") as! Int?
-    localDevice.arn = NSUserDefaults.standardUserDefaults().valueForKey("arn") as! String?
+    localDevice.id = UserDefaults.standard.value(forKey: "id") as! Int?
+    localDevice.arn = UserDefaults.standard.value(forKey: "arn") as! String?
     return localDevice
     }
     set(newValue){
       if let newToken = newValue.token {
-        NSUserDefaults.standardUserDefaults().setValue(newToken, forKey: "token")
+        UserDefaults.standard.setValue(newToken, forKey: "token")
       }
       if let newLatitude = newValue.latitude {
         if let newLongitude = newValue.longitude {
@@ -37,20 +37,20 @@ class Device: NSObject {
             locationDictionary["latitude"] = newLatitude
             locationDictionary["longitude"] = newLongitude
             locationDictionary["radius"] = newRadius
-            NSUserDefaults.standardUserDefaults().setValue(locationDictionary, forKey: "locationDictionary")
+            UserDefaults.standard.setValue(locationDictionary, forKey: "locationDictionary")
           }
         }
       }
       if let newID = newValue.id {
-        NSUserDefaults.standardUserDefaults().setValue(newID, forKey: "id")
+        UserDefaults.standard.setValue(newID, forKey: "id")
       }
       if let newArn = newValue.arn {
-        NSUserDefaults.standardUserDefaults().setValue(newArn, forKey: "arn")
+        UserDefaults.standard.setValue(newArn, forKey: "arn")
       }
     }
   }
     
-  class func from(incomingParams: NSDictionary) -> Device{
+  class func from(_ incomingParams: NSDictionary) -> Device{
     let incomingDevice = Device()
     if incomingParams["type"] as? String == "incoming" {
       if let contentParams = incomingParams["device"] as? NSDictionary {
@@ -66,12 +66,12 @@ class Device: NSObject {
   }
   
   func toParams() -> [String : AnyObject] {
-    return [
-    "longitude": longitude ?? "",
-    "latitude": latitude ?? "",
-    "radius": radius ?? "",
-    "token": token ?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-    ]
+    var params = [String : Any]()
+    params["longitude"] = longitude ?? ""
+    params["latitude"] = latitude ?? ""
+    params["radius"] = radius ?? ""
+    params["token"] = token ?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    return params as [String : AnyObject]
   }
   
 

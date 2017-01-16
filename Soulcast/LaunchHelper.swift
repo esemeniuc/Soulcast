@@ -12,25 +12,25 @@ import AWSS3
 
 
 class LaunchHelper {
-  static func update(id: Int){
+  static func update(_ id: Int){
     
   }
   
   static func launch() {
     deviceManager.register(Device.localDevice)
-    UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+    UIApplication.shared.applicationIconBadgeNumber = 0
     configureAWS()
 
   }
   
   static func configureAWS() {
     let credentialsProvider = AWSCognitoCredentialsProvider(
-      regionType: .USWest2,
+      regionType: .usWest2,
       identityPoolId: CognitoIdentityPoolId)
     let configuration = AWSServiceConfiguration(
-      region: .USWest2,
+      region: .usWest2,
       credentialsProvider: credentialsProvider)
-    AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
-    AWSLogger.defaultLogger().logLevel = .Verbose
+    AWSServiceManager.default().defaultServiceConfiguration = configuration
+    AWSLogger.default().logLevel = .verbose
   }
 }

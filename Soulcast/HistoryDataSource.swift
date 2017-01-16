@@ -8,20 +8,44 @@
 
 import Foundation
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 protocol HistoryDataSourceDelegate: class {
   func willFetch()
-  func didFetch(success:Bool)
-  func didUpdate(soulCount:Int)
-  func didFinishUpdating(soulCount:Int)
-  func didRequestBlock(soul: Soul)
+  func didFetch(_ success:Bool)
+  func didUpdate(_ soulCount:Int)
+  func didFinishUpdating(_ soulCount:Int)
+  func didRequestBlock(_ soul: Soul)
 }
 
 class HistoryDataSource: NSObject, SoulCatcherDelegate {
-  private var souls = [Soul]() 
-  private var soulCatchers = Set<SoulCatcher>()
+  fileprivate var souls = [Soul]() 
+  fileprivate var soulCatchers = Set<SoulCatcher>()
   weak var delegate: HistoryDataSourceDelegate?
-  var updateTimer: NSTimer = NSTimer()
+  var updateTimer: Timer = Timer()
   
   func fetch() {
     //TODO:
@@ -35,8 +59,8 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   }
   func startTimer() {
     updateTimer.invalidate()
-    updateTimer = NSTimer.scheduledTimerWithTimeInterval(
-      0.25,
+    updateTimer = Timer.scheduledTimer(
+      timeInterval: 0.25,
       target: self,
       selector: #selector(timerExpired),
       userInfo: nil,
@@ -59,15 +83,15 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
     }
     return souls[index]
   }
-  func indexPath(forSoul soul:Soul) -> NSIndexPath {
-    if let index = souls.indexOf(soul) {
-      return NSIndexPath(forRow: index, inSection: 0)
+  func indexPath(forSoul soul:Soul) -> IndexPath {
+    if let index = souls.index(of: soul) {
+      return IndexPath(row: index, section: 0)
     }
-    return NSIndexPath()
+    return IndexPath()
   }
-  func catchSouls(souls:[Soul]) {
-    soulCatchers.removeAll(keepCapacity: true)
-    self.souls.removeAll(keepCapacity: true)
+  func catchSouls(_ souls:[Soul]) {
+    soulCatchers.removeAll(keepingCapacity: true)
+    self.souls.removeAll(keepingCapacity: true)
     for eachSoul in souls {
       let catcher = SoulCatcher(soul: eachSoul)
       catcher.delegate = self
@@ -75,20 +99,20 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
       
     }
   }
-  func remove(soul:Soul) {
-    if let index = souls.indexOf(soul) {
-      souls.removeAtIndex(index)
+  func remove(_ soul:Soul) {
+    if let index = souls.index(of: soul) {
+      souls.remove(at: index)
       delegate?.didUpdate(souls.count)
     }
   }
-  func insertByEpoch(soul: Soul) {
+  func insertByEpoch(_ soul: Soul) {
     var insertionIndex =  0
     for eachSoul in souls {
       if eachSoul.epoch > soul.epoch {
         insertionIndex = indexPath(forSoul: eachSoul).row + 1
       }
     }
-    souls.insert(soul, atIndex: insertionIndex)
+    souls.insert(soul, at: insertionIndex)
     delegate?.didUpdate(souls.count)
   }
   
@@ -101,18 +125,18 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   
   //SoulCatcherDelegate
   
-  func soulDidStartToDownload(catcher: SoulCatcher, soul: Soul) {
+  func soulDidStartToDownload(_ catcher: SoulCatcher, soul: Soul) {
     //
   }
-  func soulIsDownloading(catcher: SoulCatcher, progress: Float) {
+  func soulIsDownloading(_ catcher: SoulCatcher, progress: Float) {
     //
   }
-  func soulDidFinishDownloading(catcher: SoulCatcher, soul: Soul) {
+  func soulDidFinishDownloading(_ catcher: SoulCatcher, soul: Soul) {
     insertByEpoch(soul)
     soulCatchers.remove(catcher)
     startTimer()
   }
-  func soulDidFailToDownload(catcher: SoulCatcher) {
+  func soulDidFailToDownload(_ catcher: SoulCatcher) {
     //
     soulCatchers.remove(catcher)
   }
@@ -122,52 +146,52 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
 }
 
 extension HistoryDataSource: UITableViewDataSource {
-  func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+  func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return souls.count
   }
   
-  func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return "Recent Souls"
   }
   
-  func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+  func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
     return ""
   }
   
-  func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+  func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
     return true
   }
   
-  func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     switch editingStyle {
-    case .Delete:
+    case .delete:
       if let blockingSoul = soul(forIndex: indexPath.row) {
         delegate?.didRequestBlock(blockingSoul)
       }
-    case .Insert:      break
-    case .None:      break
+    case .insert:      break
+    case .none:      break
     }
   }
   
 
   
-  func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+  func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
     return false
   }
   
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: String(UITableViewCell))
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = UITableViewCell(style: .subtitle, reuseIdentifier: String(describing: UITableViewCell()))
     if let thisSoul = soul(forIndex: indexPath.row),
       let epoch = thisSoul.epoch,
       let radius = thisSoul.radius {
       cell.textLabel?.text = timeAgo(epoch: epoch)
       cell.detailTextLabel?.text = String(round(radius*10)/10) + "km away"
-      cell.detailTextLabel?.textColor = UIColor.grayColor()
-      cell.accessoryType = .DisclosureIndicator
+      cell.detailTextLabel?.textColor = UIColor.gray
+      cell.accessoryType = .disclosureIndicator
     }
     return cell
   }

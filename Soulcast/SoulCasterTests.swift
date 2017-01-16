@@ -41,10 +41,10 @@ extension SoulCasterTests: SoulCasterDelegate {
   func soulDidStartUploading() {
     
   }
-  func soulIsUploading(progress:Float) {
+  func soulIsUploading(_ progress:Float) {
     
   }
-  func soulDidFinishUploading(soul:Soul) {
+  func soulDidFinishUploading(_ soul:Soul) {
     print("soulDidFinishUploading from delegate!")
   }
   func soulDidFailToUpload() {

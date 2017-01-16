@@ -25,7 +25,7 @@ class RadiusExplainerView: UIView {
     super.init(coder: aDecoder)
   }
   
-  func setup(circleArea:CGRect) {
+  func setup(_ circleArea:CGRect) {
     //TODO
     addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
     addMask(circleArea)
@@ -33,16 +33,16 @@ class RadiusExplainerView: UIView {
 
   }
   
-  func addMask(area:CGRect) {
+  func addMask(_ area:CGRect) {
     let path = UIBezierPath(roundedRect: bounds, cornerRadius: 0)
-    let circlePath = UIBezierPath(roundedRect: area, cornerRadius: CGRectGetWidth(area)/2)
-    path.appendPath(circlePath)
+    let circlePath = UIBezierPath(roundedRect: area, cornerRadius: area.width/2)
+    path.append(circlePath)
     path.usesEvenOddFillRule = true
     
     let fillLayer = CAShapeLayer()
-    fillLayer.path = path.CGPath;
+    fillLayer.path = path.cgPath;
     fillLayer.fillRule = kCAFillRuleEvenOdd;
-    fillLayer.fillColor = UIColor.darkGrayColor().CGColor
+    fillLayer.fillColor = UIColor.darkGray.cgColor
     fillLayer.opacity = 0.8;
     layer.addSublayer(fillLayer)
   }
@@ -51,22 +51,22 @@ class RadiusExplainerView: UIView {
     let titleLabel = UILabel(
       frame: CGRect(
         x: 0,
-        y: CGRectGetHeight(bounds) * 0.13,
-        width: CGRectGetWidth(bounds),
-        height: CGRectGetHeight(bounds)*0.1))
+        y: bounds.height * 0.13,
+        width: bounds.width,
+        height: bounds.height*0.1))
     titleLabel.text = titleString
-    titleLabel.textColor = UIColor.whiteColor()
+    titleLabel.textColor = UIColor.white
     titleLabel.font = UIFont(name: HelveticaNeue, size: 25)
-    titleLabel.textAlignment = .Center
+    titleLabel.textAlignment = .center
     addSubview(titleLabel)
     
     let inset:CGFloat = 30
     let descriptionLabel = UILabel(frame: CGRect(
       x: inset,
-      y: CGRectGetMaxY(titleLabel.frame),
-      width: CGRectGetWidth(bounds) - 2 * inset,
-      height: CGRectGetHeight(bounds) * 0.5))
-    descriptionLabel.textColor = UIColor.whiteColor()
+      y: titleLabel.frame.maxY,
+      width: bounds.width - 2 * inset,
+      height: bounds.height * 0.5))
+    descriptionLabel.textColor = UIColor.white
     descriptionLabel.text = descriptionString
     descriptionLabel.font = UIFont(name: HelveticaNeue, size: 18)
     descriptionLabel.numberOfLines = 0
@@ -74,13 +74,13 @@ class RadiusExplainerView: UIView {
     
     let taglineLabel = UILabel(frame: CGRect(
       x: inset,
-      y: CGRectGetHeight(bounds)*0.8,
-      width: CGRectGetWidth(bounds) - 2 * inset,
-      height: CGRectGetHeight(bounds)*0.1))
+      y: bounds.height*0.8,
+      width: bounds.width - 2 * inset,
+      height: bounds.height*0.1))
     taglineLabel.text = taglineString
-    taglineLabel.textColor = UIColor.whiteColor()
+    taglineLabel.textColor = UIColor.white
     taglineLabel.font = UIFont(name: HelveticaNeue, size: 18)
-    taglineLabel.textAlignment = .Center
+    taglineLabel.textAlignment = .center
     addSubview(taglineLabel)
   }
   
@@ -92,11 +92,11 @@ class RadiusExplainerView: UIView {
   
   
   func dismiss() {
-    UIView.animateWithDuration(0.19, animations: {
+    UIView.animate(withDuration: 0.19, animations: {
       self.alpha = 0
-      }) { (finished) in
+      }, completion: { (finished) in
         self.removeFromSuperview()
 
-    }
+    }) 
   }
 }
