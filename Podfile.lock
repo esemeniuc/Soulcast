@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.2.0)
+  - AudioKit (3.5)
   - AWSCognito (2.4.16):
     - AWSCore (= 2.4.16)
   - AWSCore (2.4.16)
@@ -7,23 +8,22 @@ PODS:
     - AWSCore (= 2.4.16)
   - AWSSNS (2.4.16):
     - AWSCore (= 2.4.16)
-  - TheAmazingAudioEngine (1.5.8)
 
 DEPENDENCIES:
   - Alamofire
+  - AudioKit
   - AWSCognito
   - AWSS3
   - AWSSNS
-  - TheAmazingAudioEngine
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  AudioKit: 775885f735260c25f4f2c3c0601e79ae49900831
   AWSCognito: 666dba6eb65ac27faad79e83febf25630913aefc
   AWSCore: 7c3c129991e6387bcbad7132bc3661e7135754db
   AWSS3: fef6aa8f8f625df8f67f1b6574fe761f3a4ddc99
   AWSSNS: f7eb9a5c19410e2a0164febc2cd665831c1cd26c
-  TheAmazingAudioEngine: 24e382d9468283bb1b3f08df29b514aa522ef4fd
 
-PODFILE CHECKSUM: 96412eb92d87aa3a610e494aeb5e6eb75e352990
+PODFILE CHECKSUM: 60000b984c152d0b40365fc3f50b1c161d5db33a
 
 COCOAPODS: 1.1.1
