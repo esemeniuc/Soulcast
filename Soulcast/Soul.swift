@@ -17,7 +17,7 @@ class Soul: NSObject {
   var longitude:Double?
   var latitude:Double?
   var radius: Double?
-  var token: String?
+  var token: String? = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 //  var device: Device?
   var type: SoulType = .Broadcast
   

@@ -188,6 +188,7 @@ extension HistoryDataSource: UITableViewDataSource {
     if let thisSoul = soul(forIndex: indexPath.row),
       let epoch = thisSoul.epoch,
       let radius = thisSoul.radius {
+      
       cell.textLabel?.text = timeAgo(epoch: epoch)
       cell.detailTextLabel?.text = String(round(radius*10)/10) + "km away"
       cell.detailTextLabel?.textColor = UIColor.gray

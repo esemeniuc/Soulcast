@@ -86,7 +86,7 @@ class ServerFacade {
   }
 
   class func improve(_ feedbackSoul: Soul, success:@escaping ()->(), failure: @escaping (Int)->()) {
-    post("improves", parameters: feedbackSoul.toParams())
+    post("improves.json", parameters: feedbackSoul.toParams())
       .responseString { response in
         switch response.result{
         case .success:

@@ -2,7 +2,9 @@
 import Foundation
 
 public func timeAgo(epoch:Int) -> String{
-  return timeAgoSince(Date(timeIntervalSince1970: TimeInterval(epoch)))
+  let interval = TimeInterval(epoch)
+  let date = Date(timeIntervalSince1970: interval)
+  return timeAgoSince(date)
 }
 
 public func timeAgoSince(_ date: Date) -> String {
@@ -13,7 +15,7 @@ public func timeAgoSince(_ date: Date) -> String {
   let components = (calendar as NSCalendar).components(unitFlags, from: date, to: now, options: [])
   
   if components.year! >= 2 {
-    return "\(components.year) years ago"
+    return "\(components.year!) years ago"
   }
   
   if components.year! >= 1 {
@@ -21,7 +23,7 @@ public func timeAgoSince(_ date: Date) -> String {
   }
   
   if components.month! >= 2 {
-    return "\(components.month) months ago"
+    return "\(components.month!) months ago"
   }
   
   if components.month! >= 1 {
@@ -29,7 +31,7 @@ public func timeAgoSince(_ date: Date) -> String {
   }
   
   if components.weekOfYear! >= 2 {
-    return "\(components.weekOfYear) weeks ago"
+    return "\(components.weekOfYear!) weeks ago"
   }
   
   if components.weekOfYear! >= 1 {
@@ -37,7 +39,7 @@ public func timeAgoSince(_ date: Date) -> String {
   }
   
   if components.day! >= 2 {
-    return "\(components.day) days ago"
+    return "\(components.day!) days ago"
   }
   
   if components.day! >= 1 {
@@ -45,7 +47,7 @@ public func timeAgoSince(_ date: Date) -> String {
   }
   
   if components.hour! >= 2 {
-    return "\(components.hour) hours ago"
+    return "\(components.hour!) hours ago"
   }
   
   if components.hour! >= 1 {
@@ -53,7 +55,7 @@ public func timeAgoSince(_ date: Date) -> String {
   }
   
   if components.minute! >= 2 {
-    return "\(components.minute) minutes ago"
+    return "\(components.minute!) minutes ago"
   }
   
   if components.minute! >= 1 {
@@ -61,7 +63,7 @@ public func timeAgoSince(_ date: Date) -> String {
   }
   
   if components.second! >= 3 {
-    return "\(components.second) seconds ago"
+    return "\(components.second!) seconds ago"
   }
   
   return "Just now"

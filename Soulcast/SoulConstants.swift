@@ -5,6 +5,7 @@ import AWSCore
 let S3BucketName: String = "soulcast"
 //var serverURL = "http://soulcast.ml/"
 var serverURL = "http://localhost:3000/"
+//var serverURL = "http://207.23.176.99:3000/"
 let newDeviceSuffix = "newDevice"
 let nearbySuffix = "nearby/"
 let SNSPlatformARN = "SNSPlatformARN"
