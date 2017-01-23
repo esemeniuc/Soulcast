@@ -1,6 +1,6 @@
 PODS:
-  - Alamofire (4.2.0)
-  - AudioKit (3.5)
+  - Alamofire (4.3.0)
+  - AudioKit (3.5.1)
   - AWSCognito (2.4.16):
     - AWSCore (= 2.4.16)
   - AWSCore (2.4.16)
@@ -17,8 +17,8 @@ DEPENDENCIES:
   - AWSSNS
 
 SPEC CHECKSUMS:
-  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  AudioKit: 775885f735260c25f4f2c3c0601e79ae49900831
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  AudioKit: 7d3183b3f95b73c747348006d4085ac6207f71fc
   AWSCognito: 666dba6eb65ac27faad79e83febf25630913aefc
   AWSCore: 7c3c129991e6387bcbad7132bc3661e7135754db
   AWSS3: fef6aa8f8f625df8f67f1b6574fe761f3a4ddc99

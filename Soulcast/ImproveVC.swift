@@ -16,7 +16,7 @@ protocol ImproveVCDelegate: class {
 class ImproveVC: UIViewController {
   
   weak var delegate:ImproveVCDelegate?
-  var outgoingVC = OutgoingVC()
+//  var outgoingVC = OutgoingVC()
   
   let descriptionText = "Help us improve Soulcast. \nWe're listening!"
   
@@ -28,17 +28,17 @@ class ImproveVC: UIViewController {
   
   func layoutStuff() {
     addDescriptionLabel()
-    addOutgoingVC()
+//    addOutgoingVC()
   }
   
-  func addOutgoingVC() {
-    outgoingVC.delegate = self
-    outgoingVC.soulType = .Improve
-    outgoingVC.maxRecordingDuration = 10
-    addChildVC(outgoingVC)
-    view.addSubview(outgoingVC.view)
-    outgoingVC.didMove(toParentViewController: self)
-  }
+//  func addOutgoingVC() {
+//    outgoingVC.delegate = self
+//    outgoingVC.soulType = .Improve
+//    outgoingVC.maxRecordingDuration = 10
+//    addChildVC(outgoingVC)
+//    view.addSubview(outgoingVC.view)
+//    outgoingVC.didMove(toParentViewController: self)
+//  }
   
   func addDescriptionLabel() {
     let inset:CGFloat = 30
