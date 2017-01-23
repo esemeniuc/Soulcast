@@ -1,7 +1,7 @@
 
 
 import UIKit
-import AVFoundation
+import TheAmazingAudioEngine
 
 let soulPlayer = SoulPlayer()
 
@@ -11,9 +11,9 @@ protocol SoulPlayerDelegate: AnyObject {
   func didFailToPlay(_ soul:Soul)
 }
 
-class SoulPlayer: NSObject, AVAudioPlayerDelegate {
+class SoulPlayer: NSObject {
   fileprivate var tempSoul: Soul?
-  var audioPlayer: AVAudioPlayer?
+  fileprivate var player: AEAudioFilePlayer?
   static var playing = false
   fileprivate var subscribers:[SoulPlayerDelegate] = []
   
@@ -25,19 +25,24 @@ class SoulPlayer: NSObject, AVAudioPlayerDelegate {
     }
     tempSoul = soul
     let filePath = URL(fileURLWithPath: soul.localURL! as String)
-    
     do {
-      audioPlayer = try AVAudioPlayer(contentsOf: filePath)
-      let player = audioPlayer!
-      player.prepareToPlay()
-      player.play()
-      player.delegate = self
+      player = try AEAudioFilePlayer(url: filePath)
+      audioController?.addChannels([player!])
+      player?.removeUponFinish = true
       SoulPlayer.playing = true
       sendStartMessage(soul)
-    } catch let error as NSError {
-      print(error.description)
-      self.sendFailMessage(soul)
+      player?.completionBlock = {
+        self.reset()
+        
+        self.sendFinishMessage(soul)
+      }
+    } catch {
+      assert(false);
+      sendFailMessage(soul)
+      print("oh noes! playAudioAtPath fail")
+      return
     }
+
   }
   
   func lastSoul() -> Soul? {
@@ -63,8 +68,10 @@ class SoulPlayer: NSObject, AVAudioPlayerDelegate {
   }
   
   func reset() {
-    audioPlayer = nil
-    SoulPlayer.playing = false
+    if player != nil {
+      audioController?.removeChannels([player!])
+      SoulPlayer.playing = false
+    }
   }
   
   func subscribe(_ subscriber:SoulPlayerDelegate) {
@@ -77,22 +84,15 @@ class SoulPlayer: NSObject, AVAudioPlayerDelegate {
     }
     if !contains {
       subscribers.append(subscriber)
-      
-    }
+
+    } 
   }
   
   func unsubscribe(_ subscriber:SoulPlayerDelegate) {
     if let removalIndex = subscribers.index(where: {$0 === subscriber}) {
       subscribers.remove(at: removalIndex)
     }
-    
-  }
-  
-  func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-    reset()
-    if let soul = tempSoul {
-      sendFinishMessage(soul)
-    }
+
   }
   
 }

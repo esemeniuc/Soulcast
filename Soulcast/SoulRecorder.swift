@@ -1,7 +1,9 @@
 
-import Foundation
 import UIKit
-import AudioKit
+import AVFoundation
+import TheAmazingAudioEngine
+
+let audioController = AEAudioController(audioDescription: AEAudioController.nonInterleaved16BitStereoAudioDescription(), inputEnabled: true)
 
 enum FileReadWrite {
   case read
@@ -33,11 +35,7 @@ class SoulRecorder: NSObject {
   var currentRecordingPath:String!
   var displayLink:CADisplayLink!
   var displayCounter:Int = 0
-  
-  var recorder: AKNodeRecorder?
-  var player: AKAudioPlayer?
-  let mic = AKMicrophone()
-  
+  var recorder:AERecorder?
   weak var delegate:SoulRecorderDelegate?
   //records and spits out the url
   var state: RecorderState = .standby{
@@ -65,26 +63,18 @@ class SoulRecorder: NSObject {
       }
     }
   }
-  
   override init() {
     super.init()
     setup()
   }
-
   func setup() {
     displayLink = CADisplayLink(target: self, selector: #selector(SoulRecorder.displayLinkFired(_:)))
     displayLink.add(to: RunLoop.main, forMode: RunLoopMode.defaultRunLoopMode)
-//
-    AKAudioFile.cleanTempDirectory()
-    AKSettings.bufferLength = .medium
-    
     do {
-      try AKSettings.setSession(category: .playAndRecord, with: .defaultToSpeaker)
-    } catch { print("Errored setting category.") }
-    
-    recorder = try? AKNodeRecorder(node: mic)
-    player = try? AKAudioPlayer(file: (recorder?.audioFile)!)
-    
+      try audioController?.start()
+    } catch {
+      print("audioController.start() fail!")
+    }
   }
   
   func displayLinkFired(_ link:CADisplayLink) {
@@ -99,31 +89,24 @@ class SoulRecorder: NSObject {
       displayCounter = 0
     }
     if state == .recordingStarted || state == .recordingLongEnough {
-      let currentRecordDuration = CGFloat(displayCounter) / 60
-      let progress:CGFloat = currentRecordDuration/CGFloat(maximumRecordDuration)
-      self.delegate?.soulIsRecording(progress)
+        let currentRecordDuration = CGFloat(displayCounter) / 60
+        let progress:CGFloat = currentRecordDuration/CGFloat(maximumRecordDuration)
+        self.delegate?.soulIsRecording(progress)
     }
   }
-  
-  fileprivate func minimumDurationDidPass() {
-    print("minimumDurationDidPass()")
-    state = .recordingLongEnough
-    delegate?.soulDidReachMinimumDuration()
-  }
-  
   
   func pleaseStartRecording() {
-    guard !SoulPlayer.playing &&
-      state == .standby else {
-        assert(false, "Should not be recording while audio is being played")
-        assert(false, "OOPS!! Tried to start recording from an inappropriate state!")
-        return
-    }
     print("pleaseStartRecording()")
-    
-    startRecording()
-    state = .recordingStarted
-    displayLink.isPaused = false
+    if SoulPlayer.playing {
+      
+      assert(false, "Should not be recording while audio is being played")
+    }
+    if state != .standby {
+      assert(false, "OOPS!! Tried to start recording from an inappropriate state!")
+    } else {
+      startRecording()
+      state = .recordingStarted
+    }
   }
   
   func pleaseStopRecording() {
@@ -133,55 +116,89 @@ class SoulRecorder: NSObject {
     } else if state == .recordingLongEnough {
       saveRecording()
     }
-    resetRecorder()
     displayCounter = 0
-    displayLink.isPaused = true
-    AudioKit.stop()
-    
   }
   
-  
   fileprivate func startRecording() {
-    AudioKit.start()
+    print("startRecording()")
     do {
-      try recorder?.record()
-      delegate?.soulDidStartRecording()
+      try audioController?.start()
     } catch {
       assert(true, "audioController start error")
     }
+    recorder = AERecorder(audioController: audioController)
+    currentRecordingPath = outputPath()
+    do {
+      try recorder?.beginRecordingToFile(atPath: currentRecordingPath, fileType: AudioFileTypeID(kAudioFileM4AType))
+        delegate?.soulDidStartRecording()
+    } catch {
+      print("OOPS! at startRecording()")
+    }
+    audioController?.addOutputReceiver(recorder)
+    audioController?.addInputReceiver(recorder)
+    
+  }
+  
+  fileprivate func minimumDurationDidPass() {
+    print("minimumDurationDidPass()")
+    state = .recordingLongEnough
+    delegate?.soulDidReachMinimumDuration()
+  }
+  
+  fileprivate func pauseRecording() {
+    //TODO:
+  }
+  
+  fileprivate func resumeRecording() {
+    //TODO:
+  }
+  
+  func outputPath() -> String {
+    var outputPath:String!
+    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+    if paths.count > 0 {
+      let randomNumberString = String(Date.timeIntervalSinceReferenceDate.description)
+      print("randomNumberString: \(randomNumberString)")
+      outputPath = paths[0] + "/Recording" + randomNumberString! + ".m4a"
+      let manager = FileManager.default
+      if manager.fileExists(atPath: outputPath) {
+        do {
+          try manager.removeItem(atPath: outputPath)
+        } catch {
+          print("outputPath(readOrWrite:FileReadWrite)")
+        }
+      }
+    }
+    return outputPath
   }
   
   fileprivate func discardRecording() {
     print("discardRecording")
     state = .failed
-    recorder?.stop()
+    recorder?.finishRecording()
+    resetRecorder()
     delegate?.soulDidFailToRecord()
   }
   
   fileprivate func saveRecording() {
-    recorder?.stop()
-    let recordedDuration = player != nil ? recorder?.audioFile?.duration  : 0
-    if recordedDuration! > 0.0 {
-      let url = player!.audioFile.directoryPath.absoluteString + player!.audioFile.fileNamePlusExtension
-      let newSoul = Soul()
-      newSoul.localURL = url
-      self.delegate?.soulDidFinishRecording(newSoul)
-      state = .finished
-    } else {
-      self.delegate?.soulDidFailToRecord()
-      state = .failed
-    }
+    print("saveRecording")
+    state = .finished
+    recorder?.finishRecording()
+    let newSoul = Soul()
+    newSoul.localURL = currentRecordingPath
+    delegate?.soulDidFinishRecording(newSoul)
+    resetRecorder()
     
   }
   
   fileprivate func resetRecorder() {
-    do  { try recorder?.reset() } catch { print("reset recorder fail! ") }
-    recorder = try? AKNodeRecorder(node: mic)
-    player = try? AKAudioPlayer(file: (recorder?.audioFile)!)
-    
+    print("resetRecorder")
     state = .standby
+    audioController?.removeOutputReceiver(recorder)
+    audioController?.removeInputReceiver(recorder)
+    recorder = nil
+    
   }
-  
   
   static func askForMicrophonePermission(_ success:@escaping ()->(), failure:@escaping ()->()) {
     //TODO:

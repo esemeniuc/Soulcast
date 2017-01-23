@@ -5,7 +5,7 @@ target 'Soulcast' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-	pod 'AudioKit'
+	pod "TheAmazingAudioEngine"
 pod 'Alamofire'    
 pod 'AWSCognito'
     pod 'AWSS3'
