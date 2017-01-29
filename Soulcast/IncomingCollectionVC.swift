@@ -26,7 +26,7 @@ class IncomingCollectionVC: UICollectionViewController {
     y: screenHeight * topSpaceProportion,
     width: screenWidth - inset * 2,
     height: screenHeight * (1-topSpaceProportion))
-  let cellIdentifier:String = NSStringFromClass(IncomingCollectionCell)
+  let cellIdentifier:String = NSStringFromClass(IncomingCollectionCell.self)
   weak var delegate:IncomingCollectionVCDelegate?
   
   init() {
@@ -123,7 +123,7 @@ extension IncomingCollectionVC: SoulPlayerDelegate {
   }
   
   func didFinishPlaying(_ soul: Soul) {
-    soloQueue.dequeue()
+    _ = soloQueue.dequeue()
     if (isActiveOnScreen()) {
       if !soloQueue.isEmpty {
         playFirstSoul()
