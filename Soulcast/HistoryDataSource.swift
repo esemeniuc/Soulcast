@@ -48,14 +48,17 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   var updateTimer: Timer = Timer()
   
   func fetch() {
-    //TODO:
-    delegate?.willFetch()
-    ServerFacade.getHistory({ souls in
-      self.catchSouls(souls)
-      self.delegate?.didFetch(true)
+    DispatchQueue.global().async {
+      self.delegate?.willFetch()
+      ServerFacade.getHistory({ souls in
+        DispatchQueue.global().async {
+          self.catchSouls(souls)
+          self.delegate?.didFetch(true)
+        }
       }, failure:  { failureCode in
         self.delegate?.didFetch(false)
-    })
+      })
+    }
   }
   func startTimer() {
     updateTimer.invalidate()

@@ -14,12 +14,12 @@ class DeviceManager: NSObject {
   func register(_ device: Device) { 
     registerDeviceLocally(device)
     tempDevice = device
-    self.registerWithServer(self.tempDevice)
+    registerWithServer(self.tempDevice)
   }
   
-  fileprivate func registerWithServer(_ device:Device) {
+  private func registerWithServer(_ device:Device) {
     ServerFacade.post(device, success: { 
-      //
+
       }) { (result) in
         //
     }
@@ -48,8 +48,12 @@ class DeviceManager: NSObject {
   }
   
   func getNearbyDevices(_ completion:@escaping ([String:AnyObject])->(), failure:@escaping ()->()) {
+    
+//    return;
     request(serverURL + nearbySuffix,
-      parameters: Device.localDevice.toParams() )
+      parameters: Device.localDevice.toParams(),
+      encoding: JSONEncoding.default,
+      headers: ServerFacade.jsonHeader)
       .responseJSON(completionHandler: { response in
         switch response.result{
         case .success:

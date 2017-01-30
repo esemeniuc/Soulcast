@@ -52,9 +52,10 @@ class IncomingQueue: NSObject, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! IncomingCollectionCell
-    let theSoul = soulQueue[indexPath.row]
-    cell.radius = Float(theSoul.radius!)
-    cell.epoch = theSoul.epoch!
+    if let theSoul = soulQueue[indexPath.row] {
+      cell.radius = Float(theSoul.radius!)
+      cell.epoch = theSoul.epoch!
+    }
     return cell
     
   }
@@ -90,7 +91,10 @@ public struct Queue<T> {
     return array.first
   }
 
-  public subscript(index: Int) -> T {
+  public subscript(index: Int) -> T? {
+    if index > array.count {
+      return nil
+    }
     return array[index]
   }
 }

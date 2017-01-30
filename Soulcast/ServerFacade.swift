@@ -14,7 +14,7 @@ class ServerFacade {
   class func block(_ soul:Soul, success:@escaping ()->(), failure:@escaping (Int)->()) {
     //TODO: check interface with cwaffles
     assert(soul.token != nil, "This soul does not have a token! A Ronen Token")
-    let localToken = Device.localDevice.token ?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    let localToken = Device.localDevice.token ?? ""
     post("blocks", parameters:[
       "blockee_token": soul.token! as AnyObject,
       "blocker_token": localToken as AnyObject ])
@@ -146,11 +146,11 @@ class ServerFacade {
   }
   
   class func patch(_ localDevice: Device, success:@escaping ()->(), failure: @escaping (Int)->()) {
-    var deviceString = ""
-    if let deviceInt = localDevice.id {
-      deviceString = String(deviceInt)
-    }
-    patch("devices/" + deviceString, parameters: localDevice.toParams())
+    guard let deviceInt = localDevice.id
+      else { return }
+    
+    let deviceString = String(deviceInt)
+    patch("devices/" + deviceString + ".json", parameters: localDevice.toParams())
       .responseJSON { (response) in
       switch response.result {
       case .success:
@@ -159,9 +159,29 @@ class ServerFacade {
         if let r = response.response {
           failure(r.statusCode)
         }
-        
       }
     }
+  }
+  
+  
+  class func getNearbyDevices(_ completion:@escaping (Int)->(), failure:@escaping ()->()) {
+    request(serverURL + "nearby/",
+            method: .get,
+            parameters: Device.localDevice.toParams(),
+            headers: ServerFacade.jsonHeader).validate()
+      .responseJSON { (response) in
+      switch response.result {
+      case .success(let JSON):
+        if let responseJSON = JSON as? NSDictionary {
+          completion(responseJSON["nearby"] as! Int)
+        }
+        
+      case .failure:
+        print("getNearbyDevices fail")
+        failure()
+      }
+    }
+    
   }
   
   class func report(_ soul:Soul) {
@@ -176,6 +196,7 @@ class ServerFacade {
   fileprivate class func get( _ route: String, parameters: [String: AnyObject]? = nil)
     -> DataRequest {
       return request(serverURL + route,
+                     method: .get,
                      parameters: parameters,
                      encoding: JSONEncoding.default,
                      headers: ServerFacade.jsonHeader).validate()

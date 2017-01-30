@@ -143,7 +143,7 @@ class SoulCaster: NSObject {
   
   fileprivate func postToServer(_ localSoul:Soul) {
     if localSoul.token == nil {
-      localSoul.token = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+//      localSoul.token = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     }
     switch localSoul.type {
     case .Broadcast:

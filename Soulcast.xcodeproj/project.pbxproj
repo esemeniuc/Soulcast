@@ -798,6 +798,7 @@
 				BDBDE7F91E2C190000161E96 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

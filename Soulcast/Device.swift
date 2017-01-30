@@ -70,7 +70,7 @@ class Device: NSObject {
     params["longitude"] = longitude ?? ""
     params["latitude"] = latitude ?? ""
     params["radius"] = radius ?? ""
-    params["token"] = token ?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    params["token"] = token //?? "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     return params as [String : AnyObject]
   }
   

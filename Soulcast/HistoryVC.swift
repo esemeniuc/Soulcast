@@ -14,7 +14,7 @@ protocol HistoryVCDelegate: class {
 }
 
 ///displays a list of souls played in the past in reverse chronological order since 24 hours ago
-class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, HistoryDataSourceDelegate {
+class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, HistoryDataSourceDelegate, Appearable {
   //title label
   let tableView = UITableView()//table view
   let dataSource = HistoryDataSource()
@@ -23,13 +23,37 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   var startedPlaylisting: Bool = false
   weak var delegate: HistoryVCDelegate?
   let refreshControl = UIRefreshControl()
-  
+  let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+  var fetchToken = true
+  var fetchFinishToken = true
   override func viewDidLoad() {
     super.viewDidLoad()
     addTableView()
-    dataSource.fetch()
+    addLoadingIndicator()
+    addPullToRefreshHintView()
     //
-    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+//    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+  }
+  func addPullToRefreshHintView() {
+    let hintView = UILabel(frame: CGRect(
+      x: 0, y: 3,
+      width: view.frame.width,
+      height: 20))
+    hintView.textAlignment = .center
+    hintView.textColor = .lightGray
+    hintView.text = "Pull to refresh"
+    hintView.font = UIFont.systemFont(ofSize: 12)
+    view.addSubview(hintView)
+  }
+  func addLoadingIndicator() {
+    let size:CGFloat = 60
+    loadingIndicator.frame = CGRect(
+      x: (tableView.frame.width-size)/2,
+      y: (tableView.frame.height-size)/2,
+      width: size, height: size)
+    view.addSubview(loadingIndicator)
+    loadingIndicator.startAnimating()
+    loadingIndicator.hidesWhenStopped = true
   }
   
   func addTableView() {
@@ -69,11 +93,17 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     }
   }
   func playNextSoul() {
-    if selectedSoul != nil {
-      let nextIndex = dataSource.indexPath(forSoul: selectedSoul!).row + 1
+    guard let soul = selectedSoul else {
+      return
+    }
+    let path = dataSource.indexPath(forSoul: soul)
+    if path.count != 0 {
+      let nextIndex = path.row + 1
       let nextIndexPath = IndexPath(item: nextIndex , section: 0)
       selectedSoul = dataSource.soul(forIndex: nextIndex)
       tableView.selectRow(at: nextIndexPath, animated: true, scrollPosition: .none)
+    } else {
+      print("playNextSoul path.count == 0")
     }
     if selectedSoul != nil {
       soulPlayer.reset()
@@ -133,14 +163,23 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   
   func didFetch(_ success: Bool) {
     if success {
-      
+ 
     } else {
       //show failure, retry button.
     }
-    refreshControl.endRefreshing()
+    DispatchQueue.main.sync {
+      refreshControl.endRefreshing()
+      if dataSource.soulCount() == 0 {
+        loadingIndicator.stopAnimating()
+      }
+    }
   }
   
   func didUpdate(_ soulcount: Int) {
+    if fetchFinishToken {
+      loadingIndicator.stopAnimating()
+      fetchFinishToken = false
+    }
     tableView.reloadData()
   }
   func didFinishUpdating(_ soulCount: Int) {
@@ -207,5 +246,25 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     }
   }
   
+  func willAppearOnScreen() {
+    //fetch for first time
+    if fetchToken {
+      dataSource.fetch()
+      refreshControl.endRefreshing()
+      fetchToken = false
+    }
+    print("HistoryVC willAppearOnScreen")
+  }
+  
+  func didAppearOnScreen() {
+    //
+  }
+  
+  func willDisappearFromScreen() {
+    //
+  }
 
+  func didDisappearFromScreen() {
+    //
+  }
 }

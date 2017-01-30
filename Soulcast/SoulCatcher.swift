@@ -25,7 +25,7 @@ class SoulCatcher: NSObject {
   static let soulCaughtNotification = "soulCaughtNotification"
   
   var trialCounter = 0
-  let MAX_TRIAL = 10
+  let MAX_TRIAL = 15
   
   var completionHandler: AWSS3TransferUtilityDownloadCompletionHandlerBlock?
 
