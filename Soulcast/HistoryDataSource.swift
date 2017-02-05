@@ -38,7 +38,7 @@ protocol HistoryDataSourceDelegate: class {
   func didFetch(_ success:Bool)
   func didUpdate(_ soulCount:Int)
   func didFinishUpdating(_ soulCount:Int)
-  func didRequestBlock(_ soul: Soul)
+  func didTapExclamation(_ soul: Soul)
 }
 
 class HistoryDataSource: NSObject, SoulCatcherDelegate {
@@ -173,7 +173,7 @@ extension HistoryDataSource: UITableViewDataSource {
     switch editingStyle {
     case .delete:
       if let blockingSoul = soul(forIndex: indexPath.row) {
-        delegate?.didRequestBlock(blockingSoul)
+        delegate?.didTapExclamation(blockingSoul)
       }
     case .insert:      break
     case .none:      break

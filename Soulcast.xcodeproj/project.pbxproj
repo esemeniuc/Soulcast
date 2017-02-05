@@ -11,6 +11,8 @@
 		6A519C27B5EFC0926D32B35E /* Pods_Soulcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */; };
 		BD0078821D88865E0088939A /* NumberOfDevicesLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0078811D88865E0088939A /* NumberOfDevicesLabel.swift */; };
 		BD0078851D888FA80088939A /* RadiusExplainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0078841D888FA80088939A /* RadiusExplainerView.swift */; };
+		BD041A4A1E47D137009A4DEB /* Inappropriate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD041A491E47D137009A4DEB /* Inappropriate.swift */; };
+		BD041A4D1E47E0E6009A4DEB /* extension UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD041A4C1E47E0E6009A4DEB /* extension UIViewController.swift */; };
 		BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */; };
 		BD0DBF161D7CBB7300FBBD17 /* put.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF151D7CBB7300FBBD17 /* put.swift */; };
 		BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF171D7CBD8A00FBBD17 /* DepressingButton.swift */; };
@@ -73,6 +75,8 @@
 		A24A58CA47E57BD36FB67E59 /* Pods_Soulcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Soulcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD0078811D88865E0088939A /* NumberOfDevicesLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberOfDevicesLabel.swift; sourceTree = "<group>"; };
 		BD0078841D888FA80088939A /* RadiusExplainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadiusExplainerView.swift; sourceTree = "<group>"; };
+		BD041A491E47D137009A4DEB /* Inappropriate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Inappropriate.swift; sourceTree = "<group>"; };
+		BD041A4C1E47E0E6009A4DEB /* extension UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "extension UIViewController.swift"; sourceTree = "<group>"; };
 		BD04C5641DB000B400DBAD2C /* Soulcast.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Soulcast.entitlements; sourceTree = "<group>"; };
 		BD0DBF131D7CBA3B00FBBD17 /* MockingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockingVC.swift; sourceTree = "<group>"; };
 		BD0DBF151D7CBB7300FBBD17 /* put.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = put.swift; sourceTree = "<group>"; };
@@ -179,6 +183,14 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		BD041A4B1E47E0D8009A4DEB /* Convenience */ = {
+			isa = PBXGroup;
+			children = (
+				BD041A4C1E47E0E6009A4DEB /* extension UIViewController.swift */,
+			);
+			name = Convenience;
+			sourceTree = "<group>";
+		};
 		BD0DBF191D7CD80900FBBD17 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,6 +237,7 @@
 			children = (
 				BDB5CC191DDED10100740EF4 /* HistoryVC.swift */,
 				BDD072F41DE112BD008EDF4E /* HistoryDataSource.swift */,
+				BD041A491E47D137009A4DEB /* Inappropriate.swift */,
 				BDD072F61DE13624008EDF4E /* HistoryButton.swift */,
 			);
 			name = History;
@@ -256,6 +269,7 @@
 				BDB8F48B1D6B938200E4C7E0 /* AppDelegate.swift */,
 				BDD072F11DE10807008EDF4E /* LaunchHelper.swift */,
 				BDB8F4B51D6BA8DA00E4C7E0 /* Soul.swift */,
+				BD041A4B1E47E0D8009A4DEB /* Convenience */,
 				BDB8F4A11D6BA79C00E4C7E0 /* UI */,
 				BDB8F4B91D6BB0A200E4C7E0 /* Transmission */,
 				BDB8F4A31D6BA7BF00E4C7E0 /* Audio */,
@@ -534,6 +548,7 @@
 				BD0DBF1B1D7CD9C700FBBD17 /* OnboardingVC.swift in Sources */,
 				BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */,
 				BD22B7C51DD7E65D0068532F /* ImproveButton.swift in Sources */,
+				BD041A4A1E47D137009A4DEB /* Inappropriate.swift in Sources */,
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BDB5CC1A1DDED10100740EF4 /* HistoryVC.swift in Sources */,
 				BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */,
@@ -544,6 +559,7 @@
 				BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */,
 				BDB8F48C1D6B938200E4C7E0 /* AppDelegate.swift in Sources */,
 				BDB8F4B21D6BA80E00E4C7E0 /* SoulPlayer.swift in Sources */,
+				BD041A4D1E47E0E6009A4DEB /* extension UIViewController.swift in Sources */,
 				BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */,
 				BDB5CC1C1DDED2F600740EF4 /* MainCoordinator.swift in Sources */,
 				BDB8F4BD1D6BB0BB00E4C7E0 /* SoulCatcher.swift in Sources */,

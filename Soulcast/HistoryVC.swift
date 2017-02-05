@@ -145,7 +145,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     return true
   }
   func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-    return "Block"
+    return "!"
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -187,38 +187,48 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       return
     }
     tableView.reloadData()
-    //TODO:
+    //TODO: untangle
 //    if !startedPlaylisting {
       startPlaylisting()
 //    }
     startedPlaylisting = true
   }
-  func didRequestBlock(_ soul: Soul) {
-    present(blockAlertController(soul), animated: true) {
-      //
-    }
-    return
-    
+
+  func didTapExclamation(_ soul: Soul) {
+    present(Inappropriate.VC(
+      reportHandler: { action in
+        self.hideExclamation()
+        self.present(Inappropriate.reportSelectAlert {
+          (reason) in
+          self.report(soul, reason.rawValue)
+          self.present(Inappropriate.reportAffirmationAlert())
+        })
+    }, blockHandler: { action in
+      self.hideExclamation()
+      self.present(Inappropriate.blockConfirmAlert {
+        self.block(soul)
+        self.present(Inappropriate.blockAffirmationAlert())
+      })
+    }))
   }
+  
+  func hideExclamation() {
+    self.tableView.setEditing(false, animated: true)
+  }
+  
   fileprivate func block(_ soul:Soul) {
     ServerFacade.block(soul, success: {
       //remove soul at index
       self.dataSource.remove(soul)
+      self.tableView.reloadData()
     }) { statusCode in
       print(statusCode)
     }
   }
-  
-  func blockAlertController(_ soul:Soul) -> UIAlertController {
-    let controller = UIAlertController(title: "Block Soul", message: "You will no longer hear from the device that casted this soul.", preferredStyle: .alert)
-    controller.addAction(UIAlertAction(title: "Block", style: .default, handler: {(action) in
-      self.block(soul)
-    }))
-    controller.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-      //
-    }))
-    return controller
+  fileprivate func report(_ soul:Soul, _ reason:String) {
+    ServerFacade.report(soul)
   }
+  
   
   
   //SoulPlayerDelegate
