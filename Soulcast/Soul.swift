@@ -11,9 +11,7 @@ enum SoulType: String {
 }
 
 class Soul: NSObject {
-  var s3Key:String?
-  var localURL:String?
-  var epoch:Int?
+  var voice:Voice?
   var longitude:Double?
   var latitude:Double?
   var radius: Double?
