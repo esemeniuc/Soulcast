@@ -144,6 +144,28 @@ class OutgoingVC: UIViewController {
 }
 
 extension OutgoingVC: SoulRecorderDelegate {
+  internal func recorderDidFinishRecording(_ localURL: String) {
+    let newSoul = Soul(voice: Voice(
+      epoch: Int(Date().timeIntervalSince1970),
+      s3Key: Randomizer.randomString(withLength: 10),
+      localURL: nil))
+    outgoingButton.mute()
+    playbackSoul(newSoul)
+    
+    newSoul.radius = delegate?.outgoingRadius()
+    newSoul.longitude = delegate?.outgoingLongitude()
+    newSoul.latitude = delegate?.outgoingLatitude()
+    newSoul.token = Device.localDevice.token
+    newSoul.type = soulType
+    
+    soulCaster.cast(newSoul)
+    
+    if !PermissionController.hasPushPermission {
+      AppDelegate.registerForPushNotifications(UIApplication.shared)
+    }
+
+  }
+
   func soulDidStartRecording() {
     outgoingButton.startProgress()
     
@@ -180,25 +202,7 @@ extension OutgoingVC: SoulRecorderDelegate {
   func soulDidReachMinimumDuration() {
     outgoingButton.tintLongEnough()
   }  
-    
-  func soulDidFinishRecording(_ newSoul: Soul) {
-    outgoingButton.mute()
-    playbackSoul(newSoul)
-    newSoul.epoch = Int(Date().timeIntervalSince1970)
-    newSoul.radius = delegate?.outgoingRadius()
-    newSoul.s3Key = Randomizer.randomString(withLength: 10)
-    newSoul.longitude = delegate?.outgoingLongitude()
-    newSoul.latitude = delegate?.outgoingLatitude()
-    newSoul.token = Device.localDevice.token
-    newSoul.type = soulType
-    
-    soulCaster.cast(newSoul)
-
-    if !PermissionController.hasPushPermission {
-      AppDelegate.registerForPushNotifications(UIApplication.shared)
-    }
-
-  }
+  
 }
 
 

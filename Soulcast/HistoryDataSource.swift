@@ -77,7 +77,7 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   }
   func assertSorted() {
     for soulIndex in 0...(souls.count-1) {
-      assert(souls[soulIndex].epoch > souls[soulIndex + 1].epoch)
+      assert(souls[soulIndex].voice.epoch > souls[soulIndex + 1].voice.epoch)
     }
   }
   func soul(forIndex index:Int) -> Soul? {
@@ -111,7 +111,7 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   func insertByEpoch(_ soul: Soul) {
     var insertionIndex =  0
     for eachSoul in souls {
-      if eachSoul.epoch > soul.epoch {
+      if eachSoul.voice.epoch > soul.voice.epoch {
         insertionIndex = indexPath(forSoul: eachSoul).row + 1
       }
     }
@@ -121,7 +121,7 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   
   func debugEpoch() {
     for eachSoul in souls {
-      print(eachSoul.epoch!)
+      print(eachSoul.voice.epoch)
     }
     print(" ")
   }
@@ -189,9 +189,8 @@ extension HistoryDataSource: UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = UITableViewCell(style: .subtitle, reuseIdentifier: String(describing: UITableViewCell()))
     if let thisSoul = soul(forIndex: indexPath.row),
-      let epoch = thisSoul.epoch,
       let radius = thisSoul.radius {
-      
+      let epoch = thisSoul.voice.epoch
       cell.textLabel?.text = timeAgo(epoch: epoch)
       cell.detailTextLabel?.text = String(round(radius*10)/10) + "km away"
       cell.detailTextLabel?.textColor = UIColor.gray

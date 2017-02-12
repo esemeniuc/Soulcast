@@ -24,7 +24,7 @@ enum RecorderState {
 protocol SoulRecorderDelegate: class {
   func soulDidStartRecording()
   func soulIsRecording(_ progress:CGFloat)
-  func soulDidFinishRecording(_ newSoul: Soul)
+  func recorderDidFinishRecording(_ localURL: String)
   func soulDidFailToRecord()
   func soulDidReachMinimumDuration()
 }
@@ -184,11 +184,8 @@ class SoulRecorder: NSObject {
     print("saveRecording")
     state = .finished
     recorder?.finishRecording()
-    let newSoul = Soul()
-    newSoul.localURL = currentRecordingPath
-    delegate?.soulDidFinishRecording(newSoul)
-    resetRecorder()
-    
+    delegate?.recorderDidFinishRecording(currentRecordingPath)
+    resetRecorder()    
   }
   
   fileprivate func resetRecorder() {

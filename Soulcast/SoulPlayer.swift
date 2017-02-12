@@ -1,5 +1,4 @@
 
-
 import UIKit
 import TheAmazingAudioEngine
 
@@ -24,7 +23,7 @@ class SoulPlayer: NSObject {
       return
     }
     tempSoul = soul
-    let filePath = URL(fileURLWithPath: soul.localURL! as String)
+    let filePath = URL(fileURLWithPath: soul.voice.localURL! as String)
     do {
       player = try AEAudioFilePlayer(url: filePath)
       audioController?.addChannels([player!])

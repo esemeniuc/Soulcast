@@ -54,7 +54,7 @@ class IncomingQueue: NSObject, UICollectionViewDataSource {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! IncomingCollectionCell
     if let theSoul = soulQueue[indexPath.row] {
       cell.radius = Float(theSoul.radius!)
-      cell.epoch = theSoul.epoch!
+      cell.epoch = theSoul.voice.epoch
     }
     return cell
     

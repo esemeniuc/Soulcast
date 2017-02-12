@@ -61,6 +61,17 @@ class SoulTester: NSObject {
 
 //wav rainbow
 extension SoulTester: SoulRecorderDelegate {
+  internal func recorderDidFinishRecording(_ localURL: String) {
+    let newSoul = Soul(voice:Voice(
+      epoch: 1234567890,
+      s3Key: "fabulousTest",
+      localURL: localURL))
+
+    let soulCaster = SoulCaster()
+    soulCaster.delegate = self
+    soulCaster.cast(newSoul)
+  }
+
   func soulDidStartRecording(){
     
   }
@@ -68,14 +79,7 @@ extension SoulTester: SoulRecorderDelegate {
     func soulIsRecording(_ progress: CGFloat) {
         //
     }
-  func soulDidFinishRecording(_ newSoul: Soul){
-    newSoul.epoch = 1234567890
-    newSoul.s3Key = "fabulousTest"
-    //upload
-    let soulCaster = SoulCaster()
-    soulCaster.delegate = self
-    soulCaster.cast(newSoul)
-  }
+  
   func soulDidFailToRecord(){
     
   }

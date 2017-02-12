@@ -23,15 +23,20 @@ class SoulRecorderTests {
 
 
 extension SoulRecorderTests: SoulRecorderDelegate {
+  internal func recorderDidFinishRecording(_ localURL: String) {
+    print("SoulTester soulDidFinishRecording")
+    let newSoul = Soul(voice: Voice(
+      epoch: 0,
+      s3Key: "",
+      localURL: localURL))
+    player.startPlaying(newSoul)
+  }
+  
   func soulDidStartRecording(){
     print("SoulTester soulDidStartRecording")
   }
-    func soulIsRecording(_ progress: CGFloat) {
-        //
-    }
-  func soulDidFinishRecording(_ newSoul: Soul){
-    print("SoulTester soulDidFinishRecording")
-    player.startPlaying(newSoul)
+  func soulIsRecording(_ progress: CGFloat) {
+    //
   }
   func soulDidFailToRecord(){
     print("SoulTester soulDidFailToRecord")

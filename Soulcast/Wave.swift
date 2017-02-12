@@ -25,11 +25,25 @@ struct Wave {
   let epoch: Int
   
   func append(call:Voice) -> Wave {
-    
+    return Wave(
+      castVoice: castVoice,
+      callVoice: call,
+      replyVoice: replyVoice,
+      casterToken: casterToken,
+      callerToken: callerToken,
+      type: type,
+      epoch: epoch)
   }
   
   func append(reply:Voice) -> Wave {
-    
+    return Wave(
+      castVoice: castVoice,
+      callVoice: callVoice,
+      replyVoice: reply,
+      casterToken: casterToken,
+      callerToken: callerToken,
+      type: type,
+      epoch: epoch)
   }
 
 }

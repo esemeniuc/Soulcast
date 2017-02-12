@@ -49,9 +49,7 @@ class SoulCatcherTests {
   }
   
   func mockIncomingSoul() -> Soul {
-    let seed = Soul()
-    seed.s3Key = "1428102802"
-    seed.epoch = 1428102802
+    let seed = Soul(voice: Voice(epoch: 1428102802, s3Key: "1428102802", localURL: nil))
     seed.longitude = -122.956074765067
     seed.latitude = 49.281255654105202
     seed.radius = 0.10652049519712301

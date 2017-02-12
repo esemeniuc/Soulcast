@@ -90,12 +90,12 @@ class SoulCaster: NSObject {
     if state != .Standby {
       assert(false, "tried to upload in a bad state! \(state.rawValue)")
     }
-    assert(someSoul.s3Key != nil)
-    assert(someSoul.epoch != nil)
+    assert(someSoul.voice.s3Key != nil)
+    assert(someSoul.voice.epoch != nil)
     assert(someSoul.longitude != nil)
     assert(someSoul.latitude != nil)
     assert(someSoul.radius != nil)
-    assert(someSoul.localURL != nil, "There's nothing to upload!!!")
+    assert(someSoul.voice.localURL != nil, "There's nothing to upload!!!")
 //    assert(someSoul.token != nil)
   }
   
@@ -136,8 +136,8 @@ class SoulCaster: NSObject {
   func cast(_ localSoul:Soul) {
     validate(localSoul)
     self.outgoingSoul = localSoul
-    let uploadKey = localSoul.s3Key! + ".mp3"
-    upload(URL(fileURLWithPath: localSoul.localURL!), key: uploadKey)
+    let uploadKey = localSoul.voice.s3Key! + ".mp3"
+    upload(URL(fileURLWithPath: localSoul.voice.localURL!), key: uploadKey)
     
   }
   

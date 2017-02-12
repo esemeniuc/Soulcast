@@ -61,7 +61,7 @@ class SoulCatcher: NSObject {
   }
   
   fileprivate func startDownloading(_ incomingSoul:Soul) {
-    let s3Key = incomingSoul.s3Key! as String + ".mp3"
+    let s3Key = incomingSoul.voice.s3Key! as String + ".mp3"
     trialCounter += 1
     let expression = AWSS3TransferUtilityDownloadExpression()
     expression.progressBlock = {(task, progress) in
@@ -88,8 +88,8 @@ class SoulCatcher: NSObject {
           }
         } else{
           self.trialCounter = 0
-          let filePath = self.saveToCache(data!, key:incomingSoul.s3Key!)
-          incomingSoul.localURL = filePath
+          let filePath = self.saveToCache(data!, key:incomingSoul.voice.s3Key!)
+          incomingSoul.voice.localURL = filePath
           self.delegate?.soulDidFinishDownloading(self, soul: incomingSoul)
           
         }

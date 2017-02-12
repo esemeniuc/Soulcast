@@ -14,11 +14,11 @@ struct Voice {
   var localURL:String?
   
   func append(key:String) -> Voice {
-    
+    return Voice(epoch: epoch, s3Key: key, localURL: localURL)
   }
   
   func append(url:String) -> Voice {
-    
+    return Voice(epoch: epoch, s3Key: s3Key, localURL: url)
   }
   
 }
