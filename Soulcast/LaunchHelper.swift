@@ -17,7 +17,7 @@ class LaunchHelper {
   }
   
   static func launch() {
-    deviceManager.register(Device.localDevice)
+    Device.registerWithServer()
     UIApplication.shared.applicationIconBadgeNumber = 0
     configureAWS()
 

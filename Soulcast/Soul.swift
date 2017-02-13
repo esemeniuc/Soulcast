@@ -43,8 +43,6 @@ class Soul: NSObject {
         epoch: soulHash["epoch"] as! Int,
         s3Key: soulHash["s3Key"] as? String,
         localURL: nil))
-    let incomingDevice = Device()
-    incomingDevice.id = soulHash["device_id"] as? Int
     incomingSoul.latitude = (soulHash["latitude"] as? NSString)?.doubleValue
     incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
     incomingSoul.radius = (soulHash["radius"] as? NSNumber)?.doubleValue
@@ -56,9 +54,6 @@ class Soul: NSObject {
       epoch: soulHash["soul[epoch]"] as! Int,
       s3Key: soulHash["soul[s3Key]"] as? String,
       localURL: nil))
-    let incomingDevice = Device()
-    incomingDevice.id = soulHash["soul[device_id]"] as? Int
-    //    incomingSoul.device = incomingDevice
     incomingSoul.latitude = (soulHash["soul[latitude]"] as? NSString)?.doubleValue
     incomingSoul.longitude = (soulHash["soul[longitude]"] as? NSString)?.doubleValue
     incomingSoul.radius = (soulHash["soul[radius]"] as? NSNumber)?.doubleValue
@@ -79,8 +74,6 @@ class Soul: NSObject {
       epoch: soulHash["epoch"] as! Int,
       s3Key: soulHash["s3Key"] as? String,
       localURL: nil))
-    let incomingDevice = Device()
-    incomingDevice.id = soulHash["device_id"] as? Int
     incomingSoul.latitude = (soulHash["latitude"] as? NSString)?.doubleValue
     incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
     incomingSoul.radius = (soulHash["radius"] as? NSNumber)?.doubleValue

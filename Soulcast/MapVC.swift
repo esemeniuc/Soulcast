@@ -14,33 +14,28 @@ class MapVC: UIViewController {
   var permissionView: UIView!
   var latestLocation: CLLocation? {
     get {
-      if let savedLatitude = Device.localDevice.latitude {
-        if let savedLongitude = Device.localDevice.longitude {
-          return CLLocation(latitude: savedLatitude, longitude: savedLongitude)
-        }
+      if let savedLatitude = Device.latitude,
+        let savedLongitude = Device.longitude {
+        return CLLocation(latitude: savedLatitude, longitude: savedLongitude)
+      } else {
+        return CLLocation(latitude: 49.2812277842772, longitude: -122.956074765067)
       }
-      return CLLocation(latitude: 49.2812277842772, longitude: -122.956074765067)
     }
     set (newValue) {
-      let updatingDevice = Device.localDevice
-      updatingDevice.latitude = newValue?.coordinate.latitude
-      updatingDevice.longitude = newValue?.coordinate.longitude
-      Device.localDevice = updatingDevice
+      Device.latitude = newValue?.coordinate.latitude
+      Device.longitude = newValue?.coordinate.longitude
     }
   }
   var userSpan: MKCoordinateSpan! {
     get {
-      if let savedRadius = Device.localDevice.radius {
-        
+      if let savedRadius = Device.radius {
         return MKCoordinateSpanMake(savedRadius, savedRadius)
       } else {
         return MKCoordinateSpanMake(0.03, 0.03)
       }
     }
     set (newValue) {
-      let updatingDevice = Device.localDevice
-      updatingDevice.radius = newValue.latitudeDelta
-      Device.localDevice = updatingDevice
+      Device.radius = newValue.latitudeDelta
     }
   }
   var originalRegion: MKCoordinateRegion?
@@ -95,7 +90,10 @@ class MapVC: UIViewController {
   func saveRegionData() {
     if let location = latestLocation {
       if let span = userSpan {
-        deviceManager.updateDeviceRegion(location.coordinate.latitude as Double, longitude: location.coordinate.longitude as Double, radius: span.latitudeDelta as Double)
+        Device.updateDeviceRegion(
+          location.coordinate.latitude as Double,
+          longitude: location.coordinate.longitude as Double,
+          radius: span.latitudeDelta as Double)
       }
     }
   }
@@ -194,7 +192,7 @@ class MapVC: UIViewController {
     
     devicesLabelUpdating = true
     devicesLabelUpdatedRecently = true
-    if Device.localDevice.radius != nil {
+    if Device.radius != nil {
       ServerFacade.getNearbyDevices({
         nearbyCount in
         self.devicesLabelUpdating = false

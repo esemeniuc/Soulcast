@@ -54,9 +54,6 @@ class SoulCatcherTests {
     seed.latitude = 49.281255654105202
     seed.radius = 0.10652049519712301
     seed.type = .Broadcast
-    let incomingDevice = Device()
-    incomingDevice.id = 1
-    //    seed.device = incomingDevice
     return seed
   }
   

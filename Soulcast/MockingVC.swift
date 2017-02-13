@@ -172,16 +172,9 @@ class MockingVC: UIViewController {
   
   func registerDeviceButtonTapped() {
     print("registerDeviceButtonTapped()")
-    let mockDevice = Device.localDevice
-    
-    mockDevice.longitude = 0
-    mockDevice.latitude = 0
-    mockDevice.radius = 0
-    
-    dump(mockDevice)
     disableButtons()
     
-    ServerFacade.post(mockDevice, success: {
+    ServerFacade.postDevice( success: {
       self.flash(self.successView)
       self.enableButtons()
     }){ errorCode in
@@ -194,7 +187,7 @@ class MockingVC: UIViewController {
   func updateDeviceButtonTapped() {
     print("updateDeviceButtonTapped()")
     disableButtons()
-    ServerFacade.patch(Device.localDevice, success: {
+    ServerFacade.patchDevice(success: {
       self.flash(self.successView)
       self.enableButtons()
     }) { errorCode in

@@ -14,7 +14,7 @@ class ServerFacade {
   class func block(_ soul:Soul, success:@escaping ()->(), failure:@escaping (Int)->()) {
     //TODO: check interface with cwaffles
     assert(soul.token != nil, "This soul does not have a token! A Ronen Token")
-    let localToken = Device.localDevice.token ?? ""
+    let localToken = Device.token ?? ""
     post("blocks", parameters:[
       "blockee_token": soul.token! as AnyObject,
       "blocker_token": localToken as AnyObject ])
@@ -35,7 +35,7 @@ class ServerFacade {
   }
   
   class func getHistory(_ success:@escaping ([Soul])->(), failure:@escaping (Int)->()) {
-    let deviceID = Device.localDevice.id ?? 1 //TODO: disallow nils...
+    let deviceID = Device.id ?? 1 //TODO: disallow nils...
     get("device_history/" + String(deviceID)).responseJSON { (response) in
       switch response.result {
       case .success(let JSON):
@@ -54,7 +54,7 @@ class ServerFacade {
   
   class func getLatest(_ success:@escaping ([String : AnyObject])->(), failure:@escaping (Int)->()){
     //TODO: test.
-    get("souls", parameters: Device.localDevice.toParams())
+    get("souls", parameters: Device.toParams())
       .responseJSON { (response) in
         switch response.result {
         case .success(let JSON):
@@ -121,8 +121,8 @@ class ServerFacade {
   
   static let jsonHeader = ["Content-type":"application/json", "Accept":"application/json"]
   
-  class func post(_ localDevice: Device, success:@escaping ()->(), failure: @escaping (Int)->()) {
-    post("devices", parameters: localDevice.toParams())
+  class func postDevice( success:@escaping ()->(), failure: @escaping (Int)->()) {
+    post("devices", parameters: Device.toParams())
       .responseJSON {
         (response) in
       switch response.result {
@@ -130,7 +130,7 @@ class ServerFacade {
         if let responseJSON = JSON as? NSDictionary {
           let deviceID = responseJSON["id"]
           if deviceID is Int {
-            deviceManager.updateLocalDeviceID(deviceID as! Int)
+            Device.id = deviceID as! Int
           }
         }
         success()
@@ -145,12 +145,12 @@ class ServerFacade {
     }
   }
   
-  class func patch(_ localDevice: Device, success:@escaping ()->(), failure: @escaping (Int)->()) {
-    guard let deviceInt = localDevice.id
+  class func patchDevice(success:@escaping ()->(), failure: @escaping (Int)->()) {
+    guard let deviceInt = Device.id
       else { return }
     
     let deviceString = String(deviceInt)
-    patch("devices/" + deviceString + ".json", parameters: localDevice.toParams())
+    patch("devices/" + deviceString + ".json", parameters: Device.toParams())
       .responseJSON { (response) in
       switch response.result {
       case .success:
@@ -167,7 +167,7 @@ class ServerFacade {
   class func getNearbyDevices(_ completion:@escaping (Int)->(), failure:@escaping ()->()) {
     request(serverURL + "nearby/",
             method: .get,
-            parameters: Device.localDevice.toParams(),
+            parameters: Device.toParams(),
             headers: ServerFacade.jsonHeader).validate()
       .responseJSON { (response) in
       switch response.result {

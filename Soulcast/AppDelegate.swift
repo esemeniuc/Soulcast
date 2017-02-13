@@ -71,8 +71,8 @@ extension AppDelegate { //push
   
   func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
     let tokenString = AppDelegate.tokenString(from: deviceToken)
-    Device.localDevice.token = tokenString
-    deviceManager.register(Device.localDevice)
+    Device.token = tokenString
+    Device.registerWithServer()
   }
   
   static func tokenString(from deviceToken:Data) -> String{

@@ -45,7 +45,6 @@
 		BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */; };
 		BDB8F4A01D6BA6B400E4C7E0 /* SoulTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F49F1D6BA6B400E4C7E0 /* SoulTests.swift */; };
 		BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4A41D6BA7D100E4C7E0 /* MapVC.swift */; };
-		BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4A71D6BA7E000E4C7E0 /* DeviceManager.swift */; };
 		BDB8F4AA1D6BA7E000E4C7E0 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4A81D6BA7E000E4C7E0 /* Device.swift */; };
 		BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4AB1D6BA7E700E4C7E0 /* SoulConstants.swift */; };
 		BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4AF1D6BA80E00E4C7E0 /* SoulRecorder.swift */; };
@@ -116,7 +115,6 @@
 		BDB8F49D1D6BA60300E4C7E0 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		BDB8F49F1D6BA6B400E4C7E0 /* SoulTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulTests.swift; sourceTree = "<group>"; };
 		BDB8F4A41D6BA7D100E4C7E0 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
-		BDB8F4A71D6BA7E000E4C7E0 /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		BDB8F4A81D6BA7E000E4C7E0 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		BDB8F4AB1D6BA7E700E4C7E0 /* SoulConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulConstants.swift; sourceTree = "<group>"; };
 		BDB8F4AF1D6BA80E00E4C7E0 /* SoulRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorder.swift; sourceTree = "<group>"; };
@@ -357,7 +355,6 @@
 		BDB8F4A61D6BA7D600E4C7E0 /* Device */ = {
 			isa = PBXGroup;
 			children = (
-				BDB8F4A71D6BA7E000E4C7E0 /* DeviceManager.swift */,
 				BDB8F4A81D6BA7E000E4C7E0 /* Device.swift */,
 			);
 			name = Device;
@@ -611,7 +608,6 @@
 				BD67CA321D83B3D40092ABF3 /* Receptionist.swift in Sources */,
 				BDD072F71DE13624008EDF4E /* HistoryButton.swift in Sources */,
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
-				BDB8F4A91D6BA7E000E4C7E0 /* DeviceManager.swift in Sources */,
 				BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */,
 				BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */,
 				BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */,
