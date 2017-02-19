@@ -29,6 +29,19 @@ class ImproveVC: UIViewController {
   func layoutStuff() {
     addDescriptionLabel()
     addOutgoingVC()
+    addBackButton()
+  }
+  func addBackButton() {
+      let xButton = UIButton(frame:CGRect(x: 10, y: 30, width: 32, height: 32))
+      xButton.setImage(UIImage(named:"xicon"), for: .normal)
+      view.addSubview(xButton)
+      xButton.addTarget(self, action: #selector(xButtonTapped), for: .touchUpInside)
+    
+  }
+  
+  func xButtonTapped() {
+      dismiss(animated: true, completion: nil)
+    
   }
   
   func addOutgoingVC() {

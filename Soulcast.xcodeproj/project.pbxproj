@@ -34,6 +34,7 @@
 		BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22E76C1DE1041600C79E33 /* PushHandler.swift */; };
 		BD2BE1281DB948F600387190 /* PermissionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BE1271DB948F600387190 /* PermissionController.swift */; };
 		BD35EA1A1E5A5D8F003875D0 /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD35EA191E5A5D8F003875D0 /* Icon-60@3x.png */; };
+		BD35EA1C1E5A62BE003875D0 /* xicon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD35EA1B1E5A62BE003875D0 /* xicon.png */; };
 		BD67CA321D83B3D40092ABF3 /* Receptionist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CA311D83B3D40092ABF3 /* Receptionist.swift */; };
 		BD6A39C11E47F66500BE205A /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A39C01E47F66500BE205A /* Voice.swift */; };
 		BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D19BE1D8C5430008B563F /* ImproveVC.swift */; };
@@ -103,6 +104,7 @@
 		BD22E76C1DE1041600C79E33 /* PushHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushHandler.swift; sourceTree = "<group>"; };
 		BD2BE1271DB948F600387190 /* PermissionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionController.swift; sourceTree = "<group>"; };
 		BD35EA191E5A5D8F003875D0 /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60@3x.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-60@3x.png"; sourceTree = "<group>"; };
+		BD35EA1B1E5A62BE003875D0 /* xicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xicon.png; sourceTree = "<group>"; };
 		BD67CA311D83B3D40092ABF3 /* Receptionist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receptionist.swift; sourceTree = "<group>"; };
 		BD6A39C01E47F66500BE205A /* Voice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
 		BD7D19BE1D8C5430008B563F /* ImproveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveVC.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				BDB8F4A21D6BA7AF00E4C7E0 /* Tests */,
 				BDB8F4B31D6BA82700E4C7E0 /* SwiftJK.swift */,
 				BD35EA191E5A5D8F003875D0 /* Icon-60@3x.png */,
+				BD35EA1B1E5A62BE003875D0 /* xicon.png */,
 				BDB8F4921D6B938200E4C7E0 /* Assets.xcassets */,
 				BDB8F4941D6B938200E4C7E0 /* LaunchScreen.storyboard */,
 				BD04C5641DB000B400DBAD2C /* Soulcast.entitlements */,
@@ -503,6 +506,7 @@
 				BD35EA1A1E5A5D8F003875D0 /* Icon-60@3x.png in Resources */,
 				BDB8F4961D6B938200E4C7E0 /* LaunchScreen.storyboard in Resources */,
 				BDCE02B71DB2E47F00D3D0CF /* eula.txt in Resources */,
+				BD35EA1C1E5A62BE003875D0 /* xicon.png in Resources */,
 				BDB8F4931D6B938200E4C7E0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
