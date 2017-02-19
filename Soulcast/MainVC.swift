@@ -113,7 +113,7 @@ extension MainVC: OutgoingVCDelegate, MapVCDelegate {
     
   }
   func outgoingRadius() -> Double{
-    return mapVC.userSpan.latitudeDelta
+    return mapVC.userSpan.longitudeDelta
   }
   func outgoingLongitude() -> Double{
     return (mapVC.latestLocation?.coordinate.longitude)!

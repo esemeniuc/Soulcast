@@ -50,7 +50,7 @@ class HistoryDataSource: NSObject, SoulCatcherDelegate {
   func fetch() {
     DispatchQueue.global().async {
       self.delegate?.willFetch()
-      ServerFacade.getHistory({ souls in
+      MockServerFacade.getHistory({ souls in
         DispatchQueue.global().async {
           self.catchSouls(souls)
           self.delegate?.didFetch(true)

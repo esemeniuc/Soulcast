@@ -20,7 +20,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   let dataSource = HistoryDataSource()
   var selectedSoul: Soul?
   var playlisting: Bool = false
-  var startedPlaylisting: Bool = false
   weak var delegate: HistoryVCDelegate?
   let refreshControl = UIRefreshControl()
   let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -74,7 +73,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     soulPlayer.subscribe(self)
-    startPlaylisting()
   }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
@@ -130,7 +128,24 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let headerView = UITableViewHeaderFooterView(reuseIdentifier: String(describing: UITableViewHeaderFooterView()))
+    if headerView.tag != 420 {
+      //add
+      let playAllButton = playlistButton()
+      playAllButton.frame = CGRect(
+        x: tableView.width - 90, y:0,
+        width: 90,
+        height: self.tableView(tableView, heightForHeaderInSection: 0)
+      )
+      headerView.addSubview(playAllButton)
+    }
+    headerView.tag = 420
     return headerView
+  }
+  func playlistButton() -> UIButton {
+    let playButton = UIButton(type: .system)
+    playButton.addTarget(self, action: #selector(didTapPlayAllButton), for: .touchUpInside)
+    playButton.setTitle("Play All", for: .normal)
+    return playButton
   }
   func tableView(_ tableView: UITableView, canFocusRowAt indexPath: IndexPath) -> Bool {
     return true
@@ -187,11 +202,10 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       return
     }
     tableView.reloadData()
-    //TODO: untangle
-//    if !startedPlaylisting {
-      startPlaylisting()
-//    }
-    startedPlaylisting = true
+  }
+  
+  func didTapPlayAllButton() {
+    startPlaylisting()
   }
 
   func didTapExclamation(_ soul: Soul) {
@@ -240,9 +254,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     if soul == selectedSoul {
       tableView.deselectRow(at: dataSource.indexPath(forSoul: soul) as IndexPath, animated: true)
     }
-    if playlisting {
-      playNextSoul()
-    }
+    if playlisting { playNextSoul() }
   }
 
   func didFailToPlay(_ soul:Soul) {

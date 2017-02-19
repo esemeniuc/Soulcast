@@ -35,7 +35,7 @@ class MapVC: UIViewController {
       }
     }
     set (newValue) {
-      Device.radius = newValue.latitudeDelta
+      Device.radius = newValue.longitudeDelta
     }
   }
   var originalRegion: MKCoordinateRegion?
@@ -86,14 +86,13 @@ class MapVC: UIViewController {
 
   }
   
-  
   func saveRegionData() {
     if let location = latestLocation {
       if let span = userSpan {
         Device.updateDeviceRegion(
           location.coordinate.latitude as Double,
           longitude: location.coordinate.longitude as Double,
-          radius: span.latitudeDelta as Double)
+          radius: span.longitudeDelta as Double)
       }
     }
   }
