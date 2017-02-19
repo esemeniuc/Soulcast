@@ -122,7 +122,7 @@ extension MainVC: OutgoingVCDelegate, MapVCDelegate {
     return (mapVC.latestLocation?.coordinate.latitude)!
   }
   func outgoingDidStart(){
-    
+    mapVC.animateDidCast()
   }
   func outgoingDidStop(){
     

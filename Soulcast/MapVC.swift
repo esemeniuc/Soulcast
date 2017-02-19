@@ -11,7 +11,8 @@ class MapVC: UIViewController {
   
   let mapView = MKMapView()
   let locationManager = CLLocationManager()
-  var permissionView: UIView!
+  let circleView = UIView(frame: CGRect(x:0, y:0, width:screenWidth, height:screenWidth))
+  
   var latestLocation: CLLocation? {
     get {
       if let savedLatitude = Device.latitude,
@@ -54,6 +55,7 @@ class MapVC: UIViewController {
     super.viewDidLoad()
     view.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
     addMap()
+    addAppIcon()
     addLabels()
     setupTimer()
     setupTiltCamera()
@@ -83,7 +85,67 @@ class MapVC: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    addRadiusCircle()
+  }
+  
+  func addRadiusCircle() {
+    circleView.center = mapView.center
+    circleView.layer.cornerRadius = circleView.width/2
+    circleView.layer.masksToBounds = true
 
+    let circlePath = UIBezierPath(
+      arcCenter: CGPoint(x: circleView.width/2,y: circleView.width/2),
+      radius: circleView.width/2,
+      startAngle: CGFloat(0),
+      endAngle:CGFloat(M_PI * 2), clockwise: true)
+    
+    let shapeLayer = CAShapeLayer()
+    shapeLayer.path = circlePath.cgPath
+    shapeLayer.fillColor = UIColor.clear.cgColor
+    shapeLayer.strokeColor = UIColor.white.cgColor
+    shapeLayer.lineWidth = 3.0
+    shapeLayer.lineDashPattern = [8, 12]
+    circleView.layer.addSublayer(shapeLayer)
+    view.addSubview(circleView)
+
+    circleView.isUserInteractionEnabled = false
+  }
+  
+  func animateDidCast() {
+    let pingView:UIView = UIView(frame: circleView.bounds)
+    pingView.layer.cornerRadius = circleView.layer.cornerRadius
+    pingView.backgroundColor = offBlue
+    circleView.addSubview(pingView)
+    
+    let animationGroup = CAAnimationGroup()
+    animationGroup.duration = 2
+    animationGroup.isRemovedOnCompletion = false
+    animationGroup.fillMode = kCAFillModeForwards
+    animationGroup.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+    animationGroup.animations = [makeScaleAnimation(),makeOpacityAnimation() ]
+    
+    pingView.layer.add(animationGroup, forKey: "pulse")
+    
+    DispatchQueue.global().asyncAfter(deadline: .now() + 2) { 
+      pingView.removeFromSuperview()
+    }
+  }
+  
+  func makeScaleAnimation() -> CABasicAnimation {
+    let scaleAnimation = CABasicAnimation(keyPath: "transform.scale.xy")
+    scaleAnimation.fromValue = NSNumber(value: 0)
+    scaleAnimation.toValue = NSNumber(value: 1.0)
+    scaleAnimation.duration = 2
+    return scaleAnimation
+  }
+  
+  func makeOpacityAnimation() -> CAKeyframeAnimation {
+    let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
+    opacityAnimation.duration = 2
+    opacityAnimation.values = [0.35, 0.6, 0]
+    opacityAnimation.keyTimes = [0, 0.2, 1]
+    opacityAnimation.isRemovedOnCompletion = false
+    return opacityAnimation
   }
   
   func saveRegionData() {
@@ -103,7 +165,7 @@ class MapVC: UIViewController {
     mapView.isScrollEnabled = false
     mapView.isRotateEnabled = false
     mapView.isZoomEnabled = false
-    mapView.showsUserLocation = true
+    mapView.showsUserLocation = false
     if let location = latestLocation {
       if let span = userSpan {
         
@@ -156,6 +218,22 @@ class MapVC: UIViewController {
     return CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse
   }
   
+  func addAppIcon() {
+    let appIcon = UIImageView(image: UIImage(named: "Icon-60@3x"))
+    appIcon.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+    appIcon.center = mapView.center
+    appIcon.backgroundColor = .blue
+    view.addSubview(appIcon)
+    appIcon.layer.cornerRadius = appIcon.width/4
+    appIcon.clipsToBounds = true
+    appIcon.isUserInteractionEnabled = true
+    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapAppIcon))
+    appIcon.addGestureRecognizer(tapRecognizer)
+  }
+  
+  func didTapAppIcon() {
+    print("didTapAppIcon")
+  }
   
   static func systemAskLocationPermission(_ locationManager: CLLocationManager) {
     /*

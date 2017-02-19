@@ -148,9 +148,10 @@ extension OutgoingVC: SoulRecorderDelegate {
     let newSoul = Soul(voice: Voice(
       epoch: Int(Date().timeIntervalSince1970),
       s3Key: Randomizer.randomString(withLength: 10),
-      localURL: nil))
+      localURL: localURL))
     outgoingButton.mute()
     playbackSoul(newSoul)
+
     
     newSoul.radius = delegate?.outgoingRadius()
     newSoul.longitude = delegate?.outgoingLongitude()
@@ -163,7 +164,9 @@ extension OutgoingVC: SoulRecorderDelegate {
     if !PermissionController.hasPushPermission {
       AppDelegate.registerForPushNotifications(UIApplication.shared)
     }
-
+    
+    delegate?.outgoingDidStart()
+    
   }
 
   func soulDidStartRecording() {
