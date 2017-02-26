@@ -28,6 +28,11 @@ class Device {
     params["latitude"] = Device.latitude ?? ""
     params["radius"] = Device.radius ?? ""
     params["token"] = Device.token
+    if Device.isSimulator {
+      params["os"] = "simulator"
+    } else {
+      params["os"] = "ios"
+    }
     return params as [String : AnyObject]
   }
  
@@ -50,6 +55,10 @@ class Device {
       //
       print("updateDeviceRegion fail")
     }
+  }
+  
+  static var isSimulator: Bool {
+    return TARGET_OS_SIMULATOR != 0 // Use this line in Xcode 7 or newer
   }
   
 }

@@ -25,10 +25,10 @@ class LaunchHelper {
   
   static func configureAWS() {
     let credentialsProvider = AWSCognitoCredentialsProvider(
-      regionType: .usWest2,
+      regionType: .USWest2,
       identityPoolId: CognitoIdentityPoolId)
     let configuration = AWSServiceConfiguration(
-      region: .usWest2,
+      region: .USWest2,
       credentialsProvider: credentialsProvider)
     AWSServiceManager.default().defaultServiceConfiguration = configuration
     AWSLogger.default().logLevel = .verbose

@@ -102,7 +102,7 @@ class SoulCatcher: NSObject {
       fromBucket: S3BucketName,
       key: s3Key,
       expression: expression,
-      completionHander: completionHandler)
+      completionHandler: completionHandler)
     //optional: .continuewithblock...
     
   }

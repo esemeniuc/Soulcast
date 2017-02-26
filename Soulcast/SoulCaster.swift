@@ -111,13 +111,13 @@ class SoulCaster: NSObject {
       key: key,
       contentType: fileContentTypeStr,
       expression: expression,
-      completionHander: completionHandler).continue({ (task) -> AnyObject? in
+      completionHandler: completionHandler).continueWith(block: { (task) -> AnyObject? in
         if let error = task.error {
           print("AWSS3TransferUtility.defaultS3TransferUtility().uploadFile error: \(error.localizedDescription)")
           //TODO: indicate failure
         }
-        if let exception = task.exception {
-          print("AWSS3TransferUtility.defaultS3TransferUtility().uploadFile exception: \(exception.description)")
+        if let error = task.error {
+          print("AWSS3TransferUtility.defaultS3TransferUtility().uploadFile exception: \(error.localizedDescription)")
           //TODO: indicate failure
         }
         if let _ = task.result {
