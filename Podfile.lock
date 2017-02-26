@@ -1,12 +1,12 @@
 PODS:
   - Alamofire (4.3.0)
-  - AWSCognito (2.4.16):
-    - AWSCore (= 2.4.16)
-  - AWSCore (2.4.16)
-  - AWSS3 (2.4.16):
-    - AWSCore (= 2.4.16)
-  - AWSSNS (2.4.16):
-    - AWSCore (= 2.4.16)
+  - AWSCognito (2.5.1):
+    - AWSCore (= 2.5.1)
+  - AWSCore (2.5.1)
+  - AWSS3 (2.5.1):
+    - AWSCore (= 2.5.1)
+  - AWSSNS (2.5.1):
+    - AWSCore (= 2.5.1)
   - TheAmazingAudioEngine (1.5.8)
 
 DEPENDENCIES:
@@ -18,10 +18,10 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
-  AWSCognito: 666dba6eb65ac27faad79e83febf25630913aefc
-  AWSCore: 7c3c129991e6387bcbad7132bc3661e7135754db
-  AWSS3: fef6aa8f8f625df8f67f1b6574fe761f3a4ddc99
-  AWSSNS: f7eb9a5c19410e2a0164febc2cd665831c1cd26c
+  AWSCognito: 0550a19816fccbb35191d1ed710e75c070e2cbe6
+  AWSCore: 71ca929a42c68ca7d645fcfa1e41ea0ff792a275
+  AWSS3: d45eaab964b731853bd20c681c0d6f0a99408305
+  AWSSNS: 417b51bd7d0f3160310fc6724924307969f35b69
   TheAmazingAudioEngine: 24e382d9468283bb1b3f08df29b514aa522ef4fd
 
 PODFILE CHECKSUM: 96412eb92d87aa3a610e494aeb5e6eb75e352990
