@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import AWSS3
 
+
 protocol SoulCatcherDelegate: class {
   func soulDidStartToDownload(_ catcher:SoulCatcher, soul:Soul)
   func soulIsDownloading(_ catcher:SoulCatcher, progress:Float)
@@ -23,6 +24,14 @@ class SoulCatcher: NSObject {
   weak var delegate: SoulCatcherDelegate?
   var progress: Float = 0
   static let soulCaughtNotification = "soulCaughtNotification"
+  static let cache = Cache<String>(
+    name: "Voice",
+    config: Config(
+      frontKind: .memory,
+      backKind: .disk,
+      expiry: .date(Date().addingTimeInterval(1000000)),
+      maxSize: 100000,
+      maxObjects: 10000))
   
   var trialCounter = 0
   let MAX_TRIAL = 15
@@ -45,7 +54,27 @@ class SoulCatcher: NSObject {
   }
   
   fileprivate func catchSoulObject(_ incomingSoul:Soul) {
-    startDownloading(incomingSoul)
+    let key = incomingSoul.voice.s3Key!
+    
+    SoulCatcher.cache.object(key) { localURL in
+      guard localURL != nil else {
+        self.startDownloading(incomingSoul)
+        return
+      }
+      //check if file exists
+      let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+      let tempPath = paths.first
+      let filePath = tempPath! + "/" + key + ".m4a"
+      if FileManager.default.fileExists(atPath: filePath) {
+        incomingSoul.voice.localURL = filePath
+        self.delegate?.soulDidFinishDownloading(self, soul: incomingSoul)
+      } else {
+        self.startDownloading(incomingSoul)
+      }
+      
+      //
+    }
+
   }
   
   func rootVC() -> UIViewController {
@@ -73,14 +102,14 @@ class SoulCatcher: NSObject {
     
     self.completionHandler = { (task, location, data, error) -> Void in
       DispatchQueue.main.async(execute: {
-        if ((error) != nil){
+        if (error != nil){
           if self.trialCounter < self.MAX_TRIAL {
             self.tryAgain(incomingSoul)
           } else {
             print("startDownloading FAIL! error:\(error!)")
             self.delegate?.soulDidFailToDownload(self)
           }
-        } else if(self.progress != 1.0) {
+        } else if( self.progress != 1.0 ) {
           if self.trialCounter < self.MAX_TRIAL {
             self.tryAgain(incomingSoul)
           } else {
@@ -88,8 +117,10 @@ class SoulCatcher: NSObject {
           }
         } else{
           self.trialCounter = 0
-          let filePath = self.saveToCache(data!, key:incomingSoul.voice.s3Key!)
+          let key = incomingSoul.voice.s3Key!
+          let filePath = self.saveToCache(data!, key:key)
           incomingSoul.voice.localURL = filePath
+          SoulCatcher.cache.add(key, object: filePath)
           self.delegate?.soulDidFinishDownloading(self, soul: incomingSoul)
           
         }

@@ -30,6 +30,27 @@
 		BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */; };
 		BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551481D764B9D0093CA2F /* ServerFacade.swift */; };
 		BD16D0601DEA4A3A0017591C /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD16D05F1DEA4A3A0017591C /* Randomizer.swift */; };
+		BD20F4591E63A5C3000F89F6 /* BasicHybridCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4441E63A5C3000F89F6 /* BasicHybridCache.swift */; };
+		BD20F45A1E63A5C3000F89F6 /* Cachable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4451E63A5C3000F89F6 /* Cachable.swift */; };
+		BD20F45B1E63A5C3000F89F6 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4461E63A5C3000F89F6 /* Cache.swift */; };
+		BD20F45C1E63A5C3000F89F6 /* Capsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4471E63A5C3000F89F6 /* Capsule.swift */; };
+		BD20F45D1E63A5C3000F89F6 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4481E63A5C3000F89F6 /* Config.swift */; };
+		BD20F45E1E63A5C3000F89F6 /* DefaultCacheConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4491E63A5C3000F89F6 /* DefaultCacheConverter.swift */; };
+		BD20F45F1E63A5C3000F89F6 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F44A1E63A5C3000F89F6 /* DiskStorage.swift */; };
+		BD20F4601E63A5C3000F89F6 /* Expiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F44B1E63A5C3000F89F6 /* Expiry.swift */; };
+		BD20F4611E63A5C3000F89F6 /* HybridCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F44C1E63A5C3000F89F6 /* HybridCache.swift */; };
+		BD20F4621E63A5C3000F89F6 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F44D1E63A5C3000F89F6 /* JSON.swift */; };
+		BD20F4631E63A5C3000F89F6 /* JSON+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F44E1E63A5C3000F89F6 /* JSON+Cache.swift */; };
+		BD20F4641E63A5C3000F89F6 /* MemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F44F1E63A5C3000F89F6 /* MemoryStorage.swift */; };
+		BD20F4651E63A5C3000F89F6 /* NSData+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4501E63A5C3000F89F6 /* NSData+Cache.swift */; };
+		BD20F4661E63A5C3000F89F6 /* NSDate+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4511E63A5C3000F89F6 /* NSDate+Cache.swift */; };
+		BD20F4671E63A5C3000F89F6 /* StorageAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4521E63A5C3000F89F6 /* StorageAware.swift */; };
+		BD20F4681E63A5C3000F89F6 /* StorageFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4531E63A5C3000F89F6 /* StorageFactory.swift */; };
+		BD20F4691E63A5C3000F89F6 /* StorageKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4541E63A5C3000F89F6 /* StorageKind.swift */; };
+		BD20F46A1E63A5C3000F89F6 /* String+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4551E63A5C3000F89F6 /* String+Cache.swift */; };
+		BD20F46B1E63A5C3000F89F6 /* SyncCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4561E63A5C3000F89F6 /* SyncCache.swift */; };
+		BD20F46C1E63A5C3000F89F6 /* SyncHybridCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4571E63A5C3000F89F6 /* SyncHybridCache.swift */; };
+		BD20F46D1E63A5C3000F89F6 /* UIImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4581E63A5C3000F89F6 /* UIImage+Cache.swift */; };
 		BD22B7C51DD7E65D0068532F /* ImproveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22B7C41DD7E65D0068532F /* ImproveButton.swift */; };
 		BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22E76C1DE1041600C79E33 /* PushHandler.swift */; };
 		BD2BE1281DB948F600387190 /* PermissionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BE1271DB948F600387190 /* PermissionController.swift */; };
@@ -100,6 +121,27 @@
 		BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCatcherTests.swift; sourceTree = "<group>"; };
 		BD1551481D764B9D0093CA2F /* ServerFacade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerFacade.swift; sourceTree = "<group>"; };
 		BD16D05F1DEA4A3A0017591C /* Randomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Randomizer.swift; sourceTree = "<group>"; };
+		BD20F4441E63A5C3000F89F6 /* BasicHybridCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicHybridCache.swift; path = Pods/Cache/Source/Shared/BasicHybridCache.swift; sourceTree = "<group>"; };
+		BD20F4451E63A5C3000F89F6 /* Cachable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cachable.swift; path = Pods/Cache/Source/Shared/DataStructures/Cachable.swift; sourceTree = "<group>"; };
+		BD20F4461E63A5C3000F89F6 /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cache.swift; path = Pods/Cache/Source/Shared/Cache.swift; sourceTree = "<group>"; };
+		BD20F4471E63A5C3000F89F6 /* Capsule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Capsule.swift; path = Pods/Cache/Source/Shared/DataStructures/Capsule.swift; sourceTree = "<group>"; };
+		BD20F4481E63A5C3000F89F6 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Pods/Cache/Source/Shared/Config.swift; sourceTree = "<group>"; };
+		BD20F4491E63A5C3000F89F6 /* DefaultCacheConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefaultCacheConverter.swift; path = Pods/Cache/Source/Shared/Library/DefaultCacheConverter.swift; sourceTree = "<group>"; };
+		BD20F44A1E63A5C3000F89F6 /* DiskStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiskStorage.swift; path = Pods/Cache/Source/Shared/Storage/DiskStorage.swift; sourceTree = "<group>"; };
+		BD20F44B1E63A5C3000F89F6 /* Expiry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Expiry.swift; path = Pods/Cache/Source/Shared/DataStructures/Expiry.swift; sourceTree = "<group>"; };
+		BD20F44C1E63A5C3000F89F6 /* HybridCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HybridCache.swift; path = Pods/Cache/Source/iOS/HybridCache.swift; sourceTree = "<group>"; };
+		BD20F44D1E63A5C3000F89F6 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSON.swift; path = Pods/Cache/Source/Shared/DataStructures/JSON.swift; sourceTree = "<group>"; };
+		BD20F44E1E63A5C3000F89F6 /* JSON+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "JSON+Cache.swift"; path = "Pods/Cache/Source/Shared/Extensions/JSON+Cache.swift"; sourceTree = "<group>"; };
+		BD20F44F1E63A5C3000F89F6 /* MemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryStorage.swift; path = Pods/Cache/Source/Shared/Storage/MemoryStorage.swift; sourceTree = "<group>"; };
+		BD20F4501E63A5C3000F89F6 /* NSData+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+Cache.swift"; path = "Pods/Cache/Source/Shared/Extensions/NSData+Cache.swift"; sourceTree = "<group>"; };
+		BD20F4511E63A5C3000F89F6 /* NSDate+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Cache.swift"; path = "Pods/Cache/Source/Shared/Extensions/NSDate+Cache.swift"; sourceTree = "<group>"; };
+		BD20F4521E63A5C3000F89F6 /* StorageAware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageAware.swift; path = Pods/Cache/Source/Shared/Storage/StorageAware.swift; sourceTree = "<group>"; };
+		BD20F4531E63A5C3000F89F6 /* StorageFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageFactory.swift; path = Pods/Cache/Source/Shared/Storage/StorageFactory.swift; sourceTree = "<group>"; };
+		BD20F4541E63A5C3000F89F6 /* StorageKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageKind.swift; path = Pods/Cache/Source/Shared/DataStructures/StorageKind.swift; sourceTree = "<group>"; };
+		BD20F4551E63A5C3000F89F6 /* String+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Cache.swift"; path = "Pods/Cache/Source/Shared/Extensions/String+Cache.swift"; sourceTree = "<group>"; };
+		BD20F4561E63A5C3000F89F6 /* SyncCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncCache.swift; path = Pods/Cache/Source/Shared/Library/SyncCache.swift; sourceTree = "<group>"; };
+		BD20F4571E63A5C3000F89F6 /* SyncHybridCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SyncHybridCache.swift; path = Pods/Cache/Source/Shared/Library/SyncHybridCache.swift; sourceTree = "<group>"; };
+		BD20F4581E63A5C3000F89F6 /* UIImage+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Cache.swift"; path = "Pods/Cache/Source/iOS/Extensions/UIImage+Cache.swift"; sourceTree = "<group>"; };
 		BD22B7C41DD7E65D0068532F /* ImproveButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveButton.swift; sourceTree = "<group>"; };
 		BD22E76C1DE1041600C79E33 /* PushHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushHandler.swift; sourceTree = "<group>"; };
 		BD2BE1271DB948F600387190 /* PermissionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionController.swift; sourceTree = "<group>"; };
@@ -179,6 +221,27 @@
 			children = (
 				91C980E6402B4D4FFB23ED92 /* Pods-Soulcast.debug.xcconfig */,
 				603494C3AA1D964B0DE8F762 /* Pods-Soulcast.release.xcconfig */,
+				BD20F4441E63A5C3000F89F6 /* BasicHybridCache.swift */,
+				BD20F4451E63A5C3000F89F6 /* Cachable.swift */,
+				BD20F4461E63A5C3000F89F6 /* Cache.swift */,
+				BD20F4471E63A5C3000F89F6 /* Capsule.swift */,
+				BD20F4481E63A5C3000F89F6 /* Config.swift */,
+				BD20F4491E63A5C3000F89F6 /* DefaultCacheConverter.swift */,
+				BD20F44A1E63A5C3000F89F6 /* DiskStorage.swift */,
+				BD20F44B1E63A5C3000F89F6 /* Expiry.swift */,
+				BD20F44C1E63A5C3000F89F6 /* HybridCache.swift */,
+				BD20F44D1E63A5C3000F89F6 /* JSON.swift */,
+				BD20F44E1E63A5C3000F89F6 /* JSON+Cache.swift */,
+				BD20F44F1E63A5C3000F89F6 /* MemoryStorage.swift */,
+				BD20F4501E63A5C3000F89F6 /* NSData+Cache.swift */,
+				BD20F4511E63A5C3000F89F6 /* NSDate+Cache.swift */,
+				BD20F4521E63A5C3000F89F6 /* StorageAware.swift */,
+				BD20F4531E63A5C3000F89F6 /* StorageFactory.swift */,
+				BD20F4541E63A5C3000F89F6 /* StorageKind.swift */,
+				BD20F4551E63A5C3000F89F6 /* String+Cache.swift */,
+				BD20F4561E63A5C3000F89F6 /* SyncCache.swift */,
+				BD20F4571E63A5C3000F89F6 /* SyncHybridCache.swift */,
+				BD20F4581E63A5C3000F89F6 /* UIImage+Cache.swift */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -575,6 +638,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD20F4601E63A5C3000F89F6 /* Expiry.swift in Sources */,
 				BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */,
 				BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */,
 				BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */,
@@ -585,11 +649,15 @@
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BDB5CC1A1DDED10100740EF4 /* HistoryVC.swift in Sources */,
 				BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */,
+				BD20F46A1E63A5C3000F89F6 /* String+Cache.swift in Sources */,
 				BD041A501E47F158009A4DEB /* OutWaveVC.swift in Sources */,
 				BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */,
+				BD20F45F1E63A5C3000F89F6 /* DiskStorage.swift in Sources */,
 				BD041A541E47F22E009A4DEB /* Wave.swift in Sources */,
 				BD0078851D888FA80088939A /* RadiusExplainerView.swift in Sources */,
 				BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */,
+				BD20F45E1E63A5C3000F89F6 /* DefaultCacheConverter.swift in Sources */,
+				BD20F4641E63A5C3000F89F6 /* MemoryStorage.swift in Sources */,
 				BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */,
 				BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */,
 				BD041A521E47F18D009A4DEB /* InWaveVC.swift in Sources */,
@@ -603,13 +671,21 @@
 				BD0DBF1F1D7CE51600FBBD17 /* PermissionVC.swift in Sources */,
 				34D8B8081D8B464A003083F5 /* RecordButton.swift in Sources */,
 				BDF478D31D826F3C004F6CAA /* TimeAgo.swift in Sources */,
+				BD20F4621E63A5C3000F89F6 /* JSON.swift in Sources */,
+				BD20F45A1E63A5C3000F89F6 /* Cachable.swift in Sources */,
 				BD16D0601DEA4A3A0017591C /* Randomizer.swift in Sources */,
+				BD20F46B1E63A5C3000F89F6 /* SyncCache.swift in Sources */,
+				BD20F4661E63A5C3000F89F6 /* NSDate+Cache.swift in Sources */,
 				BD2BE1281DB948F600387190 /* PermissionController.swift in Sources */,
 				BD0DBF1D1D7CDA7700FBBD17 /* JKPageViewController.swift in Sources */,
 				BDB8F4B41D6BA82700E4C7E0 /* SwiftJK.swift in Sources */,
+				BD20F46C1E63A5C3000F89F6 /* SyncHybridCache.swift in Sources */,
+				BD20F45C1E63A5C3000F89F6 /* Capsule.swift in Sources */,
 				BD1551271D7611CE0093CA2F /* SoulCatcherTests.swift in Sources */,
+				BD20F46D1E63A5C3000F89F6 /* UIImage+Cache.swift in Sources */,
 				BDF478CE1D826EE3004F6CAA /* IncomingCollectionVC.swift in Sources */,
 				BD0DBF161D7CBB7300FBBD17 /* put.swift in Sources */,
+				BD20F4631E63A5C3000F89F6 /* JSON+Cache.swift in Sources */,
 				BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */,
 				BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */,
 				BDF478D11D826EE3004F6CAA /* IncomingQueue.swift in Sources */,
@@ -623,12 +699,20 @@
 				BDF478D51D836E61004F6CAA /* IntegrationTestButton.swift in Sources */,
 				BDD072F21DE10807008EDF4E /* LaunchHelper.swift in Sources */,
 				BDD072F51DE112BD008EDF4E /* HistoryDataSource.swift in Sources */,
+				BD20F45B1E63A5C3000F89F6 /* Cache.swift in Sources */,
+				BD20F4681E63A5C3000F89F6 /* StorageFactory.swift in Sources */,
 				BD0DBF261D7E24C200FBBD17 /* LocationPermissionVC.swift in Sources */,
 				BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */,
 				BD0078821D88865E0088939A /* NumberOfDevicesLabel.swift in Sources */,
 				BDCE02B51DB2CD8F00D3D0CF /* EulaVC.swift in Sources */,
+				BD20F4611E63A5C3000F89F6 /* HybridCache.swift in Sources */,
 				BDB8F4A01D6BA6B400E4C7E0 /* SoulTests.swift in Sources */,
+				BD20F4671E63A5C3000F89F6 /* StorageAware.swift in Sources */,
 				BDF478CF1D826EE3004F6CAA /* IncomingCollectionFlowLayout.swift in Sources */,
+				BD20F45D1E63A5C3000F89F6 /* Config.swift in Sources */,
+				BD20F4651E63A5C3000F89F6 /* NSData+Cache.swift in Sources */,
+				BD20F4691E63A5C3000F89F6 /* StorageKind.swift in Sources */,
+				BD20F4591E63A5C3000F89F6 /* BasicHybridCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

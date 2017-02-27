@@ -122,8 +122,10 @@ class SoulCaster: NSObject {
         }
         if let _ = task.result {
           print("Upload Success!")
-          self.delegate?.soulDidFinishUploading(self.outgoingSoul!)
-          self.postToServer(self.outgoingSoul!)
+          DispatchQueue.main.async {
+            self.delegate?.soulDidFinishUploading(self.outgoingSoul!)
+            self.postToServer(self.outgoingSoul!)
+          }
           //TODO: indicate success with some sick animation
         }
         return nil

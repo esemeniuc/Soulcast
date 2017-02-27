@@ -61,6 +61,7 @@ class MapVC: UIViewController {
     setupTiltCamera()
   }
   
+  
   func setupTiltCamera() {
     tiltCamera.centerCoordinate = mapView.centerCoordinate
     tiltCamera.pitch = 80.0
@@ -78,13 +79,9 @@ class MapVC: UIViewController {
     timer?.fire()
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    monitorLocation()
-  }
-  
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    monitorLocation()
     addRadiusCircle()
   }
   

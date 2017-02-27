@@ -7,6 +7,9 @@ PODS:
     - AWSCore (= 2.5.1)
   - AWSSNS (2.5.1):
     - AWSCore (= 2.5.1)
+  - Cache (2.2.1):
+    - CryptoSwift
+  - CryptoSwift (0.6.7)
   - TheAmazingAudioEngine (1.5.8)
 
 DEPENDENCIES:
@@ -14,6 +17,7 @@ DEPENDENCIES:
   - AWSCognito
   - AWSS3
   - AWSSNS
+  - Cache
   - TheAmazingAudioEngine
 
 SPEC CHECKSUMS:
@@ -22,8 +26,10 @@ SPEC CHECKSUMS:
   AWSCore: 71ca929a42c68ca7d645fcfa1e41ea0ff792a275
   AWSS3: d45eaab964b731853bd20c681c0d6f0a99408305
   AWSSNS: 417b51bd7d0f3160310fc6724924307969f35b69
+  Cache: 5b2d2d68477bd9c5b8e539d673cc217ed1284814
+  CryptoSwift: 685ae257941e5447474348a2b545583e1a16b573
   TheAmazingAudioEngine: 24e382d9468283bb1b3f08df29b514aa522ef4fd
 
-PODFILE CHECKSUM: 96412eb92d87aa3a610e494aeb5e6eb75e352990
+PODFILE CHECKSUM: df3a6462b06ca5ad9847c1249478c873e2d66481
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0

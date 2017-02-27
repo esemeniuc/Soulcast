@@ -116,6 +116,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   // UITableViewDelegate
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     playlisting = false
+    
     selectedSoul = dataSource.soul(forIndex:indexPath.row)
     if SoulPlayer.playing {
       soulPlayer.reset()
