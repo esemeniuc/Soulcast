@@ -70,7 +70,11 @@ class MapVC: UIViewController {
   }
   
   func setupTimer() {
-    timer = Timer(timeInterval: 35,
+    var interval: TimeInterval = 15 //if app is on
+    if UIApplication.shared.applicationState == .background {
+      interval = 100
+    }
+    timer = Timer(timeInterval: interval,
                     target: self,
                     selector: #selector(restartLocationUpdates(_:)),
                     userInfo: nil,
@@ -163,12 +167,9 @@ class MapVC: UIViewController {
     mapView.isRotateEnabled = false
     mapView.isZoomEnabled = false
     mapView.showsUserLocation = false
-    if let location = latestLocation {
-      if let span = userSpan {
-        
-        mapView.setRegion(MKCoordinateRegionMake(location.coordinate, span), animated: true)
-        
-      }
+    if let location = latestLocation, let span = userSpan {
+      mapView.setRegion(MKCoordinateRegionMake(location.coordinate, span), animated: true)
+      
     }
     mapView.delegate = self
     view.addSubview(mapView)
@@ -206,8 +207,10 @@ class MapVC: UIViewController {
   
   func monitorLocation() {
     locationManager.delegate = self
+    locationManager.pausesLocationUpdatesAutomatically = true
+    locationManager.activityType = .otherNavigation
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-    locationManager.distanceFilter = 10
+    locationManager.distanceFilter = 50
     locationManager.startUpdatingLocation()
   }
   
@@ -332,7 +335,10 @@ extension MapVC: CLLocationManagerDelegate {
       }
     }
     manager.stopUpdatingLocation()
-    latestLocation = location
+    if location != nil {
+      latestLocation = location
+      mapView.setRegion(MKCoordinateRegionMake(latestLocation!.coordinate, userSpan), animated: true)
+    }
   }
   
   func restartLocationUpdates(_ timer: Timer) {

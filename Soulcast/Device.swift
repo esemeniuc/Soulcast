@@ -2,7 +2,12 @@ import Foundation
 
 class Device {
   static var id: Int? {
-    get { return UserDefaults.standard.value(forKey: "id") as! Int? }
+    get {
+      if Device.isSimulator {
+        return -1
+      }
+      return UserDefaults.standard.value(forKey: "id") as! Int?
+    }
     set { UserDefaults.standard.setValue(newValue, forKey: "id") }
   }
   static var token: String? {
