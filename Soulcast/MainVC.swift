@@ -28,7 +28,7 @@ class MainVC: UIViewController {
     add(children:[mapVC, outgoingVC])
     addImproveButton()
     //
-//    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
     
   }
   
@@ -138,8 +138,9 @@ extension MainVC: SoulCatcherDelegate {
   }
   func soulDidFinishDownloading(_ catcher:SoulCatcher, soul:Soul){
     //play audio if available...
-    
-    displaySoul(soul)
+    DispatchQueue.main.async {
+      self.displaySoul(soul)
+    }
     soulCatchers.remove(catcher)
   }
   func soulDidFailToDownload(_ catcher:SoulCatcher){

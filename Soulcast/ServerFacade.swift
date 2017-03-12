@@ -35,7 +35,8 @@ class ServerFacade {
   }
   
   class func getHistory(_ success:@escaping ([Soul])->(), failure:@escaping (Int)->()) {
-    let deviceID = Device.id ?? 1 //TODO: disallow nils...
+    var deviceID = Device.id ?? -1
+    if deviceID == -1 { deviceID = 1 } //TODO: simulator special case? disallow nils...
     get("device_history/" + String(deviceID)).responseJSON { (response) in
       switch response.result {
       case .success(let JSON):

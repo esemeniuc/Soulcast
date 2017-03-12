@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MainCoordinator: NSObject, JKPageVCDelegate {
+class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegate, OnboardingVCDelegate, MainVCDelegate, ImproveVCDelegate, HistoryVCDelegate, IncomingCollectionVCDelegate {
   let pageVC = JKPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
   var mainVC: MainVC = MainVC()
   fileprivate var navVC: UINavigationController?
@@ -86,9 +86,9 @@ class MainCoordinator: NSObject, JKPageVCDelegate {
     }
   }
   
-}
+//}
+//extension MainCoordinator: UINavigationControllerDelegate {
 
-extension MainCoordinator: UINavigationControllerDelegate {
   func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
     switch viewController {
     case is OnboardingVC:
@@ -100,9 +100,8 @@ extension MainCoordinator: UINavigationControllerDelegate {
     default: break
     }
   }
-}
-
-extension MainCoordinator: OnboardingVCDelegate {
+//}
+//extension MainCoordinator: OnboardingVCDelegate {
   func transitionToMainVC() {
     let window = UIApplication.shared.keyWindow!
     if window.rootViewController is MainVC {
@@ -119,9 +118,9 @@ extension MainCoordinator: OnboardingVCDelegate {
     })
     
   }
-}
 
-extension MainCoordinator: MainVCDelegate {
+//}
+//extension MainCoordinator: MainVCDelegate {
   
   func promptImprove() {
     improveVC.delegate = self
@@ -136,7 +135,9 @@ extension MainCoordinator: MainVCDelegate {
       incomingVC = IncomingCollectionVC()
     }
     incomingVC.delegate = self
-    mainVC.addChildVC(incomingVC)
+    DispatchQueue.main.async {
+      self.mainVC.addChildVC(self.incomingVC)
+    }
   }
   
   func mainVCWillDisappear() {
@@ -146,26 +147,20 @@ extension MainCoordinator: MainVCDelegate {
     }
   }
   
-}
-
-
-extension MainCoordinator: ImproveVCDelegate, HistoryVCDelegate {
+//}
+//extension MainCoordinator: ImproveVCDelegate, HistoryVCDelegate {
+  
   func didFinishGettingImprove() {
     //TODO:
 //    navVC.popToRootViewControllerAnimated(true)
   }
   
   
-}
+//}
+//extension MainCoordinator: IncomingCollectionVCDelegate {
 
-
-extension MainCoordinator: IncomingCollectionVCDelegate {
   func didRunOutOfSouls(_ ivc:IncomingCollectionVC) {
-    //TODO: animate
-    ivc.animateAway() {
-      self.mainVC.removeChildVC(ivc)
-      
-    }
+    self.mainVC.removeChildVC(ivc)
   }
   
 }

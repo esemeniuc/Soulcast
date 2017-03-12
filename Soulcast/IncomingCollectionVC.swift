@@ -58,8 +58,8 @@ class IncomingCollectionVC: UICollectionViewController {
   }
   override func willMove(toParentViewController parent: UIViewController?) {
     super.willMove(toParentViewController: parent)
-    //TODO: animate
     view.frame = IncomingCollectionVC.beforeFrame
+    
     UIView.animate(withDuration: 0.3, animations: { 
       self.view.frame = IncomingCollectionVC.afterFrame
     }) 

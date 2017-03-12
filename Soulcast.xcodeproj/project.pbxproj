@@ -23,7 +23,6 @@
 		BD0DBF1D1D7CDA7700FBBD17 /* JKPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF1C1D7CDA7700FBBD17 /* JKPageViewController.swift */; };
 		BD0DBF1F1D7CE51600FBBD17 /* PermissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF1E1D7CE51600FBBD17 /* PermissionVC.swift */; };
 		BD0DBF261D7E24C200FBBD17 /* LocationPermissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0DBF251D7E24C200FBBD17 /* LocationPermissionVC.swift */; };
-		BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD15511E1D74D1580093CA2F /* SoulQueue.swift */; };
 		BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */; };
 		BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */; };
 		BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1551241D7611C30093CA2F /* SoulCasterTests.swift */; };
@@ -114,7 +113,6 @@
 		BD0DBF1C1D7CDA7700FBBD17 /* JKPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JKPageViewController.swift; sourceTree = "<group>"; };
 		BD0DBF1E1D7CE51600FBBD17 /* PermissionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionVC.swift; sourceTree = "<group>"; };
 		BD0DBF251D7E24C200FBBD17 /* LocationPermissionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationPermissionVC.swift; sourceTree = "<group>"; };
-		BD15511E1D74D1580093CA2F /* SoulQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulQueue.swift; sourceTree = "<group>"; };
 		BD1551201D76118C0093CA2F /* SoulRecorderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulRecorderTests.swift; sourceTree = "<group>"; };
 		BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulPlayerTests.swift; sourceTree = "<group>"; };
 		BD1551241D7611C30093CA2F /* SoulCasterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoulCasterTests.swift; sourceTree = "<group>"; };
@@ -436,7 +434,6 @@
 				BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */,
 				BD1551481D764B9D0093CA2F /* ServerFacade.swift */,
 				BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */,
-				BD15511E1D74D1580093CA2F /* SoulQueue.swift */,
 			);
 			name = Transmission;
 			sourceTree = "<group>";
@@ -651,7 +648,6 @@
 				BD041A4A1E47D137009A4DEB /* Inappropriate.swift in Sources */,
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BDB5CC1A1DDED10100740EF4 /* HistoryVC.swift in Sources */,
-				BD15511F1D74D1580093CA2F /* SoulQueue.swift in Sources */,
 				BD20F46A1E63A5C3000F89F6 /* String+Cache.swift in Sources */,
 				BD041A501E47F158009A4DEB /* OutWaveVC.swift in Sources */,
 				BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */,

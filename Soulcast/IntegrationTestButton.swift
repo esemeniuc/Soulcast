@@ -22,12 +22,12 @@ class IntegrationTestButton: UIButton {
   
   func integrationTest() {
     print("integrationTest()")
-    ServerFacade.getHistory({ (souls) in
-      //
-      }) { (code) in
-        print("Server error \(code)")
-    }
-//    UIApplication.sharedApplication().delegate?.application!(UIApplication.sharedApplication(), didReceiveRemoteNotification: SoulCatcherTests.mockUserInfo())
+//    ServerFacade.getHistory({ (souls) in
+//      //
+//      }) { (code) in
+//        print("Server error \(code)")
+//    }
+    UIApplication.shared.delegate?.application!(UIApplication.shared, didReceiveRemoteNotification: SoulCatcherTests.mockUserInfo())
   }
   
 }

@@ -89,6 +89,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       soulPlayer.startPlaying(thisSoul)
       playlisting = true
     }
+    
   }
   func playNextSoul() {
     guard let soul = selectedSoul else {
