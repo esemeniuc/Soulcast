@@ -14,7 +14,7 @@ protocol HistoryVCDelegate: class {
 }
 
 ///displays a list of souls played in the past in reverse chronological order since 24 hours ago
-class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, HistoryDataSourceDelegate, Appearable {
+class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, HistoryDataSourceDelegate, Appearable, UIViewControllerTransitioningDelegate {
   //title label
   let tableView = UITableView()//table view
   let dataSource = HistoryDataSource()
@@ -25,11 +25,16 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
   var fetchToken = true
   var fetchFinishToken = true
+  
+  let zoomAnimator = ZoomTransitionAnimationController()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.backgroundColor = .white
     addTableView()
     addLoadingIndicator()
     addPullToRefreshHintView()
+    addDismissButton()
     //
 //    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
   }
@@ -53,6 +58,22 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     view.addSubview(loadingIndicator)
     loadingIndicator.startAnimating()
     loadingIndicator.hidesWhenStopped = true
+  }
+  
+  func addDismissButton() {
+    let dismissButton = UIButton()
+    dismissButton.imageView?.contentMode = .scaleAspectFit
+    dismissButton.setBackgroundImage(UIImage(named:"xicon"), for: .normal)
+    dismissButton.frame = CGRect(x: 15, y: view.frame.height - 50, width: 35, height: 35)
+    view.addSubview(dismissButton)
+    dismissButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
+  }
+  
+  func dismissVC() {
+    //TODO:
+    dismiss(animated: true) { 
+      //
+    }
   }
   
   func addTableView() {
@@ -291,4 +312,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   func didDisappearFromScreen() {
     //
   }
+  
+  
 }

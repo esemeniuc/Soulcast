@@ -13,9 +13,10 @@ protocol MainVCDelegate: class {
   func promptImprove()
   func presentIncomingVC()
   func mainVCWillDisappear()
+  func presentHistoriesVC()
 }
 
-class MainVC: UIViewController {
+class MainVC: UIViewController, SoulCatcherDelegate, OutgoingVCDelegate, MapVCDelegate  {
   let mapVC = MapVC()
   let outgoingVC = OutgoingVC()
   var soulCatchers = Set<SoulCatcher>()
@@ -27,9 +28,7 @@ class MainVC: UIViewController {
     view.backgroundColor = UIColor.clear
     add(children:[mapVC, outgoingVC])
     addImproveButton()
-    //
 //    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
-    
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -104,11 +103,8 @@ class MainVC: UIViewController {
     }
     return hypothesis
   }
-  
-  
-}
 
-extension MainVC: OutgoingVCDelegate, MapVCDelegate {
+///////////////////////extension MainVC: OutgoingVCDelegate, MapVCDelegate {
   func mapVCDidChangeradius(_ radius:Double){
     
   }
@@ -127,9 +123,11 @@ extension MainVC: OutgoingVCDelegate, MapVCDelegate {
   func outgoingDidStop(){
     
   }
-}
+  func mapVCDidTapAppIcon() {
+    delegate?.presentHistoriesVC()
+  }
 
-extension MainVC: SoulCatcherDelegate {
+//////////////////////////////extension MainVC: SoulCatcherDelegate
   func soulDidStartToDownload(_ catcher:SoulCatcher, soul:Soul){
     //TODO:
   }
@@ -153,6 +151,10 @@ extension MainVC: SoulCatcherDelegate {
       //
     }
     soulCatchers.remove(catcher)
+  }
+  
+  func appIconFrame() -> CGRect {
+    return mapVC.appIconFrame()
   }
 }
 

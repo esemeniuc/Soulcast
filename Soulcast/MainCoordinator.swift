@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegate, OnboardingVCDelegate, MainVCDelegate, ImproveVCDelegate, HistoryVCDelegate, IncomingCollectionVCDelegate {
+class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegate, OnboardingVCDelegate, MainVCDelegate, ImproveVCDelegate, HistoryVCDelegate, IncomingCollectionVCDelegate, UIViewControllerTransitioningDelegate {
   let pageVC = JKPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
   var mainVC: MainVC = MainVC()
   fileprivate var navVC: UINavigationController?
@@ -19,6 +19,7 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   var onboardingVC: OnboardingVC?
   var pages: [UIViewController] = []
   var pushHandleAction:(()->())? = nil
+  fileprivate let zoomAnimator = ZoomTransitionAnimationController()
   
   var rootVC:UIViewController {
 //    return HistoryVC()
@@ -35,7 +36,8 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   }
   
   override init() {
-    pages = [historyVC, mainVC]
+//    pages = [historyVC, mainVC]
+    pages = [UIViewController(), mainVC]
     if Receptionist.needsOnboarding() {
       onboardingVC = OnboardingVC()
       navVC = UINavigationController(rootViewController: onboardingVC!)
@@ -51,7 +53,7 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
     pageVC.jkDelegate = self
     pageVC.disableScroll()
     mainVC.delegate = self
-    addPageTab()
+    //addPageTab()
   }
   
   func addPageTab() {
@@ -119,7 +121,6 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
     
   }
 
-//}
 //extension MainCoordinator: MainVCDelegate {
   
   func promptImprove() {
@@ -140,6 +141,12 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
     }
   }
   
+  func presentHistoriesVC() {
+    //TODO: custom transition to historyVC
+    historyVC.transitioningDelegate = self
+    pageVC.present(historyVC)
+  }
+  
   func mainVCWillDisappear() {
     if incomingVC != nil {
       incomingVC.stop()
@@ -147,7 +154,6 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
     }
   }
   
-//}
 //extension MainCoordinator: ImproveVCDelegate, HistoryVCDelegate {
   
   func didFinishGettingImprove() {
@@ -156,12 +162,22 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   }
   
   
-//}
 //extension MainCoordinator: IncomingCollectionVCDelegate {
 
   func didRunOutOfSouls(_ ivc:IncomingCollectionVC) {
     self.mainVC.removeChildVC(ivc)
   }
+
+//extension MainCoordinator: UIViewControllerTransitioningDelegate
   
+  func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    zoomAnimator.originFrame = mainVC.appIconFrame()
+    return zoomAnimator
+  }
+  
+  func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    zoomAnimator.originFrame = mainVC.appIconFrame()
+    return zoomAnimator
+  }
 }
 

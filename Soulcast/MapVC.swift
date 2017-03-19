@@ -5,6 +5,7 @@ import MapKit
 
 protocol MapVCDelegate: class {
   func mapVCDidChangeradius(_ radius:Double)
+  func mapVCDidTapAppIcon()
 }
 
 class MapVC: UIViewController {
@@ -12,7 +13,7 @@ class MapVC: UIViewController {
   let mapView = MKMapView()
   let locationManager = CLLocationManager()
   let circleView = UIView(frame: CGRect(x:0, y:0, width:screenWidth, height:screenWidth))
-  
+  fileprivate var iconFrame: CGRect = .zero
   var latestLocation: CLLocation? {
     get {
       if let savedLatitude = Device.latitude,
@@ -127,7 +128,7 @@ class MapVC: UIViewController {
     
     pingView.layer.add(animationGroup, forKey: "pulse")
     
-    DispatchQueue.global().asyncAfter(deadline: .now() + 2) { 
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
       pingView.removeFromSuperview()
     }
   }
@@ -222,6 +223,7 @@ class MapVC: UIViewController {
     let appIcon = UIImageView(image: UIImage(named: "Icon-60@3x"))
     appIcon.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
     appIcon.center = mapView.center
+    iconFrame = appIcon.frame
     appIcon.backgroundColor = .blue
     view.addSubview(appIcon)
     appIcon.layer.cornerRadius = appIcon.width/4
@@ -233,6 +235,7 @@ class MapVC: UIViewController {
   
   func didTapAppIcon() {
     print("didTapAppIcon")
+    delegate?.mapVCDidTapAppIcon()
   }
   
   static func systemAskLocationPermission(_ locationManager: CLLocationManager) {
@@ -346,6 +349,8 @@ extension MapVC: CLLocationManagerDelegate {
     saveRegionData()
   }
   
-  
+  func appIconFrame() -> CGRect {
+    return iconFrame
+  }
 }
 
