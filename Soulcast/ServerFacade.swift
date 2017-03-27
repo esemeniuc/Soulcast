@@ -85,6 +85,20 @@ class ServerFacade {
         }
     }
   }
+  
+  class func post(_ wave: Wave, _ success:@escaping ()->() = {_ in}, failure: @escaping (Int)->()) {
+    post("waves", parameters: wave.toParams() as [String : AnyObject]?)
+    .responseString { response in
+      switch response.result {
+      case .success:
+        print ("Post Wave success!")
+        success()
+      case .failure:
+        print("Post wave fail!")
+        failure(response.response!.statusCode)
+      }
+    }
+  }
 
   class func improve(_ feedbackSoul: Soul, success:@escaping ()->(), failure: @escaping (Int)->()) {
     post("improves.json", parameters: feedbackSoul.toParams())
@@ -233,6 +247,9 @@ class MockServerFacade: ServerFacade {
       MockFactory.mockSoulFive(), ])
   }
   class override func block(_ soul:Soul, success:@escaping ()->(), failure:@escaping (Int)->()) {
+    success()
+  }
+  class func post(_ wave: Wave,_ success:@escaping ()->() = {_ in}) {
     success()
   }
 }

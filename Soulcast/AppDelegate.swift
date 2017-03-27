@@ -19,12 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   let mainCoordinator = MainCoordinator()
+  var tests: VoiceTests!
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     launchWindow()
     receive(launchOptions)
     LaunchHelper.launch()
     //    tester.testAllTheThings()
+    tests = VoiceTests()
+    
     return true
   }
   
@@ -43,6 +46,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let userInfo = options[UIApplicationLaunchOptionsKey.remoteNotification] as? [String:AnyObject],
       let soulHash = userInfo["soulObject"] as? [String:AnyObject] {
       pushHandler.handle(soulHash)
+    }
+    if let options = launchOptions,
+      let userInfo = options[UIApplicationLaunchOptionsKey.remoteNotification] as? [String:AnyObject],
+      let waveHash = userInfo["wave"] as? [String:AnyObject] {
+      pushHandler.handleWave(waveHash)
     }
     
   }

@@ -59,6 +59,10 @@
 		BD67CA321D83B3D40092ABF3 /* Receptionist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CA311D83B3D40092ABF3 /* Receptionist.swift */; };
 		BD6A39C11E47F66500BE205A /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A39C01E47F66500BE205A /* Voice.swift */; };
 		BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D19BE1D8C5430008B563F /* ImproveVC.swift */; };
+		BD8AB3A41E885F49008D5CF8 /* VoiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8AB3A31E885F49008D5CF8 /* VoiceTests.swift */; };
+		BD8AB3A61E886647008D5CF8 /* MockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8AB3A51E886647008D5CF8 /* MockFactory.swift */; };
+		BD8AB3A81E88687C008D5CF8 /* WaveCatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8AB3A71E88687C008D5CF8 /* WaveCatcher.swift */; };
+		BD8AB3AA1E8868D9008D5CF8 /* VoiceFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8AB3A91E8868D9008D5CF8 /* VoiceFetcher.swift */; };
 		BDB5CC1A1DDED10100740EF4 /* HistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5CC191DDED10100740EF4 /* HistoryVC.swift */; };
 		BDB5CC1C1DDED2F600740EF4 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB5CC1B1DDED2F600740EF4 /* MainCoordinator.swift */; };
 		BDB6C88D1E089E2E0023FD12 /* PageTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB6C88C1E089E2E0023FD12 /* PageTab.swift */; };
@@ -150,6 +154,10 @@
 		BD67CA311D83B3D40092ABF3 /* Receptionist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receptionist.swift; sourceTree = "<group>"; };
 		BD6A39C01E47F66500BE205A /* Voice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
 		BD7D19BE1D8C5430008B563F /* ImproveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveVC.swift; sourceTree = "<group>"; };
+		BD8AB3A31E885F49008D5CF8 /* VoiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceTests.swift; sourceTree = "<group>"; };
+		BD8AB3A51E886647008D5CF8 /* MockFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFactory.swift; sourceTree = "<group>"; };
+		BD8AB3A71E88687C008D5CF8 /* WaveCatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveCatcher.swift; sourceTree = "<group>"; };
+		BD8AB3A91E8868D9008D5CF8 /* VoiceFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceFetcher.swift; sourceTree = "<group>"; };
 		BDB5CC191DDED10100740EF4 /* HistoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryVC.swift; sourceTree = "<group>"; };
 		BDB5CC1B1DDED2F600740EF4 /* MainCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		BDB6C88C1E089E2E0023FD12 /* PageTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTab.swift; sourceTree = "<group>"; };
@@ -279,6 +287,7 @@
 				BDB8F4B51D6BA8DA00E4C7E0 /* Soul.swift */,
 				BD041A531E47F22D009A4DEB /* Wave.swift */,
 				BD6A39C01E47F66500BE205A /* Voice.swift */,
+				BD8AB3A51E886647008D5CF8 /* MockFactory.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -409,6 +418,7 @@
 				BD1551221D76119F0093CA2F /* SoulPlayerTests.swift */,
 				BD1551241D7611C30093CA2F /* SoulCasterTests.swift */,
 				BD1551261D7611CE0093CA2F /* SoulCatcherTests.swift */,
+				BD8AB3A31E885F49008D5CF8 /* VoiceTests.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -437,6 +447,8 @@
 				BDB8F4BA1D6BB0B600E4C7E0 /* SoulCaster.swift */,
 				BD1551481D764B9D0093CA2F /* ServerFacade.swift */,
 				BDB8F4BC1D6BB0BB00E4C7E0 /* SoulCatcher.swift */,
+				BD8AB3A91E8868D9008D5CF8 /* VoiceFetcher.swift */,
+				BD8AB3A71E88687C008D5CF8 /* WaveCatcher.swift */,
 			);
 			name = Transmission;
 			sourceTree = "<group>";
@@ -644,6 +656,7 @@
 				BD20F4601E63A5C3000F89F6 /* Expiry.swift in Sources */,
 				BDB8F4BF1D6BB4DC00E4C7E0 /* OutgoingVC.swift in Sources */,
 				BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */,
+				BD8AB3AA1E8868D9008D5CF8 /* VoiceFetcher.swift in Sources */,
 				BD0DBF141D7CBA3B00FBBD17 /* MockingVC.swift in Sources */,
 				BD0DBF1B1D7CD9C700FBBD17 /* OnboardingVC.swift in Sources */,
 				BD1551491D764B9D0093CA2F /* ServerFacade.swift in Sources */,
@@ -652,8 +665,10 @@
 				BDB8F49E1D6BA60300E4C7E0 /* MainVC.swift in Sources */,
 				BDB5CC1A1DDED10100740EF4 /* HistoryVC.swift in Sources */,
 				BD20F46A1E63A5C3000F89F6 /* String+Cache.swift in Sources */,
+				BD8AB3A81E88687C008D5CF8 /* WaveCatcher.swift in Sources */,
 				BD041A501E47F158009A4DEB /* OutWaveVC.swift in Sources */,
 				BDB8F4A51D6BA7D100E4C7E0 /* MapVC.swift in Sources */,
+				BD8AB3A61E886647008D5CF8 /* MockFactory.swift in Sources */,
 				BD20F45F1E63A5C3000F89F6 /* DiskStorage.swift in Sources */,
 				BD041A541E47F22E009A4DEB /* Wave.swift in Sources */,
 				BD0078851D888FA80088939A /* RadiusExplainerView.swift in Sources */,
@@ -661,6 +676,7 @@
 				BD1551231D76119F0093CA2F /* SoulPlayerTests.swift in Sources */,
 				BD20F45E1E63A5C3000F89F6 /* DefaultCacheConverter.swift in Sources */,
 				BD20F4641E63A5C3000F89F6 /* MemoryStorage.swift in Sources */,
+				BD8AB3A41E885F49008D5CF8 /* VoiceTests.swift in Sources */,
 				BDB8F4BB1D6BB0B600E4C7E0 /* SoulCaster.swift in Sources */,
 				BDB8F4AC1D6BA7E700E4C7E0 /* SoulConstants.swift in Sources */,
 				BD041A521E47F18D009A4DEB /* InWaveVC.swift in Sources */,

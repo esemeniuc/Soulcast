@@ -14,6 +14,32 @@ let pushHandler = PushHandler()
 class PushHandler {
   var bufferHash: [String:AnyObject]?
   
+  func handleWave(_ waveHash: [String: AnyObject]) {
+    guard let appDelegate = app.delegate as? AppDelegate,
+      app.applicationState == .active else {
+      bufferHash = waveHash
+      return
+    }
+    let wave = Wave.from(waveHash)
+    print(wave.debugDescription)
+    //TODO: test
+    return;
+    let coordinator = appDelegate.mainCoordinator
+    // at mainVC screen
+    let mainVC = coordinator.mainVC
+    let historyVC = coordinator.historyVC
+    if mainVC.view.window != nil && historyVC.view.window == nil{
+      mainVC.receiveRemoteNotification(waveHash)
+      return
+    }
+    // at historyVC screen
+    if historyVC.view.window != nil && mainVC.view.window == nil {
+      coordinator.scrollToMainVC() {
+        mainVC.receiveRemoteNotification(waveHash)
+      }
+    }
+  }
+  
   func handle(_ soulHash: [String:AnyObject]) {
     guard let appDelegate = app.delegate as? AppDelegate else {
       bufferHash = soulHash

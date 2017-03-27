@@ -13,12 +13,16 @@ struct Voice {
   var s3Key:String?
   var localURL:String?
   
-  func append(key:String) -> Voice {
-    return Voice(epoch: epoch, s3Key: key, localURL: localURL)
+  static func from(_ hash:[String : Any]) -> Voice? {
+    if let epoch = hash["epoch"] as? Int,
+      let s3Key = hash["s3key"] as? String {
+      return Voice(epoch: epoch,
+                   s3Key: s3Key,
+                   localURL: nil)
+    }
+    return nil
   }
-  
-  func append(url:String) -> Voice {
-    return Voice(epoch: epoch, s3Key: s3Key, localURL: url)
+  func toParams() -> [String: Any] {
+    return ["s3key": s3Key!, "epoch": epoch]
   }
-  
 }

@@ -70,7 +70,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   }
   
   func dismissVC() {
-    //TODO:
     dismiss(animated: true) { 
       //
     }
