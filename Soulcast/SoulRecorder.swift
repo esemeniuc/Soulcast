@@ -158,7 +158,7 @@ class SoulRecorder: NSObject {
     let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     if paths.count > 0 {
       let randomNumberString = String(Date.timeIntervalSinceReferenceDate.description)
-      print("randomNumberString: \(randomNumberString)")
+      print("randomNumberString: \(randomNumberString!)")
       outputPath = paths[0] + "/Recording" + randomNumberString! + ".m4a"
       let manager = FileManager.default
       if manager.fileExists(atPath: outputPath) {

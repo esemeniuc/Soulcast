@@ -91,7 +91,7 @@ class SoulCaster: NSObject {
       assert(false, "tried to upload in a bad state! \(state.rawValue)")
     }
     assert(someSoul.voice.s3Key != nil)
-    assert(someSoul.voice.epoch != nil)
+//    assert(someSoul.voice.epoch != nil)
     assert(someSoul.longitude != nil)
     assert(someSoul.latitude != nil)
     assert(someSoul.radius != nil)

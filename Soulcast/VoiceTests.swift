@@ -30,6 +30,13 @@ class VoiceTests {
     
   }
   
+  func receiveNotificationTest(userInfo: [String: Any]) {
+    //TODO:
+    let noteWave = Wave.from(userInfo)
+    print(noteWave.debugDescription)
+    
+  }
+  
   func waveCallTest() {
     //make a mock soul
     let incomingSoul = MockFactory.mockSoulOne()

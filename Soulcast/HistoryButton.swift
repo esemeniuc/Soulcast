@@ -13,7 +13,7 @@ class HistoryButton: UIButton {
   //TODO:
   override init(frame: CGRect) {
     //top right...
-    let inset:CGFloat = 30
+//    let inset:CGFloat = 30
     
     super.init(frame: CGRect(x: 0, y: 0, width: 100, height:100))
     backgroundColor = .clear

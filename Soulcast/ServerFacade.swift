@@ -144,8 +144,8 @@ class ServerFacade {
       case .success (let JSON):
         if let responseJSON = JSON as? NSDictionary {
           let deviceID = responseJSON["id"]
-          if deviceID is Int {
-            Device.id = deviceID as! Int
+          if let id = deviceID as Int {
+            Device.id = id
           }
         }
         success()

@@ -56,7 +56,7 @@ class SoulCatcher: NSObject {
   fileprivate func catchSoulObject(_ incomingSoul:Soul) {
     let key = incomingSoul.voice.s3Key!
     
-    SoulCatcher.cache.object(key) { localURL in
+    SoulCatcher.cache.object(key) { (localURL: String?) in
       guard localURL != nil else {
         self.startDownloading(incomingSoul)
         return

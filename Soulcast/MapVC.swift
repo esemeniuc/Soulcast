@@ -99,7 +99,7 @@ class MapVC: UIViewController {
       arcCenter: CGPoint(x: circleView.width/2,y: circleView.width/2),
       radius: circleView.width/2,
       startAngle: CGFloat(0),
-      endAngle:CGFloat(M_PI * 2), clockwise: true)
+      endAngle:CGFloat(Double.pi * 2), clockwise: true)
     
     let shapeLayer = CAShapeLayer()
     shapeLayer.path = circlePath.cgPath
