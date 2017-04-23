@@ -142,11 +142,9 @@ class ServerFacade {
         (response) in
       switch response.result {
       case .success (let JSON):
-        if let responseJSON = JSON as? NSDictionary {
-          let deviceID = responseJSON["id"]
-          if let id = deviceID as Int {
-            Device.id = id
-          }
+        if let responseJSON = JSON as? NSDictionary,
+          let deviceID = responseJSON["id"] as? Int {
+          Device.id = deviceID
         }
         success()
         

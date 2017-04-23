@@ -58,6 +58,8 @@
 		BD3BF4CF1E7F3A6D008158D0 /* ZoomTransitionAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3BF4CE1E7F3A6C008158D0 /* ZoomTransitionAnimationController.swift */; };
 		BD67CA321D83B3D40092ABF3 /* Receptionist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD67CA311D83B3D40092ABF3 /* Receptionist.swift */; };
 		BD6A39C11E47F66500BE205A /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A39C01E47F66500BE205A /* Voice.swift */; };
+		BD6ED7511EAD4C3D005611E2 /* DetailModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6ED7501EAD4C3D005611E2 /* DetailModalVC.swift */; };
+		BD6ED7531EAD6436005611E2 /* VoiceRecorderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6ED7521EAD6436005611E2 /* VoiceRecorderVC.swift */; };
 		BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D19BE1D8C5430008B563F /* ImproveVC.swift */; };
 		BD8AB3A41E885F49008D5CF8 /* VoiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8AB3A31E885F49008D5CF8 /* VoiceTests.swift */; };
 		BD8AB3A61E886647008D5CF8 /* MockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8AB3A51E886647008D5CF8 /* MockFactory.swift */; };
@@ -153,6 +155,8 @@
 		BD3BF4CE1E7F3A6C008158D0 /* ZoomTransitionAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomTransitionAnimationController.swift; sourceTree = "<group>"; };
 		BD67CA311D83B3D40092ABF3 /* Receptionist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receptionist.swift; sourceTree = "<group>"; };
 		BD6A39C01E47F66500BE205A /* Voice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
+		BD6ED7501EAD4C3D005611E2 /* DetailModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailModalVC.swift; sourceTree = "<group>"; };
+		BD6ED7521EAD6436005611E2 /* VoiceRecorderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceRecorderVC.swift; sourceTree = "<group>"; };
 		BD7D19BE1D8C5430008B563F /* ImproveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveVC.swift; sourceTree = "<group>"; };
 		BD8AB3A31E885F49008D5CF8 /* VoiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceTests.swift; sourceTree = "<group>"; };
 		BD8AB3A51E886647008D5CF8 /* MockFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFactory.swift; sourceTree = "<group>"; };
@@ -314,6 +318,15 @@
 			name = Permission;
 			sourceTree = "<group>";
 		};
+		BD6ED74F1EAD4C1C005611E2 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				BD6ED7501EAD4C3D005611E2 /* DetailModalVC.swift */,
+				BD6ED7521EAD6436005611E2 /* VoiceRecorderVC.swift */,
+			);
+			name = Detail;
+			sourceTree = "<group>";
+		};
 		BD7D19BC1D8C51A4008B563F /* Outgoing */ = {
 			isa = PBXGroup;
 			children = (
@@ -336,6 +349,7 @@
 		BDB5CC181DDED0E300740EF4 /* History */ = {
 			isa = PBXGroup;
 			children = (
+				BD6ED74F1EAD4C1C005611E2 /* Detail */,
 				BDB5CC191DDED10100740EF4 /* HistoryVC.swift */,
 				BD3BF4CE1E7F3A6C008158D0 /* ZoomTransitionAnimationController.swift */,
 				BDD072F41DE112BD008EDF4E /* HistoryDataSource.swift */,
@@ -708,6 +722,7 @@
 				BD0DBF181D7CBD8A00FBBD17 /* DepressingButton.swift in Sources */,
 				BD1551251D7611C30093CA2F /* SoulCasterTests.swift in Sources */,
 				BDF478D11D826EE3004F6CAA /* IncomingQueue.swift in Sources */,
+				BD6ED7531EAD6436005611E2 /* VoiceRecorderVC.swift in Sources */,
 				BD67CA321D83B3D40092ABF3 /* Receptionist.swift in Sources */,
 				BDD072F71DE13624008EDF4E /* HistoryButton.swift in Sources */,
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
@@ -724,6 +739,7 @@
 				BDF478D01D826EE3004F6CAA /* IncomingCollectionCell.swift in Sources */,
 				BD0078821D88865E0088939A /* NumberOfDevicesLabel.swift in Sources */,
 				BDCE02B51DB2CD8F00D3D0CF /* EulaVC.swift in Sources */,
+				BD6ED7511EAD4C3D005611E2 /* DetailModalVC.swift in Sources */,
 				BD20F4611E63A5C3000F89F6 /* HybridCache.swift in Sources */,
 				BDB8F4A01D6BA6B400E4C7E0 /* SoulTests.swift in Sources */,
 				BD20F4671E63A5C3000F89F6 /* StorageAware.swift in Sources */,

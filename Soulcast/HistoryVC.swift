@@ -14,7 +14,7 @@ protocol HistoryVCDelegate: class {
 }
 
 ///displays a list of souls played in the past in reverse chronological order since 24 hours ago
-class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, HistoryDataSourceDelegate, Appearable, UIViewControllerTransitioningDelegate {
+class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, HistoryDataSourceDelegate, UIViewControllerTransitioningDelegate, DetailModalVCDelegate {
   //title label
   let tableView = UITableView()//table view
   let dataSource = HistoryDataSource()
@@ -25,7 +25,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
   var fetchToken = true
   var fetchFinishToken = true
-  
   let zoomAnimator = ZoomTransitionAnimationController()
   
   override func viewDidLoad() {
@@ -89,10 +88,16 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
     tableView.addSubview(refreshControl)
   }
-
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     soulPlayer.subscribe(self)
+    if fetchToken {
+      dataSource.fetch()
+      refreshControl.endRefreshing()
+      loadingIndicator.stopAnimating()
+      fetchToken = false
+    }
   }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
@@ -134,17 +139,22 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     dataSource.fetch()
   }
   
-  // UITableViewDelegate
+  func addDetailModal(_ soul:Soul) {
+    let modalVC = DetailModalVC(soul: soul)
+    modalVC.delegate = self
+    addChildVC(modalVC)
+  }
+  
+  func removeDetailModal(_ vc:UIViewController) {
+    removeChildVC(vc)
+  }
+  
+//// UITableViewDelegate
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     playlisting = false
-    
-    selectedSoul = dataSource.soul(forIndex:indexPath.row)
-    if SoulPlayer.playing {
-      soulPlayer.reset()
-      tableView.deselectRow(at: indexPath, animated: true)
-    } else {
-      soulPlayer.reset()
-      soulPlayer.startPlaying(selectedSoul)
+    soulPlayer.reset()
+    if let selectedSoul = dataSource.soul(forIndex:indexPath.row) {
+      addDetailModal(selectedSoul)
     }
   }
   
@@ -205,9 +215,9 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       //show failure, retry button.
     }
     DispatchQueue.main.sync {
-      refreshControl.endRefreshing()
+      self.refreshControl.endRefreshing()
       if dataSource.soulCount() == 0 {
-        loadingIndicator.stopAnimating()
+        self.loadingIndicator.stopAnimating()
       }
     }
   }
@@ -290,27 +300,8 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     }
   }
   
-  func willAppearOnScreen() {
-    //fetch for first time
-    if fetchToken {
-      dataSource.fetch()
-      refreshControl.endRefreshing()
-      fetchToken = false
-    }
-    print("HistoryVC willAppearOnScreen")
+  func detailModalCancelled(_ vc: UIViewController) {
+    removeDetailModal(vc)
   }
-  
-  func didAppearOnScreen() {
-    //
-  }
-  
-  func willDisappearFromScreen() {
-    //
-  }
-
-  func didDisappearFromScreen() {
-    //
-  }
-  
   
 }

@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     receive(launchOptions)
     LaunchHelper.launch()
     //    tester.testAllTheThings()
-    tests = VoiceTests()
+    //tests = VoiceTests()
     
     return true
   }

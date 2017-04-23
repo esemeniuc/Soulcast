@@ -195,6 +195,7 @@ extension HistoryDataSource: UITableViewDataSource {
       cell.detailTextLabel?.text = String(round(radius*10)/10) + "km away"
       cell.detailTextLabel?.textColor = UIColor.gray
       cell.accessoryType = .disclosureIndicator
+      cell.selectionStyle = .default
     }
     return cell
   }
