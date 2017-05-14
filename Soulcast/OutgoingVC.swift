@@ -147,7 +147,7 @@ extension OutgoingVC: SoulRecorderDelegate {
   internal func recorderDidFinishRecording(_ localURL: String) {
     let newSoul = Soul(voice: Voice(
       epoch: Int(Date().timeIntervalSince1970),
-      s3Key: Randomizer.randomString(withLength: 10),
+      s3Key: Randomizer.randomString(withLength: 10) + ".mp3",
       localURL: localURL))
     outgoingButton.mute()
     playbackSoul(newSoul)

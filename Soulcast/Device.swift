@@ -37,31 +37,10 @@ class Device {
       params["os"] = "simulator"
     } else {
       params["os"] = "ios"
-    }
+    } 
     return params as [String : AnyObject]
   }
  
-  static func registerWithServer() {
-    ServerFacade.postDevice(success: {
-      
-    }) { (result) in
-      //
-    }
-  }
-  
-  static func updateDeviceRegion(_ latitude:Double, longitude:Double, radius:Double) {
-    Device.latitude = latitude
-    Device.longitude = longitude
-    Device.radius = radius
-    ServerFacade.patchDevice( success: {
-      //
-      print("updateDeviceRegion success!")
-    }) { code in
-      //
-      print("updateDeviceRegion fail")
-    }
-  }
-  
   static var isSimulator: Bool {
     return TARGET_OS_SIMULATOR != 0 // Use this line in Xcode 7 or newer
   }

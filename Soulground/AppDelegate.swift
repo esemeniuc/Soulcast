@@ -13,13 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
+  let waveCoordinator = WaveCoordinator()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     if window == nil {
-      window = UIWindow(frame: UIScreen.mainScreen().bounds)
-      window?.backgroundColor = UIColor.whiteColor()
+      window = UIWindow(frame: UIScreen.main.bounds)
+      window?.backgroundColor = UIColor.white
     }
-    window!.rootViewController = mainCoordinator.rootVC
+    window!.rootViewController = waveCoordinator.rootVC
     window!.makeKeyAndVisible()
 return true
   }

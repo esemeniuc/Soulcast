@@ -232,6 +232,29 @@ class ServerFacade {
                      encoding: JSONEncoding.default,
                      headers: ServerFacade.jsonHeader).validate()
   }
+  
+  
+  static func register() {
+    postDevice(success: {
+      
+    }) { (result) in
+      //
+    }
+  }
+  
+  static func updateDeviceRegion(_ latitude:Double, longitude:Double, radius:Double) {
+    Device.latitude = latitude
+    Device.longitude = longitude
+    Device.radius = radius
+    ServerFacade.patchDevice( success: {
+      //
+      print("updateDeviceRegion success!")
+    }) { code in
+      //
+      print("updateDeviceRegion fail")
+    }
+  }
+  
 }
 
 

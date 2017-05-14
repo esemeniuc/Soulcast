@@ -90,7 +90,9 @@ class SoulCatcher: NSObject {
   }
   
   fileprivate func startDownloading(_ incomingSoul:Soul) {
-    let s3Key = incomingSoul.voice.s3Key! as String + ".mp3"
+    
+    var s3Key = incomingSoul.voice.s3Key! as String
+    
     trialCounter += 1
     let expression = AWSS3TransferUtilityDownloadExpression()
     expression.progressBlock = {(task, progress) in

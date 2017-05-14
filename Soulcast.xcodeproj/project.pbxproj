@@ -52,6 +52,12 @@
 		BD20F46D1E63A5C3000F89F6 /* UIImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD20F4581E63A5C3000F89F6 /* UIImage+Cache.swift */; };
 		BD22B7C51DD7E65D0068532F /* ImproveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22B7C41DD7E65D0068532F /* ImproveButton.swift */; };
 		BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD22E76C1DE1041600C79E33 /* PushHandler.swift */; };
+		BD23663F1EC8F64C00A725BD /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD23663E1EC8F64C00A725BD /* File.swift */; };
+		BD2366411EC8F66B00A725BD /* WaveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2366401EC8F66B00A725BD /* WaveVC.swift */; };
+		BD2366421EC8FA7200A725BD /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD041A531E47F22D009A4DEB /* Wave.swift */; };
+		BD2366431EC8FBD700A725BD /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A39C01E47F66500BE205A /* Voice.swift */; };
+		BD2366441EC8FBE100A725BD /* Soul.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4B51D6BA8DA00E4C7E0 /* Soul.swift */; };
+		BD2366451EC8FBF200A725BD /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB8F4A81D6BA7E000E4C7E0 /* Device.swift */; };
 		BD2BE1281DB948F600387190 /* PermissionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2BE1271DB948F600387190 /* PermissionController.swift */; };
 		BD35EA1A1E5A5D8F003875D0 /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD35EA191E5A5D8F003875D0 /* Icon-60@3x.png */; };
 		BD35EA1C1E5A62BE003875D0 /* xicon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD35EA1B1E5A62BE003875D0 /* xicon.png */; };
@@ -149,6 +155,8 @@
 		BD20F4581E63A5C3000F89F6 /* UIImage+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Cache.swift"; path = "Pods/Cache/Source/iOS/Extensions/UIImage+Cache.swift"; sourceTree = "<group>"; };
 		BD22B7C41DD7E65D0068532F /* ImproveButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveButton.swift; sourceTree = "<group>"; };
 		BD22E76C1DE1041600C79E33 /* PushHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushHandler.swift; sourceTree = "<group>"; };
+		BD23663E1EC8F64C00A725BD /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		BD2366401EC8F66B00A725BD /* WaveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveVC.swift; sourceTree = "<group>"; };
 		BD2BE1271DB948F600387190 /* PermissionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PermissionController.swift; sourceTree = "<group>"; };
 		BD35EA191E5A5D8F003875D0 /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60@3x.png"; path = "Assets.xcassets/AppIcon.appiconset/Icon-60@3x.png"; sourceTree = "<group>"; };
 		BD35EA1B1E5A62BE003875D0 /* xicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xicon.png; sourceTree = "<group>"; };
@@ -471,6 +479,8 @@
 			isa = PBXGroup;
 			children = (
 				BDBDE7EB1E2C190000161E96 /* AppDelegate.swift */,
+				BD23663E1EC8F64C00A725BD /* File.swift */,
+				BD2366401EC8F66B00A725BD /* WaveVC.swift */,
 				BDBDE7ED1E2C190000161E96 /* ViewController.swift */,
 				BDBDE7F21E2C190000161E96 /* Assets.xcassets */,
 				BDBDE7F41E2C190000161E96 /* LaunchScreen.storyboard */,
@@ -756,7 +766,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDBDE7EE1E2C190000161E96 /* ViewController.swift in Sources */,
+				BD2366421EC8FA7200A725BD /* Wave.swift in Sources */,
+				BD23663F1EC8F64C00A725BD /* File.swift in Sources */,
 				BDBDE7EC1E2C190000161E96 /* AppDelegate.swift in Sources */,
+				BD2366441EC8FBE100A725BD /* Soul.swift in Sources */,
+				BD2366431EC8FBD700A725BD /* Voice.swift in Sources */,
+				BD2366411EC8F66B00A725BD /* WaveVC.swift in Sources */,
+				BD2366451EC8FBF200A725BD /* Device.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

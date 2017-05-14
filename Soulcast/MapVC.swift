@@ -153,7 +153,7 @@ class MapVC: UIViewController {
   func saveRegionData() {
     if let location = latestLocation {
       if let span = userSpan {
-        Device.updateDeviceRegion(
+        ServerFacade.updateDeviceRegion(
           location.coordinate.latitude as Double,
           longitude: location.coordinate.longitude as Double,
           radius: span.longitudeDelta as Double)
@@ -261,7 +261,7 @@ class MapVC: UIViewController {
   }
   
   func updateDevicesLabel() {
-    if devicesLabelUpdating || devicesLabelUpdatedRecently{
+    if devicesLabelUpdating || devicesLabelUpdatedRecently {
       return
     }
     let delayTime = DispatchTime.now() + Double(Int64(0.75 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
