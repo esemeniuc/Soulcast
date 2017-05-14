@@ -17,20 +17,25 @@ struct Wave {
   let castVoice: Voice
   var callVoice: Voice
   var replyVoice: Voice?
-  let casterToken: String
-  let callerToken: String
+  let casterID: Int
+  let callerID: Int
+  let casterOS: OS
+  let callerOS: OS
   
   var type: WaveType
   let epoch: Int
   
-  init(castVoice: Voice, callVoice: Voice, replyVoice: Voice?, casterToken: String, callerToken: String, type:WaveType, epoch: Int) {
+  init(castVoice: Voice, callVoice: Voice, replyVoice: Voice?, casterID: Int, callerID: Int, type:WaveType, casterOS: OS, callerOS: OS, epoch: Int) {
     self.castVoice = castVoice
     self.callVoice = callVoice
     self.replyVoice = replyVoice
-    self.casterToken = casterToken
-    self.callerToken = callerToken
+    self.casterID = casterID
+    self.callerID = callerID
     self.type = type
     self.epoch = epoch
+    self.casterOS = casterOS
+    self.callerOS = callerOS
+    
   }
   
   init(incomingSoul: Soul, call: Voice)   {
@@ -38,8 +43,10 @@ struct Wave {
     callVoice = call
     replyVoice = nil
     type = .call
-    casterToken = incomingSoul.token!
-    callerToken = Device.token!
+    casterID = incomingSoul.deviceID!
+    callerID = Device.id!
+    callerOS = Device.isSimulator ? OS.simulator : OS.ios
+    casterOS = incomingSoul.os 
     epoch = Int(Date().timeIntervalSince1970)
   }
   
@@ -53,18 +60,21 @@ struct Wave {
     let castVoice = Voice.from(hash["castVoice"] as! [String : Any])!
     let callVoice = Voice.from(hash["callVoice"] as! [String : Any])!
     let replyVoice = Voice.from(hash["replyVoice"] as! [String : Any]) //optional
-    let casterToken = hash["casterToken"] as! String
-    let callerToken = hash["callerToken"] as! String
+    let casterID = hash["casterID"] as! Int
+    let callerID = hash["callerID"] as! Int
     let type = (replyVoice == nil) ? WaveType.call : WaveType.reply
     let epoch = hash["epoch"] as! Int
-
+    let casterOS = OS(rawValue:hash["casterOS"] as! String) ?? OS.ios
+    let callerOS = OS(rawValue:hash["callerOS"] as! String) ?? OS.ios
     return Wave(
       castVoice: castVoice,
       callVoice: callVoice,
       replyVoice: replyVoice,
-      casterToken: casterToken,
-      callerToken: callerToken,
+      casterID: casterID,
+      callerID: callerID,
       type: type,
+      casterOS: casterOS,
+      callerOS: callerOS,
       epoch: epoch)
   }
 
@@ -76,8 +86,10 @@ struct Wave {
     if replyVoice != nil {
       params["replyVoice"] = replyVoice!.toParams()
     }
-    params["casterToken"] = casterToken
-    params["callerToken"] = callerToken
+    params["casterID"] = casterID
+    params["callerID"] = callerID
+    params["casterOS"] = casterOS.rawValue
+    params["callerOS"] = callerOS.rawValue
     params["type"] = type.rawValue
     params["epoch"] = epoch
     

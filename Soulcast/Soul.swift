@@ -14,8 +14,9 @@ class Soul: NSObject {
   var longitude:Double?
   var latitude:Double?
   var radius: Double?
-  var token: String? // = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-//  var device: Device?
+//  var token: String? // = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  var deviceID: Int?
+  var os: OS = OS.ios
   var type: SoulType = .Broadcast
   
   init(voice:Voice) {
@@ -31,12 +32,13 @@ class Soul: NSObject {
     params["longitude"] = longitude
     params["latitude"] = latitude
     params["radius"] = radius
-    params["token"] = token
+    //params["token"] = token
+    params["deviceID"] = deviceID
     return params as [String : AnyObject]
   }
   
   
-  class func fromAPNSHash (_ soulHash:NSDictionary) -> Soul {
+  static func fromAPNSHash (_ soulHash:NSDictionary) -> Soul {
     let incomingSoul = Soul(
       voice: Voice(
         epoch: soulHash["epoch"] as! Int,
@@ -45,10 +47,11 @@ class Soul: NSObject {
     incomingSoul.latitude = (soulHash["latitude"] as? NSString)?.doubleValue
     incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
     incomingSoul.radius = (soulHash["radius"] as? NSNumber)?.doubleValue
+    incomingSoul.deviceID = (soulHash["deviceID"] as? NSNumber)?.intValue
     return incomingSoul
   }
   
-  class func fromHash (_ soulHash:NSDictionary) -> Soul {
+  static func fromHash (_ soulHash:NSDictionary) -> Soul {
     let incomingSoul = Soul(voice: Voice(
       epoch: soulHash["soul[epoch]"] as! Int,
       s3Key: soulHash["soul[s3Key]"] as? String,
@@ -56,11 +59,12 @@ class Soul: NSObject {
     incomingSoul.latitude = (soulHash["soul[latitude]"] as? NSString)?.doubleValue
     incomingSoul.longitude = (soulHash["soul[longitude]"] as? NSString)?.doubleValue
     incomingSoul.radius = (soulHash["soul[radius]"] as? NSNumber)?.doubleValue
-    incomingSoul.token = soulHash["soul[token]"] as? String
+    incomingSoul.deviceID = (soulHash["soul[deviceID]"] as? NSNumber)?.intValue
+    
     return incomingSoul
   }
   
-  class func fromArray (_ soulsJSON: [[String: AnyObject]]) -> [Soul] {
+  static func fromArray (_ soulsJSON: [[String: AnyObject]]) -> [Soul] {
     var souls = [Soul]()
     for eachSoulJson in soulsJSON {
       souls.append(fromServerHash(eachSoulJson as NSDictionary))
@@ -68,7 +72,7 @@ class Soul: NSObject {
     return souls
   }
   
-  class func fromServerHash (_ soulHash:NSDictionary) -> Soul {
+  static func fromServerHash (_ soulHash:NSDictionary) -> Soul {
     let incomingSoul = Soul(voice: Voice(
       epoch: soulHash["epoch"] as! Int,
       s3Key: soulHash["s3Key"] as? String,
@@ -76,7 +80,7 @@ class Soul: NSObject {
     incomingSoul.latitude = (soulHash["latitude"] as? NSString)?.doubleValue
     incomingSoul.longitude = (soulHash["longitude"] as? NSString)?.doubleValue
     incomingSoul.radius = (soulHash["radius"] as? NSNumber)?.doubleValue
-    incomingSoul.token = soulHash["token"] as? String
+    incomingSoul.deviceID = (soulHash["deviceID"] as? NSNumber)?.intValue
     return incomingSoul
   }
   

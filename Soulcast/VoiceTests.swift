@@ -41,13 +41,13 @@ class VoiceTests {
     //make a mock soul
     let incomingSoul = MockFactory.mockSoulOne()
     //get a caster key
-    let casterToken = incomingSoul.token!
+//    let casterToken = incomingSoul.token!
     //make a caller key
     let callerToken = Device.token!
     //make a voice 
     let callVoice = MockFactory.voiceOne()
     //make a wave from soul and voice
-    let newWave = Wave(castVoice: incomingSoul.voice, callVoice: callVoice, replyVoice: nil, casterToken: casterToken, callerToken: callerToken, type: .call, epoch: 12321321)
+    let newWave = Wave(castVoice: incomingSoul.voice, callVoice: callVoice, replyVoice: nil, casterID: 3, callerID: 4, type: .call, casterOS: OS.ios, callerOS: OS.ios, epoch: 12321321)
     //post the wave through server facade
     MockServerFacade.post(newWave) {
       
@@ -60,9 +60,11 @@ class VoiceTests {
       castVoice: MockFactory.voiceOne(),
       callVoice: MockFactory.voiceOne(),
       replyVoice: nil,
-      casterToken: Device.token!,
-      callerToken: "callertoken",
+      casterID: Device.id!,
+      callerID: 33,
       type: .call,
+      casterOS: OS.ios,
+      callerOS: OS.ios,
       epoch: 12344321234)
     calledWave.append(reply: MockFactory.voiceOne())
     

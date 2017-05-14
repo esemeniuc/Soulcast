@@ -17,7 +17,7 @@ class MockFactory {
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
-    newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
+//    newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
     return newMockSoul
   }
   static func mockSoulTwo() -> Soul {
@@ -28,7 +28,7 @@ class MockFactory {
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
-    newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
+//    newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
     return newMockSoul
   }
   static func mockSoulThree() -> Soul {
@@ -39,7 +39,7 @@ class MockFactory {
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
-    newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
+    newMockSoul.deviceID = 1234
     return newMockSoul
   }
   static func mockSoulFour() -> Soul {
@@ -50,7 +50,7 @@ class MockFactory {
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.23
     newMockSoul.radius = 44.44
-    newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
+    newMockSoul.deviceID = 1324
     return newMockSoul
   }
   static func mockSoulFive() -> Soul {
@@ -61,7 +61,7 @@ class MockFactory {
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.23
     newMockSoul.radius = 44.44
-    newMockSoul.token = "SOMESAMPLETOKENBLAHBLAH"
+    newMockSoul.deviceID = 5432
     return newMockSoul
   }
   
@@ -82,9 +82,11 @@ class MockFactory {
       castVoice: voiceOne(),
       callVoice: voiceTwo(),
       replyVoice: voiceThree(),
-      casterToken: "castertokenpoken4321casd",
-      callerToken: "callertokenpokenrewq3421",
+      casterID: 3,
+      callerID: 4,
       type: .reply,
+      casterOS: OS.ios,
+      callerOS: OS.ios,
       epoch: 432143214321)
   }
 }

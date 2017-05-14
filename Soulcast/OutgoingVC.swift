@@ -156,7 +156,7 @@ extension OutgoingVC: SoulRecorderDelegate {
     newSoul.radius = delegate?.outgoingRadius()
     newSoul.longitude = delegate?.outgoingLongitude()
     newSoul.latitude = delegate?.outgoingLatitude()
-    newSoul.token = Device.token
+    newSoul.deviceID = Device.id ?? -1
     newSoul.type = soulType
     
     soulCaster.cast(newSoul)

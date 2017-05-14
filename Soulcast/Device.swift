@@ -1,6 +1,13 @@
 import Foundation
 
+enum OS: String {
+  case ios = "ios"
+  case simulator = "simulator"
+  case android = "android"
+}
+
 class Device {
+  static var os: OS = Device.isSimulator ? OS.simulator : OS.ios
   static var id: Int? {
     get {
       if Device.isSimulator {
@@ -33,11 +40,7 @@ class Device {
     params["latitude"] = Device.latitude ?? ""
     params["radius"] = Device.radius ?? ""
     params["token"] = Device.token
-    if Device.isSimulator {
-      params["os"] = "simulator"
-    } else {
-      params["os"] = "ios"
-    } 
+    params["os"] = Device.os.rawValue
     return params as [String : AnyObject]
   }
  

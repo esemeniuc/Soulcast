@@ -13,11 +13,10 @@ class ServerFacade {
   
   class func block(_ soul:Soul, success:@escaping ()->(), failure:@escaping (Int)->()) {
     //TODO: check interface with cwaffles
-    assert(soul.token != nil, "This soul does not have a token! A Ronen Token")
-    let localToken = Device.token ?? ""
+    let localID = Device.id ?? -1
     post("blocks", parameters:[
-      "blockee_token": soul.token! as AnyObject,
-      "blocker_token": localToken as AnyObject ])
+      "blockee_id": soul.deviceID as AnyObject,
+      "blocker_id": localID as AnyObject ])
       .responseJSON { response in
         switch response.result {
         case .success(let JSON):
