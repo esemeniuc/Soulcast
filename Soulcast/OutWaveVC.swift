@@ -75,15 +75,15 @@ class OutWaveVC: UIViewController, SoulPlayerDelegate {
   }
   
   ////// SoulPlayerDelegate
-  func didStartPlaying(_ soul:Soul) {
+  func didStartPlaying(_ voice:Voice) {
     playButton.isEnabled = false
   }
   
-  func didFinishPlaying(_ soul:Soul) {
+  func didFinishPlaying(_ voice:Voice) {
     playButton.isEnabled = true
   }
   
-  func didFailToPlay(_ soul:Soul) {
+  func didFailToPlay(_ voice:Voice) {
     
   }
   //////

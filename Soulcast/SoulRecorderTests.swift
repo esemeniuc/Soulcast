@@ -22,7 +22,7 @@ class SoulRecorderTests {
 
 
 
-extension SoulRecorderTests: SoulRecorderDelegate {
+extension SoulRecorderTests: VoiceRecorderDelegate {
   internal func recorderDidFinishRecording(_ localURL: String) {
     print("SoulTester soulDidFinishRecording")
     let newSoul = Soul(voice: Voice(

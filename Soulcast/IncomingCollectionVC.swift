@@ -118,11 +118,11 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
 }
 
 extension IncomingCollectionVC: SoulPlayerDelegate {
-  func didStartPlaying(_ soul: Soul) {
+  func didStartPlaying(_ voice: Voice) {
     
   }
   
-  func didFinishPlaying(_ soul: Soul) {
+  func didFinishPlaying(_ voice: Voice) {
     _ = soloQueue.dequeue()
     if (isActiveOnScreen()) {
       if !soloQueue.isEmpty {
@@ -133,7 +133,7 @@ extension IncomingCollectionVC: SoulPlayerDelegate {
     }
   }
   
-  func didFailToPlay(_ soul: Soul) {
+  func didFailToPlay(_ voice: Voice) {
     //
   }
   

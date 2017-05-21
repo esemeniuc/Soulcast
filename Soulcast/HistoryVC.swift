@@ -279,18 +279,18 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   
   
   //SoulPlayerDelegate
-  func didStartPlaying(_ soul:Soul) {
+  func didStartPlaying(_ voice:Voice) {
     
   }
-  func didFinishPlaying(_ soul:Soul) {
-    //deselect current row if same
-    if soul == selectedSoul {
-      tableView.deselectRow(at: dataSource.indexPath(forSoul: soul) as IndexPath, animated: true)
+  func didFinishPlaying(_ voice:Voice) {
+    guard selectedSoul != nil else { return }
+    if voice.epoch == selectedSoul!.voice.epoch {
+      tableView.deselectRow(at: dataSource.indexPath(forSoul: selectedSoul!) as IndexPath, animated: true)
     }
     if playlisting { playNextSoul() }
   }
 
-  func didFailToPlay(_ soul:Soul) {
+  func didFailToPlay(_ voice:Voice) {
     
   }
   

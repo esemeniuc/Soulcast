@@ -60,7 +60,7 @@ class SoulTester: NSObject {
 }
 
 //wav rainbow
-extension SoulTester: SoulRecorderDelegate {
+extension SoulTester: VoiceRecorderDelegate {
   internal func recorderDidFinishRecording(_ localURL: String) {
     let newSoul = Soul(voice:Voice(
       epoch: 1234567890,

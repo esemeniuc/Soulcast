@@ -5,9 +5,9 @@ import TheAmazingAudioEngine
 let soulPlayer = SoulPlayer()
 
 protocol SoulPlayerDelegate: AnyObject {
-  func didStartPlaying(_ soul:Soul)
-  func didFinishPlaying(_ soul:Soul)
-  func didFailToPlay(_ soul:Soul)
+  func didStartPlaying(_ voice:Voice)
+  func didFinishPlaying(_ voice:Voice)
+  func didFailToPlay(_ voice:Voice)
 }
 
 class SoulPlayer: NSObject {
@@ -15,6 +15,32 @@ class SoulPlayer: NSObject {
   fileprivate var player: AEAudioFilePlayer?
   static var playing = false
   fileprivate var subscribers:[SoulPlayerDelegate] = []
+  
+  func startPlaying(_ voice:Voice) {
+    guard !SoulPlayer.playing else{
+      reset()
+      startPlaying(voice)
+      return
+    }
+    let filePath = URL(fileURLWithPath: voice.localURL! as String)
+    do {
+      player = try AEAudioFilePlayer(url: filePath)
+      audioController?.addChannels([player!])
+      player?.removeUponFinish = true
+      SoulPlayer.playing = true
+      sendStartMessage(voice)
+      player?.completionBlock = {
+        self.reset()
+        self.sendFinishMessage(voice)
+      }
+    } catch {
+      assert(false);
+      sendFailMessage(voice)
+      print("oh noes! playAudioAtPath fail")
+      return
+    }
+    
+  }
   
   func startPlaying(_ soul:Soul!) {
     guard !SoulPlayer.playing else{
@@ -29,15 +55,14 @@ class SoulPlayer: NSObject {
       audioController?.addChannels([player!])
       player?.removeUponFinish = true
       SoulPlayer.playing = true
-      sendStartMessage(soul)
+      sendStartMessage(soul.voice)
       player?.completionBlock = {
         self.reset()
-        
-        self.sendFinishMessage(soul)
+        self.sendFinishMessage(soul.voice)
       }
     } catch {
       assert(false);
-      sendFailMessage(soul)
+      sendFailMessage(soul.voice)
       print("oh noes! playAudioAtPath fail")
       return
     }
@@ -48,21 +73,21 @@ class SoulPlayer: NSObject {
     return tempSoul
   }
   
-  func sendStartMessage(_ soul:Soul) {
+  func sendStartMessage(_ voice:Voice) {
     for eachSubscriber in subscribers {
-      eachSubscriber.didStartPlaying(soul)
+      eachSubscriber.didStartPlaying(voice)
     }
   }
   
-  func sendFinishMessage(_ soul:Soul) {
+  func sendFinishMessage(_ voice:Voice) {
     for eachSubscriber in subscribers {
-      eachSubscriber.didFinishPlaying(soul)
+      eachSubscriber.didFinishPlaying(voice)
     }
   }
   
-  func sendFailMessage(_ soul:Soul) {
+  func sendFailMessage(_ voice:Voice) {
     for eachSubscriber in subscribers {
-      eachSubscriber.didFailToPlay(soul)
+      eachSubscriber.didFailToPlay(voice)
     }
   }
   

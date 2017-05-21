@@ -93,7 +93,7 @@ class OutgoingVC: UIViewController {
   }
   
   func outgoingButtonTouchedUpInside(_ button:UIButton) {
-        requestFinishRecording()
+    requestFinishRecording()
   }
   
   func outgoingButtonTouchDraggedExit(_ button:UIButton) {
@@ -143,7 +143,7 @@ class OutgoingVC: UIViewController {
   
 }
 
-extension OutgoingVC: SoulRecorderDelegate {
+extension OutgoingVC: VoiceRecorderDelegate {
   internal func recorderDidFinishRecording(_ localURL: String) {
     let newSoul = Soul(voice: Voice(
       epoch: Int(Date().timeIntervalSince1970),
@@ -230,14 +230,14 @@ extension OutgoingVC: SoulCasterDelegate {
 }
 
 extension OutgoingVC: SoulPlayerDelegate {
-  func didStartPlaying(_ soul:Soul){
+  func didStartPlaying(_ voice:Voice){
     
   }
-  func didFinishPlaying(_ soul:Soul){
+  func didFinishPlaying(_ voice:Voice){
     outgoingButton.resetSuccess()
     delegate?.outgoingDidStop()
   }
-  func didFailToPlay(_ soul:Soul){
+  func didFailToPlay(_ voice:Voice){
     
   }
 }
