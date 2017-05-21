@@ -9,9 +9,18 @@
 import Foundation
 import UIKit
 
+protocol WaveCoordinatorDelegate: class {
+  //TODO:
+}
+
 class WaveCoordinator {
-  
-  let castSoul: Soul
+  weak var delegate:  WaveCoordinatorDelegate?
+  var castSoul: Soul
+  var waveVC: OutWaveVC {
+    let vc = OutWaveVC()
+    vc.castSoul = castSoul
+    return vc
+  }
   
   init(soul: Soul) {
     self.castSoul = soul

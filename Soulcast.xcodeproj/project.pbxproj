@@ -291,6 +291,7 @@
 			children = (
 				BD79FBC01ED22D2E007E71C1 /* WaveCoordinator.swift */,
 				BD041A4F1E47F157009A4DEB /* OutWaveVC.swift */,
+				BD6ED7521EAD6436005611E2 /* VoiceRecorderVC.swift */,
 				BD041A511E47F18D009A4DEB /* InWaveVC.swift */,
 			);
 			name = Wave;
@@ -333,7 +334,6 @@
 			isa = PBXGroup;
 			children = (
 				BD6ED7501EAD4C3D005611E2 /* DetailModalVC.swift */,
-				BD6ED7521EAD6436005611E2 /* VoiceRecorderVC.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";

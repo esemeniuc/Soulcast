@@ -23,5 +23,9 @@ class VoiceRecorderVC: UIViewController {
   var maximumDuration = 3
   var soulRecorder = SoulRecorder()
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = .yellow
+  }
   
 }

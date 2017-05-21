@@ -12,7 +12,6 @@ class DetailModalVC: UIViewController, SoulPlayerDelegate {
   let grayOverlay = UIView()
   let containerView = UIView()
   let playButton = UIButton()
-  let voiceVC = VoiceRecorderVC()
   
   let sideInset: CGFloat = 30
   let verticalInset: CGFloat = 60
@@ -66,7 +65,6 @@ class DetailModalVC: UIViewController, SoulPlayerDelegate {
   
   func didTapPlayButton() {
     soulPlayer.startPlaying(soul)
-    
   }
   
   override func didMove(toParentViewController parent: UIViewController?) {

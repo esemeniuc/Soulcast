@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegate, OnboardingVCDelegate, MainVCDelegate, ImproveVCDelegate, HistoryVCDelegate, IncomingCollectionVCDelegate, UIViewControllerTransitioningDelegate {
+class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegate, OnboardingVCDelegate, MainVCDelegate, ImproveVCDelegate, HistoryVCDelegate, IncomingCollectionVCDelegate, UIViewControllerTransitioningDelegate, WaveCoordinatorDelegate {
   let pageVC = JKPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
   var mainVC: MainVC = MainVC()
   fileprivate var onboardingNavVC: UINavigationController?
-  fileprivate var pageNavVC: UINavigationController?
+  fileprivate var historyNavVC: UINavigationController?
   let historyVC = HistoryVC()
   var incomingVC:IncomingCollectionVC!
   let improveVC = ImproveVC()
@@ -25,13 +25,16 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   
   var rootVC:UIViewController {
     if onboardingNavVC != nil {
+      onboardingNavVC!.title = "onboardingNavVC"
       return onboardingNavVC!
     } else {
-      if pageNavVC == nil {
-        pageNavVC = UINavigationController(rootViewController: pageVC)
-        pageNavVC?.setNavigationBarHidden(true, animated: false)
+      if historyNavVC == nil {
+        historyNavVC = UINavigationController(rootViewController: historyVC)
+        historyNavVC!.delegate = self
+        historyNavVC!.title = "historyNavVC"
+        historyNavVC!.setNavigationBarHidden(true, animated: false)
       }
-      return pageNavVC!
+      return pageVC
     }
   }
   
@@ -58,27 +61,7 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
     pageVC.jkDelegate = self
     pageVC.disableScroll()
     mainVC.delegate = self
-    //addPageTab()
-  }
-  
-  func addPageTab() {
-    let leftTab = PageTab(direction: .left)
-    let leftTabTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabTapped))
-    leftTab.addGestureRecognizer(leftTabTapRecognizer)
-    mainVC.view.addSubview(leftTab)
-
-    let rightTab = PageTab(direction: .right)
-    let rightTabTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabTapped))
-    rightTab.addGestureRecognizer(rightTabTapRecognizer)
-    historyVC.view.addSubview(rightTab)
-  }
-  
-  func tabTapped() {
-    if pageVC.currentIndex == Page.history {
-      pageVC.scrollToVC(Page.main, direction: .forward)
-    } else if pageVC.currentIndex == Page.main {
-      pageVC.scrollToVC(Page.history, direction: .reverse)
-    }
+    
   }
   
   func scrollToMainVC(_ completion:@escaping ()->()) {
@@ -97,6 +80,10 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
 //extension MainCoordinator: UINavigationControllerDelegate {
 
   func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    if navigationController.title == "historyNavVC" {
+      navigationController.setNavigationBarHidden(true, animated: true)
+      return
+    }
     switch viewController {
     case is OnboardingVC:
       navigationController.isNavigationBarHidden = true
@@ -149,7 +136,9 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   func presentHistoriesVC() {
     //TODO: custom transition to historyVC
     historyVC.transitioningDelegate = self
-    pageVC.present(historyVC)
+    historyVC.delegate = self
+
+    pageVC.present(historyNavVC!)
   }
   
   func mainVCWillDisappear() {
@@ -188,9 +177,12 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   func historyDidSelect(soul: Soul) {
     if waveCoordinator == nil {
       waveCoordinator = WaveCoordinator(soul: soul)
+      waveCoordinator!.delegate = self
+    } else {
+      waveCoordinator?.castSoul = soul
     }
     //TODO:
-    
+    historyNavVC!.pushViewController(waveCoordinator!.waveVC, animated: true)
     
     
   }
