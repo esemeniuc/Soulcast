@@ -10,8 +10,6 @@ import UIKit
 import AWSS3
 import UserNotifications
 
-
-
 let app = UIApplication.shared
 
 @UIApplicationMain
@@ -28,6 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //    tester.testAllTheThings()
     //tests = VoiceTests()
     
+    //app delegate is responsible for:
+    // setting up the app for UI
+    // setting up the app for data
+    // controller UI + data is for VC.
+    // route push payload to push handler...
     return true
   }
   

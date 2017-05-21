@@ -12,7 +12,8 @@ import UIKit
 class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegate, OnboardingVCDelegate, MainVCDelegate, ImproveVCDelegate, HistoryVCDelegate, IncomingCollectionVCDelegate, UIViewControllerTransitioningDelegate {
   let pageVC = JKPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
   var mainVC: MainVC = MainVC()
-  fileprivate var navVC: UINavigationController?
+  fileprivate var onboardingNavVC: UINavigationController?
+  fileprivate var pageNavVC: UINavigationController?
   let historyVC = HistoryVC()
   var incomingVC:IncomingCollectionVC!
   let improveVC = ImproveVC()
@@ -20,13 +21,17 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   var pages: [UIViewController] = []
   var pushHandleAction:(()->())? = nil
   fileprivate let zoomAnimator = ZoomTransitionAnimationController()
+  var waveCoordinator: WaveCoordinator?
   
   var rootVC:UIViewController {
-//    return HistoryVC()
-    if navVC != nil {
-      return navVC!
+    if onboardingNavVC != nil {
+      return onboardingNavVC!
     } else {
-      return pageVC
+      if pageNavVC == nil {
+        pageNavVC = UINavigationController(rootViewController: pageVC)
+        pageNavVC?.setNavigationBarHidden(true, animated: false)
+      }
+      return pageNavVC!
     }
   }
   
@@ -40,10 +45,10 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
     pages = [UIViewController(), mainVC]
     if Receptionist.needsOnboarding() {
       onboardingVC = OnboardingVC()
-      navVC = UINavigationController(rootViewController: onboardingVC!)
+      onboardingNavVC = UINavigationController(rootViewController: onboardingVC!)
       super.init()
       onboardingVC!.delegate = self
-      navVC!.delegate = self
+      onboardingNavVC!.delegate = self
     } else {
       pageVC.initialIndex = 1
       pageVC.pages = pages
@@ -158,7 +163,7 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   
   func didFinishGettingImprove() {
     //TODO:
-//    navVC.popToRootViewControllerAnimated(true)
+//    onboardingNavVC.popToRootViewControllerAnimated(true)
   }
   
   
@@ -178,6 +183,16 @@ class MainCoordinator: NSObject, JKPageVCDelegate, UINavigationControllerDelegat
   func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     zoomAnimator.originFrame = mainVC.appIconFrame()
     return zoomAnimator
+  }
+  
+  func historyDidSelect(soul: Soul) {
+    if waveCoordinator == nil {
+      waveCoordinator = WaveCoordinator(soul: soul)
+    }
+    //TODO:
+    
+    
+    
   }
 }
 

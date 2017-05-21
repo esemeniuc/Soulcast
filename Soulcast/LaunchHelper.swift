@@ -20,7 +20,6 @@ class LaunchHelper {
     ServerFacade.register()
     UIApplication.shared.applicationIconBadgeNumber = 0
     configureAWS()
-
   }
   
   static func configureAWS() {
@@ -33,4 +32,5 @@ class LaunchHelper {
     AWSServiceManager.default().defaultServiceConfiguration = configuration
     AWSLogger.default().logLevel = .verbose
   }
+  
 }

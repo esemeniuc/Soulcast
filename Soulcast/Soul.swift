@@ -14,7 +14,6 @@ class Soul: NSObject {
   var longitude:Double?
   var latitude:Double?
   var radius: Double?
-//  var token: String? // = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
   var deviceID: Int?
   var os: OS = OS.ios
   var type: SoulType = .Broadcast
@@ -32,7 +31,6 @@ class Soul: NSObject {
     params["longitude"] = longitude
     params["latitude"] = latitude
     params["radius"] = radius
-    //params["token"] = token
     params["deviceID"] = deviceID
     return params as [String : AnyObject]
   }

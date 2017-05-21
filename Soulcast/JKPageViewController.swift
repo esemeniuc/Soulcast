@@ -69,7 +69,8 @@ protocol JKPageVCDelegate: class{
   override func didMove(toParentViewController parent: UIViewController?) {
     super.didMove(toParentViewController: parent)
     parent!.view.gestureRecognizers = gestureRecognizers
-    recursivelyIterateSubviews(view)
+    //recursivelyIterateSubviews(view)
+    view.frame = parent!.view.bounds
   }
   
   /// should call manually.

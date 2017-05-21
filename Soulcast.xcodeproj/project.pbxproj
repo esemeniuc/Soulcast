@@ -66,6 +66,7 @@
 		BD6A39C11E47F66500BE205A /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A39C01E47F66500BE205A /* Voice.swift */; };
 		BD6ED7511EAD4C3D005611E2 /* DetailModalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6ED7501EAD4C3D005611E2 /* DetailModalVC.swift */; };
 		BD6ED7531EAD6436005611E2 /* VoiceRecorderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6ED7521EAD6436005611E2 /* VoiceRecorderVC.swift */; };
+		BD79FBC11ED22D2E007E71C1 /* WaveCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD79FBC01ED22D2E007E71C1 /* WaveCoordinator.swift */; };
 		BD7D19BF1D8C5430008B563F /* ImproveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7D19BE1D8C5430008B563F /* ImproveVC.swift */; };
 		BD8AB3A41E885F49008D5CF8 /* VoiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8AB3A31E885F49008D5CF8 /* VoiceTests.swift */; };
 		BD8AB3A61E886647008D5CF8 /* MockFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8AB3A51E886647008D5CF8 /* MockFactory.swift */; };
@@ -165,6 +166,7 @@
 		BD6A39C01E47F66500BE205A /* Voice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
 		BD6ED7501EAD4C3D005611E2 /* DetailModalVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailModalVC.swift; sourceTree = "<group>"; };
 		BD6ED7521EAD6436005611E2 /* VoiceRecorderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceRecorderVC.swift; sourceTree = "<group>"; };
+		BD79FBC01ED22D2E007E71C1 /* WaveCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveCoordinator.swift; sourceTree = "<group>"; };
 		BD7D19BE1D8C5430008B563F /* ImproveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImproveVC.swift; sourceTree = "<group>"; };
 		BD8AB3A31E885F49008D5CF8 /* VoiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceTests.swift; sourceTree = "<group>"; };
 		BD8AB3A51E886647008D5CF8 /* MockFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFactory.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 		BD041A4E1E47F12A009A4DEB /* Wave */ = {
 			isa = PBXGroup;
 			children = (
+				BD79FBC01ED22D2E007E71C1 /* WaveCoordinator.swift */,
 				BD041A4F1E47F157009A4DEB /* OutWaveVC.swift */,
 				BD041A511E47F18D009A4DEB /* InWaveVC.swift */,
 			);
@@ -738,6 +741,7 @@
 				BDB8F4B61D6BA8DA00E4C7E0 /* Soul.swift in Sources */,
 				BD1551211D76118C0093CA2F /* SoulRecorderTests.swift in Sources */,
 				BD22E76D1DE1041600C79E33 /* PushHandler.swift in Sources */,
+				BD79FBC11ED22D2E007E71C1 /* WaveCoordinator.swift in Sources */,
 				BDB8F4B11D6BA80E00E4C7E0 /* SoulRecorder.swift in Sources */,
 				BDB6C88D1E089E2E0023FD12 /* PageTab.swift in Sources */,
 				BDF478D51D836E61004F6CAA /* IntegrationTestButton.swift in Sources */,

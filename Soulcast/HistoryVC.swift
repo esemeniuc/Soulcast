@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol HistoryVCDelegate: class {
-  //TODO:
+  func historyDidSelect(soul: Soul)
 }
 
 ///displays a list of souls played in the past in reverse chronological order since 24 hours ago
@@ -26,6 +26,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   var fetchToken = true
   var fetchFinishToken = true
   let zoomAnimator = ZoomTransitionAnimationController()
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -154,7 +155,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     playlisting = false
     soulPlayer.reset()
     if let selectedSoul = dataSource.soul(forIndex:indexPath.row) {
-      addDetailModal(selectedSoul)
+      delegate?.historyDidSelect(soul: selectedSoul)
     }
   }
   
