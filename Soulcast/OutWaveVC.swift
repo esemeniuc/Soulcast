@@ -10,19 +10,21 @@ import Foundation
 import UIKit
 
 protocol OutWaveVCDelegate: class {
-  //TODO:
+  func outWaveDidCall(wave:Wave)
 }
 
-class OutWaveVC: UIViewController, SoulPlayerDelegate {
+class OutWaveVC: UIViewController, SoulPlayerDelegate, VoiceRecorderVCDelegate {
   var castSoul: Soul!
   let playButton = UIButton()
+  let descriptionLabel = UILabel()
   let voiceVC = VoiceRecorderVC()
-  
+  weak var delegate: OutWaveVCDelegate?
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
     addPlayButton()
     addBackButton()
+    addDescriptionLabel()
     addVoiceVC()
   }
   
@@ -32,18 +34,32 @@ class OutWaveVC: UIViewController, SoulPlayerDelegate {
     soulPlayer.subscribe(self)
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    soulPlayer.startPlaying(castSoul)
+  }
+  
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     soulPlayer.unsubscribe(self)
   }
   
   func addVoiceVC() {
+    voiceVC.delegate = self
     addChildViewController(voiceVC)
-    voiceVC.view.frame = CGRect(x: 0, y: view.maxY - 100, width: view.width, height: 100)
+    _ = voiceVC.view
     view.addSubview(voiceVC.view)
     voiceVC.didMove(toParentViewController: self)
   }
   
+  func addDescriptionLabel() {
+    descriptionLabel.frame = CGRect(
+      x: 20, y: view.height/2,
+      width: view.width - 40, height: view.height/4)
+    descriptionLabel.text = "Send a message to the caster of this soul to start a one-to-one conversation!"
+    descriptionLabel.numberOfLines = 0
+    view.addSubview(descriptionLabel)
+  }
   func addPlayButton() {
     let buttonSize:CGFloat = 80
     playButton.frame = CGRect(
@@ -58,7 +74,6 @@ class OutWaveVC: UIViewController, SoulPlayerDelegate {
   
   func didTapPlayButton() {
     soulPlayer.startPlaying(castSoul)
-    
   }
   
   func addBackButton() {
@@ -71,21 +86,34 @@ class OutWaveVC: UIViewController, SoulPlayerDelegate {
   }
   
   func goBack() {
-    self.navigationController?.popViewController(animated: true)
+    self.navigationController!.popViewController(animated: true)
   }
   
   ////// SoulPlayerDelegate
-  func didStartPlaying(_ voice:Voice) {
+  func didStartPlaying(_ voice:Voice) { playButton.isEnabled = false }
+  func didFinishPlaying(_ voice:Voice) { playButton.isEnabled = true }
+  func didFailToPlay(_ voice:Voice) { }
+  //////
+  func recorderWillStart(_:VoiceRecorderVC) {
     playButton.isEnabled = false
   }
-  
-  func didFinishPlaying(_ voice:Voice) {
+  func recorderFailed(_:VoiceRecorderVC) {
     playButton.isEnabled = true
   }
-  
-  func didFailToPlay(_ voice:Voice) {
-    
+  func recorderFinished(_:VoiceRecorderVC, callVoice:Voice) {
+    presentFinishedAlert()
+    let callWave = Wave(incomingSoul: castSoul, call: callVoice)
+    delegate?.outWaveDidCall(wave: callWave)
   }
   //////
-
+  func presentFinishedAlert() {
+    let finishedAlert = UIAlertController(
+      title: "Waved", message: "You just waved at the soul caster",
+      preferredStyle: .alert)
+    finishedAlert.addAction(UIAlertAction(
+      title: "OK", style: .cancel,
+      handler: { (action) in self.goBack() }
+    ))
+    present(finishedAlert)
+  }
 }

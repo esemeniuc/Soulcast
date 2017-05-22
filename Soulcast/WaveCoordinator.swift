@@ -13,11 +13,12 @@ protocol WaveCoordinatorDelegate: class {
   //TODO:
 }
 
-class WaveCoordinator {
+class WaveCoordinator: OutWaveVCDelegate {
   weak var delegate:  WaveCoordinatorDelegate?
   var castSoul: Soul
   var waveVC: OutWaveVC {
     let vc = OutWaveVC()
+    vc.delegate = self
     vc.castSoul = castSoul
     return vc
   }
@@ -26,7 +27,13 @@ class WaveCoordinator {
     self.castSoul = soul
   }
   
-  
+  func outWaveDidCall(wave: Wave) {
+    ServerFacade.post(wave, {
+      //
+    }) { (statuscode) in
+      
+    }
+  }
   
   
 }

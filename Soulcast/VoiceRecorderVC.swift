@@ -12,11 +12,11 @@ import UIKit
 protocol VoiceRecorderVCDelegate: class {
   func recorderWillStart(_:VoiceRecorderVC)
   func recorderFailed(_:VoiceRecorderVC)
-  func recorderFinished(_:VoiceRecorderVC, voice:Voice)
+  func recorderFinished(_:VoiceRecorderVC, callVoice:Voice)
 }
 
 ///combines recording ui and recording logic. To be used as a child VC
-class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate {
+class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate, SoulPlayerDelegate {
   weak var delegate: VoiceRecorderVCDelegate?
   var recordButton: RecordButton!
   var maxRecordingDuration: Int {
@@ -32,7 +32,6 @@ class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .yellow
     addRecordButton()
     configureAudio()
   }
@@ -54,6 +53,7 @@ class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate {
   func configureAudio() {
     voiceRecorder.delegate = self
     voiceRecorder.setup()
+    soulPlayer.subscribe(self)
   }
   
   func requestStartRecording() {
@@ -66,10 +66,6 @@ class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate {
     voiceRecorder.pleaseStopRecording()
   }
 
-  func playback(_ voice:Voice) {
-    //voicePlayer.startPlaying(localSoul)
-  }
-  
   func soulDidStartRecording() {
     recordButton.startProgress()
   }
@@ -82,7 +78,7 @@ class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate {
       s3Key: Randomizer.randomString(withLength: 10) + ".mp3",
       localURL: localURL)
     soulPlayer.startPlaying(newVoice)
-    delegate?.recorderFinished(self, voice: newVoice)
+    delegate?.recorderFinished(self, callVoice: newVoice)
   }
   func soulDidFailToRecord() {
     delegate?.recorderFailed(self)
@@ -98,4 +94,7 @@ class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate {
     alert.addAction(cancel)
     present(alert, animated: true)
   }
+  func didStartPlaying(_ voice:Voice) {  }
+  func didFinishPlaying(_ voice:Voice) { recordButton.resetSuccess() }
+  func didFailToPlay(_ voice:Voice) { recordButton.resetFail() }
 }
