@@ -8,10 +8,25 @@
 
 import Foundation
 
+enum VoiceContext {
+  case soul
+  case waveCast
+  case waveCall
+  case waveReply
+}
+
 struct Voice {
   let epoch:Int
   var s3Key:String?
   var localURL:String?
+  var context:VoiceContext? = nil
+  var contextEpoch: Int = 0
+  
+  init(epoch: Int, s3Key: String?, localURL: String?) {
+    self.epoch = epoch
+    self.s3Key = s3Key
+    self.localURL = localURL
+  }
   
   static func from(_ hash:[String : Any]) -> Voice? {
     if let epoch = hash["epoch"] as? Int,

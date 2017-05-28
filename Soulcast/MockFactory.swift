@@ -13,7 +13,7 @@ class MockFactory {
     let newMockSoul = Soul(voice: Voice(
       epoch: 1480719472,
       s3Key: "1479619472",
-      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"))
+      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.mp3"))
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
@@ -24,7 +24,7 @@ class MockFactory {
     let newMockSoul = Soul(voice: Voice(
       epoch: 1481889665,
       s3Key: "1479599118",
-      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"))
+      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.mp3"))
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
@@ -35,7 +35,7 @@ class MockFactory {
     let newMockSoul = Soul(voice: Voice(
       epoch: 1481899665,
       s3Key:  "1479612020",
-      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"))
+      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.mp3"))
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.234
     newMockSoul.radius = 44.44
@@ -46,7 +46,7 @@ class MockFactory {
     let newMockSoul = Soul(voice: Voice(
       epoch: 1481900565,
       s3Key: "1479612126",
-      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"))
+      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.mp3"))
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.23
     newMockSoul.radius = 44.44
@@ -57,7 +57,7 @@ class MockFactory {
     let newMockSoul = Soul(voice: Voice(
       epoch: 1481900665,
       s3Key: "fabulousTest",
-      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a"))
+      localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.mp3"))
     newMockSoul.longitude = 49.343
     newMockSoul.latitude = 223.23
     newMockSoul.radius = 44.44
@@ -66,15 +66,15 @@ class MockFactory {
   }
   
   static func voiceOne() -> Voice {
-    return Voice(epoch: 1234, s3Key: "onekeeyyyyy", localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a")
+    return Voice(epoch: 1234, s3Key: "gs11nvE22dphKwHTwL3GdOqf0J8wrJYy6WiksZ4JNtPytWwAHXNQIFYyyo81Xgf.mp3", localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.mp3")
   }
   
   static func voiceTwo() -> Voice {
-    return Voice(epoch: 12345, s3Key: "twokeeyyyyy", localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a")
+    return Voice(epoch: 12345, s3Key: "pqEWJs5l4UpJyejgBeoMPHwrn2Yy8Y0zl6RrDzoWvJs83YT52offuSMP8bV8don.mp3", localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.mp3")
   }
   
   static func voiceThree() -> Voice {
-    return Voice(epoch: 123456, s3Key: "threekeeyyyyy", localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.m4a")
+    return Voice(epoch: 123456, s3Key: "KynZkEU9XLbM8kLn1F34UZF7D7GX6OxgiJ3Lw1zgoZvkfZqXQzaD405jqSKLbBB.mp3", localURL: "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/A102AB98-3348-4B4B-A4F4-97E2714EB03B/Documents/Recording493417238.887139.mp3")
   }
   
   static func waveOne() -> Wave {

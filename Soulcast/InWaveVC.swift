@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import UIKit
+
+class InWaveVC: UIViewController {
+  let inWave: Wave
+  init(wave: Wave) {
+    self.inWave = wave
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+}

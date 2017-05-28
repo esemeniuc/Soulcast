@@ -23,19 +23,18 @@ class PushHandler {
     let wave = Wave.from(waveHash)
     print(wave.debugDescription)
     //TODO: test
-    return;
     let coordinator = appDelegate.mainCoordinator
     // at mainVC screen
     let mainVC = coordinator.mainVC
     let historyVC = coordinator.historyVC
     if mainVC.view.window != nil && historyVC.view.window == nil{
-      mainVC.receiveRemoteNotification(waveHash)
+      mainVC.receiveRemote(wave)
       return
     }
     // at historyVC screen
     if historyVC.view.window != nil && mainVC.view.window == nil {
       coordinator.scrollToMainVC() {
-        mainVC.receiveRemoteNotification(waveHash)
+        mainVC.receiveRemote(wave)
       }
     }
   }

@@ -25,7 +25,7 @@ class SoulCasterTests {
   class func mockSoul() -> Soul {
     let seed = Soul(voice: Voice(epoch: 14932432, s3Key: "1428104002", localURL: nil))
     //TODO: switch out localURL for a valid file
-    seed.voice.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/549676D1-DB20-401E-8ED9-E67142EC5BE2/Documents/Recording494031955.70334.m4a"
+    seed.voice.localURL = "/Users/june/Library/Developer/CoreSimulator/Devices/773EB184-EEE2-499F-AB97-F63AEF6FC7FB/data/Containers/Data/Application/549676D1-DB20-401E-8ED9-E67142EC5BE2/Documents/Recording494031955.70334.mp3"
     seed.longitude = -93.2783
     seed.latitude = 44.9817
     seed.radius = 0.333

@@ -28,7 +28,7 @@ class MainVC: UIViewController, SoulCatcherDelegate, OutgoingVCDelegate, MapVCDe
     view.backgroundColor = UIColor.clear
     add(children:[mapVC, outgoingVC])
     addImproveButton()
-//    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
+    view.addSubview(IntegrationTestButton(frame:CGRect(x: 10, y: 10, width: 100, height: 100)))
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -73,9 +73,19 @@ class MainVC: UIViewController, SoulCatcherDelegate, OutgoingVCDelegate, MapVCDe
   
   func receiveRemoteNotification(_ hash:[String : AnyObject]){
     let tempSoulCatcher = SoulCatcher(soulHash:hash)
-      tempSoulCatcher.delegate = self
-      soulCatchers.insert(tempSoulCatcher)
+    tempSoulCatcher.delegate = self
+    soulCatchers.insert(tempSoulCatcher)
     
+  }
+  func receiveRemote(_ wave:Wave){
+    WaveCatcher.catcher.catchWave(wave) { filledWave in
+      //TODO: modal incoming waveVC
+      print("receiveRemote finished catching wave")
+      DispatchQueue.main.async {
+        let incomingWaveVC = InWaveVC(wave:filledWave)
+        self.present(incomingWaveVC)
+      }
+    }
   }
   
   func displaySoul(_ incomingSoul:Soul) {

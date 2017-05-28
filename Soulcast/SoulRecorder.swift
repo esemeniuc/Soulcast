@@ -159,7 +159,7 @@ class SoulRecorder: NSObject {
     if paths.count > 0 {
       let randomNumberString = String(Date.timeIntervalSinceReferenceDate.description)
       print("randomNumberString: \(randomNumberString!)")
-      outputPath = paths[0] + "/Recording" + randomNumberString! + ".m4a"
+      outputPath = paths[0] + "/Recording" + randomNumberString! + ".mp3"
       let manager = FileManager.default
       if manager.fileExists(atPath: outputPath) {
         do {

@@ -23,7 +23,6 @@ class SoulCatcher: NSObject {
   var catchingSoul: Soul
   weak var delegate: SoulCatcherDelegate?
   var progress: Float = 0
-  static let soulCaughtNotification = "soulCaughtNotification"
   static let cache = Cache<String>(
     name: "Voice",
     config: Config(
@@ -55,7 +54,6 @@ class SoulCatcher: NSObject {
   
   fileprivate func catchSoulObject(_ incomingSoul:Soul) {
     let key = incomingSoul.voice.s3Key!
-    
     SoulCatcher.cache.object(key) { (localURL: String?) in
       guard localURL != nil else {
         self.startDownloading(incomingSoul)
@@ -64,21 +62,14 @@ class SoulCatcher: NSObject {
       //check if file exists
       let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
       let tempPath = paths.first
-      let filePath = tempPath! + "/" + key + ".m4a"
+      let filePath = tempPath! + "/" + key
       if FileManager.default.fileExists(atPath: filePath) {
         incomingSoul.voice.localURL = filePath
         self.delegate?.soulDidFinishDownloading(self, soul: incomingSoul)
       } else {
         self.startDownloading(incomingSoul)
       }
-      
-      //
     }
-
-  }
-  
-  func rootVC() -> UIViewController {
-    return (UIApplication.shared.keyWindow?.rootViewController)!
   }
   
   fileprivate func tryAgain(_ soul: Soul) {
@@ -145,7 +136,7 @@ class SoulCatcher: NSObject {
   func saveToCache(_ data: Data, key:String) -> String {
     let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
     let tempPath = paths.first
-    let filePath = tempPath! + "/" + key + ".m4a"
+    let filePath = tempPath! + "/" + key
     do {
       if FileManager.default.fileExists(atPath: filePath) {
         try FileManager.default.removeItem(atPath: filePath)

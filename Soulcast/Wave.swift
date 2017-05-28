@@ -14,7 +14,7 @@ enum WaveType: String {
 }
 
 struct Wave {
-  let castVoice: Voice
+  var castVoice: Voice
   var callVoice: Voice
   var replyVoice: Voice?
   let casterID: Int
@@ -43,7 +43,7 @@ struct Wave {
     callVoice = call
     replyVoice = nil
     type = .call
-    casterID = incomingSoul.deviceID!
+    casterID = incomingSoul.deviceID ?? -1
     callerID = Device.id!
     callerOS = Device.isSimulator ? OS.simulator : OS.ios
     casterOS = incomingSoul.os 
