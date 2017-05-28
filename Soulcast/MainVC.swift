@@ -82,6 +82,8 @@ class MainVC: UIViewController, SoulCatcherDelegate, OutgoingVCDelegate, MapVCDe
       //TODO: modal incoming waveVC
       print("receiveRemote finished catching wave")
       DispatchQueue.main.async {
+        //TODO: present a top bar notification with a completion handler that shows inwaveVC
+        return;
         let incomingWaveVC = InWaveVC(wave:filledWave)
         self.present(incomingWaveVC)
       }
