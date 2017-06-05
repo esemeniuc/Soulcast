@@ -1,35 +1,35 @@
 PODS:
   - Alamofire (4.4.0)
-  - AWSCognito (2.5.3):
-    - AWSCore (= 2.5.3)
-  - AWSCore (2.5.3)
-  - AWSS3 (2.5.3):
-    - AWSCore (= 2.5.3)
-  - AWSSNS (2.5.3):
-    - AWSCore (= 2.5.3)
-  - Cache (2.2.2):
+  - AudioKit (3.7)
+  - AWSCognito (2.5.8):
+    - AWSCore (= 2.5.8)
+  - AWSCore (2.5.8)
+  - AWSS3 (2.5.8):
+    - AWSCore (= 2.5.8)
+  - AWSSNS (2.5.8):
+    - AWSCore (= 2.5.8)
+  - Cache (2.3.0):
     - CryptoSwift
-  - CryptoSwift (0.6.8)
-  - TheAmazingAudioEngine (1.5.8)
+  - CryptoSwift (0.6.9)
 
 DEPENDENCIES:
   - Alamofire
+  - AudioKit (~> 3.7)
   - AWSCognito
   - AWSS3
   - AWSSNS
   - Cache
-  - TheAmazingAudioEngine
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  AWSCognito: 74be06e52a2a063ab932a9d457a89e003d68631d
-  AWSCore: 344e21892790650cf902246d436402257a545bde
-  AWSS3: 88095d68f9d588eaa042d7f502f350234f98f606
-  AWSSNS: 7ce904133daad7ea47378c2b8018db9dc2cef275
-  Cache: b00196618af3facf17986fadda228cc77b5a5a10
-  CryptoSwift: f21ea03ed3a94e79d241648ce26652cd4810508a
-  TheAmazingAudioEngine: 24e382d9468283bb1b3f08df29b514aa522ef4fd
+  AudioKit: 73c43705575e483623bf3cf306f823a8677aebdd
+  AWSCognito: 8eb74039f4dc5f2d929999c4f531eeb4bd83e6cb
+  AWSCore: cf101c44d2cc5da32abc27d5529cddc63c010415
+  AWSS3: addf558f9cf2368e7fb520440867fea5596db0fb
+  AWSSNS: 812baa3f5dd5e53da69c37fb8b451e52d0735821
+  Cache: 077e4e799c394ccffc18bb3240f5b55cb9b3cc1b
+  CryptoSwift: a22f6ba238e9ce4d26ee7bf45b9ed82e7122d4a0
 
-PODFILE CHECKSUM: df3a6462b06ca5ad9847c1249478c873e2d66481
+PODFILE CHECKSUM: 591a115717a9ebbb0082bfa5e103469b732d96a8
 
 COCOAPODS: 1.2.1
