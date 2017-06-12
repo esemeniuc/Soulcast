@@ -3,7 +3,7 @@ platform :ios, '9.0'
 
 target 'Soulcast' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
-  pod 'Cache'
+  pod 'Cache', '~> 2.2.2'
   use_frameworks!
 pod 'AudioKit', '~> 3.7'
 pod 'Alamofire'    
