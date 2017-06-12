@@ -20,13 +20,12 @@ class OutgoingVC: UIViewController {
     
   var outgoingSoul:Soul?
   var recordingStartTime:Date!
-  var soulRecorder = SoulRecorder()
   var soulCaster = SoulCaster()
   var displayLink: CADisplayLink!
   
   var maxRecordingDuration: Int {
-    get { return soulRecorder.maximumRecordDuration }
-    set { soulRecorder.maximumRecordDuration = newValue }
+    get { return Recorder.maxDuration }
+    set { Recorder.maxDuration = newValue }
   }
   
   var firstTime:Bool {
@@ -46,7 +45,6 @@ class OutgoingVC: UIViewController {
     super.viewDidLoad()
     addDisplayLink()
     addOutgoingButton()
-    configureAudio()
     configureNetworking()
   }
   
@@ -54,12 +52,6 @@ class OutgoingVC: UIViewController {
     //requestStartRecording()
   }
 
-  func configureAudio() {
-    soulRecorder.delegate = self
-    soulRecorder.setup()
-    soulPlayer.subscribe(self)
-  }
-  
   func configureNetworking() {
     soulCaster.delegate = self
   }
@@ -79,25 +71,25 @@ class OutgoingVC: UIViewController {
   func outgoingButtonTouchedDown(_ button:UIButton) {
     if firstTime && !PermissionController.hasAudioPermission {
       //ask for recording permissions
-      SoulRecorder.askForMicrophonePermission({ 
-        self.firstTime = false
-        }, failure: {
-          self.firstTime = true
-          //display can't do anything message
-      })
+//      Recorder.askForMicrophonePermission({
+//        self.firstTime = false
+//        }, failure: {
+//          self.firstTime = true
+//          //display can't do anything message
+//      })
       return
     }
-    if !SoulPlayer.playing {
+    if !Player.playing {
       requestStartRecording()
     }
   }
   
   func outgoingButtonTouchedUpInside(_ button:UIButton) {
-    requestFinishRecording()
+    Recorder.requestStopRecording(subscriber: self)
   }
   
   func outgoingButtonTouchDraggedExit(_ button:UIButton) {
-    requestFinishRecording()
+    Recorder.requestStopRecording(subscriber: self)
   }
     
   
@@ -107,7 +99,7 @@ class OutgoingVC: UIViewController {
   }
   
   func displayLinkFired(_ link:CADisplayLink) {
-    if soulRecorder.state == .recordingStarted || soulRecorder.state == .recordingLongEnough {
+    if Recorder.state == .recordingStarted || Recorder.state == .recordingLongEnough {
       incrementRecordingIndicator()
     }
     
@@ -120,18 +112,20 @@ class OutgoingVC: UIViewController {
   
   func requestStartRecording() {
     recordingStartTime = Date()
-    soulRecorder.pleaseStartRecording()
+    Recorder.startRecording(subscriber: self)
     //HAX to get the view to change state
    
   }
   
   func requestFinishRecording() {
-    soulRecorder.pleaseStopRecording()
+    Recorder.requestStopRecording(subscriber: self)
     //replay, save, change ui to disabled.
   }
   
   func playbackSoul(_ localSoul:Soul) {
-    soulPlayer.startPlaying(localSoul)
+    if let url = localSoul.voice.localURL {
+      Player.play(url: URL.init(string: url)!)
+    }
   }
   
   
@@ -143,15 +137,30 @@ class OutgoingVC: UIViewController {
   
 }
 
-extension OutgoingVC: VoiceRecorderDelegate {
-  internal func recorderDidFinishRecording(_ localURL: String) {
+extension OutgoingVC: RecorderSubscriber {
+  func recorderReachedMinDuration() {
+     outgoingButton.tintLongEnough()
+  }
+
+  
+  func recorderStarted() {
+    outgoingButton.startProgress()
+  }
+  
+  func recorderRecording(_ progress: CGFloat) {
+    let haxProgress = progress + 1/60
+    outgoingButton.setProgress(haxProgress)
+
+  }
+  
+  func recorderFinished(_ localURL: URL) {
     let newSoul = Soul(voice: Voice(
       epoch: Int(Date().timeIntervalSince1970),
       s3Key: Randomizer.randomString(withLength: 10) + ".mp3",
-      localURL: localURL))
+      localURL: localURL.absoluteString))
     outgoingButton.mute()
     playbackSoul(newSoul)
-
+    
     
     newSoul.radius = delegate?.outgoingRadius()
     newSoul.longitude = delegate?.outgoingLongitude()
@@ -166,20 +175,9 @@ extension OutgoingVC: VoiceRecorderDelegate {
     }
     
     delegate?.outgoingDidStart()
-    
-  }
-
-  func soulDidStartRecording() {
-    outgoingButton.startProgress()
-    
   }
   
-  func soulIsRecording(_ progress: CGFloat) {
-    let haxProgress = progress + 1/60
-    outgoingButton.setProgress(haxProgress)
-  }
-  
-  func soulDidFailToRecord() {
+  func recorderFailed() {
     animateNegativeShake()
     outgoingButton.resetFail()
     tryShowExplainFailAlert()
@@ -202,9 +200,6 @@ extension OutgoingVC: VoiceRecorderDelegate {
     }
   }
   
-  func soulDidReachMinimumDuration() {
-    outgoingButton.tintLongEnough()
-  }  
   
 }
 
@@ -229,15 +224,15 @@ extension OutgoingVC: SoulCasterDelegate {
   }
 }
 
-extension OutgoingVC: SoulPlayerDelegate {
-  func didStartPlaying(_ voice:Voice){
+extension OutgoingVC: PlayerSubscriber {
+  func playerStarted() {
     
   }
-  func didFinishPlaying(_ voice:Voice){
+  func playerFinished(_ url: URL) {
     outgoingButton.resetSuccess()
     delegate?.outgoingDidStop()
   }
-  func didFailToPlay(_ voice:Voice){
+  func playerFailed() {
     
   }
 }

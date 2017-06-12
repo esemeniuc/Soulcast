@@ -227,7 +227,10 @@ extension MockingVC: SoulCatcherDelegate {
   
   }
   func soulDidFinishDownloading(_ catcher:SoulCatcher, soul:Soul) {
-    soulPlayer.startPlaying(soul)
+    if let url = soul.voice.localURL,
+      let urlurl = URL.init(string:url) {
+//      Player.play(url: urlurl, subscriber: self)
+    }
   }
   func soulDidFailToDownload(_ catcher:SoulCatcher) {
   

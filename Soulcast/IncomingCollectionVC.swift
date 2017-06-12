@@ -80,13 +80,10 @@ class IncomingCollectionVC: UICollectionViewController {
   
   func stop() {
     animateAway { }
-    soulPlayer.reset()
   }
   
   fileprivate func playFirstSoul() {
-    soulPlayer.subscribe(self)
-    soulPlayer.reset()
-    soulPlayer.startPlaying(soloQueue.peek())
+    Player.play(url: URL.init(string: (soloQueue.peek()?.voice.localURL!)!)!, subscriber: self)
   }
 }
 
@@ -98,7 +95,7 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
       collectionView?.insertItems(at: [IndexPath(row: max(soloQueue.count-1, 0), section: 0)])
     }
     //if only item, and player isn't playing, dequeue.
-    if !SoulPlayer.playing {
+    if !Player.playing {
       playFirstSoul()
       UIView.animate(withDuration: 0.3, animations: {
         self.view.frame = IncomingCollectionVC.afterFrame
@@ -117,12 +114,12 @@ extension IncomingCollectionVC: IncomingQueueDelegate {
   }
 }
 
-extension IncomingCollectionVC: SoulPlayerDelegate {
-  func didStartPlaying(_ voice: Voice) {
+extension IncomingCollectionVC: PlayerSubscriber {
+  func playerStarted() {
     
   }
   
-  func didFinishPlaying(_ voice: Voice) {
+  func playerFinished(_ url: URL) {
     _ = soloQueue.dequeue()
     if (isActiveOnScreen()) {
       if !soloQueue.isEmpty {
@@ -132,9 +129,8 @@ extension IncomingCollectionVC: SoulPlayerDelegate {
       soloQueue.purge()
     }
   }
-  
-  func didFailToPlay(_ voice: Voice) {
-    //
+  func playerFailed() {
+    
   }
   
 }

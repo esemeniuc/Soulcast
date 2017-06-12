@@ -14,7 +14,7 @@ protocol HistoryVCDelegate: class {
 }
 
 ///displays a list of souls played in the past in reverse chronological order since 24 hours ago
-class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, HistoryDataSourceDelegate, UIViewControllerTransitioningDelegate, DetailModalVCDelegate {
+class HistoryVC: UIViewController, UITableViewDelegate, PlayerSubscriber, HistoryDataSourceDelegate, UIViewControllerTransitioningDelegate, DetailModalVCDelegate {
   //title label
   let tableView = UITableView()//table view
   let dataSource = HistoryDataSource()
@@ -92,7 +92,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    soulPlayer.subscribe(self)
     if fetchToken {
       dataSource.fetch()
       refreshControl.endRefreshing()
@@ -102,7 +101,6 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   }
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    soulPlayer.unsubscribe(self)
     deselectAllRows()
   }
   func startPlaylisting() {
@@ -110,9 +108,8 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     tableView.selectRow(at: first, animated: true, scrollPosition: .none)
     selectedSoul = dataSource.soul(forIndex: 0)
     // play first soul
-    soulPlayer.reset()
     if let thisSoul = selectedSoul {
-      soulPlayer.startPlaying(thisSoul)
+      Player.play(url: URL.init(string:thisSoul.voice.localURL!)!, subscriber: self)
       playlisting = true
     }
     
@@ -131,8 +128,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
       print("playNextSoul path.count == 0")
     }
     if selectedSoul != nil {
-      soulPlayer.reset()
-      soulPlayer.startPlaying(selectedSoul)
+      Player.play(url: URL.init(string:selectedSoul!.voice.localURL!)!, subscriber: self)
     }
   }
   
@@ -153,7 +149,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
 //// UITableViewDelegate
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     playlisting = false
-    soulPlayer.reset()
+    Player.stop()
     if let selectedSoul = dataSource.soul(forIndex:indexPath.row) {
       delegate?.historyDidSelect(soul: selectedSoul)
     }
@@ -200,7 +196,7 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
     return 55
   }
   func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    soulPlayer.reset()
+    Player.stop()
     selectedSoul = nil
   }
   // HistoryDataSourceDelegate
@@ -278,21 +274,17 @@ class HistoryVC: UIViewController, UITableViewDelegate, SoulPlayerDelegate, Hist
   
   
   
-  //SoulPlayerDelegate
-  func didStartPlaying(_ voice:Voice) {
-    
-  }
-  func didFinishPlaying(_ voice:Voice) {
+  //PlayerSubscriber
+  func playerStarted() {}
+  func playerFinished(_ url: URL) {
     guard selectedSoul != nil else { return }
-    if voice.epoch == selectedSoul!.voice.epoch {
+    if url.absoluteString == selectedSoul!.voice.localURL {
       tableView.deselectRow(at: dataSource.indexPath(forSoul: selectedSoul!) as IndexPath, animated: true)
     }
     if playlisting { playNextSoul() }
   }
-
-  func didFailToPlay(_ voice:Voice) {
-    
-  }
+  func playerFailed() {}
+  
   
   func deselectAllRows() {
     for rowIndex in 0...dataSource.soulCount() {

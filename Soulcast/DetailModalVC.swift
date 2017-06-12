@@ -6,7 +6,7 @@ protocol DetailModalVCDelegate: class {
   func detailModalCancelled(_ vc:UIViewController)
 }
 
-class DetailModalVC: UIViewController, SoulPlayerDelegate {
+class DetailModalVC: UIViewController, PlayerSubscriber {
   
   weak var delegate: DetailModalVCDelegate?
   let grayOverlay = UIView()
@@ -37,12 +37,10 @@ class DetailModalVC: UIViewController, SoulPlayerDelegate {
   }
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    soulPlayer.subscribe(self)
-    soulPlayer.startPlaying(soul)
+    Player.play(url: URL.init(string:soul.voice.localURL!)!, subscriber: self)
   }
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    soulPlayer.unsubscribe(self)
   }
   func addGrayOverlay() {
     grayOverlay.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
@@ -64,7 +62,7 @@ class DetailModalVC: UIViewController, SoulPlayerDelegate {
   }
   
   func didTapPlayButton() {
-    soulPlayer.startPlaying(soul)
+    Player.play(url: URL.init(string:soul.voice.localURL!)!, subscriber: self)
   }
   
   override func didMove(toParentViewController parent: UIViewController?) {
@@ -91,7 +89,7 @@ class DetailModalVC: UIViewController, SoulPlayerDelegate {
   }
   
   func didTapGrayOverlay() {
-    soulPlayer.reset()
+    Player.stop()
     UIView.transition(with: self.grayOverlay, duration: 0.3, options: .transitionCrossDissolve, animations: {
       self.grayOverlay.isHidden = true
     }) { _ in
@@ -101,15 +99,13 @@ class DetailModalVC: UIViewController, SoulPlayerDelegate {
   }
   
 ////// SoulPlayerDelegate
-  func didStartPlaying(_ voice:Voice) {
+  func playerStarted() {
     playButton.isEnabled = false
   }
-  
-  func didFinishPlaying(_ voice:Voice) {
+  func playerFinished(_ url: URL) {
     playButton.isEnabled = true
   }
-  
-  func didFailToPlay(_ voice:Voice) {
+  func playerFailed() {
     
   }
 //////

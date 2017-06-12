@@ -2,11 +2,9 @@
 import Foundation
 
 class SoulPlayerTests {
-  let soulPlayer = SoulPlayer()
   
   
   func testPlay(){
-    soulPlayer.startPlaying(mockSoul())
   }
   
   func mockSoul() -> Soul {

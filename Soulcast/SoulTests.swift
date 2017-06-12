@@ -47,9 +47,7 @@ class SoulTester: NSObject {
   
   func testWavRainbow() {
     //record, upload, download, play
-    let recorder = SoulRecorder()
-    recorder.delegate = self
-    recorder.pleaseStartRecording()
+    Recorder.startRecording(subscriber: self)
   }
   
   func testJsonRainbow() {
@@ -60,32 +58,22 @@ class SoulTester: NSObject {
 }
 
 //wav rainbow
-extension SoulTester: VoiceRecorderDelegate {
-  internal func recorderDidFinishRecording(_ localURL: String) {
+extension SoulTester: RecorderSubscriber {
+  func recorderFinished(_ localURL: URL) {
     let newSoul = Soul(voice:Voice(
       epoch: 1234567890,
       s3Key: "fabulousTest",
-      localURL: localURL))
-
+      localURL: localURL.absoluteString))
+    
     let soulCaster = SoulCaster()
     soulCaster.delegate = self
     soulCaster.cast(newSoul)
   }
 
-  func soulDidStartRecording(){
-    
-  }
-    
-    func soulIsRecording(_ progress: CGFloat) {
-        //
-    }
-  
-  func soulDidFailToRecord(){
-    
-  }
-  func soulDidReachMinimumDuration(){
-    
-  }
+  func recorderStarted() {}
+  func recorderReachedMinDuration() {}
+  func recorderRecording(_ progress:CGFloat) {}
+  func recorderFailed() {}
 }
 //wav rainbow
 extension SoulTester: SoulCasterDelegate {
@@ -118,8 +106,6 @@ extension SoulTester: SoulCatcherDelegate {
   }
   func soulDidFinishDownloading(_ catcher: SoulCatcher, soul:Soul){
     //play
-    let soulPlayer = SoulPlayer()
-    soulPlayer.startPlaying(soul)
   }
   func soulDidFailToDownload(_ catcher: SoulCatcher){
     

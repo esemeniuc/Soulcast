@@ -13,7 +13,7 @@ protocol OutWaveVCDelegate: class {
   func outWaveDidCall(wave:Wave)
 }
 
-class OutWaveVC: UIViewController, SoulPlayerDelegate, VoiceRecorderVCDelegate {
+class OutWaveVC: UIViewController, PlayerSubscriber, VoiceRecorderVCDelegate {
   var castSoul: Soul!
   let playButton = UIButton()
   let descriptionLabel = UILabel()
@@ -31,17 +31,15 @@ class OutWaveVC: UIViewController, SoulPlayerDelegate, VoiceRecorderVCDelegate {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.isNavigationBarHidden = false
-    soulPlayer.subscribe(self)
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    soulPlayer.startPlaying(castSoul)
+    Player.play(url: URL.init(string: castSoul.voice.localURL!)!, subscriber: self)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    soulPlayer.unsubscribe(self)
   }
   
   func addVoiceVC() {
@@ -73,7 +71,8 @@ class OutWaveVC: UIViewController, SoulPlayerDelegate, VoiceRecorderVCDelegate {
   }
   
   func didTapPlayButton() {
-    soulPlayer.startPlaying(castSoul)
+    Player.play(url: URL.init(string: castSoul.voice.localURL!)!, subscriber: self)
+
   }
   
   func addBackButton() {
@@ -90,9 +89,10 @@ class OutWaveVC: UIViewController, SoulPlayerDelegate, VoiceRecorderVCDelegate {
   }
   
   ////// SoulPlayerDelegate
-  func didStartPlaying(_ voice:Voice) { playButton.isEnabled = false }
-  func didFinishPlaying(_ voice:Voice) { playButton.isEnabled = true }
-  func didFailToPlay(_ voice:Voice) { }
+  func playerStarted(){ playButton.isEnabled = false }
+  func playerFinished(_ url: URL){ playButton.isEnabled = true }
+  func playerFailed(){ }
+  
   //////
   func recorderWillStart(_:VoiceRecorderVC) {
     playButton.isEnabled = false

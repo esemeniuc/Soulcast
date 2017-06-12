@@ -16,14 +16,13 @@ protocol VoiceRecorderVCDelegate: class {
 }
 
 ///combines recording ui and recording logic. To be used as a child VC
-class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate, SoulPlayerDelegate {
+class VoiceRecorderVC: UIViewController, RecorderSubscriber, PlayerSubscriber {
   weak var delegate: VoiceRecorderVCDelegate?
   var recordButton: RecordButton!
   var maxRecordingDuration: Int {
-    get { return voiceRecorder.maximumRecordDuration }
-    set { voiceRecorder.maximumRecordDuration = newValue }
+    get { return Recorder.maxDuration }
+    set { Recorder.maxDuration = newValue }
   }
-  var voiceRecorder = SoulRecorder()
   var buttonSize:CGFloat = screenWidth * 0.28
   var displayLink: CADisplayLink!
   var voice: Voice?
@@ -33,7 +32,6 @@ class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate, SoulPlayerDelega
   override func viewDidLoad() {
     super.viewDidLoad()
     addRecordButton()
-    configureAudio()
   }
   
   func addRecordButton() {
@@ -50,41 +48,38 @@ class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate, SoulPlayerDelega
     view.addSubview(recordButton)
   }
   
-  func configureAudio() {
-    voiceRecorder.delegate = self
-    voiceRecorder.setup()
-    soulPlayer.subscribe(self)
-  }
-  
   func requestStartRecording() {
     recordingStartTime = Date()
-    voiceRecorder.pleaseStartRecording()
+    Recorder.startRecording(subscriber: self)
     //HAX to get the view to change state
   }
   
   func requestFinishRecording() {
-    voiceRecorder.pleaseStopRecording()
+    Recorder.requestStopRecording(subscriber: self)
   }
 
-  func soulDidStartRecording() {
+  func recorderStarted(){
     recordButton.startProgress()
   }
-  func soulIsRecording(_ progress:CGFloat) {
+  func recorderReachedMinDuration() {}
+  func recorderRecording(_ progress:CGFloat){
     recordButton.setProgress(progress + 1/60)
   }
-  func recorderDidFinishRecording(_ localURL: String) {
+
+  func recorderFinished(_ localURL: URL){
     let newVoice = Voice(
       epoch: Int(Date().timeIntervalSince1970),
       s3Key: Randomizer.randomString(withLength: 10) + ".mp3",
-      localURL: localURL)
-    soulPlayer.startPlaying(newVoice)
+      localURL: localURL.absoluteString)
+    Player.play(url: localURL, subscriber: self)
     delegate?.recorderFinished(self, callVoice: newVoice)
   }
-  func soulDidFailToRecord() {
+  func recorderFailed(){
     delegate?.recorderFailed(self)
     recordButton.resetFail()
     tryShowExplainFailAlert()
   }
+
   func soulDidReachMinimumDuration() {
     recordButton.tintLongEnough()
   }
@@ -94,7 +89,9 @@ class VoiceRecorderVC: UIViewController, VoiceRecorderDelegate, SoulPlayerDelega
     alert.addAction(cancel)
     present(alert, animated: true)
   }
-  func didStartPlaying(_ voice:Voice) {  }
-  func didFinishPlaying(_ voice:Voice) { recordButton.resetSuccess() }
-  func didFailToPlay(_ voice:Voice) { recordButton.resetFail() }
+  
+  func playerStarted(){  }
+  func playerFinished(_ url: URL) { recordButton.resetSuccess() }
+  func playerFailed() { recordButton.resetFail() }
+  
 }

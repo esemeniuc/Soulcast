@@ -10,7 +10,6 @@ import Foundation
 
 class SoulCatcherTests {
   var soulCatcher: SoulCatcher?
-  let soulPlayer = SoulPlayer()
   
   static func mockUserInfo() -> [NSString : AnyObject] {
     var mockUserInfo = [NSString : AnyObject]()
@@ -70,7 +69,6 @@ extension SoulCatcherTests: SoulCatcherDelegate {
   }
   func soulDidFinishDownloading(_ catcher: SoulCatcher, soul:Soul) {
     print("soulDidFinishDownloading")
-    soulPlayer.startPlaying(soul)
   }
   func soulDidFailToDownload(_ catcher: SoulCatcher) {
     print("soulDidFailToDownload")
