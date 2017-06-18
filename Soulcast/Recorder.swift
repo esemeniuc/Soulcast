@@ -146,7 +146,7 @@ class Recorder {
   }
   
   fileprivate static func setSession() {
-    AKAudioFile.cleanTempDirectory()
+    //AKAudioFile.cleanTempDirectory()
     AKSettings.enableLogging = false
     AKSettings.bufferLength = .medium
     do {

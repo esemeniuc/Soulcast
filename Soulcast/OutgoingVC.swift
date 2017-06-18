@@ -124,7 +124,7 @@ class OutgoingVC: UIViewController {
   
   func playbackSoul(_ localSoul:Soul) {
     if let url = localSoul.voice.localURL {
-      Player.play(url: URL.init(string: url)!)
+      Player.play(url: URL.init(string: url)!, subscriber: self)
     }
   }
   

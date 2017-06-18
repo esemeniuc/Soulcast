@@ -30,7 +30,6 @@ class LaunchHelper {
       region: .USWest2,
       credentialsProvider: credentialsProvider)
     AWSServiceManager.default().defaultServiceConfiguration = configuration
-    AWSLogger.default().logLevel = .verbose
   }
   
 }

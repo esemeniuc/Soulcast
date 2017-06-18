@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.4.0)
+  - Alamofire (4.5.0)
   - AudioKit (3.7)
   - AWSCognito (2.5.8):
     - AWSCore (= 2.5.8)
@@ -21,7 +21,7 @@ DEPENDENCIES:
   - Cache (~> 2.2.2)
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   AudioKit: 73c43705575e483623bf3cf306f823a8677aebdd
   AWSCognito: 8eb74039f4dc5f2d929999c4f531eeb4bd83e6cb
   AWSCore: cf101c44d2cc5da32abc27d5529cddc63c010415

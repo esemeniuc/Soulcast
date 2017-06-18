@@ -115,10 +115,7 @@ class SoulCaster: NSObject {
         if let error = task.error {
           print("AWSS3TransferUtility.defaultS3TransferUtility().uploadFile error: \(error.localizedDescription)")
           //TODO: indicate failure
-        }
-        if let error = task.error {
-          print("AWSS3TransferUtility.defaultS3TransferUtility().uploadFile exception: \(error.localizedDescription)")
-          //TODO: indicate failure
+          self.delegate?.soulDidFailToUpload()
         }
         if let _ = task.result {
           print("Upload Success!")
